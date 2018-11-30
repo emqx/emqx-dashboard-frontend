@@ -1,0 +1,146 @@
+@import "color";
+
+/* reset global style */
+.el-form--label-top {
+  .el-form-item__label {
+    padding: 0;
+  }
+}
+
+.el-table {
+  border-radius: 4px;
+  &.el-table--small {
+    font-size: 14px;
+  }
+  &::before {
+    height: 0;
+  }
+  &.el-table--group::after,
+  &.el-table--border::after {
+    width: 0;
+  }
+  th, td {
+    border-right: none;
+  }
+  th {
+    border-bottom: none;
+  }
+  .el-table__header-wrapper {
+  }
+  .el-table__body-wrapper {
+    .el-table__body {
+    }
+  }
+}
+
+.el-checkbox {
+  .el-checkbox__inner {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    &:after {
+      border-left: 0;
+      border-top: 0;
+      height: 8px;
+      left: 5px;
+      position: absolute;
+      top: 2px;
+      width: 4px;
+    }
+  }
+}
+
+.el-select {
+  &.el-select--small {
+    .el-input__inner {
+      height: 40px !important;
+    }
+  }
+  &.select-radius {
+    width: 240px;
+    .el-input__inner {
+      border-radius: 40px;
+    }
+  }
+}
+
+.el-select-dropdown {
+  min-height: 40px;
+}
+
+.el-input, .el-textarea {
+  &.input-radius {
+    width: 240px;
+    .el-input__inner {
+      border-radius: 40px;
+    }
+  }
+  .el-input__suffix {
+    width: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    .el-input__suffix-inner {
+      font-weight: bolder;
+    }
+  }
+}
+
+.el-button {
+  &.el-button--mini {
+    padding: 4px;
+  }
+  &.is-plain {
+    font-weight: normal !important;
+    //&.is-disabled {
+    //  background-color: #323538 !important;
+    //  &:hover {
+    //    background-color: #323538 !important;
+    //    border-color: #323538 !important;
+    //    color: #a7a7a7 !important;
+    //  }
+    //}
+  }
+}
+
+.el-card {
+  border: none !important;
+  font-size: 16px;
+  font-weight: 600;
+  .el-card__header {
+    border-bottom: 1px solid #f1f1f1;
+  }
+  &.el-card--self {
+    font-weight: 400;
+    .el-card__header {
+      border-bottom: none !important;
+    }
+  }
+}
+
+.cache-btn {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.el-switch__input:focus ~ .el-switch__core {
+  outline: none !important;
+}
+
+.el-dialog {
+  .el-dialog__header {
+    border-bottom: 1px solid #f1f1f1 !important;
+  }
+}
+
+// Fix Chrome's input
+
+.el-input {
+  &.el-input--medium {
+    .el-input__inner {
+    }
+  }
+}
+
+.el-loading-mask {
+  opacity: .8;
+}
