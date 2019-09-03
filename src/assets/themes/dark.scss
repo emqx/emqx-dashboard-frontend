@@ -61,12 +61,6 @@
 }
 
 .el-checkbox {
-  .el-checkbox__inner {
-    &:after {
-      //border: 2px solid #fff;
-    }
-  }
-
   .el-checkbox__input.is-checked + .el-checkbox__label {
     color: #606266;
   }
@@ -239,15 +233,6 @@
         color: #fff !important;
       }
     }
-
-    //&.is-disabled {
-    //  background-color: #323538 !important;
-    //  &:hover {
-    //    background-color: #323538 !important;
-    //    border-color: #323538 !important;
-    //    color: #a7a7a7 !important;
-    //  }
-    //}
   }
 }
 

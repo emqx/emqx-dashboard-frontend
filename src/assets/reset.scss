@@ -149,15 +149,6 @@
   }
 }
 
-// Fix Chrome's input
-
-.el-input {
-  &.el-input--medium {
-    .el-input__inner {
-    }
-  }
-}
-
 .el-loading-mask {
   opacity: .8;
 }
