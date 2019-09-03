@@ -14,7 +14,11 @@
             </router-link>
           </el-tooltip>
         </div>
-          <el-button size="medium" class="enterprise-btn" @click="tryEnterprise">
+          <el-button size="medium" class="github-btn" @click="openLink('github')">
+            GitHub
+            <i class="iconfont icon-git"></i>
+          </el-button>
+          <el-button size="medium" class="enterprise-btn" @click="openLink('enterprise')">
             {{ $t('topbar.tryEnterprise') }}
             <i class="iconfont icon-arrow"></i>
           </el-button>
@@ -45,11 +49,17 @@ export default {
   },
 
   methods: {
-    tryEnterprise() {
-      const openLink = this.lang === 'en'
-        ? 'https://www.emqx.io/downloads#enterprise'
-          : 'https://www.emqx.io/cn/downloads#enterprise'
-      window.open(openLink)
+    openLink(type) {
+      let link = ''
+      if (type === 'enterprise') {
+        link = this.lang === 'en'
+          ? 'https://www.emqx.io/downloads#enterprise'
+            : 'https://www.emqx.io/cn/downloads#enterprise'
+      } else if (type === 'github') {
+        link = 'https://github.com/emqx/emqx'
+      }
+      const windowUrl = window.open(link)
+      windowUrl.opener = null
     },
   },
 }
@@ -69,7 +79,7 @@ export default {
   .top-area {
     background-color: #242327;
     height: 100%;
-    padding: 0 20px;
+    padding: 0 32px;
     text-align: right;
     .topbar-right {
       .help-link {
@@ -90,18 +100,29 @@ export default {
           color: #34C388;
         }
       }
-      .enterprise-btn.el-button {
-        color: #34C388;
-        background: transparent;
+      .el-button {
+        width: 135px;
         border-radius: 40px;
-        border-color: #34C388;
+        border-width: 2px;
         margin-left: 20px;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
         line-height: 15px;
-        .icon-arrow {
-          position: relative;
-          top: 1px;
+        background: transparent;
+        &.enterprise-btn {
+          color: #34C388;
+          border-color: #34C388;
+          .icon-arrow {
+            position: relative;
+            top: 1px;
+          }
+        }
+        &.github-btn {
+          color: #ADAFB4;
+          border-color: #ADAFB4;
+        }
+        .iconfont {
+          margin-left: 5px;
         }
       }
       .el-button--medium {
