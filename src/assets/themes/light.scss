@@ -414,3 +414,36 @@
     background-color: #DCDFE6;
   }
 }
+
+/* Tabs */
+.el-tabs {
+  &.normal-tabs {
+    &>.el-tabs__header {
+      .el-tabs__item {
+        background: #fff;
+        border-bottom: 1px solid #fff;
+      }
+      .el-tabs__item.is-active {
+        background: #fff;
+        border: 1px solid #fff;
+        border-left: 2px solid;
+        color: $themes-color;
+      }
+    }
+  }
+}
+
+/* Clients */
+.clients-basic {
+  .clients-basic-form {
+    .form-subtitle {
+      color: #343434;
+      font-size: 14px;
+      margin: 24px 0;
+    }
+
+    .el-form-item__content {
+      color: #343434;
+    }
+  }
+}

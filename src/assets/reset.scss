@@ -1,12 +1,15 @@
 @import "color";
 
 /* reset global style */
+
+/* Form */
 .el-form--label-top {
   .el-form-item__label {
     padding: 0;
   }
 }
 
+/* Table */
 .el-table:not(.el-table--public) {
   border-radius: 4px;
 
@@ -30,16 +33,9 @@
   th {
     border-bottom: none;
   }
-
-  .el-table__header-wrapper {
-  }
-
-  .el-table__body-wrapper {
-    .el-table__body {
-    }
-  }
 }
 
+/* Input, Select, Checkbox */
 .el-checkbox {
   .el-checkbox__inner {
     width: 18px;
@@ -98,6 +94,7 @@
   }
 }
 
+/* Button */
 .el-button {
   &.el-button--mini {
     padding: 4px;
@@ -105,17 +102,10 @@
 
   &.is-plain {
     font-weight: normal !important;
-    //&.is-disabled {
-    //  background-color: #323538 !important;
-    //  &:hover {
-    //    background-color: #323538 !important;
-    //    border-color: #323538 !important;
-    //    color: #a7a7a7 !important;
-    //  }
-    //}
   }
 }
 
+/* el-card */
 .el-card {
   border: none !important;
   font-size: 16px;
@@ -143,6 +133,7 @@
   outline: none !important;
 }
 
+/* Loading */
 .el-dialog {
   .el-dialog__header {
     border-bottom: 1px solid #f1f1f1 !important;
@@ -151,4 +142,42 @@
 
 .el-loading-mask {
   opacity: .8;
+}
+
+/* Tabs */
+.el-tabs {
+  &.normal-tabs {
+    margin-top: 24px;
+    &>.el-tabs__header {
+      border-bottom: 0px;
+      margin-bottom: 0px;
+      .el-tabs__nav {
+        border: none;
+      }
+      .el-tabs__item {
+        min-width: 120px;
+        text-align: center;
+        background: #1D1E24;
+        border-radius: 4px 4px 0 0;
+        margin-right: 8px;
+        border: 1px solid transparent;
+        border-bottom: 1px solid #1f1d1d;
+        line-height: 38px;
+        color: #ADAFB4;
+        transition: all 0.5s;
+        font-size: 16px;
+      }
+      .el-tabs__item.is-active {
+        background: #1f1d1d;
+        border: 1px solid #1f1d1d;
+        border-left: 2px solid;
+        color: $themes-color;
+      }
+    }
+  }
+}
+
+/* Dropdown */
+.el-dropdown {
+  cursor: pointer;
 }
