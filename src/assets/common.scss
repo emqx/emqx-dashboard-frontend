@@ -85,7 +85,6 @@ a {
   .el-breadcrumb {
     margin-top: 2px;
     font-size: 24px;
-    text-transform: lowercase;
 
     .uppercase {
       text-transform: Capitalize;
@@ -159,7 +158,7 @@ input {
 
 .btn {
   cursor: pointer;
-  color: #34c388;
+  color: $themes-color;
 }
 
 .a-line {
@@ -202,9 +201,6 @@ input {
     padding: 6px;
     min-height: 32px;
     line-height: 32px;
-    /*&:nth-child(odd) {*/
-    /*background-color: #f1f1f1;*/
-    /*}*/
     clear:both;
     .option-title {
       width: 48%;
@@ -221,12 +217,19 @@ input {
     .option-all {
       clear: both;
       width: 100%;
-      /*background-color: #f1f1f1;*/
-      /*padding: 6px;*/
 
       .option-item {
         padding: 6px 0;
       }
     }
   }
+}
+
+/* Status */
+.connected {
+  color: $themes-color;
+}
+
+.disconnected {
+  color: $themes-color-danger;
 }

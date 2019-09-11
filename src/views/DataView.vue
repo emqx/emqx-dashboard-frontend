@@ -33,96 +33,58 @@
       </div>
     </div>
 
-    <!-- connections -->
-    <el-table v-show="activeTab==='connections'" v-loading="$store.state.loading" border :data="connections">
-      <el-table-column v-if="cluster" prop="node" min-width="160" :label="$t('connections.node')">
-      </el-table-column>
-      <el-table-column prop="client_id" min-width="160" :label="$t('connections.clientId')">
-      </el-table-column>
-      <el-table-column prop="username" min-width="130" :label="$t('connections.username')">
-      </el-table-column>
-      <el-table-column prop="ipaddress" min-width="150" :label="$t('connections.ipAddr')">
-      </el-table-column>
-      <el-table-column prop="port" min-width="80" :label="$t('connections.port')">
-      </el-table-column>
-      <el-table-column prop="clean_start" min-width="110" :label="$t('connections.cleanStart')">
-        <template slot-scope="scope">
-          <span>{{ scope.row.clean_start }}</span>
+    <!-- clients -->
+    <el-table v-show="activeTab==='clients'" v-loading="$store.state.loading" border :data="clients">
+      <el-table-column prop="client_id" label="Client ID">
+        <template slot-scope="{ row }">
+          <a href="javascript:;" @click="$router.push({ path: `/clients/${row.client_id}` })">
+            {{ row.client_id }}
+          </a>
         </template>
       </el-table-column>
-      <el-table-column prop="proto_ver" width="120" :label="$t('connections.protoVer')">
-      </el-table-column>
-      <el-table-column prop="keepalive" width="120" :label="$t('connections.keepalive')">
-      </el-table-column>
-      <el-table-column prop="connected_at" width="180" :label="$t('connections.connectedAt')">
-      </el-table-column>
-    </el-table>
-
-    <!-- sessions -->
-    <el-table v-show="activeTab ==='sessions'" v-loading="$store.state.loading" border :data="sessions">
-      <el-table-column v-if="cluster" prop="node" min-width="160" :label="$t('connections.node')">
-        <template slot-scope="props">
-          {{ props.row.node || '--'}}
+      <el-table-column prop="username" label="Username"></el-table-column>
+      <el-table-column prop="keepalive" label="Keepalive"></el-table-column>
+      <el-table-column prop="expiry_interval" :label="$t('clients.expiryInterval')"></el-table-column>
+      <el-table-column prop="subscriptions_cnt" :label="$t('clients.subscriptionsCount')"></el-table-column>
+      <el-table-column prop="connected" :label="$t('clients.connected')">
+        <template slot-scope="{ row }">
+          <span :class="row.connected ? 'connected' : 'disconnected'">
+            {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
+          </span>
         </template>
       </el-table-column>
-      <el-table-column prop="client_id" min-width="160" :label="$t('sessions.clientId')">
-        <template slot-scope="props">
-          {{ props.row.client_id || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="clean_start" width="120" :label="$t('sessions.cleanStart')">
-        <template slot-scope="scope">
-          <span>{{ scope.row.clean_start }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="subscriptions_count" min-width="160" :label="$t('sessions.subscriptionsCount')">
-        <template slot-scope="props">
-          {{ props.row.subscriptions_count || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="expiry_interval" min-width="120" :label="$t('sessions.expiryInterval')">
-        <template slot-scope="props">
-          {{ props.row.expiry_interval}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="max_inflight" min-width="150" :label="$t('sessions.maxInflight')">
-        <template slot-scope="props">
-          {{ props.row.max_inflight || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="inflight_len" min-width="150" :label="$t('sessions.inflightLen')">
-        <template slot-scope="props">
-          {{ props.row.inflight_len || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="mqueue_len" min-width="150" :label="$t('sessions.mqueueLen')">
-        <template slot-scope="props">
-          {{ props.row.mqueue_len || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="mqueue_dropped" min-width="150" :label="$t('sessions.mqueueDropped')">
-        <template slot-scope="props">
-          {{ props.row.mqueue_dropped || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="awaiting_rel_len" min-width="150" :label="$t('sessions.awaitingRelLen')">
-        <template slot-scope="props">
-          {{ props.row.awaiting_rel_len || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="deliver_msg" min-width="150" :label="$t('sessions.deliverMsg')">
-        <template slot-scope="props">
-          {{ props.row.deliver_msg || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="enqueue_msg" min-width="180" :label="$t('sessions.enqueueMsg')">
-        <template slot-scope="props">
-          {{ props.row.enqueue_msg || '0'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="created_at" min-width="180" :label="$t('sessions.createdAt')">
-        <template slot-scope="props">
-          {{ props.row.created_at || '--'}}
+      <el-table-column prop="created_at" :label="$t('clients.createdAt')"></el-table-column>
+      <el-table-column width="120px" :label="$t('oper.oper')">
+        <template slot-scope="{ row, $index, _self }">
+          <el-popover
+           v-if="row.connected"
+           :ref="`popover-${$index}`"
+           placement="right"
+           trigger="click">
+            <p>{{ $t('oper.confirmDisconnect') }}</p>
+            <div style="text-align: right">
+              <el-button
+                size="mini"
+                type="text"
+                class="cache-btn"
+                @click="_self.$refs[`popover-${$index}`].doClose()">
+                {{ $t('oper.cancel') }}
+              </el-button>
+              <el-button
+                size="mini"
+                type="success"
+                @click="handleDisconnect(row, $index, _self)">
+                {{ $t('oper.confirm') }}
+              </el-button>
+            </div>
+            <el-button
+              slot="reference"
+              size="mini"
+              type="danger"
+              plain>
+              {{ $t('websocket.disconnect') }}
+            </el-button>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -135,7 +97,7 @@
 
     <!-- subscriptions -->
     <el-table v-show="activeTab==='subscriptions'" v-loading="$store.state.loading" border :data="subscriptions">
-      <el-table-column v-if="cluster" prop="node" min-width="160" :label="$t('connections.node')">
+      <el-table-column v-if="cluster" prop="node" min-width="160" :label="$t('clients.node')">
       </el-table-column>
       <el-table-column prop="client_id" :label="$t('subscriptions.clientId')"></el-table-column>
       <el-table-column prop="topic" :label="$t('subscriptions.topic')"></el-table-column>
@@ -185,12 +147,11 @@ export default {
       },
       nodeName: '',
       nodes: [],
-      activeTab: 'connections',
+      activeTab: 'clients',
       searchKey: '',
       searchValue: '',
       searchPlaceholder: 'ClientId',
-      connections: [],
-      sessions: [],
+      clients: [],
       topics: [],
       subscriptions: [],
     }
@@ -294,6 +255,15 @@ export default {
     handleSizeChange(val) {
       this.params._limit = val
       this.loadChild(true)
+    },
+    handleDisconnect(row, index, self) {
+      this.$httpDelete(`/clients/${row.client_id}`).then(() => {
+        this.loadData()
+        // Close popover
+        self.$refs[`popover-${index}`].doClose()
+      }).catch((error) => {
+        this.$message.error(error || this.$t('error.networkError'))
+      })
     },
   },
   created() {

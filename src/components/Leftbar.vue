@@ -23,11 +23,8 @@
         <el-menu-item index="/">
           {{ $t('leftbar.overview') }}
         </el-menu-item>
-        <el-menu-item index="/connections">
-          {{ $t('leftbar.connections') }}
-        </el-menu-item>
-        <el-menu-item index="/sessions">
-          {{ $t('leftbar.sessions') }}
+        <el-menu-item index="/clients">
+          {{ $t('leftbar.clients') }}
         </el-menu-item>
         <el-menu-item index="/topics">
           {{ $t('leftbar.topics') }}
@@ -183,6 +180,7 @@ export default {
     padding-left: 20px;
     height: 47px;
     line-height: 47px;
+    background: inherit;
     border-top: 1px solid #2B2C30;
     color: #fff !important;
 

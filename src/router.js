@@ -20,12 +20,12 @@ const routes = [
         component: () => import('~/views/OverView'),
       },
       {
-        path: '/connections',
+        path: '/clients',
         component: () => import('~/views/DataView'),
       },
       {
-        path: '/sessions',
-        component: () => import('~/views/DataView'),
+        path: '/clients/:id',
+        component: () => import('~/views/Clients/ClientsView'),
       },
       {
         path: '/topics',
