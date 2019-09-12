@@ -35,33 +35,31 @@
 
     <!-- clients -->
     <el-table v-show="activeTab==='clients'" v-loading="$store.state.loading" border :data="clients">
-      <el-table-column prop="client_id" label="Client ID">
+      <el-table-column prop="client_id" label="Client ID" width="160px" show-overflow-tooltip>
         <template slot-scope="{ row }">
           <a href="javascript:;" @click="$router.push({ path: `/clients/${row.client_id}` })">
             {{ row.client_id }}
           </a>
         </template>
       </el-table-column>
-      <el-table-column prop="username" label="Username"></el-table-column>
+      <el-table-column prop="username" label="Username" show-overflow-tooltip></el-table-column>
       <el-table-column prop="keepalive" label="Keepalive"></el-table-column>
       <el-table-column prop="expiry_interval" :label="$t('clients.expiryInterval')"></el-table-column>
       <el-table-column prop="subscriptions_cnt" :label="$t('clients.subscriptionsCount')"></el-table-column>
       <el-table-column prop="connected" :label="$t('clients.connected')">
         <template slot-scope="{ row }">
-          <span :class="row.connected ? 'connected' : 'disconnected'">
-            {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
-          </span>
+          <span :class="[row.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
+          {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
         </template>
       </el-table-column>
-      <el-table-column prop="created_at" :label="$t('clients.createdAt')"></el-table-column>
+      <el-table-column prop="created_at" :label="$t('clients.createdAt')" width="160px"></el-table-column>
       <el-table-column width="120px" :label="$t('oper.oper')">
         <template slot-scope="{ row, $index, _self }">
           <el-popover
-           v-if="row.connected"
            :ref="`popover-${$index}`"
            placement="right"
            trigger="click">
-            <p>{{ $t('oper.confirmDisconnect') }}</p>
+            <p>{{ row.connected ? $t('oper.confirmDisconnect') : $t('oper.confirmCleanSession') }}</p>
             <div style="text-align: right">
               <el-button
                 size="mini"
@@ -82,7 +80,7 @@
               size="mini"
               type="danger"
               plain>
-              {{ $t('websocket.disconnect') }}
+              {{ row.connected ? $t('websocket.disconnect') : $t('websocket.cleanSession') }}
             </el-button>
           </el-popover>
         </template>

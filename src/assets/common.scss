@@ -226,10 +226,22 @@ input {
 }
 
 /* Status */
+.status-circle {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
 .connected {
   color: $themes-color;
+  &.status-circle {
+    background: $themes-color;
+  }
 }
-
 .disconnected {
   color: $themes-color-danger;
+  &.status-circle {
+    background: $themes-color-danger;
+  }
 }

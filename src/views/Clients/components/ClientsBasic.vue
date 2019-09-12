@@ -18,11 +18,13 @@
             <el-form-item label="Username" prop="username">
               <span>{{ record.username }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.protoName')" prop="proto_name">
-              <span>{{ record.proto_name }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('clients.protoVer')" prop="proto_ver">
-              <span>{{ record.proto_ver }}</span>
+            <el-form-item :label="$t('clients.protoType')">
+              <template v-if="record.proto_name === 'MQTT'">
+                <span>{{ record.proto_name }}_{{ mqttVersionMap[record.proto_ver] }}</span>
+              </template>
+              <template v-else>
+                <span>{{ record.proto_name }}_v{{ record.proto_ver }}</span>
+              </template>
             </el-form-item>
             <el-form-item :label="$t('clients.ipAddr')" prop="ip_address">
               <span>{{ record.ip_address }}</span>
@@ -166,6 +168,11 @@ export default {
   data() {
     return {
       showMore: false,
+      mqttVersionMap: {
+        3: 'v3.1',
+        4: 'v3.1.1',
+        5: 'v5.0',
+      },
     }
   },
 }
