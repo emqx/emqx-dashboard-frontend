@@ -35,15 +35,15 @@
 
     <!-- clients -->
     <el-table v-show="activeTab==='clients'" v-loading="$store.state.loading" border :data="clients">
-      <el-table-column prop="client_id" label="Client ID" width="160px" show-overflow-tooltip>
+      <el-table-column prop="client_id" :label="$t('clients.clientId')" width="160px" show-overflow-tooltip>
         <template slot-scope="{ row }">
           <a href="javascript:;" @click="$router.push({ path: `/clients/${row.client_id}` })">
             {{ row.client_id }}
           </a>
         </template>
       </el-table-column>
-      <el-table-column prop="username" label="Username" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="keepalive" label="Keepalive"></el-table-column>
+      <el-table-column prop="username" :label="$t('clients.username')" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="keepalive" :label="$t('clients.keepalive')"></el-table-column>
       <el-table-column prop="expiry_interval" :label="$t('clients.expiryInterval')"></el-table-column>
       <el-table-column prop="subscriptions_cnt" :label="$t('clients.subscriptionsCount')"></el-table-column>
       <el-table-column prop="connected" :label="$t('clients.connected')">

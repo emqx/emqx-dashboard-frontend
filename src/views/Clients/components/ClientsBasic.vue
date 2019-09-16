@@ -12,10 +12,10 @@
             <el-form-item :label="$t('clients.node')" prop="node">
               <span>{{ record.node }}</span>
             </el-form-item>
-            <el-form-item label="Client ID" prop="client_id">
+            <el-form-item :label="$t('clients.clientId')" prop="client_id">
               <span>{{ record.client_id }}</span>
             </el-form-item>
-            <el-form-item label="Username" prop="username">
+            <el-form-item :label="$t('clients.username')" prop="username">
               <span>{{ record.username }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.protoType')">
@@ -56,7 +56,7 @@
             <el-form-item :label="record.proto_ver === 5 ? 'Clean Start' : 'Clean Session'" prop="clean_start">
               <span>{{ record.clean_start }}</span>
             </el-form-item>
-            <el-form-item label="Keepalive" prop="keepalive">
+            <el-form-item :label="$t('clients.keepalive')" prop="keepalive">
               <span>{{ record.keepalive }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.expiryInterval')" prop="expiry_interval">

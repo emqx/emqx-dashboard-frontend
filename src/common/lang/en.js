@@ -127,7 +127,7 @@ export default {
   clients: {
     node: 'Node',
     nodeName: 'Node Name',
-    clientId: 'ClientId',
+    clientId: 'Client ID',
     username: 'Username',
     ipAddr: 'IP Address',
     port: 'Port',
