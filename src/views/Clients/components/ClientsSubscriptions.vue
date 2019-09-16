@@ -57,7 +57,7 @@
         :rules="rules"
         size="small"
         label-position="top">
-        <el-form-item prop="topic" label="Topic">
+        <el-form-item prop="topic" :label="$t('subscriptions.topic')">
           <el-input v-model="record.topic" placeholder="Topic"></el-input>
         </el-form-item>
         <el-form-item prop="qos" label="QoS">
