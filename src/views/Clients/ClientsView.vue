@@ -11,21 +11,16 @@
       </el-breadcrumb>
     </div>
 
-    <div class="client-dropdown">
+    <div class="client-oper">
+      <span :class="[basicRecord.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
       <span>{{ clientId }}</span>
-      <el-dropdown trigger="click" @command="handleCommand">
-        <span :class="['el-dropdown-link', basicRecord.connected ? 'connected' : 'disconnected']">
-          <span class="online">{{  basicRecord.connected ? $t('oper.online') : $t('oper.offline') }}</span>
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            command="handleDisconnect"
-            :disabled="!basicRecord.connected">
-            {{ $t('websocket.disconnect') }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-button
+        :class="[basicRecord.connected ? 'connected' : 'disconnected', 'connect-btn']"
+        size="mini"
+        :disabled="!basicRecord.connected"
+        @click="handleDisconnect">
+        {{ basicRecord.connected ? $t('websocket.disconnect') : $t('clients.disconnected') }}
+      </el-button>
     </div>
 
     <el-tabs class="normal-tabs" v-model="activeName" type="card">
@@ -121,17 +116,29 @@ export default {
 
 <style lang="scss">
 .clients-view {
-  .client-dropdown {
+  .client-oper {
     float: right;
     margin-top: -32px;
     color: #ADAFB4;
 
-    .el-dropdown-link {
-      .online {
-        margin-left: 20px;
+    .connect-btn {
+      border: 1px solid;
+      background: transparent;
+      margin-left: 20px;
+      min-width: 80px;
+      font-size: 14px;
+      font-weight: normal;
+
+      &.disconnected {
+        border-color: #ff6d6d;
+        color: #ff6d6d;
       }
-      .el-icon-arrow-down {
-        font-weight: 600;
+      &.connected {
+        border-color: #ADAFB4;
+        color: #ADAFB4;
+      }
+      &:hover {
+        background: transparent !important;
       }
     }
   }

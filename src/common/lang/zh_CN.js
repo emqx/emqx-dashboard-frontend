@@ -176,6 +176,7 @@ export default {
     currentSubs: '当前订阅',
     addSubs: '添加订阅',
     view: '详情',
+    disconnected: '已断开',
   },
   // topics
   topics: {

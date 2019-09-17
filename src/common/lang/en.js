@@ -23,7 +23,7 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm',
     delete: 'Delete',
-    oper: 'Oper',
+    oper: 'Operation',
     edit: 'Edit',
     save: 'Save',
     create: 'Create',
@@ -174,6 +174,7 @@ export default {
     currentSubs: 'Current Subscriptions',
     addSubs: 'Add Subscription',
     view: 'View',
+    disconnected: 'Disconnected',
   },
   // topics
   topics: {
@@ -194,7 +195,7 @@ export default {
     status: 'Status',
     stopped: 'Stopped',
     running: 'Running',
-    oper: 'Oper',
+    oper: 'Operation',
     start: 'Start',
     stop: 'Stop',
     config: 'Config',
@@ -264,7 +265,7 @@ export default {
     topic: 'Topic',
     qoS: 'QoS',
     date: 'Date',
-    oper: 'Oper',
+    oper: 'Operation',
     // Messages
     messages: 'Messages',
     retained: 'Retained',
