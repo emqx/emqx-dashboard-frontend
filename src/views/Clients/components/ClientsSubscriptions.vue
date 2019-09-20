@@ -163,7 +163,6 @@ export default {
         const body = {}
         Object.assign(body, this.record)
         this.$httpPost('/mqtt/subscribe', body).then(() => {
-          this.$message.success(this.$t('oper.addSuccess'))
           this.close()
           this.reload()
         }).catch(() => {})

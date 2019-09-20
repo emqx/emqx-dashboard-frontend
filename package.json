@@ -8,7 +8,8 @@
     "dev": "BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js && ./dist.sh"
+    "build": "node build/build.js",
+    "deploy:build": "node build/build.js && ./dist.sh"
   },
   "dependencies": {
     "axios": "^0.19.0",
