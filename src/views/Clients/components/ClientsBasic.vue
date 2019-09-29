@@ -12,8 +12,8 @@
             <el-form-item :label="$t('clients.node')" prop="node">
               <span>{{ record.node }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.clientId')" prop="client_id">
-              <span>{{ record.client_id }}</span>
+            <el-form-item :label="$t('clients.clientId')" prop="clientid">
+              <span>{{ record.clientid }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.username')" prop="username">
               <span>{{ record.username }}</span>

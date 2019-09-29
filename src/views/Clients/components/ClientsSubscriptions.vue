@@ -28,7 +28,7 @@
       </el-row>
 
       <el-table class="client-sub-table" v-loading="$store.state.loading" border :data="tableData">
-        <el-table-column prop="client_id" :label="$t('subscriptions.clientId')"></el-table-column>
+        <el-table-column prop="clientid" :label="$t('subscriptions.clientId')"></el-table-column>
         <el-table-column prop="topic" :label="$t('subscriptions.topic')"></el-table-column>
         <el-table-column prop="qos" :label="$t('subscriptions.qoS')"></el-table-column>
         <el-table-column width="120px" :label="$t('oper.oper')">
@@ -124,7 +124,7 @@ export default {
         qos: 0,
       },
       rules: {
-        client_id: {
+        clientid: {
           required: true,
           message: this.$t('oper.pleaseEnter'),
         },
@@ -141,10 +141,10 @@ export default {
       this.$msgbox.confirm(this.$t('oper.unsubscribeConfirm'), this.$t('oper.warning'), {
           type: 'warning',
         }).then(() => {
-        const { topic, client_id } = row
+        const { topic, clientid } = row
         const body = {
           topic,
-          client_id,
+          clientid,
         }
         this.$httpPost('/mqtt/unsubscribe', body).then(() => {
           this.reload()
@@ -153,7 +153,7 @@ export default {
     },
     open() {
       this.addVisible = true
-      this.record.client_id = this.clientId
+      this.record.clientid = this.clientId
     },
     handleAdd() {
       this.$refs.record.validate((valid) => {

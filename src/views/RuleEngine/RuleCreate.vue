@@ -254,7 +254,7 @@ export default {
       },
       selectedOption: {
         columns: [
-          'client_id',
+          'clientid',
           'username',
           'event',
           'id',
@@ -267,7 +267,7 @@ export default {
         event: 'message.publish',
         sql_example: 'SELECT * FROM "message.publish" WHERE topic =~ \'t/#\'',
         test_columns: {
-          client_id: 'c_emqx',
+          clientid: 'c_emqx',
           username: 'u_emqx',
           topic: 't/a',
           qos: 1,

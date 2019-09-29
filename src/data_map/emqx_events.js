@@ -3,9 +3,9 @@ export default [
     name: 'message.publish',
     value: 'message.publish',
     description: '',
-    test_field: ['payload', 'client_id', 'username', 'topic', 'qos'],
+    test_field: ['payload', 'clientid', 'username', 'topic', 'qos'],
     ctx: {
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       event: 'message.publish',
       flags: {
         dup: false,
@@ -26,9 +26,9 @@ export default [
     name: 'message.acked',
     value: 'message.acked',
     description: '',
-    test_field: ['payload', 'client_id', 'username', 'topic', 'qos'],
+    test_field: ['payload', 'clientid', 'username', 'topic', 'qos'],
     ctx: {
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       event: 'message.acked',
       flags: {
         dup: false,
@@ -49,10 +49,10 @@ export default [
     name: 'message.deliver',
     value: 'message.deliver',
     description: '',
-    test_field: ['payload', 'client_id', 'username', 'topic', 'qos'],
+    test_field: ['payload', 'clientid', 'username', 'topic', 'qos'],
     ctx: {
       auth_result: 'success',
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       event: 'message.deliver',
       flags: {
         dup: false,
@@ -74,9 +74,9 @@ export default [
     name: 'message.dropped',
     value: 'message.dropped',
     description: '',
-    test_field: ['payload', 'client_id', 'username', 'topic', 'qos'],
+    test_field: ['payload', 'clientid', 'username', 'topic', 'qos'],
     ctx: {
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       event: 'message.dropped',
       flags: {
         dup: false,
@@ -98,11 +98,11 @@ export default [
     name: 'client.connected',
     value: 'client.connected',
     description: '',
-    test_field: ['client_id', 'username', 'auth_result', 'peername'],
+    test_field: ['clientid', 'username', 'auth_result', 'peername'],
     ctx: {
       auth_result: 'success',
       clean_start: true,
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       connack: 0,
       connected_at: 1557818415698,
       event: 'client.connected',
@@ -119,10 +119,10 @@ export default [
     name: 'client.disconnected',
     value: 'client.disconnected',
     description: '',
-    test_field: ['client_id', 'username', 'reason_code'],
+    test_field: ['clientid', 'username', 'reason_code'],
     ctx: {
       auth_result: 'success',
-      client_id: 'emqx-client-EMQ-df616a68ba79d4dec133',
+      clientid: 'emqx-client-EMQ-df616a68ba79d4dec133',
       event: 'client.disconnected',
       peername: '127.0.0.1:63409',
       reason_code: 'normal',
@@ -135,10 +135,10 @@ export default [
     name: 'client.subscribe',
     value: 'client.subscribe',
     description: '',
-    test_field: ['client_id', 'username', 'topic_filters'],
+    test_field: ['clientid', 'username', 'topic_filters'],
     ctx: {
       auth_result: 'success',
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       event: 'client.subscribe',
       peername: '127.0.0.1:63412',
       topic_filters: [{ topic: 't/a', qos: 0 }, { topic: 't/b', qos: 1 }],
@@ -153,10 +153,10 @@ export default [
     name: 'client.unsubscribe',
     value: 'client.unsubscribe',
     description: '',
-    test_field: ['client_id', 'username', 'topic_filters'],
+    test_field: ['clientid', 'username', 'topic_filters'],
     ctx: {
       auth_result: 'success',
-      client_id: 'c_emqx',
+      clientid: 'c_emqx',
       event: 'client.unsubscribe',
       peername: '127.0.0.1:63412',
       topic_filters: ['t/a', 't/b'],
