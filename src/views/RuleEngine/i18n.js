@@ -128,7 +128,7 @@ export const en = {
 
   <p>3. Select the login message with the username 'emqx' and filter out the ClientID field.</p>
   <div class="code">
-    <code>SELECT client_id FROM "client.connected" WHERE username = 'emqx'</code>
+    <code>SELECT clientid FROM "client.connected" WHERE username = 'emqx'</code>
   </div>
 
   <p>See the EMQ X documentation for a detailed tutorial on the rules engine and SQL statements.</p>`,
@@ -253,7 +253,6 @@ export const zh = {
   rule_descr_placeholder: 'e.g.消息转发到 Webhook',
   rule_sql_tips_title: '编写 SQL 进行条件过滤与数据处理：',
   sql_tips_html: `<p>EMQ X 规则引擎由事件触发，可通过 SQL 的 FROM 子句指定事件类型。</p>
-  
   <p class="item">事件触发时会携带事件的上下文信息，包含了消息内容与事件参数等。可使用 SELECT 子句 和 WHERE 子句，
     从上下文信息中过滤和处理数据。每个事件上下文信息中可用的字段参见 EMQ X 文档。
   </p>
@@ -274,7 +273,7 @@ export const zh = {
 
   <p>3. 选择用户名为 'emqx' 的登录消息，并筛选出 ClientID 字段。</p>
   <div class="code">
-    <code>SELECT client_id FROM "client.connected" WHERE username = 'emqx'</code>
+    <code>SELECT clientid FROM "client.connected" WHERE username = 'emqx'</code>
   </div>
 
   <p>规则引擎和 SQL 语句的详细教程参见 EMQ X 文档。</p>`,

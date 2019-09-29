@@ -134,7 +134,7 @@ export default {
     cleanStart: 'CleanStart',
     keepalive: 'Keepalive(s)',
     back: 'Back',
-    subscriptionsCount: 'Subscriptions/Count',
+    subscriptionsCount: 'Subscriptions Count',
     expiryInterval: 'Expiry Interval',
     maxInflight: 'MaxInflight',
     inflightLen: 'Inflight Len',

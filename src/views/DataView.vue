@@ -35,10 +35,10 @@
 
     <!-- clients -->
     <el-table v-show="activeTab==='clients'" v-loading="$store.state.loading" border :data="clients">
-      <el-table-column prop="client_id" :label="$t('clients.clientId')" width="160px" show-overflow-tooltip>
+      <el-table-column prop="clientid" :label="$t('clients.clientId')" width="160px" show-overflow-tooltip>
         <template slot-scope="{ row }">
-          <a href="javascript:;" @click="$router.push({ path: `/clients/${row.client_id}` })">
-            {{ row.client_id }}
+          <a href="javascript:;" @click="$router.push({ path: `/clients/${row.clientid}` })">
+            {{ row.clientid }}
           </a>
         </template>
       </el-table-column>
@@ -97,7 +97,7 @@
     <el-table v-show="activeTab==='subscriptions'" v-loading="$store.state.loading" border :data="subscriptions">
       <el-table-column v-if="cluster" prop="node" min-width="160" :label="$t('clients.node')">
       </el-table-column>
-      <el-table-column prop="client_id" :label="$t('subscriptions.clientId')"></el-table-column>
+      <el-table-column prop="clientid" :label="$t('subscriptions.clientId')"></el-table-column>
       <el-table-column prop="topic" :label="$t('subscriptions.topic')"></el-table-column>
       <el-table-column prop="qos" :label="$t('subscriptions.qoS')"></el-table-column>
     </el-table>
@@ -255,7 +255,7 @@ export default {
       this.loadChild(true)
     },
     handleDisconnect(row, index, self) {
-      this.$httpDelete(`/clients/${row.client_id}`).then(() => {
+      this.$httpDelete(`/clients/${row.clientid}`).then(() => {
         this.loadData()
         // Close popover
         self.$refs[`popover-${index}`].doClose()

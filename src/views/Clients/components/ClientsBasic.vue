@@ -12,15 +12,15 @@
             <el-form-item :label="$t('clients.node')" prop="node">
               <span>{{ record.node }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.clientId')" prop="client_id">
-              <span>{{ record.client_id }}</span>
+            <el-form-item :label="$t('clients.clientId')" prop="clientid">
+              <span>{{ record.clientid }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.username')" prop="username">
               <span>{{ record.username }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.protoType')">
               <template v-if="record.proto_name === 'MQTT'">
-                <span>{{ record.proto_name }}_{{ mqttVersionMap[record.proto_ver] }}</span>
+                <span>{{ record.proto_name }} {{ mqttVersionMap[record.proto_ver] }}</span>
               </template>
               <template v-else>
                 <span>{{ record.proto_name }}_v{{ record.proto_ver }}</span>
