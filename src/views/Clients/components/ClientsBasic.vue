@@ -20,7 +20,7 @@
             </el-form-item>
             <el-form-item :label="$t('clients.protoType')">
               <template v-if="record.proto_name === 'MQTT'">
-                <span>{{ record.proto_name }}_{{ mqttVersionMap[record.proto_ver] }}</span>
+                <span>{{ record.proto_name }} {{ mqttVersionMap[record.proto_ver] }}</span>
               </template>
               <template v-else>
                 <span>{{ record.proto_name }}_v{{ record.proto_ver }}</span>
