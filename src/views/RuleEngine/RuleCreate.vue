@@ -67,6 +67,10 @@
                           </code>
                         </div>
                       </template>
+                      <p><span class="notice">*</span> {{ $t('rule.upgrade_tip') }}</p>
+                      <div class="code text">
+                        {{ $t('rule.json_decode_upgrade') }}
+                      </div>
                       <p>{{ $t('rule.suggest_sql') }}</p>
                       <div class="code">
                         <code style="font-size: 12px">
@@ -335,7 +339,7 @@ export default {
       if (paramsRe) {
         const paramsText = paramsRe[1]
         if (paramsText) {
-          const newParamsText = paramsText.replace(/(!#!|\s)/g, '').split(/[,，]/).join(', ')
+          const newParamsText = paramsText.replace(/(!#!|\s)/g, ' ').split(/[,，]/).join(', ')
           text = text.replace(paramsText, `  ${newParamsText}`)
         }
       }
@@ -450,6 +454,9 @@ export default {
       font-size: 13px;
       margin-bottom: 4px;
       margin-top: 6px;
+      .notice {
+        color: #ff6d6d;
+      }
     }
   }
 
@@ -478,7 +485,7 @@ export default {
     padding: 20px 0;
     border-radius: 4px;
     font-size: 15px;
-    max-height: 460px;
+    max-height: 480px;
 
     .title {
       padding: 0 20px 12px 20px;
@@ -489,10 +496,9 @@ export default {
     }
 
     .doc-wrapper {
-      max-height: 380px;
+      max-height: 400px;
       padding: 0 20px;
     }
-
 
     p {
       font-size: 13px;
@@ -515,6 +521,9 @@ export default {
     padding: 6px;
     border-radius: 4px;
     margin-bottom: 12px;
+    &.text {
+      line-height: 1.8;
+    }
   }
 
   .code-sql__editor {
