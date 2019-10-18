@@ -45,6 +45,8 @@ export const en = {
   action_type: 'Action Type',
   event_info: 'Available Field',
   suggest_sql: 'SQL Example',
+  upgrade_tip: 'Upgrade Tip',
+  json_decode_upgrade: 'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
   events: {
     message_acked: 'message.acked',
     message_dropped: 'message.dropped',
@@ -201,6 +203,8 @@ export const zh = {
   action_type: '动作类型',
   event_info: '可用字段',
   suggest_sql: '规则 SQL 示例',
+  upgrade_tip: '升级提示',
+  json_decode_upgrade: '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
   events: {
     message_acked: '消息确认',
     message_dropped: '消息丢弃',
