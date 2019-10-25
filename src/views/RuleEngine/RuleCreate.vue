@@ -67,10 +67,6 @@
                           </code>
                         </div>
                       </template>
-                      <p><span class="notice">*</span> {{ $t('rule.upgrade_tip') }}</p>
-                      <div class="code text">
-                        {{ $t('rule.json_decode_upgrade') }}
-                      </div>
                       <p>{{ $t('rule.suggest_sql') }}</p>
                       <div class="code">
                         <code style="font-size: 12px">
