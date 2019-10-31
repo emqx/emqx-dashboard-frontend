@@ -520,7 +520,7 @@ export default {
     },
     setSSL() {
       if (window.location.protocol === 'https:') {
-        this.isSSl = true
+        this.isSSL = true
         this.port = 8084
       }
     },
