@@ -63,10 +63,10 @@ const routes = [
         path: '/plugins',
         component: () => import('~/views/Plugins'),
       },
-      {
-        path: '/plugins/:nodeName/:pluginName',
-        component: () => import('~/views/PluginConfig'),
-      },
+      // {
+      //   path: '/plugins/:nodeName/:pluginName',
+      //   component: () => import('~/views/PluginConfig'),
+      // },
       {
         path: '/listeners',
         component: () => import('~/views/Listeners'),

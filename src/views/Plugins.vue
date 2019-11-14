@@ -39,7 +39,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column width="180" :label="$t('oper.oper')">
+      <el-table-column width="100" :label="$t('oper.oper')">
         <template slot-scope="props">
           <el-button
             slot="reference"
@@ -49,14 +49,14 @@
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
           </el-button>
-          <el-button
+          <!-- <el-button
             type="success"
             size="mini"
             :disabled="props.row.name.includes('dashboard') || props.row.name.includes('management')"
             :plain="true"
             @click="config(props.row)">
             {{ $t('plugins.config') }}
-          </el-button>
+          </el-button> -->
         </template>
       </el-table-column>
     </el-table>
