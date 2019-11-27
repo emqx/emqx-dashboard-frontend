@@ -199,6 +199,7 @@ export default {
     start: 'Start',
     stop: 'Stop',
     config: 'Config',
+    tutorial: 'Tutorial',
     back: 'Back',
     advancedConfig: 'Advanced Config',
     add: 'Add',

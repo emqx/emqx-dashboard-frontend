@@ -39,7 +39,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column width="100" :label="$t('oper.oper')">
+      <el-table-column width="160" :label="$t('oper.oper')">
         <template slot-scope="props">
           <el-button
             slot="reference"
@@ -48,6 +48,16 @@
             :type="props.row.active ? 'warning' : 'success'"
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
+          </el-button>
+           <el-button
+            v-if="!props.row.name.includes('dashboard')
+              && !props.row.name.includes('management')
+              && getLinks(props.row.name) !== ''"
+            type="success"
+            size="mini"
+            :plain="true"
+            @click="openLink(props.row)">
+            {{ $t('plugins.tutorial') }}
           </el-button>
           <!-- <el-button
             type="success"
@@ -70,6 +80,7 @@ import {
   Breadcrumb, BreadcrumbItem, Form, FormItem, Row, Col, Card,
 } from 'element-ui'
 import { mapActions } from 'vuex'
+import { getPluginLink } from '~/common/utils'
 
 export default {
   name: 'plugins-view',
@@ -149,8 +160,13 @@ export default {
         this.loadPlugins()
       })
     },
-    config(row) {
-      this.$router.push(`/plugins/${window.btoa(this.nodeName)}/${row.name}`)
+    getLinks(name) {
+      return getPluginLink(name)
+    },
+    openLink(row) {
+      const url = this.getLinks(row.name)
+      const windowUrl = window.open(url)
+      windowUrl.opener = null
     },
   },
   created() {
