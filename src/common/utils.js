@@ -1,6 +1,4 @@
-// export function schema2Form(schema = []) {
-//
-// }
+import { pluginsZh, pluginsEn } from './urls_links'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 const dictMap = {
@@ -160,6 +158,13 @@ export function params2Form(params = {}) {
   })
 
   return { model, rules, resource }
+}
+
+export function getPluginLink(pluginName) {
+  if (lang === 'en') {
+    return pluginsEn[pluginName]
+  }
+  return pluginsZh[pluginName]
 }
 
 export default {}
