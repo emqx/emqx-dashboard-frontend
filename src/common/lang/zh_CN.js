@@ -211,6 +211,7 @@ export default {
     noticeTitle: '注意',
     cacheNotice: '已放弃操作',
     emptyConfigOption: '默认配置项为空',
+    searchByName: '按插件名称搜索',
   },
   // instances
   instances: {

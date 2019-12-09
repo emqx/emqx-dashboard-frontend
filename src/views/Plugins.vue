@@ -3,20 +3,34 @@
     <!-- plugin list -->
     <div class="page-title">
       {{ $t('leftbar.plugins') }}
-      <el-select
-        v-model="nodeName"
-        class="select-radius"
-        :placeholder="$t('select.placeholder')"
-        :disabled="$store.state.loading"
-        @change="loadPlugins">
-        <el-option
-          v-for="node in nodes"
-          :key="node.name"
-          :label="node.name"
-          :value="node.name">
-        </el-option>
-      </el-select>
+      <div style="float: right">
+        <el-input
+          v-model="searchValue"
+          class="input-radius"
+          size="large"
+          style="float: right;padding-left: 20px"
+          :disabled="$store.state.loading"
+          :placeholder="$t('plugins.searchByName')"
+          @keyup.enter.native="searchPlugins">
+          <i slot="suffix" :class="[iconStatus, 'el-input__icon']" @click="searchPlugins"></i>
+        </el-input>
+
+        <el-select
+          v-model="nodeName"
+          class="select-radius"
+          :placeholder="$t('select.placeholder')"
+          :disabled="$store.state.loading"
+          @change="loadPlugins">
+          <el-option
+            v-for="node in nodes"
+            :key="node.name"
+            :label="node.name"
+            :value="node.name">
+          </el-option>
+        </el-select>
+      </div>
     </div>
+
     <el-table
       v-loading="$store.state.loading"
       border
@@ -49,7 +63,7 @@
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
           </el-button>
-           <el-button
+          <el-button
             v-if="!props.row.name.includes('dashboard')
               && !props.row.name.includes('management')
               && getLinks(props.row.name) !== ''"
@@ -80,7 +94,7 @@ import {
   Breadcrumb, BreadcrumbItem, Form, FormItem, Row, Col, Card,
 } from 'element-ui'
 import { mapActions } from 'vuex'
-import { getPluginLink } from '~/common/utils'
+import { getPluginLink, matchSearch } from '~/common/utils'
 
 export default {
   name: 'plugins-view',
@@ -109,11 +123,19 @@ export default {
       enableTableData: [],
       nodeName: '',
       nodes: [],
+      searchValue: '',
+      searchView: false,
     }
+  },
+  computed: {
+    iconStatus() {
+      return this.searchView ? 'el-icon-close' : 'el-icon-search'
+    },
   },
   methods: {
     ...mapActions(['CURRENT_NODE']),
     loadData() {
+      this.searchView = false
       this.$httpGet('/nodes').then((response) => {
         this.nodeName = this.$store.state.nodeName || response.data[0].name
         this.nodes = response.data
@@ -167,6 +189,21 @@ export default {
       const url = this.getLinks(row.name)
       const windowUrl = window.open(url)
       windowUrl.opener = null
+    },
+    searchPlugins() {
+      if (this.searchView) {
+        this.searchValue = ''
+        this.loadData()
+        return
+      }
+      matchSearch(this.tableData, 'name', this.searchValue).then((res) => {
+        if (res) {
+          this.enableTableData = res
+        }
+        this.searchView = true
+      }).catch(() => {
+        this.searchView = false
+      })
     },
   },
   created() {
