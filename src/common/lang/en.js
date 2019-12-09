@@ -210,6 +210,7 @@ export default {
     noticeTitle: 'Notice',
     cacheNotice: 'You have given up this change',
     emptyConfigOption: 'No Default Configuration',
+    searchByName: 'Search by plugin name',
   },
   // instances
   instances: {

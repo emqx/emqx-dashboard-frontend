@@ -41,7 +41,6 @@ export default {
     }
   },
 
-
   computed: {
     activeLink() {
       return this.$route.path === '/help'

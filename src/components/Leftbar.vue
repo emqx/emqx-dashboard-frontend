@@ -173,7 +173,7 @@ export default {
   }
 
   .bar-footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 180px;
     z-index: 1003;
