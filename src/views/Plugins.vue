@@ -36,15 +36,15 @@
       border
       :data="enableTableData"
       @filter-change="resetFilter">
-      <el-table-column prop="name" width="240" :label="$t('plugins.name')">
+      <el-table-column prop="name" width="230" :label="$t('plugins.name')">
       </el-table-column>
-      <el-table-column prop="version" width="100" :label="$t('plugins.version')">
+      <el-table-column prop="version" width="140" :label="$t('plugins.version')">
       </el-table-column>
       <el-table-column prop="description" min-width="340" :label="$t('plugins.description')">
       </el-table-column>
       <el-table-column
         prop="active"
-        width="120"
+        width="150"
         :label="$t('plugins.status')"
         :filters="[{ text: $t('plugins.stopped'), value: false }, { text: $t('plugins.running'), value: true }]">
         <template slot-scope="props">
@@ -57,22 +57,22 @@
         <template slot-scope="props">
           <el-button
             slot="reference"
+            class="oper"
             size="mini"
             :disabled="props.row.name.indexOf('dashboard') !== -1 || props.row.name.includes('management')"
             :type="props.row.active ? 'warning' : 'success'"
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
           </el-button>
-          <el-button
+          <div
             v-if="!props.row.name.includes('dashboard')
               && !props.row.name.includes('management')
               && getLinks(props.row.name) !== ''"
-            type="success"
-            size="mini"
-            :plain="true"
-            @click="openLink(props.row)">
-            {{ $t('plugins.tutorial') }}
-          </el-button>
+            class="tutorial">
+            <a href="javascript:;" @click="openLink(props.row)">
+              {{ $t('plugins.tutorial') }}
+            </a>
+          </div>
           <!-- <el-button
             type="success"
             size="mini"
@@ -90,8 +90,8 @@
 
 <script>
 import {
-  Dialog, Input, Checkbox, CheckboxGroup, Select, Option, Button, Table, TableColumn,
-  Breadcrumb, BreadcrumbItem, Form, FormItem, Row, Col, Card,
+  Input, Select, Option, Button, Table, TableColumn,
+  Form, FormItem, Row, Col, Card,
 } from 'element-ui'
 import { mapActions } from 'vuex'
 import { getPluginLink, matchSearch } from '~/common/utils'
@@ -99,17 +99,12 @@ import { getPluginLink, matchSearch } from '~/common/utils'
 export default {
   name: 'plugins-view',
   components: {
-    'el-dialog': Dialog,
     'el-input': Input,
-    'el-checkbox': Checkbox,
-    'el-checkbox-group': CheckboxGroup,
     'el-select': Select,
     'el-option': Option,
     'el-button': Button,
     'el-table': Table,
     'el-table-column': TableColumn,
-    'el-breadcrumb': Breadcrumb,
-    'el-breadcrumb-item': BreadcrumbItem,
     'el-form': Form,
     'el-form-item': FormItem,
     'el-row': Row,
@@ -175,7 +170,9 @@ export default {
     update(row) {
       const operation = row.active ? 'unload' : 'load'
       this.$httpPut(`/nodes/${this.nodeName}/plugins/${row.name}/${operation}`).then(() => {
-        this.$message.success(`${row.active ? this.$t('plugins.stop') : this.$t('plugins.start')}${this.$t('alert.success')}`)
+        this.$message.success(
+          `${row.active ? this.$t('plugins.stop') : this.$t('plugins.start')}${this.$t('alert.success')}`,
+        )
         this.loadPlugins()
       }).catch((error) => {
         this.$message.error(error || this.$t('error.networkError'))
@@ -214,7 +211,6 @@ export default {
 
 
 <style lang="scss">
-/* Advanced Config DiaLog */
 .plugins-view {
   .el-table {
     margin-top: 24px;
@@ -227,25 +223,18 @@ export default {
   .el-row {
     margin-top: 20px;
   }
-  .el-dialog {
-    .el-button {
-      width: 80px;
-    }
+  .oper {
+    width: 60px;
+    font-size: 14px;
+    margin-bottom: 4px;
   }
-  .config-area {
-    .el-button {
-      width: 80px;
-    }
-  }
-  .advanced-key {
-    .el-checkbox-group {
-      .el-checkbox {
-        &:first-child {
-          margin-left: 15px;
-        }
-        margin-bottom: 10px;
-        margin-top: 10px;
-      }
+  .tutorial a {
+    font-size: 13px;
+    margin-left: 6px;
+    color: #7a7a7a;
+    border-bottom: 1px solid;
+    &:hover {
+      color: #34C388;
     }
   }
 }
