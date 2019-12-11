@@ -37,6 +37,23 @@
       :data="enableTableData"
       @filter-change="resetFilter">
       <el-table-column prop="name" width="230" :label="$t('plugins.name')">
+        <template slot-scope="props">
+          {{ props.row.name }}
+          <el-tooltip
+            effect="light"
+            :content="$t('plugins.tutorial')"
+            :open-delay="500"
+            placement="top">
+            <a
+              v-if="!props.row.name.includes('dashboard')
+                && !props.row.name.includes('management')
+                && getLinks(props.row.name) !== ''"
+              class="tutorial"
+              href="javascript:;" @click="openLink(props.row)">
+              <i class="el-icon-warning-outline"></i>
+            </a>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column prop="version" width="140" :label="$t('plugins.version')">
       </el-table-column>
@@ -64,15 +81,6 @@
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
           </el-button>
-          <div
-            v-if="!props.row.name.includes('dashboard')
-              && !props.row.name.includes('management')
-              && getLinks(props.row.name) !== ''"
-            class="tutorial">
-            <a href="javascript:;" @click="openLink(props.row)">
-              {{ $t('plugins.tutorial') }}
-            </a>
-          </div>
           <!-- <el-button
             type="success"
             size="mini"
@@ -224,15 +232,13 @@ export default {
     margin-top: 20px;
   }
   .oper {
-    width: 60px;
+    width: 50px;
     font-size: 14px;
     margin-bottom: 4px;
   }
-  .tutorial a {
-    font-size: 13px;
-    margin-left: 6px;
-    color: #7a7a7a;
-    border-bottom: 1px solid;
+  .tutorial {
+    margin-left: 5px;
+    color: #a7a7a7;
     &:hover {
       color: #34C388;
     }
