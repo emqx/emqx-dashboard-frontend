@@ -200,7 +200,7 @@ export default {
     start: '启动',
     stop: '停止',
     config: '配置',
-    tutorial: '教程',
+    tutorial: '使用文档',
     back: '返回',
     advancedConfig: '高级配置',
     add: '新增',
