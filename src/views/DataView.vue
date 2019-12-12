@@ -43,10 +43,15 @@
         </template>
       </el-table-column>
       <el-table-column prop="username" :label="$t('clients.username')" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="ip_address" :label="$t('clients.ipAddr')" width="140px" show-overflow-tooltip>
+        <template slot-scope="{ row }">
+          {{ row.ip_address }}:{{ row.port }}
+        </template>
+      </el-table-column>
       <el-table-column prop="keepalive" :label="$t('clients.keepalive')"></el-table-column>
       <el-table-column prop="expiry_interval" :label="$t('clients.expiryInterval')"></el-table-column>
       <el-table-column prop="subscriptions_cnt" :label="$t('clients.subscriptionsCount')"></el-table-column>
-      <el-table-column prop="connected" :label="$t('clients.connected')">
+      <el-table-column prop="connected" width="120px" :label="$t('clients.connected')">
         <template slot-scope="{ row }">
           <span :class="[row.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
           {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
