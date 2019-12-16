@@ -50,7 +50,7 @@
                 && getLinks(props.row.name) !== ''"
               class="tutorial"
               href="javascript:;" @click="openLink(props.row)">
-              <i class="el-icon-warning-outline"></i>
+              <i class="iconfont icon-bangzhu"></i>
             </a>
           </el-tooltip>
         </template>
