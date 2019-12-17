@@ -61,13 +61,13 @@
           <el-input v-model="record.topic" placeholder="Topic"></el-input>
         </el-form-item>
         <el-form-item prop="qos" label="QoS">
-          <emq-select2
+          <emq-select
             class="el-select--public"
             popper-class="el-select--public"
             v-model="record.qos"
             size="small"
             :field="{ list: [0, 1, 2] }">
-          </emq-select2>
+          </emq-select>
         </el-form-item>
       </el-form>
 
@@ -92,13 +92,13 @@
 
 
 <script>
-import EmqSelect2 from '~/components/EmqSelect2'
+import EmqSelect from '~/components/EmqSelect'
 
 export default {
   name: 'clients-subscriptions',
 
   components: {
-    EmqSelect2,
+    EmqSelect,
   },
 
   props: {

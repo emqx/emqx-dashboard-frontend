@@ -91,13 +91,13 @@
               v-model="record.params[item.key]"
             ></data-table>
 
-            <emq-select2
+            <emq-select
               v-else-if="item.type === 'emq-select'"
               v-bind="item.$attrs"
               v-model="record.params[item.key]"
               class="el-select--public"
               popper-class="el-select--public">
-            </emq-select2>
+            </emq-select>
 
             <!-- Number field -->
             <el-input
@@ -139,7 +139,7 @@
 
 
 <script>
-import EmqSelect2 from '~/components/EmqSelect2'
+import EmqSelect from '~/components/EmqSelect'
 import ResourceDialog from '~/views/RuleEngine/components/ResourceDialog'
 import { params2Form2 } from '~/common/utils'
 
@@ -150,7 +150,7 @@ export default {
 
   inheritAttrs: false,
 
-  components: { EmqSelect2, ResourceDialog },
+  components: { EmqSelect, ResourceDialog },
 
   props: {
     visible: {

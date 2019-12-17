@@ -48,10 +48,6 @@ const routes = [
         component: () => import('~/views/RuleEngine/RuleView'),
       },
       {
-        path: '/events_rule',
-        component: () => import('~/views/RuleEngine/EventsRule'),
-      },
-      {
         path: '/resources',
         component: () => import('~/views/RuleEngine/Resources'),
       },
@@ -63,10 +59,6 @@ const routes = [
         path: '/plugins',
         component: () => import('~/views/Plugins'),
       },
-      // {
-      //   path: '/plugins/:nodeName/:pluginName',
-      //   component: () => import('~/views/PluginConfig'),
-      // },
       {
         path: '/listeners',
         component: () => import('~/views/Listeners'),

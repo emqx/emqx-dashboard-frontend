@@ -14,8 +14,6 @@
       :rules="rules">
       <el-row :gutter="20">
 
-        <!--<div class="block__title">资源信息</div>-->
-
         <el-col :span="12">
           <el-form-item prop="type" :label="$t('rule.resource_type')">
             <el-select
@@ -45,12 +43,6 @@
           </el-form-item>
         </el-col>
 
-        <!--<el-col v-if="!record.type" class="params-none" :span="24">-->
-        <!--<el-form-item :label="$t('rule.select_resource')">-->
-        <!--{{ $t('rule.select_resource') }}-->
-        <!--</el-form-item>-->
-        <!--</el-col>-->
-
         <template v-if="record.type">
           <el-col
             v-for="(item, index) in paramsList"
@@ -76,13 +68,13 @@
                 v-model="record.config[item.key]"
               ></data-table>
 
-              <emq-select2
+              <emq-select
                 v-else-if="item.type === 'emq-select'"
                 v-bind="item.$attrs"
                 v-model="record.config[item.key]"
                 class="el-select--public"
                 popper-class="el-select--public">
-              </emq-select2>
+              </emq-select>
 
               <!-- Number field -->
               <el-input
@@ -128,14 +120,14 @@
 
 
 <script>
-import EmqSelect2 from '~/components/EmqSelect2'
+import EmqSelect from '~/components/EmqSelect'
 import { params2Form2 } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
 export default {
   name: 'resource-dialog',
-  components: { EmqSelect2 },
+  components: { EmqSelect },
   inheritAttrs: false,
 
   props: {

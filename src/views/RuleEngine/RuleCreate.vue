@@ -37,7 +37,7 @@
                       {{ $t('rule.trigger_events') }}
                     </span>
                   </template>
-                  <emq-select2
+                  <emq-select
                     v-model="record.for"
                     style="width: 100%"
                     :field-name="{ label: 'event', value: 'event' }"
@@ -47,7 +47,7 @@
                       <span style="float: left">{{ item.event }}</span>
                       <span style="float: right; color: #8492a6; font-size: 13px">{{ item.title }}</span>
                     </template>
-                  </emq-select2>
+                  </emq-select>
                   <!--<el-select v-model="record.for" style="width: 100%" @change="triggerChange">-->
                   <!--<el-option-->
                   <!--v-for="(item, k) in eventOptions"-->
@@ -207,7 +207,7 @@
 
 <script>
 import sqlFormatter from 'sql-formatter'
-import EmqSelect2 from '~/components/EmqSelect2'
+import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
 
 import CodeEditor from '~/components/CodeEditor'
@@ -217,7 +217,7 @@ import RuleActions from './components/RuleActions'
 export default {
   name: 'rule-view',
 
-  components: { EmqSelect2, CodeEditor, RuleActions },
+  components: { EmqSelect, CodeEditor, RuleActions },
 
   props: {},
 
