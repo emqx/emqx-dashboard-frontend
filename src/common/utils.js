@@ -24,14 +24,7 @@ const validateType = [
   'email',
 ]
 
-function getRule(type) {
-  const ruleMap = {
-    url: 'url',
-  }
-  return ruleMap[type] || 'string'
-}
-
-function getRule2(item) {
+function getRule(item) {
   const [key, value] = item
   const { type, format, required, enum: enumValue } = value
   let { title } = value
@@ -50,23 +43,10 @@ function getRule2(item) {
   }
   rule.enum = type === 'enum' ? enumValue : undefined
 
-  // if (type === 'object') {
-  //   rule = {
-  //     required,
-  //     validator: (rule, value, callback, source) => {
-  //       try {
-  //         const data = JSON.parse(value)
-  //         source[key] = {}
-  //       } catch (e) {
-  //
-  //       }
-  //     },
-  //   }
-  // }
   return Object.keys(rule).length > 0 ? rule : undefined
 }
 
-export function params2Form2(params = {}, deepKey = '') {
+export function params2Form(params = {}, deepKey = '') {
   const model = []
   let resource = ''
   const rules = {
@@ -97,6 +77,7 @@ export function params2Form2(params = {}, deepKey = '') {
     if (validateType.includes(format)) {
       placeholder = placeholderMap[format]
     }
+    placeholder = placeholder.toString()
     const $attrs = {
       placeholder,
     }
@@ -126,35 +107,10 @@ export function params2Form2(params = {}, deepKey = '') {
       description: (description || '').replace(/\n/g, '<br/>'),
     })
     if (deepKey) {
-      rules[deepKey][key] = getRule2(item)
+      rules[deepKey][key] = getRule(item)
     } else {
-      rules[key] = getRule2(item)
+      rules[key] = getRule(item)
     }
-  })
-
-  return { model, rules, resource }
-}
-
-export function params2Form(params = {}) {
-  const model = []
-  const rules = {}
-  let resource = ''
-
-  Object.entries(params).forEach((item) => {
-    const [key, value] = item
-    if (key === '$resource') {
-      resource = value
-      return
-    }
-
-    model.push({
-      key,
-      label: key,
-      prop: key,
-      rules: { type: getRule(value), required: true, message: `${key} ${dictMap.is_required[lang]}` },
-      placeholder: value.toString(),
-    })
-    rules[`params.${key}`] = { required: true, message: `${key} ${dictMap.is_required[lang]}` }
   })
 
   return { model, rules, resource }

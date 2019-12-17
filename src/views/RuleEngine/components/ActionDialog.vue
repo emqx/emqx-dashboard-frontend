@@ -141,7 +141,7 @@
 <script>
 import EmqSelect from '~/components/EmqSelect'
 import ResourceDialog from '~/views/RuleEngine/components/ResourceDialog'
-import { params2Form2 } from '~/common/utils'
+import { params2Form } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
@@ -257,7 +257,7 @@ export default {
       }
       this.enableItem = this.action.types
       // TODO: resource_type to action layout
-      const { model = [], rules = {} } = params2Form2(this.action.params)
+      const { model = [], rules = {} } = params2Form(this.action.params)
       this.rules.params = { ...this.rules.params, ...rules }
       // fillData
       this.$set(this.record, 'params', {})
