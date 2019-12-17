@@ -1,4 +1,3 @@
-import EmqSelect from '~/components/EmqSelect'
 import JSONInput from '~/components/JSONInput'
 import DataTable from '~/components/DataTable'
 
@@ -10,7 +9,6 @@ export default (Vue) => {
     params._ = Date.now()
     return API.get(url, { params })
   }
-  Vue.component(EmqSelect.name, EmqSelect)
   Vue.component(JSONInput.name, JSONInput)
   Vue.component(DataTable.name, DataTable)
 
