@@ -23,13 +23,15 @@
               style="width: 100%"
               :disabled="!!resourceType"
               @change="handleTypeChange">
-              <el-option
+              <div
                 v-for="(item, index) in resourceTypes"
-                v-if="enableItem.length === 0 ? true : enableItem.includes(item.name)"
-                :key="index"
-                :label="item.titleLabel"
-                :value="item.name">
-              </el-option>
+                :key="index">
+                <el-option
+                  v-if="enableItem.length === 0 ? true : enableItem.includes(item.name)"
+                  :label="item.titleLabel"
+                  :value="item.name">
+                </el-option>
+              </div>
             </el-select>
           </el-form-item>
         </el-col>
@@ -121,7 +123,7 @@
 
 <script>
 import EmqSelect from '~/components/EmqSelect'
-import { params2Form2 } from '~/common/utils'
+import { params2Form } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
@@ -158,6 +160,24 @@ export default {
     }
   },
 
+  computed: {
+    dialogVisible: {
+      get() {
+        return this.visible
+      },
+      set(val) {
+        this.$emit('update:visible', val)
+      },
+    },
+    rules() {
+      return {
+        name: { required: true },
+        type: { required: true },
+        ...this.resourceRules,
+      }
+    },
+  },
+
   methods: {
     clearTabIndex() {
       document.querySelectorAll('.el-icon-question').forEach((el) => {
@@ -183,11 +203,7 @@ export default {
           this.$message.success(this.$t('rule.create_success'))
           this.dialogVisible = false
           this.$emit('confirm', res.data)
-        }).catch(() => {
-          // if (!isCreate) {
-          //   this.$message.error(this.$t('rule.conf_test_fail'))
-          // }
-        })
+        }).catch(() => {})
       })
     },
     handleTypeChange(val) {
@@ -197,7 +213,7 @@ export default {
       if (!resourceType) {
         return
       }
-      const { model, rules } = params2Form2(resourceType.params, 'config')
+      const { model, rules } = params2Form(resourceType.params, 'config')
       this.resourceRules = rules
       this.paramsList = model
       this.initRecord()
@@ -239,28 +255,6 @@ export default {
           this.$refs.record.clearValidate()
         }, 30)
       })
-    },
-  },
-
-  created() {
-    // this.loadResourceTypes()
-  },
-
-  computed: {
-    dialogVisible: {
-      get() {
-        return this.visible
-      },
-      set(val) {
-        this.$emit('update:visible', val)
-      },
-    },
-    rules() {
-      return {
-        name: { required: true },
-        type: { required: true },
-        ...this.resourceRules,
-      }
     },
   },
 }
