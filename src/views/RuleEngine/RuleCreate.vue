@@ -48,15 +48,7 @@
                       <span style="float: right; color: #8492a6; font-size: 13px">{{ item.title }}</span>
                     </template>
                   </emq-select>
-                  <!--<el-select v-model="record.for" style="width: 100%" @change="triggerChange">-->
-                  <!--<el-option-->
-                  <!--v-for="(item, k) in eventOptions"-->
-                  <!--:key="k"-->
-                  <!--:label="item.name"-->
-                  <!--:value="item.value">-->
-                  <!---->
-                  <!--</el-option>-->
-                  <!--</el-select>-->
+
                   <el-collapse-transition>
                     <div v-show="showGuess" class="show-guess">
                       <template v-if="ctxValue">
@@ -78,23 +70,19 @@
                 </el-form-item>
 
                 <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql">
-                  <!--<el-input-->
-                  <!--v-model="record.rawsql"-->
-                  <!--type="textarea"-->
-                  <!--:rows="5"-->
-                  <!--:placeholder="rawSqlPlaceholder"></el-input>-->
-                  <code-editor
-                    v-model="record.rawsql"
-                    lang="text/x-sql"
-                    class="code-sql__editor"
-                    :primary-key="sqlPrimaryKey">
-                  </code-editor>
+                  <div class="monaco-container">
+                    <monaco
+                      v-model="record.rawsql"
+                      lang="sql"
+                      @qucik-save="handleTest">
+                    </monaco>
+                  </div>
                 </el-form-item>
 
                 <el-form-item :label="$t('rule.description')">
-                  <el-input v-model="record.description" :placeholder="$t('rule.rule_descr_placeholder')"></el-input>
+                  <el-input v-model="record.description" :placeholder="$t('rule.rule_descr_placeholder')">
+                  </el-input>
                 </el-form-item>
-
 
                 <!-- sql test -->
                 <el-form-item :label="$t('rule.input_test_data')">
@@ -131,7 +119,6 @@
                     </el-button>
                   </el-form-item>
 
-
                   <el-form-item :label="$t('rule.test_output')">
                     <el-input
                       v-model="testOutPut"
@@ -155,9 +142,7 @@
             </el-row>
           </div>
 
-
         </div>
-
 
         <!-- 触发动作 -->
         <div class="form-block--wrapper" style="clear: both;">
@@ -180,8 +165,6 @@
               </el-col>
             </el-row>
           </div>
-
-
         </div>
 
       </el-form>
@@ -211,13 +194,19 @@ import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
 
 import CodeEditor from '~/components/CodeEditor'
+import Monaco from '~/components/Monaco'
 
 import RuleActions from './components/RuleActions'
 
 export default {
   name: 'rule-view',
 
-  components: { EmqSelect, CodeEditor, RuleActions },
+  components: {
+    EmqSelect,
+    CodeEditor,
+    Monaco,
+    RuleActions,
+  },
 
   props: {},
 
@@ -361,12 +350,6 @@ export default {
     async loadData() {
       this.eventsList = await loadRuleEvents()
       this.generateEventsSelect()
-      // if (this.id === 0 || this.id === '0' || this.operationName == 'v') {
-      //   return
-      // }
-      // this.$httpGet(`/rules/${this.id}`).then((response) => {
-      //   this.record = response.data
-      // })
     },
     handleCancel() {
       this.$router.push('/rules')
@@ -540,10 +523,12 @@ export default {
 
   .el-form-item__content {
     line-height: 18px !important;
+    height: 200px;
   }
 
   &.is-error {
-    .code-sql__editor {
+    .code-sql__editor,
+    .monaco-container {
       border-color: #ff6d6d;
     }
   }
