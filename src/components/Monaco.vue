@@ -1,20 +1,26 @@
 <template>
-  <div id="monaco"></div>
+  <div :id="`monaco-${id}`" class="monaco-view"></div>
 </template>
 
 
 <script>
-import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import Monokai from '../assets/themes/monokai.json'
 
 export default {
   name: 'monaco',
 
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     value: {
+      type: String,
       required: true,
     },
     lang: {
+      type: String,
       required: true,
     },
     disabled: {
@@ -43,14 +49,19 @@ export default {
         }
       }
     },
+    lang(val) {
+      if (this.editor) {
+        this.editor.dispose()
+        this.initEditor()
+      }
+    },
   },
 
   methods: {
     initEditor() {
-      // Defined theme
-      monaco.editor.defineTheme('monokai', Monokai)
       // Create
-      this.editor = monaco.editor.create(document.getElementById('monaco'), {
+      const id = `monaco-${this.id}`
+      this.editor = monaco.editor.create(document.getElementById(id), {
         value: this.value,
         language: this.lang,
         fontSize: 14,
@@ -58,9 +69,6 @@ export default {
         readOnly: this.disabled,
         lineNumbersMinChars: 2,
         theme: this.getTheme(),
-        colors: {
-          'editor.background': '#394555'
-        },
         minimap: {
           enabled: false,
         },
@@ -78,6 +86,9 @@ export default {
         this.$emit('qucik-save', this.value)
       })
     },
+    defineTheme() {
+      monaco.editor.defineTheme('monokai', Monokai)
+    },
     getTheme() {
       return this.theme === 'dark-themes' ? 'monokai' : 'vs'
     },
@@ -88,6 +99,7 @@ export default {
   },
 
   created() {
+    this.defineTheme()
     window.onresize = () => {
       if (this.editor) {
         this.editor.layout()
@@ -104,8 +116,8 @@ export default {
 </script>
 
 
-<style scoped>
-#monaco {
+<style lang="scss">
+.monaco-view {
   height: 100%;
   position: relative;
 }

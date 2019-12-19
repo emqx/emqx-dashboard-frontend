@@ -72,6 +72,7 @@
                 <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql">
                   <div class="monaco-container">
                     <monaco
+                      id="rule-sql"
                       v-model="record.rawsql"
                       lang="sql"
                       @qucik-save="handleTest">
@@ -105,16 +106,26 @@
                     <el-input
                       v-if="k !== 'payload'"
                       v-model="record.ctx[k]"></el-input>
-                    <code-editor
-                      v-else
-                      v-model="record.ctx.payload"
-                      lang="text/x-sql"
-                      class="code-sql__editor">
-                    </code-editor>
+                    <template v-else>
+                      <div class="monaco-container">
+                        <monaco
+                          id="payload"
+                          v-model="record.ctx.payload"
+                          :lang="payloadType"
+                          @qucik-save="handleTest">
+                        </monaco>
+                      </div>
+                      <div class="payload-type">
+                        <el-radio-group v-model="payloadType">
+                          <el-radio label="json">JSON</el-radio>
+                          <el-radio label="plaintext">RAW</el-radio>
+                        </el-radio-group>
+                      </div>
+                    </template>
                   </el-form-item>
 
                   <el-form-item>
-                    <el-button type="primary" size="small" @click="handleTest">
+                    <el-button class="test-btn" type="primary" size="small" @click="handleTest">
                       {{ $t('rule.test') }}
                     </el-button>
                   </el-form-item>
@@ -193,9 +204,7 @@ import sqlFormatter from 'sql-formatter'
 import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
 
-import CodeEditor from '~/components/CodeEditor'
 import Monaco from '~/components/Monaco'
-
 import RuleActions from './components/RuleActions'
 
 export default {
@@ -203,7 +212,6 @@ export default {
 
   components: {
     EmqSelect,
-    CodeEditor,
     Monaco,
     RuleActions,
   },
@@ -221,6 +229,7 @@ export default {
 
   data() {
     return {
+      payloadType: 'json',
       eventsList: [],
       testOutPut: '',
       inTest: false,
@@ -505,16 +514,8 @@ export default {
     }
   }
 
-  .code-sql__editor {
-    border-radius: 6px;
-
-    .CodeMirror-gutters {
-      border-radius: 6px 0 0 6px;
-    }
-
-    .CodeMirror {
-      border-radius: 6px;
-    }
+  .test-btn {
+    margin-top: 12px;
   }
 }
 
@@ -524,6 +525,16 @@ export default {
   .el-form-item__content {
     line-height: 18px !important;
     height: 200px;
+  }
+
+  .payload-type {
+    width: 100%;
+    text-align: right;
+    padding: 2px 4px;
+    margin-bottom: 12px;
+    .el-radio__label {
+      font-size: 13px;
+    }
   }
 
   &.is-error {
