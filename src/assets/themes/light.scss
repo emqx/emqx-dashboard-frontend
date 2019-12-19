@@ -387,6 +387,12 @@
     height: 100%;
     border: 1px solid #DCDFE6;
   }
+
+  .payload-type {
+    background-color: rgba(223, 223, 223, 0.8);
+    border: 1px solid #DCDFE6;
+    border-top: none;
+  }
 }
 
 /* Leftbar */
@@ -395,8 +401,6 @@
 }
 
 /* Topbar */
-// .topbar {
-// }
 
 /* Help */
 .help-view {
