@@ -66,6 +66,8 @@ export default {
         language: this.lang,
         fontSize: 14,
         automaticLayout: true,
+        lineHeight: 25,
+        scrollBeyondLastLine: false,
         readOnly: this.disabled,
         lineNumbersMinChars: 2,
         theme: this.getTheme(),
