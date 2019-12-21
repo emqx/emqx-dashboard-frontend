@@ -123,31 +123,47 @@
       <el-table :data="stats" border>
         <el-table-column prop="node" min-width="150" :label="$t('overview.name')">
         </el-table-column>
-        <el-table-column prop="connections_count" min-width="150" :label="$t('overview.connectionsCount')">
-        </el-table-column>
-        <el-table-column prop="connections_max" min-width="150" :label="$t('overview.connectionsMax')">
-        </el-table-column>
-        <el-table-column prop="topics_count" min-width="150" :label="$t('overview.topicsCount')">
-        </el-table-column>
-        <el-table-column prop="topics_max" min-width="150" :label="$t('overview.topicsMax')">
-        </el-table-column>
-        <el-table-column prop="retained_count" min-width="150" :label="$t('overview.retainedCount')">
-        </el-table-column>
-        <el-table-column prop="retained_max" min-width="150" :label="$t('overview.retainedMax')">
-        </el-table-column>
-        <el-table-column prop="sessions_count" min-width="150" :label="$t('overview.sessionsCount')">
-        </el-table-column>
-        <el-table-column prop="sessions_max" min-width="150" :label="$t('overview.sessionsMax')">
-        </el-table-column>
-        <el-table-column prop="subscriptions_count" min-width="160" :label="$t('overview.subscriptionsCount')">
-        </el-table-column>
-        <el-table-column prop="subscriptions_max" min-width="160" :label="$t('overview.subscriptionsMax')">
+        <el-table-column
+          min-width="180"
+          :label="`${$t('overview.connectionsCount')} / ${$t('overview.connectionsMax')}`">
+          <template slot-scope="{ row }">
+            {{ row.connections_count }} / {{ row.connections_max }}
+          </template>
         </el-table-column>
         <el-table-column
-          prop="subscriptions_shared_count" min-width="160"
-          :label="$t('overview.subscriptionsSharedCount')">
+          min-width="180"
+          :label="`${$t('overview.topicsCount')} / ${$t('overview.topicsMax')}`">
+          <template slot-scope="{ row }">
+            {{ row.topics_count }} / {{ row.topics_max }}
+          </template>
         </el-table-column>
-        <el-table-column prop="subscriptions_shared_max" min-width="160" :label="$t('overview.subscriptionsSharedMax')">
+        <el-table-column
+          min-width="210"
+          :label="`${$t('overview.retainedCount')} / ${$t('overview.retainedMax')}`">
+          <template slot-scope="{ row }">
+            {{ row.retained_count }} / {{ row.retained_max }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          min-width="180"
+          :label="`${$t('overview.sessionsCount')} / ${$t('overview.sessionsMax')}`">
+          <template slot-scope="{ row }">
+            {{ row.sessions_count }} / {{ row.sessions_max }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          min-width="190"
+          :label="`${$t('overview.subscriptionsCount')} / ${$t('overview.subscriptionsMax')}`">
+          <template slot-scope="{ row }">
+            {{ row.subscriptions_count }} / {{ row.subscriptions_max }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          min-width="210"
+          :label="`${$t('overview.subscriptionsSharedCount')} / ${$t('overview.subscriptionsSharedMax')}`">
+          <template slot-scope="{ row }">
+            {{ row.subscriptions_shared_count }} / {{ row.subscriptions_shared_max }}
+          </template>
         </el-table-column>
       </el-table>
     </div>
