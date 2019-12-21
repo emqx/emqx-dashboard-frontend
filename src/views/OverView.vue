@@ -120,50 +120,50 @@
     <!-- Stats -->
     <div class="card-box">
       <div class="card-title">{{ $t('overview.stats') }}({{ stats.length }})</div>
-      <el-table :data="stats" border>
+      <el-table :data="stats" border class="stats-table">
         <el-table-column prop="node" min-width="150" :label="$t('overview.name')">
         </el-table-column>
-        <el-table-column
-          min-width="180"
-          :label="`${$t('overview.connectionsCount')} / ${$t('overview.connectionsMax')}`">
-          <template slot-scope="{ row }">
-            {{ row.connections_count }} / {{ row.connections_max }}
-          </template>
+        <el-table-column :label="$t('overview.connectionsCount')">
+          <el-table-column min-width="150" label="(count/max)">
+            <template slot-scope="{ row }">
+              {{ row.connections_count }} / {{ row.connections_max }}
+            </template>
+          </el-table-column>
         </el-table-column>
-        <el-table-column
-          min-width="180"
-          :label="`${$t('overview.topicsCount')} / ${$t('overview.topicsMax')}`">
-          <template slot-scope="{ row }">
-            {{ row.topics_count }} / {{ row.topics_max }}
-          </template>
+        <el-table-column :label="$t('overview.topicsCount')">
+          <el-table-column min-width="150" label="(count/max)">
+            <template slot-scope="{ row }">
+              {{ row.topics_count }} / {{ row.topics_max }}
+            </template>
+          </el-table-column>
         </el-table-column>
-        <el-table-column
-          min-width="210"
-          :label="`${$t('overview.retainedCount')} / ${$t('overview.retainedMax')}`">
-          <template slot-scope="{ row }">
-            {{ row.retained_count }} / {{ row.retained_max }}
-          </template>
+        <el-table-column :label="$t('overview.retainedCount')">
+          <el-table-column min-width="150" label="(count/max)">
+            <template slot-scope="{ row }">
+              {{ row.retained_count }} / {{ row.retained_max }}
+            </template>
+          </el-table-column>
         </el-table-column>
-        <el-table-column
-          min-width="180"
-          :label="`${$t('overview.sessionsCount')} / ${$t('overview.sessionsMax')}`">
-          <template slot-scope="{ row }">
-            {{ row.sessions_count }} / {{ row.sessions_max }}
-          </template>
+        <el-table-column :label="$t('overview.sessionsCount')">
+          <el-table-column min-width="150" label="(count/max)">
+            <template slot-scope="{ row }">
+              {{ row.sessions_count }} / {{ row.sessions_max }}
+            </template>
+          </el-table-column>
         </el-table-column>
-        <el-table-column
-          min-width="190"
-          :label="`${$t('overview.subscriptionsCount')} / ${$t('overview.subscriptionsMax')}`">
-          <template slot-scope="{ row }">
-            {{ row.subscriptions_count }} / {{ row.subscriptions_max }}
-          </template>
+        <el-table-column :label="$t('overview.subscriptionsCount')">
+          <el-table-column min-width="150" label="(count/max)">
+            <template slot-scope="{ row }">
+              {{ row.subscriptions_count }} / {{ row.subscriptions_max }}
+            </template>
+          </el-table-column>
         </el-table-column>
-        <el-table-column
-          min-width="210"
-          :label="`${$t('overview.subscriptionsSharedCount')} / ${$t('overview.subscriptionsSharedMax')}`">
-          <template slot-scope="{ row }">
-            {{ row.subscriptions_shared_count }} / {{ row.subscriptions_shared_max }}
-          </template>
+        <el-table-column :label="$t('overview.subscriptionsSharedCount')">
+          <el-table-column min-width="150" label="(count/max)">
+            <template slot-scope="{ row }">
+              {{ row.subscriptions_shared_count }} / {{ row.subscriptions_shared_max }}
+            </template>
+          </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -373,6 +373,10 @@ export default {
 
     .el-table {
       margin-top: 0;
+    }
+
+    .stats-table.el-table--medium th, .el-table--medium td {
+      padding: 4px 0;
     }
 
     @media screen and (max-width: 1280px) {
