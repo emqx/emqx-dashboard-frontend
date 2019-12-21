@@ -262,7 +262,11 @@ export default {
       this.$httpGet('/stats').then((response) => {
         const { data } = response
         data.forEach((item) => {
-          Object.entries(item).forEach((d) => {
+          const $item = {
+            node: item.node,
+            ...item.stats,
+          }
+          Object.entries($item).forEach((d) => {
             const [k, v] = d
             const realKey = k.replace(/\./g, '_')
             item[realKey] = v
