@@ -123,6 +123,9 @@ export default {
     packetsData: 'The packets data',
     messagesData: 'The messages data',
     bytesData: 'The bytes data',
+    session: 'Session',
+    client: 'Client',
+    delivery: 'Delivery',
   },
   clients: {
     node: 'Node',

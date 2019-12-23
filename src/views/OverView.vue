@@ -173,6 +173,42 @@
       <div class="card-title">{{ $t('overview.metrics') }}</div>
       <el-row :gutter="20">
         <el-col :span="8">
+          <el-table :data="metrics.client">
+            <el-table-column
+              min-width="200"
+              prop="key"
+              :label="$t('overview.client')">
+            </el-table-column>
+            <el-table-column prop="value" label=""></el-table-column>
+          </el-table>
+        </el-col>
+
+        <el-col :span="8">
+          <el-table :data="metrics.delivery">
+            <el-table-column
+              min-width="160"
+              prop="key"
+              :label="$t('overview.delivery')">
+            </el-table-column>
+            <el-table-column prop="value" label=""></el-table-column>
+          </el-table>
+        </el-col>
+
+        <el-col :span="8">
+          <el-table :data="metrics.session">
+            <el-table-column
+              min-width="200"
+              prop="key"
+              :label="$t('overview.session')">
+            </el-table-column>
+            <el-table-column prop="value" label=""></el-table-column>
+          </el-table>
+        </el-col>
+
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
           <el-table :data="metrics.packets">
             <el-table-column
               min-width="200"
@@ -235,6 +271,9 @@ export default {
         packets: [],
         messages: [],
         bytes: [],
+        client: [],
+        session: [],
+        delivery: [],
       },
     }
   },
@@ -303,12 +342,18 @@ export default {
           packets: [],
           messages: [],
           bytes: [],
+          client: [],
+          session: [],
+          delivery: [],
         }
         const dict = { ...response.data }
         const indexTable = {
           packets: ['received', 'sent', 'connect', 'connack', 'auth', 'disconnect.sent', 'disconnect.received', 'pingreq', 'pingresp', 'publish.received', 'publish.sent', 'puback.received', 'puback.sent', 'puback.missed', 'pubcomp.received', 'pubcomp.sent', 'pubcomp.missed', 'pubrec.received', 'pubrec.sent', 'pubrec.missed', 'pubrel.received', 'pubrel.sent', 'pubrel.missed', 'subscribe', 'suback', 'unsubscribe', 'unsuback'],
           messages: ['received', 'sent', 'dropped', 'retained', 'qos0.received', 'qos0.sent', 'qos1.received', 'qos1.sent', 'qos2.received', 'qos2.expired', 'qos2.sent', 'qos2.dropped'],
           bytes: ['received', 'sent'],
+          client: ['connected', 'authenticate', 'auth.anonymous', 'check_acl', 'subscribe', 'unsubscribe', 'disconnected'],
+          session: ['created', 'resumed', 'takeovered', 'discarded', 'terminated'],
+          delivery: ['dropped', 'dropped.no_local', 'dropped.too_large', 'dropped.qos0_msg', 'dropped.queue_full', 'dropped.expired'],
         }
         Object.keys(indexTable).forEach((item) => {
           indexTable[item].forEach((item2) => {
@@ -373,6 +418,9 @@ export default {
 
     .el-table {
       margin-top: 0;
+      .caret-wrapper {
+        left: -8px;
+      }
     }
 
     .stats-table.el-table--medium th, .el-table--medium td {
