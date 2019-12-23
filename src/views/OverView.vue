@@ -179,7 +179,7 @@
               prop="key"
               :label="$t('overview.client')">
             </el-table-column>
-            <el-table-column prop="value" label=""></el-table-column>
+            <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
@@ -190,7 +190,7 @@
               prop="key"
               :label="$t('overview.delivery')">
             </el-table-column>
-            <el-table-column prop="value" label=""></el-table-column>
+            <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
@@ -201,7 +201,7 @@
               prop="key"
               :label="$t('overview.session')">
             </el-table-column>
-            <el-table-column prop="value" label=""></el-table-column>
+            <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
@@ -215,7 +215,7 @@
               prop="key"
               :label="$t('overview.packetsData')">
             </el-table-column>
-            <el-table-column prop="value" label=""></el-table-column>
+            <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
@@ -226,7 +226,7 @@
               prop="key"
               :label="$t('overview.messagesData')">
             </el-table-column>
-            <el-table-column prop="value" label=""></el-table-column>
+            <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
@@ -237,7 +237,7 @@
               prop="key"
               :label="$t('overview.bytesData')">
             </el-table-column>
-            <el-table-column prop="value" label=""></el-table-column>
+            <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
       </el-row>
