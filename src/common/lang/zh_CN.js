@@ -97,7 +97,7 @@ export default {
     nodes: '节点信息',
     name: '节点名称',
     erlangOTPRelease: 'Erlang/OTP 版本',
-    erlangProcesses: 'Erlang进程',
+    erlangProcesses: 'Erlang 进程',
     cpuInfo: 'CPU',
     memoryInfo: '内存',
     maxFds: '最大文件句柄数',
@@ -123,6 +123,9 @@ export default {
     packetsData: 'MQTT报文',
     messagesData: '消息(数)',
     bytesData: '流量收发统计(字节)',
+    session: '会话',
+    client: '客户端',
+    delivery: 'Delivery',
   },
   // Clients
   clients: {
