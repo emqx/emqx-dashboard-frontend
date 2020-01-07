@@ -118,19 +118,19 @@ export const en = {
   <p>1. Select the message published to the 't/#' topic and filter out all fields:</p>
 
   <div class="code">
-    <code>SELECT * FROM "message.publish" WHERE topic =~ 't/#'</code>
+    <code>SELECT * FROM  "t/#"</code>
   </div>
 
   <p>2. Select the message published to the 't/a' topic and filter the "x" field from the json-formatted message
     content:</p>
 
   <div class="code">
-    <code>SELECT payload.x as x FROM "message.publish" WHERE topic =~ 't/a'</code>
+    <code>SELECT payload.x as x FROM "t/a"</code>
   </div>
 
   <p>3. Select the login message with the username 'emqx' and filter out the ClientID field.</p>
   <div class="code">
-    <code>SELECT clientid FROM "client.connected" WHERE username = 'emqx'</code>
+    <code>SELECT clientid FROM "$events/client_connected" WHERE username = 'emqx'</code>
   </div>
 
   <p>See the EMQ X documentation for a detailed tutorial on the rules engine and SQL statements.</p>`,
@@ -154,6 +154,24 @@ export const en = {
   resource_name: 'Name',
   resource_details: 'Details',
   config_info: 'Configuration',
+
+  clientid_doc: 'Current MQTT clientid',
+  username_doc: 'Current MQTT username',
+  event_doc: 'Trigger event name',
+  id_doc: 'MQTT message id',
+  payload_doc: 'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
+  peername_doc: 'Client peer name',
+  qos_doc: 'Enumeration of message QoS 0,1,2',
+  timestamp_doc: 'Timestamp(millisecond)',
+  topic_doc: 'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
+  node_doc: 'Node name of the trigger event',
+  message_deliver: 'message deliver',
+  message_acked: 'message acked',
+  message_dropped: 'message dropped',
+  client_connected: 'client connected',
+  client_disconnected: 'client disconnected',
+  session_subscribe: 'session subscribe',
+  session_unsubscribe: 'session unsubscribe',
 }
 
 export const zh = {
@@ -266,18 +284,18 @@ export const zh = {
   <p>1. 选择发布到 't/#' 主题的消息，并筛选出全部字段：</p>
 
   <div class="code">
-    <code>SELECT * FROM "message.publish" WHERE topic =~ 't/#'</code>
+    <code>SELECT * FROM  "t/#"</code>
   </div>
 
   <p>2. 选择发布到 't/a' 主题的消息，并从 JSON 格式的消息内容中筛选出 "x" 字段：</p>
 
   <div class="code">
-    <code>SELECT payload.x as x FROM "message.publish" WHERE topic =~ 't/a'</code>
+    <code>SELECT payload.x as x FROM "t/a"</code>
   </div>
 
   <p>3. 选择用户名为 'emqx' 的登录消息，并筛选出 ClientID 字段。</p>
   <div class="code">
-    <code>SELECT clientid FROM "client.connected" WHERE username = 'emqx'</code>
+    <code>SELECT clientid FROM "$events/client_connected" WHERE username = 'emqx'</code>
   </div>
 
   <p>规则引擎和 SQL 语句的详细教程参见 EMQ X 文档。</p>`,
@@ -302,4 +320,22 @@ export const zh = {
   events_rule: '事件规则',
   create_rule: '事件规则',
   events_type: '事件类型',
+
+  clientid_doc: '当前客户端 MQTT clientid',
+  username_doc: '当前客户端 MQTT username',
+  event_doc: '触发事件名称',
+  id_doc: 'MQTT message id',
+  payload_doc: '消息内容, 如果是 JSON 格式将自动解码, 在 SQL 中使用 payload.x 获取对象信息',
+  peername_doc: '客户端网络地址',
+  qos_doc: '消息 QoS 0,1,2 中枚举',
+  timestamp_doc: '当前毫秒级时间戳',
+  topic_doc: '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
+  node_doc: '触发事件的节点名称',
+  message_deliver: '消息投递',
+  message_acked: '消息应答',
+  message_dropped: '消息丢弃',
+  client_connected: '连接建立',
+  client_disconnected: '连接断开',
+  session_subscribe: '会话订阅',
+  session_unsubscribe: '会话取消订阅',
 }

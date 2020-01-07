@@ -1,5 +1,5 @@
 <template>
-  <div class="rule-view">
+  <div class="rule-create">
     <div class="page-title">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/rules' }">
@@ -31,50 +31,13 @@
           <div class="form-block__body">
             <el-row style="max-width: 1366px">
               <el-col :span="14">
-                <el-form-item prop="for">
-                  <template slot="label">
-                    <span style="cursor: pointer" @click="showGuess = !showGuess">
-                      {{ $t('rule.trigger_events') }}
-                    </span>
-                  </template>
-                  <emq-select
-                    v-model="record.for"
-                    style="width: 100%"
-                    :field-name="{ label: 'event', value: 'event' }"
-                    :field="{ options: eventsList }"
-                    @change="triggerChange">
-                    <template slot="option" slot-scope="{ item }">
-                      <span style="float: left">{{ item.event }}</span>
-                      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.title }}</span>
-                    </template>
-                  </emq-select>
-
-                  <el-collapse-transition>
-                    <div v-show="showGuess" class="show-guess">
-                      <template v-if="ctxValue">
-                        <p>{{ $t('rule.event_info') }}</p>
-                        <div class="code">
-                          <code style="font-size: 12px">
-                            {{ ctxValue }}
-                          </code>
-                        </div>
-                      </template>
-                      <p>{{ $t('rule.suggest_sql') }}</p>
-                      <div class="code">
-                        <code style="font-size: 12px">
-                          {{ guessSQL }}
-                        </code>
-                      </div>
-                    </div>
-                  </el-collapse-transition>
-                </el-form-item>
-
-                <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql">
+                <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql rawsql">
                   <div class="monaco-container">
                     <monaco
                       id="rule-sql"
                       v-model="record.rawsql"
                       lang="sql"
+                      :provider="sqlProvider"
                       @qucik-save="handleTest">
                     </monaco>
                   </div>
@@ -100,7 +63,7 @@
                 <template v-if="inTest">
                   <el-form-item
                     v-for="k in Object.keys(selectedOption.test_columns)"
-                    :class="{ 'code-sql': k === 'payload' }"
+                    :class="{ 'code-sql': k === 'payload', 'payload': k === 'payload' }"
                     v-bind="{ label: k, prop: `ctx.${k}` }"
                     :key="k">
                     <el-input
@@ -203,12 +166,13 @@
 import sqlFormatter from 'sql-formatter'
 import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
+import { ruleEngineProvider } from '~/common/provider'
 
 import Monaco from '~/components/Monaco'
 import RuleActions from './components/RuleActions'
 
 export default {
-  name: 'rule-view',
+  name: 'rule-create',
 
   components: {
     EmqSelect,
@@ -218,15 +182,6 @@ export default {
 
   props: {},
 
-  watch: {
-    inTest(val) {
-      if (!val) {
-        return
-      }
-      this.initTestFormItem()
-    },
-  },
-
   data() {
     return {
       payloadType: 'json',
@@ -234,36 +189,21 @@ export default {
       testOutPut: '',
       inTest: false,
       id: this.$route.params.id,
-      showGuess: true,
       eventOptions: [],
       sqlPrimaryKey: [],
       record: {
-        name: '',
         for: 'message.publish',
         rawsql: '',
         actions: [],
         description: '',
         ctx: {},
       },
-      rawSqlPlaceholder: '',
       rules: {
-        for: { required: true },
         rawsql: { required: true, message: this.$t('rule.sql_required') },
       },
       selectedOption: {
-        columns: [
-          'clientid',
-          'username',
-          'event',
-          'id',
-          'payload',
-          'peername',
-          'qos',
-          'timestamp',
-          'topic',
-        ],
         event: 'message.publish',
-        sql_example: 'SELECT * FROM "message.publish" WHERE topic =~ \'t/#\'',
+        sql_example: 'SELECT * FROM "t/#"',
         test_columns: {
           clientid: 'c_emqx',
           username: 'u_emqx',
@@ -275,7 +215,46 @@ export default {
     }
   },
 
+  computed: {
+    params() {
+      let [type] = (this.record.for || '').split('.')
+      type = type || 'message'
+      type = `$${type}`
+      return {
+        for: type,
+      }
+    },
+    operationName() {
+      const oper = 'create'
+      const operationNameMap = {
+        view: this.$t('rule.view'),
+        edit: this.$t('rule.edit'),
+        create: this.$t('rule.create'),
+      }
+      if (this.id === '0' || this.id === 0) {
+        return operationNameMap.create
+      }
+      return operationNameMap[oper]
+    },
+    sqlProvider() {
+      return ruleEngineProvider
+    }
+  },
+
+  watch: {
+    inTest(val) {
+      if (!val) {
+        return
+      }
+      this.initTestFormItem()
+    },
+    'record.rawsql': 'handleSqlChanged',
+  },
+
   methods: {
+    handleSqlChanged(val) {
+      // console.log(val)
+    },
     handleTest() {
       this.testOutPut = ''
       this.$refs.record.validate((valid) => {
@@ -295,12 +274,6 @@ export default {
           this.testOutPut = JSON.stringify(data, null, 2)
         })
       })
-    },
-    triggerChange(value) {
-      this.selectedOption = this.eventsList.find($ => $.event === value) || { columns: {}, test_columns: {} }
-      this.record.rawsql = this._sqlFormatter(this.selectedOption.sql_example)
-      this.sqlPrimaryKey = this.selectedOption.columns
-      this.initTestFormItem()
     },
     initTestFormItem() {
       this.testOutPut = ''
@@ -324,7 +297,6 @@ export default {
       this.eventOptions = this.eventsList
       this.selectedOption = this.eventsList[0]
       this.record.rawsql = this._sqlFormatter(this.selectedOption.sql_example)
-      this.sqlPrimaryKey = this.selectedOption.columns
     },
     _sqlFormatter(sql) {
       const newSQL = sqlFormatter.format(sql)
@@ -369,49 +341,12 @@ export default {
     this.loadData()
     this.initTestFormItem()
   },
-
-  computed: {
-    ctxValue() {
-      if (!this.selectedOption.columns) {
-        return ''
-      }
-      const { columns } = this.selectedOption
-      return columns.join(', ')
-    },
-    params() {
-      let [type] = (this.record.for || '').split('.')
-      type = type || 'message'
-      type = `$${type}`
-      return {
-        for: type,
-      }
-    },
-    operationName() {
-      // const { oper = 'view' } = this.$route.query
-      const oper = 'create'
-      const operationNameMap = {
-        view: this.$t('rule.view'),
-        edit: this.$t('rule.edit'),
-        create: this.$t('rule.create'),
-      }
-      if (this.id === '0' || this.id === 0) {
-        return operationNameMap.create
-      }
-      return operationNameMap[oper]
-    },
-    guessSQL() {
-      if (!this.selectedOption.event) {
-        return ''
-      }
-      return this.selectedOption.sql_example
-    },
-  },
 }
 </script>
 
 
 <style lang="scss">
-.rule-view {
+.rule-create {
 
   .page-title .el-breadcrumb {
     text-transform: none;
@@ -421,6 +356,7 @@ export default {
     margin-top: 24px;
     min-height: 150px;
     padding: 20px;
+    overflow: visible;
 
     .config-null {
       text-align: center;
@@ -435,13 +371,11 @@ export default {
   }
 
   .show-guess {
-    margin-top: 4px;
     line-height: 1.4;
 
     p {
       font-size: 13px;
       margin-bottom: 4px;
-      margin-top: 6px;
       .notice {
         color: #ff6d6d;
       }
@@ -522,9 +456,16 @@ export default {
 .code-sql {
   line-height: 18px !important;
 
+  &.rawsql .el-form-item__content {
+    height: 420px;
+  }
+
+  &.payload .el-form-item__content {
+    height: 200px;
+  }
+
   .el-form-item__content {
     line-height: 18px !important;
-    height: 200px;
   }
 
   .payload-type {
