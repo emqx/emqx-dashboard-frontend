@@ -6,6 +6,7 @@
 <script>
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import Monokai from '../assets/themes/monokai.json'
+import { createMonacoComplete, createMonacoHover } from '~/common/monacoUtils'
 
 export default {
   name: 'monaco',
@@ -27,11 +28,37 @@ export default {
       type: Boolean,
       default: false,
     },
+    provider: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data() {
     return {
       editor: null,
+      providerDisposeID: null,
+      hoverDisposeID: null,
+      sqlHints: [
+        {
+          name: 'SELECT',
+          type: 'Keyword',
+          detail: 'SQL',
+          documentation: 'SQL selector.',
+        },
+        {
+          name: 'FROM',
+          type: 'Keyword',
+          detail: 'SQL',
+          documentation: 'What event.',
+        },
+        {
+          name: 'WHERE',
+          type: 'Keyword',
+          detail: 'SQL',
+          documentation: 'Filters a result set to include only records that fulfill a specified condition. ',
+        },
+      ],
     }
   },
 
@@ -74,6 +101,10 @@ export default {
         minimap: {
           enabled: false,
         },
+        hover: {
+          delay: 500,
+          enabled: true,
+        },
       })
       // event changed
       this.editor.onDidChangeModelContent((event) => {
@@ -94,6 +125,45 @@ export default {
     getTheme() {
       return this.theme === 'dark-themes' ? 'monokai' : 'vs'
     },
+    getHints() {
+      const $hints = [...this.provider]
+      if (this.lang === 'sql') {
+        $hints.push(...this.sqlHints)
+      }
+      return $hints
+    },
+    registerCustomHintsProvider() {
+      this.providerDisposeID = monaco.languages.registerCompletionItemProvider(this.lang, {
+        provideCompletionItems: (model, position) => {
+          const hints = this.getHints()
+          const word = model.getWordUntilPosition(position)
+          const range = {
+            startLineNumber: position.lineNumber,
+            endLineNumber: position.lineNumber,
+            startColumn: word.startColumn,
+            endColumn: word.endColumn,
+          }
+          return {
+            suggestions: createMonacoComplete(hints, range),
+          }
+        },
+        triggerCharacters: [' '],
+      })
+    },
+    registerCustomHoverProvider() {
+      monaco.languages.register({ id: this.lang })
+      this.hoverDisposeID = monaco.languages.registerHoverProvider(this.lang, {
+        provideHover: (model, position) => {
+          if (!model.getWordAtPosition(position)) {
+            return {}
+          }
+          const { word } = model.getWordAtPosition(position)
+          return {
+            contents: createMonacoHover(word, this.provider)
+          }
+        },
+      })
+    },
   },
 
   mounted() {
@@ -107,11 +177,23 @@ export default {
         this.editor.layout()
       }
     }
+    if (this.provider.length) {
+      this.registerCustomHintsProvider()
+      this.registerCustomHoverProvider()
+    }
   },
 
   beforeDestroy() {
     if (this.editor) {
+      this.editor.getModel().dispose()
       this.editor.dispose()
+      this.editor = null
+    }
+    if (this.providerDisposeID) {
+      this.providerDisposeID.dispose()
+    }
+    if (this.hoverDisposeID) {
+      this.hoverDisposeID.dispose()
     }
   },
 }
