@@ -166,7 +166,7 @@ export default {
     },
     params: {
       type: Object,
-      default: () => ({ for: '$message' }),
+      default: () => ({}),
     },
   },
 

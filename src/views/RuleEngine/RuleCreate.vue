@@ -14,7 +14,7 @@
     <el-card class="el-card--self">
       <el-form
         label-position="right"
-        label-width="100px"
+        label-width="108px"
         ref="record"
         :model="record"
         :rules="rules">
@@ -132,7 +132,6 @@
             <el-row style="max-width: 1366px;">
               <el-col :span="23">
                 <rule-actions
-                  :params="params"
                   :operations="['create', 'delete']"
                   :record="record">
                 </rule-actions>
@@ -167,6 +166,7 @@ import sqlFormatter from 'sql-formatter'
 import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
 import { ruleEngineProvider } from '~/common/provider'
+import { ruleNewSqlParser, ruleOldSqlCheck } from '~/common/utils'
 
 import Monaco from '~/components/Monaco'
 import RuleActions from './components/RuleActions'
@@ -191,8 +191,8 @@ export default {
       id: this.$route.params.id,
       eventOptions: [],
       sqlPrimaryKey: [],
+      needCheckSql: true,
       record: {
-        for: 'message.publish',
         rawsql: '',
         actions: [],
         description: '',
@@ -202,7 +202,7 @@ export default {
         rawsql: { required: true, message: this.$t('rule.sql_required') },
       },
       selectedOption: {
-        event: 'message.publish',
+        event: '$events/messagepublish',
         sql_example: 'SELECT * FROM "t/#"',
         test_columns: {
           clientid: 'c_emqx',
@@ -216,14 +216,6 @@ export default {
   },
 
   computed: {
-    params() {
-      let [type] = (this.record.for || '').split('.')
-      type = type || 'message'
-      type = `$${type}`
-      return {
-        for: type,
-      }
-    },
     operationName() {
       const oper = 'create'
       const operationNameMap = {
@@ -253,12 +245,43 @@ export default {
 
   methods: {
     handleSqlChanged(val) {
-      // console.log(val)
+      this.triggerEventChange(val)
+      if (!this.needCheckSql) {
+        return
+      }
+      const checkValues = ruleOldSqlCheck(val)
+      if (!checkValues) {
+        return
+      }
+      this.sqlParse(val, checkValues[0])
+    },
+    sqlParse(sql, oldEvent) {
+      this.$confirm(this.$t('rule.parse_confirm'), this.$t('oper.warning'), {
+        confirmButtonClass: 'confirm-btn',
+        cancelButtonClass: 'cache-btn el-button--text',
+        type: 'warning',
+      }).then(() => {
+        this.record.rawsql = this._sqlFormatter(ruleNewSqlParser(sql, oldEvent))
+      }).catch(() => {
+        this.needCheckSql = false
+      })
+    },
+    beforeSqlValid(sql) {
+      const checkValues = ruleOldSqlCheck(sql)
+      if (!checkValues) {
+        return true
+      }
+      this.sqlParse(sql, checkValues[0])
+      return false
     },
     handleTest() {
       this.testOutPut = ''
+      this.needCheckSql = true
       this.$refs.record.validate((valid) => {
         if (!valid) {
+          return
+        }
+        if (!this.beforeSqlValid(this.record.rawsql)) {
           return
         }
         const data = JSON.parse(JSON.stringify(this.record))
@@ -274,6 +297,37 @@ export default {
           this.testOutPut = JSON.stringify(data, null, 2)
         })
       })
+    },
+    triggerEventChange(sql) {
+      const events = [
+        'events/message_delivered',
+        'events/message_acked',
+        'events/message_dropped',
+        'events/client_connected',
+        'events/client_disconnected',
+        'events/session_subscribed',
+        'events/session_unsubscribed',
+      ]
+      let values = null
+      let value = ''
+      events.forEach((e) => {
+        const [regType, regEvent] = e.split('/')
+        const reg = new RegExp(`\\$${regType}\\/${regEvent}`, 'gim')
+        if (sql.match(reg)) {
+          values = sql.match(reg)
+        }
+      })
+      if (values) {
+        value = values[0]
+      } else {
+        value = '$events/message_publish'
+      }
+      if (value === this.selectedOption.event) {
+        return
+      }
+      this.selectedOption = this.eventsList.find($ => $.event === value) || { columns: {}, test_columns: {} }
+      this.sqlPrimaryKey = this.selectedOption.columns
+      this.initTestFormItem()
     },
     initTestFormItem() {
       this.testOutPut = ''

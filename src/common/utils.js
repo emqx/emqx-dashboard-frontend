@@ -1,3 +1,4 @@
+import parser from 'js-sql-parser'
 import { pluginsZh, pluginsEn } from './urls_links'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
@@ -140,6 +141,52 @@ export function matchSearch(data, searchKey, searchValue) {
       return reject(error)
     }
   })
+}
+
+export function ruleOldSqlCheck(sql) {
+  const $sql = sql.replace(/\"/g, '')
+  const oldEvent = [
+    'message.publish',
+    'message.deliver',
+    'message.acked',
+    'message.dropped',
+    'client.connected',
+    'client.disconnected',
+    'client.subscribe',
+    'client.unsubscribe',
+  ]
+  let matchRes = null
+  oldEvent.forEach((e) => {
+    const [eventType, eventValue] = e.split('.')
+    const eventReg = new RegExp(`${eventType}\\.${eventValue}`, 'gim')
+    if ($sql.match(eventReg)) {
+      matchRes = $sql.match(eventReg)
+    }
+  })
+  return matchRes
+}
+
+
+export function ruleNewSqlParser(sql, e) {
+  const oldEventDict = {
+    'message.publish': '',
+    'message.deliver': '$events/message_delivered',
+    'message.acked': '$events/message_acked',
+    'message.dropped': '$events/message_dropped',
+    'client.connected': '$events/client_connected',
+    'client.disconnected': '$events/client_disconnected',
+    'client.subscribe': '$events/session_subscribed',
+    'client.unsubscribe': '$events/session_unsubscribed',
+  }
+  let newEvent = oldEventDict[e]
+  const $sql = sql.replace(/\"/g, '')
+  const ast = parser.parse($sql)
+  if (newEvent === '') {
+    ast.value.where = null
+    newEvent = '#'
+  }
+  ast.value.from.value[0].value.value.value = `"${newEvent}"`
+  return parser.stringify(ast)
 }
 
 export default {}

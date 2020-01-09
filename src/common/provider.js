@@ -32,7 +32,7 @@ export const ruleEngineProvider = [
     name: 'payload',
     documentation: VueI18n.rule.payload_doc,
     type: 'Field',
-    default: `{"msg": "hello"}`,
+    default: '{"msg": "hello"}',
     valueType: 'string',
   }, {
     name: 'peername',
@@ -65,31 +65,31 @@ export const ruleEngineProvider = [
     default: 'emqx@127.0.0.1',
     valueType: 'string',
   }, {
-    name: `"$events/message_deliver"`,
-    documentation: VueI18n.rule.message_deliver,
+    name: '"$events/message_delivered"',
+    documentation: VueI18n.rule.message_delivered,
     type: 'Method',
   }, {
-    name: `"$events/message_acked"`,
+    name: '"$events/message_acked"',
     documentation: VueI18n.rule.message_acked,
     type: 'Method',
   }, {
-    name: `"$events/message_dropped"`,
+    name: '"$events/message_dropped"',
     documentation: VueI18n.rule.message_dropped,
     type: 'Method',
   }, {
-    name: `"$events/client_connected"`,
+    name: '"$events/client_connected"',
     documentation: VueI18n.rule.client_connected,
     type: 'Method',
   }, {
-    name: `"$events/client_disconnected"`,
+    name: '"$events/client_disconnected"',
     documentation: VueI18n.rule.client_disconnected,
     type: 'Method',
   }, {
-    name: `"$events/session_subscribe"`,
+    name: '"$events/session_subscribe"',
     documentation: VueI18n.rule.session_subscribe,
     type: 'Method',
   }, {
-    name: `"$events/session_unsubscribe"`,
+    name: '"$events/session_unsubscribe"',
     documentation: VueI18n.rule.session_unsubscribe,
     type: 'Method',
   },
