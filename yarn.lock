@@ -3659,6 +3659,11 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.5.1"
   resolved "http://registry.npm.taobao.org/js-base64/download/js-base64-2.5.1.tgz#1efa39ef2c5f7980bb1784ade4a8af2de3291121"
 
+js-sql-parser@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/js-sql-parser/-/js-sql-parser-1.2.1.tgz#8156631d7b70a8e10e49b7c36be92f4cab9d0736"
+  integrity sha512-rmKLFpxQN3JwbnNT2sKLKwOOCUA6SBQadMWjUNap+OL2zOc88yzTFhWX77bfr4L45gLbG6jSNk8OGcAaB8+EQQ==
+
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"

@@ -125,7 +125,7 @@ export default {
     getTheme() {
       return this.theme === 'dark-themes' ? 'monokai' : 'vs'
     },
-    getHints() {
+    getHints(filter = {}) {
       const $hints = [...this.provider]
       if (this.lang === 'sql') {
         $hints.push(...this.sqlHints)
@@ -134,17 +134,17 @@ export default {
     },
     registerCustomHintsProvider() {
       this.providerDisposeID = monaco.languages.registerCompletionItemProvider(this.lang, {
-        provideCompletionItems: (model, position) => {
-          const hints = this.getHints()
-          const word = model.getWordUntilPosition(position)
+        provideCompletionItems: (model, position, context) => {
+          const wordObj = model.getWordUntilPosition(position)
+          const hints = this.getHints(wordObj)
           const range = {
             startLineNumber: position.lineNumber,
             endLineNumber: position.lineNumber,
-            startColumn: word.startColumn,
-            endColumn: word.endColumn,
+            startColumn: wordObj.startColumn,
+            endColumn: wordObj.endColumn,
           }
           return {
-            suggestions: createMonacoComplete(hints, range),
+            suggestions: createMonacoComplete(hints, range, wordObj),
           }
         },
         triggerCharacters: [' '],

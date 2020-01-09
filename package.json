@@ -16,6 +16,7 @@
     "codemirror": "^5.48.0",
     "dateformat": "^3.0.3",
     "element-ui": "^2.11.1",
+    "js-sql-parser": "^1.2.1",
     "jsonlint": "^1.6.3",
     "monaco-editor": "^0.18.1",
     "mqtt": "^2.18.8",

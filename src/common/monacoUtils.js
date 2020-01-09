@@ -1,6 +1,10 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 
-export function createMonacoComplete(hints, range) {
+function getInertText(text, preWord) {
+  // let $text = text.replace(/\"/g, '')
+  return text
+}
+export function createMonacoComplete(hints, range, { word }) {
   let customHints = []
   if (hints.length) {
     customHints = hints.map((doc) => ({
@@ -8,7 +12,7 @@ export function createMonacoComplete(hints, range) {
       // kind is icon
       kind: doc.type ? monaco.languages.CompletionItemKind[doc.type] : monaco.languages.CompletionItemKind.Function,
       documentation: doc.documentation,
-      insertText: doc.name,
+      insertText: getInertText(doc.name, word),
       detail: doc.detail || 'EMQX',
       range,
     }))
