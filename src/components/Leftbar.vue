@@ -140,6 +140,7 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 140px;
+  padding-bottom: 45px;
   background-color: #242327;
   box-shadow: 0px 0px 15px #0b0b0b;
 
