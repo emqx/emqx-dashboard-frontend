@@ -102,34 +102,27 @@ export const en = {
   rule_sql: 'SQL',
   rule_descr_placeholder: 'e.g.message render to Webhook',
   rule_sql_tips_title: 'Write SQL statements for conditional filtering and data processing:',
-  sql_tips_html: `<p>The EMQ X rules engine is triggered by an event, and the event type can be specified by the FROM clause of SQL.</p>
+  sql_tips_html: `<p>EMQ X will trigger the Rule Engine when the message is published and the event is triggered, and the rules meeting the triggering conditions will execute their respective SQL statements to filter and process the context information of the message and event.</p>
 
   <p class="item">
-    When the event is triggered, it carries the context information of the event, including the message content and
-    event parameters. Data can be filtered and processed from context information using the SELECT command with the
-    WHERE clause. The fields available in the context information of each event can be acquired from EMQ X document.
+    With the Actions, the Rule Engine can store the message processing results of a specified topic to the database, send them to the HTTP Server, forward them to the Kafka or RabbitMQ, and republish them to a new topic or another broker cluster like Azure IoT Hub. Each rule can allocate multiple Actions.
   </p>
 
-  <p class="item">
-    Events filtered through the SQL statement will trigger corresponding response actions, such as persisting to the
-    database, republishing processed messages, forwarding messages to message queues, and so on. A single rule can
-    configure multiple response actions.
-  </p>
-
-  <p>1. Select the message published to the 't/#' topic and filter out all fields:</p>
+  <p>1. Select the messages published to t/# and select all fields:</p>
 
   <div class="code">
     <code>SELECT * FROM  "t/#"</code>
   </div>
 
-  <p>2. Select the message published to the 't/a' topic and filter the "x" field from the json-formatted message
-    content:</p>
+  <p>2. Select the message published to the t/a topic, and select the "x" field from the message payload in JSON format:</p>
 
   <div class="code">
     <code>SELECT payload.x as x FROM "t/a"</code>
   </div>
 
-  <p>3. Select the login message with the username 'emqx' and filter out the ClientID field.</p>
+  <p class="item">The Rule Engine uses the virtual topic (Event Topic) starting with $events/ to process the built-in events of EMQ X. the built-in events provide more sophisticated message control and client action processing capabilities, which can be used in the message arrival records of QoS 1 and QoS 2, the device up and down line records and other businesses.</p>
+
+  <p>1. Select the client connected event, filter the device with Username 'emqx' and select the connection information:</p>
   <div class="code">
     <code>SELECT clientid FROM "$events/client_connected" WHERE username = 'emqx'</code>
   </div>
@@ -277,12 +270,8 @@ export const zh = {
   rule_sql: '规则 SQL',
   rule_descr_placeholder: 'e.g.消息转发到 Webhook',
   rule_sql_tips_title: '编写 SQL 进行条件过滤与数据处理：',
-  sql_tips_html: `<p>EMQ X 规则引擎由事件触发，可通过 SQL 的 FROM 子句指定事件类型。</p>
-  <p class="item">事件触发时会携带事件的上下文信息，包含了消息内容与事件参数等。可使用 SELECT 子句 和 WHERE 子句，
-    从上下文信息中过滤和处理数据。每个事件上下文信息中可用的字段参见 EMQ X 文档。
-  </p>
-
-  <p class="item">经过 SQL 语句筛选通过的事件，将会触发对应的响应动作，比如持久化到数据库、重新发布处理后的消息、转发消息到消息队列等。一条规则可以配置多个响应动作。</p>
+  sql_tips_html: `<p>EMQ X 在消息发布、事件触发时将触发规则引擎，满足触发条件的规则将执行各自的 SQL 语句筛选并处理消息和事件的上下文信息。</p>
+  <p class="item">规则引擎借助响应动作可将特定主题的消息处理结果存储到数据库，发送到 HTTP Server，转发到消息队列 Kafka 或 RabbitMQ，重新发布到新的主题甚至是另一个 Broker 集群中，每个规则可以配置多个响应动作。</p>
 
   <p>1. 选择发布到 't/#' 主题的消息，并筛选出全部字段：</p>
 
@@ -296,9 +285,11 @@ export const zh = {
     <code>SELECT payload.x as x FROM "t/a"</code>
   </div>
 
-  <p>3. 选择用户名为 'emqx' 的登录消息，并筛选出 ClientID 字段。</p>
+  <p class="item">规则引擎使用 $events/ 开头的虚拟主题（事件主题）处理 EMQ X 内置事件，内置事件提供更精细的消息控制和客户端动作处理能力，可用在 QoS 1 QoS 2 的消息抵达记录、设备上下线记录等业务中。<p>
+
+  <p>1. 选择客户端连接事件，筛选 Username 为 'emqx' 的设备并获取连接信息：</p>
   <div class="code">
-    <code>SELECT clientid FROM "$events/client_connected" WHERE username = 'emqx'</code>
+    <code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = 'emqx'</code>
   </div>
 
   <p>规则引擎和 SQL 语句的详细教程参见 EMQ X 文档。</p>`,
