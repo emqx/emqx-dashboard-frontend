@@ -85,12 +85,12 @@ export const ruleEngineProvider = [
     documentation: VueI18n.rule.client_disconnected,
     type: 'Method',
   }, {
-    name: '"$events/session_subscribe"',
-    documentation: VueI18n.rule.session_subscribe,
+    name: '"$events/session_subscribed"',
+    documentation: VueI18n.rule.session_subscribed,
     type: 'Method',
   }, {
-    name: '"$events/session_unsubscribe"',
-    documentation: VueI18n.rule.session_unsubscribe,
+    name: '"$events/session_unsubscribed"',
+    documentation: VueI18n.rule.session_unsubscribed,
     type: 'Method',
   },
 ]
