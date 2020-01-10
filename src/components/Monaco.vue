@@ -130,6 +130,8 @@ export default {
       this.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, () => {
         this.$emit('qucik-save', this.value)
       })
+      // Update editor options
+      this.editor.getModel().updateOptions({ tabSize: 2 })
     },
     defineTheme() {
       monaco.editor.defineTheme('monokai', Monokai)

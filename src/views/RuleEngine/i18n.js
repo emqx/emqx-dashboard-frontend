@@ -1,6 +1,7 @@
 export const en = {
   viewStates: 'Status',
-  node: 'node',
+  topic: 'Topic',
+  node: 'Node',
   all: 'All',
   connectSuccess: 'Connect success',
   speed_unit: 'times/s',
@@ -177,6 +178,7 @@ export const en = {
 
 export const zh = {
   viewStates: '状态',
+  topic: '主题',
   node: '节点',
   all: '合计',
   connectSuccess: '连接成功',

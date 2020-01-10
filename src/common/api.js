@@ -19,7 +19,7 @@ Object.assign(Axios.defaults, {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
   },
-  baseURL: '/api/v3',
+  baseURL: '/api/v4',
   timeout: 10 * 1000,
 })
 

@@ -9,7 +9,6 @@
       </el-breadcrumb>
     </div>
 
-
     <el-card class="el-card--self">
       <div slot="header" class="config-dialog">
         {{ $t('rule.basic_info') }}
@@ -32,11 +31,8 @@
         <el-form-item :label="$t('rule.rule_sql')">
           <code>{{ record.rawsql }}</code>
         </el-form-item>
-
       </el-form>
-
     </el-card>
-
 
     <el-card class="el-card--self">
       <div slot="header" class="config-dialog">

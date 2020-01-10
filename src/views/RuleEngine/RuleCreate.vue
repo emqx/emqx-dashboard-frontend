@@ -360,7 +360,7 @@ export default {
         const paramsText = paramsRe[1]
         if (paramsText) {
           const newParamsText = paramsText.replace(/(!#!|\s)/g, ' ').split(/[,，]/).join(', ')
-          text = text.replace(paramsText, `  ${newParamsText}`)
+          text = text.replace(paramsText, `${newParamsText}`)
         }
       }
       return text.replace(/!#!/g, '\n')

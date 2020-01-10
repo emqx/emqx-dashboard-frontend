@@ -112,7 +112,7 @@ export default {
       if (!this.isLink(props)) {
         return
       }
-      this.uri = `/api/v3${props.target}`
+      this.uri = `/api/v4${props.target}`
       this.scrollTop = document.documentElement.scrollTop
       document.documentElement.scrollTop = 0
       switch (props.method) {
@@ -145,7 +145,7 @@ export default {
         Object.keys(data).forEach((item) => {
           this.tableData.push({
             method: data[item].method,
-            path: `/api/v3${data[item].path.startsWith('/') ? data[item].path : `/${data[item].path}`}`,
+            path: `/api/v4${data[item].path.startsWith('/') ? data[item].path : `/${data[item].path}`}`,
             target: data[item].path,
             description: data[item].descr,
           })
