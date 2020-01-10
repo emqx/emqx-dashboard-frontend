@@ -102,13 +102,13 @@ export default {
     },
     docsLink() {
       return this.lang === 'en'
-        ? 'https://docs.emqx.io/broker/v3/en'
-          : 'https://docs.emqx.io/broker/v3/cn'
+        ? 'https://docs.emqx.io/broker/v4/en'
+          : 'https://docs.emqx.io/broker/v4/cn'
     },
     faqLink() {
       return this.lang === 'en'
-        ? 'https://docs.emqx.io/tutorial/v3/en/faq/faq.html'
-          : 'https://docs.emqx.io/tutorial/v3/zh/faq/faq.html'
+        ? 'https://docs.emqx.io/tutorial/v4/en/faq/faq.html'
+          : 'https://docs.emqx.io/tutorial/v4/zh/faq/faq.html'
     },
   },
 

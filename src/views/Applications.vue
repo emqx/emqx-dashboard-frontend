@@ -232,8 +232,8 @@
           {{ this.$t('app.guide') }}
           <a
             :href="lang === 'zh'
-              ? 'https://docs.emqx.io/broker/v3/cn/rest.html'
-              : 'https://docs.emqx.io/broker/v3/en/rest.html'" target="_blank">
+              ? 'https://docs.emqx.io/broker/v4/cn/rest.html'
+              : 'https://docs.emqx.io/broker/v4/en/rest.html'" target="_blank">
             {{ $t('app.docs') }}
           </a>
         </div>
