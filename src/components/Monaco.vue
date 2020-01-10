@@ -58,6 +58,18 @@ export default {
           detail: 'SQL',
           documentation: 'Filters a result set to include only records that fulfill a specified condition. ',
         },
+        {
+          name: 'and',
+          type: 'Keyword',
+          detail: 'SQL',
+          documentation: 'Operator.',
+        },
+        {
+          name: 'or',
+          type: 'Keyword',
+          detail: 'SQL',
+          documentation: 'Operator.',
+        },
       ],
     }
   },
