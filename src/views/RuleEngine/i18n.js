@@ -165,13 +165,13 @@ export const en = {
   timestamp_doc: 'Timestamp(millisecond)',
   topic_doc: 'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
   node_doc: 'Node name of the trigger event',
-  message_delivered: 'message deliver',
+  message_delivered: 'message delivered',
   message_acked: 'message acked',
   message_dropped: 'message dropped',
   client_connected: 'client connected',
   client_disconnected: 'client disconnected',
-  session_subscribed: 'session subscribe',
-  session_unsubscribed: 'session unsubscribe',
+  session_subscribed: 'session subscribed',
+  session_unsubscribed: 'session unsubscribed',
   parse_confirm: 'Detected incompatible old SQL syntax, confirm to automatically convert it to the new version?',
 }
 
