@@ -18,33 +18,6 @@
 
     <!-- rules list -->
     <el-table v-loading="$store.state.loading" border :data="tableData">
-
-      <!--<el-table-column prop="id" type="expand">-->
-      <!--<template slot-scope="{ row }">-->
-      <!--<ul class="status-wrapper">-->
-      <!--<li v-for="(item, i) in row.metrics || []" :key="i" class="status-item">-->
-      <!--<span class="key">-->
-      <!--{{ item.node }}-->
-      <!--</span>-->
-
-      <!--<span size="mini" type="info">-->
-      <!--{{$t('rule.rule_matched_1')}}: <span>{{ item.matched }}</span> {{$t('rule.match_unit')}}-->
-      <!--</span>-->
-      <!--<span size="mini" type="info">-->
-      <!--{{$t('rule.speed_current')}}: <span>{{ item.speed }}</span> {{$t('rule.speed_unit')}}-->
-      <!--</span>-->
-      <!--<span size="mini" type="info">-->
-      <!--{{$t('rule.speed_max_1')}}: <span>{{ item.speed_max }}</span> {{$t('rule.speed_unit')}}-->
-      <!--</span>-->
-      <!--<span size="mini" type="info">-->
-      <!--{{$t('rule.speed_last5m_1')}}: <span>{{ item.speed_last5m }}</span> {{$t('rule.speed_unit')}}-->
-      <!--</span>-->
-
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-
       <!-- rule name -->
       <el-table-column prop="id" :label="$t('rule.id')">
         <template slot-scope="{ row }">
@@ -54,13 +27,8 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="for" :label="$t('rule.trigger_events')"></el-table-column>
+      <el-table-column prop="for" :label="$t('rule.topic')"></el-table-column>
 
-      <!--<el-table-column prop="enabled" label="是否启用">-->
-      <!--<template slot-scope="{ row }">-->
-      <!--{{ row.enabled }}-->
-      <!--</template>-->
-      <!--</el-table-column>-->
       <el-table-column prop="rawsql" min-width="150px" label="SQL"></el-table-column>
       <!--<el-table-column prop="description" label="描述"></el-table-column>-->
       <el-table-column prop="actions" :label="$t('rule.actions')">
@@ -71,18 +39,11 @@
         </template>
       </el-table-column>
 
-      <!--<el-table-column prop="metrics" min-width="120px" :label="$t('rule.speed')">-->
-
-      <!--<el-table-column min-width="150" prop="process" :label="$t('rule.speed_line')">-->
-      <!--<template slot-scope="{ row }">-->
-      <!--{{ row.metrics.speed }} / {{ row.metrics.speed_max }} / {{ row.metrics.speed_last5m }}-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--</el-table-column>-->
-
-
-      <el-table-column prop="metrics.matched" min-width="110px" :label="$t('rule.rule_matched_1')"
-                       :formatter="getMatchedCount"></el-table-column>
+      <el-table-column
+        prop="metrics.matched"
+        min-width="110px"
+        :label="$t('rule.rule_matched_1')"
+        :formatter="getMatchedCount"></el-table-column>
 
       <el-table-column :label="$t('rule.oper')" min-width="70px">
         <template slot-scope="{ row }">
