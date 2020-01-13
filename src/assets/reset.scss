@@ -1,0 +1,183 @@
+@import "color";
+
+/* reset global style */
+
+/* Form */
+.el-form--label-top {
+  .el-form-item__label {
+    padding: 0;
+  }
+}
+
+/* Table */
+.el-table:not(.el-table--public) {
+  border-radius: 4px;
+
+  &.el-table--small {
+    font-size: 14px;
+  }
+
+  &::before {
+    height: 0;
+  }
+
+  &.el-table--group::after,
+  &.el-table--border::after {
+    width: 0;
+  }
+
+  th, td {
+    border-right: none;
+  }
+
+  th {
+    border-bottom: none;
+  }
+}
+
+/* Input, Select, Checkbox */
+.el-checkbox {
+  .el-checkbox__inner {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+
+    &:after {
+      border-left: 0;
+      border-top: 0;
+      height: 8px;
+      left: 5px;
+      position: absolute;
+      top: 2px;
+      width: 4px;
+    }
+  }
+}
+
+.el-select {
+  &.el-select--small {
+    .el-input__inner {
+      height: 40px !important;
+    }
+  }
+
+  &.select-radius {
+    width: 240px;
+
+    .el-input__inner {
+      border-radius: 40px;
+    }
+  }
+}
+
+.el-select-dropdown {
+  min-height: 40px;
+}
+
+.el-input, .el-textarea {
+  &.input-radius {
+    width: 240px;
+
+    .el-input__inner {
+      border-radius: 40px;
+    }
+  }
+
+  .el-input__suffix {
+    width: 30px;
+    font-size: 16px;
+    cursor: pointer;
+
+    .el-input__suffix-inner {
+      font-weight: bolder;
+    }
+  }
+}
+
+/* Button */
+.el-button {
+  &.el-button--mini {
+    padding: 4px;
+  }
+
+  &.is-plain {
+    font-weight: normal !important;
+  }
+}
+
+/* el-card */
+.el-card {
+  border: none !important;
+  font-size: 16px;
+  font-weight: 600;
+
+  .el-card__header {
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  &.el-card--self {
+    font-weight: 400;
+
+    .el-card__header {
+      border-bottom: none !important;
+    }
+  }
+}
+
+.cache-btn {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.el-switch__input:focus ~ .el-switch__core {
+  outline: none !important;
+}
+
+/* Loading */
+.el-dialog {
+  .el-dialog__header {
+    border-bottom: 1px solid #f1f1f1 !important;
+  }
+}
+
+.el-loading-mask {
+  opacity: .8;
+}
+
+/* Tabs */
+.el-tabs {
+  &.normal-tabs {
+    margin-top: 24px;
+    &>.el-tabs__header {
+      border-bottom: 0px;
+      margin-bottom: 0px;
+      .el-tabs__nav {
+        border: none;
+      }
+      .el-tabs__item {
+        min-width: 120px;
+        text-align: center;
+        background: #1D1E24;
+        border-radius: 4px 4px 0 0;
+        margin-right: 8px;
+        border: 1px solid transparent;
+        border-bottom: 1px solid #1f1d1d;
+        line-height: 38px;
+        color: #ADAFB4;
+        transition: all 0.5s;
+        font-size: 16px;
+      }
+      .el-tabs__item.is-active {
+        background: #1f1d1d;
+        border: 1px solid #1f1d1d;
+        border-left: 2px solid;
+        color: $themes-color;
+      }
+    }
+  }
+}
+
+/* Dropdown */
+.el-dropdown {
+  cursor: pointer;
+}
