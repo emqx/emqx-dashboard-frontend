@@ -37,7 +37,9 @@
     <el-table v-show="activeTab==='clients'" v-loading="$store.state.loading" border :data="clients">
       <el-table-column prop="clientid" :label="$t('clients.clientId')" width="160px" show-overflow-tooltip>
         <template slot-scope="{ row }">
-          <a href="javascript:;" @click="$router.push({ path: `/clients/${row.clientid}` })">
+          <a
+            href="javascript:;"
+            @click="$router.push({ path: `/clients/${encodeURIComponent(row.clientid)}` })">
             {{ row.clientid }}
           </a>
         </template>
@@ -260,7 +262,7 @@ export default {
       this.loadChild(true)
     },
     handleDisconnect(row, index, self) {
-      this.$httpDelete(`/clients/${row.clientid}`).then(() => {
+      this.$httpDelete(`/clients/${encodeURIComponent(row.clientid)}`).then(() => {
         this.loadData()
         // Close popover
         self.$refs[`popover-${index}`].doClose()
