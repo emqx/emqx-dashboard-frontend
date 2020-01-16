@@ -20,7 +20,7 @@
         label-width="100px"
         label-suffix=":"
       >
-        <el-form-item :label="$t('rule.trigger_events')">
+        <el-form-item :label="$t('rule.topic')">
           <span>{{ record.for.join(',') }}</span>
         </el-form-item>
 

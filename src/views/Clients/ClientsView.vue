@@ -100,12 +100,12 @@ export default {
       }).catch(() => {})
     },
     loadBasicData() {
-      this.$httpGet(`/clients/${this.clientId}`).then((res) => {
+      this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`).then((res) => {
         this.basicRecord = res.data[0]
       }).catch(() => {})
     },
     loadSubscription() {
-      this.$httpGet(`/subscriptions/${this.clientId}`).then((res) => {
+      this.$httpGet(`/subscriptions/${encodeURIComponent(this.clientId)}`).then((res) => {
         this.subscriptionsData = res.data
       }).catch(() => {})
     },
