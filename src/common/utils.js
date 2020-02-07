@@ -48,7 +48,7 @@ function getRule(item) {
 }
 
 export function params2Form(params = {}, deepKey = '') {
-  const model = []
+  let model = []
   let resource = ''
   const rules = {
     [deepKey]: {},
@@ -62,7 +62,7 @@ export function params2Form(params = {}, deepKey = '') {
       return
     }
 
-    const { format, enum: enumValue, input } = value
+    const { format, enum: enumValue, input, order } = value
     let { title, type, description, default: defaultValue } = value
     if (typeof title === 'object') {
       title = title[lang]
@@ -106,6 +106,7 @@ export function params2Form(params = {}, deepKey = '') {
       defaultValue,
       $attrs,
       description: (description || '').replace(/\n/g, '<br/>'),
+      order,
     })
     if (deepKey) {
       rules[deepKey][key] = getRule(item)
@@ -114,6 +115,9 @@ export function params2Form(params = {}, deepKey = '') {
     }
   })
 
+  model = model.sort((prev, next) => {
+    return prev.order - next.order
+  })
   return { model, rules, resource }
 }
 
