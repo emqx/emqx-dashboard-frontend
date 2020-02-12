@@ -155,7 +155,7 @@ export default {
       activeTab: 'clients',
       searchKey: '',
       searchValue: '',
-      searchPlaceholder: 'ClientId',
+      searchPlaceholder: this.$t('clients.clientId'),
       clients: [],
       topics: [],
       subscriptions: [],
@@ -188,7 +188,7 @@ export default {
           this.searchPlaceholder = 'Topic'
           break
         default:
-          this.searchPlaceholder = 'ClientId'
+          this.searchPlaceholder = this.$t('clients.clientId')
           break
       }
       this.loadData()

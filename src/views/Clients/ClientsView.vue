@@ -150,7 +150,7 @@ export default {
   }
   .card-subtitle {
     color: #F8F8F8;
-    font-size: 14px;
+    font-size: 16px;
     margin: 24px 0;
   }
 }

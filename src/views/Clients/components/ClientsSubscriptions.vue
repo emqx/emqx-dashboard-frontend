@@ -28,7 +28,6 @@
       </el-row>
 
       <el-table class="client-sub-table" v-loading="$store.state.loading" border :data="tableData">
-        <el-table-column prop="clientid" :label="$t('subscriptions.clientId')"></el-table-column>
         <el-table-column prop="topic" :label="$t('subscriptions.topic')"></el-table-column>
         <el-table-column prop="qos" :label="$t('subscriptions.qoS')"></el-table-column>
         <el-table-column width="120px" :label="$t('oper.oper')">
