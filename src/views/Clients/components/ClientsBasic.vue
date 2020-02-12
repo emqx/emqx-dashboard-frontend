@@ -35,10 +35,10 @@
             <el-form-item :label="$t('clients.isBridge')" prop="is_bridge">
               <span>{{ record.is_bridge ? $t('oper.yes') : $t('oper.no') }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.connectedAt')" prop="connected_at">
+            <el-form-item v-if="record.connected" :label="$t('clients.connectedAt')" prop="connected_at">
               <span>{{ record.connected_at }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.disconnectAt')" prop="disconnected_at">
+            <el-form-item v-if="!record.connected" :label="$t('clients.disconnectAt')" prop="disconnected_at">
               <span>{{ record.disconnected_at }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.connected')" prop="connected">
