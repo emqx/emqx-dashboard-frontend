@@ -38,7 +38,7 @@
       <el-submenu index="2">
         <template slot="title">
           <i class="iconfont icon-guize2"></i>
-          <span>{{ $t('rule.rule_engine') }}</span>
+          <span>{{ $t('leftbar.rule_engine') }}</span>
         </template>
         <!-- 消息规则 -->
         <el-menu-item index="/rules">
