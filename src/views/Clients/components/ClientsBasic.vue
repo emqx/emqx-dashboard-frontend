@@ -32,6 +32,9 @@
             <el-form-item :label="$t('clients.port')" prop="port">
               <span>{{ record.port }}</span>
             </el-form-item>
+            <el-form-item :label="$t('clients.keepalive')" prop="keepalive">
+              <span>{{ record.keepalive }}</span>
+            </el-form-item>
             <el-form-item :label="$t('clients.isBridge')" prop="is_bridge">
               <span>{{ record.is_bridge ? $t('oper.yes') : $t('oper.no') }}</span>
             </el-form-item>
@@ -56,9 +59,6 @@
             <el-form-item :label="record.proto_ver === 5 ? 'Clean Start' : 'Clean Session'" prop="clean_start">
               <span>{{ record.clean_start }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.keepalive')" prop="keepalive">
-              <span>{{ record.keepalive }}</span>
-            </el-form-item>
             <el-form-item :label="$t('clients.expiryInterval')" prop="expiry_interval">
               <span>{{ record.expiry_interval }}</span>
             </el-form-item>
@@ -66,22 +66,28 @@
               <span>{{ record.created_at }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.subscriptions')">
-              <span>{{ record.subscriptions_cnt }} / {{ record.max_subscriptions }}</span>
+              <span>{{ record.subscriptions_cnt }} / {{ record.max_subscriptions | transToUnlimit }}</span>
+            </el-form-item>
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.subscriptions')}`">
+              <span>{{ record.max_subscriptions | transToUnlimit }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.inflight')">
               <span>{{ record.inflight }} / {{ record.max_inflight }}</span>
             </el-form-item>
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.inflight')}`">
+              <span>{{ record.max_inflight }}</span>
+            </el-form-item>
             <el-form-item :label="$t('clients.mqueue')">
               <span>{{ record.mqueue_len }} / {{ record.max_mqueue }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.heapSize')" prop="heap_size">
-              <span>{{ record.heap_size }}</span>
+             <el-form-item :label="`${$t('clients.max')} ${$t('clients.mqueue')}`">
+              <span>{{ record.max_mqueue }}</span>
             </el-form-item>
-            <el-form-item :label="`OTP ${$t('clients.reductions')}`" prop="reductions">
-              <span>{{ record.reductions }}</span>
+            <el-form-item :label="$t('clients.awaiting_rel')" prop="awaiting_rel">
+              <span>{{ record.awaiting_rel }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.mailbox')" prop="mailbox_len">
-              <span>{{ record.mailbox_len }}</span>
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.awaiting_rel')}`" prop="max_awaiting_rel">
+              <span>{{ record.max_awaiting_rel }}</span>
             </el-form-item>
           </el-col>
         </el-form>
@@ -103,14 +109,6 @@
           label-suffix=":">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="awaiting_rel" prop="awaiting_rel">
-                <span>{{ record.awaiting_rel }}</span>
-                <span class="form-item-desc">{{ $t('clients.awaiting_rel_desc') }}</span>
-              </el-form-item>
-              <el-form-item label="max_awaiting_rel" prop="max_awaiting_rel">
-                <span>{{ record.max_awaiting_rel }}</span>
-                <span class="form-item-desc">{{ $t('clients.max_awaiting_rel_desc') }}</span>
-              </el-form-item>
               <el-form-item label="recv_cnt" prop="recv_cnt">
                 <span>{{ record.recv_cnt }}</span>
                 <span class="form-item-desc">{{ $t('clients.recv_cnt_desc') }}</span>
@@ -162,6 +160,12 @@ export default {
     record: {
       type: Object,
       default: () => ({})
+    },
+  },
+
+  filters: {
+    transToUnlimit(val) {
+      return val === 0 ? 'Unlimit' : val
     },
   },
 
