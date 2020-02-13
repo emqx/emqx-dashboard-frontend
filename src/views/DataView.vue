@@ -66,7 +66,7 @@
            :ref="`popover-${$index}`"
            placement="right"
            trigger="click">
-            <p>{{ row.connected ? $t('oper.confirmDisconnect') : $t('oper.confirmCleanSession') }}</p>
+            <p>{{ row.connected ? $t('oper.confirmKickOut') : $t('oper.confirmCleanSession') }}</p>
             <div style="text-align: right">
               <el-button
                 size="mini"
@@ -87,7 +87,7 @@
               size="mini"
               type="danger"
               plain>
-              {{ row.connected ? $t('websocket.disconnect') : $t('websocket.cleanSession') }}
+              {{ row.connected ? $t('clients.kickOut') : $t('websocket.cleanSession') }}
             </el-button>
           </el-popover>
         </template>
