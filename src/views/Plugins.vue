@@ -140,7 +140,7 @@ export default {
     loadData() {
       this.searchView = false
       this.$httpGet('/nodes').then((response) => {
-        this.nodeName = this.$store.state.nodeName || response.data[0].name
+        this.nodeName = this.$store.state.nodeName || response.data[0].node
         this.nodes = response.data
         this.loadPlugins()
       }).catch((error) => {
