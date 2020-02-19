@@ -283,7 +283,7 @@ export default {
       // load nodes every page
       this.$httpGet('/nodes').then((response) => {
         // set default of select not clan
-        this.nodeName = this.$store.state.nodeName || response.data[0].name
+        this.nodeName = this.$store.state.nodeName || response.data[0].node
         this.nodes = response.data
         this.CURRENT_NODE(this.nodeName)
         this.refreshInterval()
@@ -304,7 +304,7 @@ export default {
       // nodes[]
       this.$httpGet('/nodes').then((response) => {
         this.nodes = response.data.sort(($1, $2) => {
-          if ($1.name === this.nodeName) {
+          if ($1.node === this.nodeName) {
             return -1
           }
           if ($1.uptime > $2.uptime) {

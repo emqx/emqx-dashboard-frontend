@@ -197,7 +197,7 @@ export default {
       this.searchValue = ''
       // set default of select
       this.$httpGet('/nodes').then((response) => {
-        const currentNode = this.$store.state.nodeName || response.data[0].name
+        const currentNode = this.$store.state.nodeName || response.data[0].node
         this.nodeName = this.cluster ? 'cluster' : currentNode
         this.nodes = response.data
         this.loadChild()

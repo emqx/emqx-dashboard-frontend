@@ -96,7 +96,7 @@ export default {
     init() {
       const currentNodeName = this.$store.state.nodeName
       this.$httpGet('/nodes').then((response) => {
-        this.nodeName = currentNodeName || response.data[0].name
+        this.nodeName = currentNodeName || response.data[0].node
         this.nodes = response.data
         this.setApiData()
       }).catch((error) => {
