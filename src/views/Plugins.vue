@@ -11,8 +11,8 @@
           style="float: right;padding-left: 20px"
           :disabled="$store.state.loading"
           :placeholder="$t('plugins.searchByName')"
-          @keyup.enter.native="searchPlugins">
-          <i slot="suffix" :class="[iconStatus, 'el-input__icon']" @click="searchPlugins"></i>
+          clearable
+          @input="searchPlugins">
         </el-input>
 
         <el-select
@@ -196,19 +196,19 @@ export default {
       windowUrl.opener = null
     },
     searchPlugins() {
-      if (this.searchView) {
-        this.searchValue = ''
+      if (!this.searchValue) {
         this.loadData()
         return
       }
-      matchSearch(this.tableData, 'name', this.searchValue).then((res) => {
-        if (res) {
-          this.enableTableData = res
-        }
-        this.searchView = true
-      }).catch(() => {
-        this.searchView = false
-      })
+      setTimeout(() => {
+        matchSearch(this.tableData, 'name', this.searchValue).then((res) => {
+          if (res) {
+            this.enableTableData = res
+          }
+        }).catch(() => {
+          // ignore
+        })
+      }, 500)
     },
   },
   created() {
