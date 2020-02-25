@@ -44,15 +44,15 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column prop="username" :label="$t('clients.username')" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="username" width="100px" :label="$t('clients.username')" show-overflow-tooltip></el-table-column>
       <el-table-column prop="ip_address" :label="$t('clients.ipAddr')" width="140px" show-overflow-tooltip>
         <template slot-scope="{ row }">
           {{ row.ip_address }}:{{ row.port }}
         </template>
       </el-table-column>
-      <el-table-column prop="keepalive" :label="$t('clients.keepalive')"></el-table-column>
-      <el-table-column prop="expiry_interval" :label="$t('clients.expiryInterval')"></el-table-column>
-      <el-table-column prop="subscriptions_cnt" :label="$t('clients.subscriptionsCount')"></el-table-column>
+      <el-table-column prop="keepalive" width="100px" :label="$t('clients.keepalive')"></el-table-column>
+      <el-table-column prop="expiry_interval" width="150px" :label="$t('clients.expiryInterval')"></el-table-column>
+      <el-table-column prop="subscriptions_cnt" width="160px" :label="$t('clients.subscriptionsCount')"></el-table-column>
       <el-table-column prop="connected" width="120px" :label="$t('clients.connected')">
         <template slot-scope="{ row }">
           <span :class="[row.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
