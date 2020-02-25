@@ -17,9 +17,8 @@
       <el-button
         :class="[basicRecord.connected ? 'connected' : 'disconnected', 'connect-btn']"
         size="mini"
-        :disabled="!basicRecord.connected"
         @click="handleDisconnect">
-        {{ basicRecord.connected ? $t('websocket.disconnect') : $t('clients.disconnected') }}
+        {{ basicRecord.connected ? $t('clients.kickOut') : $t('websocket.cleanSession') }}
       </el-button>
     </div>
 
@@ -86,7 +85,10 @@ export default {
       this[command]()
     },
     handleDisconnect() {
-      this.$confirm(this.$t('oper.confirmDisconnect'), this.$t('oper.warning'), {
+      const confirmMsg = this.basicRecord.connected
+        ? this.$t('oper.confirmKickOut')
+          : this.$t('oper.confirmCleanSession')
+      this.$confirm(confirmMsg, this.$t('oper.warning'), {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
@@ -94,6 +96,9 @@ export default {
         this.$httpDelete(`/clients/${this.clientId}`).then(() => {
           this.$message.success(this.$t('oper.disconnectSuccess'))
           this.$set(this.basicRecord, 'connected', false)
+          setTimeout(() => {
+            this.$router.push({ path: '/clients' })
+          }, 500)
         }).catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
