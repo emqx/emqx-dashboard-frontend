@@ -48,7 +48,8 @@
       :title="$t('clients.addSubs')"
       width="400px"
       :visible.sync="addVisible"
-      class="create-subscribe">
+      class="create-subscribe"
+      @keyup.enter.native="handleAdd">
       <el-form
         ref="record"
         class="el-form--public"

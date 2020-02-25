@@ -8,7 +8,8 @@
     :visible.sync="dialogVisible"
     :title="$t('rule.actions')"
     @open="open"
-    @close="close">
+    @close="close"
+    @keyup.enter.native="handleAdd">
     <el-form
       class="el-form--public"
       ref="record"
