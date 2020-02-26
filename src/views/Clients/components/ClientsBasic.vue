@@ -36,7 +36,7 @@
               <span>{{ record.keepalive }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.isBridge')" prop="is_bridge">
-              <span>{{ record.is_bridge ? $t('oper.yes') : $t('oper.no') }}</span>
+              <span>{{ record.is_bridge }}</span>
             </el-form-item>
             <el-form-item v-if="record.connected" :label="$t('clients.connectedAt')" prop="connected_at">
               <span>{{ record.connected_at }}</span>
@@ -109,39 +109,31 @@
           label-suffix=":">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="recv_cnt" prop="recv_cnt">
+              <el-form-item :label="$t('clients.recv_cnt_desc')" prop="recv_cnt">
                 <span>{{ record.recv_cnt }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_cnt_desc') }}</span>
               </el-form-item>
-              <el-form-item label="recv_msg" prop="recv_msg">
+              <el-form-item :label="$t('clients.recv_msg_desc')" prop="recv_msg">
                 <span>{{ record.recv_msg }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_msg_desc') }}</span>
               </el-form-item>
-              <el-form-item label="recv_oct" prop="recv_oct">
+              <el-form-item :label="$t('clients.recv_oct_desc')" prop="recv_oct">
                 <span>{{ record.recv_oct }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_oct_desc') }}</span>
               </el-form-item>
-              <el-form-item label="recv_pkt" prop="recv_pkt">
+              <el-form-item :label="$t('clients.recv_pkt_desc')" prop="recv_pkt">
                 <span>{{ record.recv_pkt }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_pkt_desc') }}</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="send_cnt" prop="send_cnt">
+              <el-form-item :label="$t('clients.send_cnt_desc')" prop="send_cnt">
                 <span>{{ record.send_cnt }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_cnt_desc') }}</span>
               </el-form-item>
-              <el-form-item label="send_msg" prop="send_msg">
+              <el-form-item :label="$t('clients.send_msg_desc')" prop="send_msg">
                 <span>{{ record.send_msg }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_msg_desc') }}</span>
               </el-form-item>
-              <el-form-item label="send_oct" prop="send_oct">
+              <el-form-item :label="$t('clients.send_oct_desc')" prop="send_oct">
                 <span>{{ record.send_oct }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_oct_desc') }}</span>
               </el-form-item>
-              <el-form-item label="send_pkt" prop="send_pkt">
+              <el-form-item :label="$t('clients.send_pkt_desc')" prop="send_pkt">
                 <span>{{ record.send_pkt }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_pkt_desc') }}</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -165,7 +157,7 @@ export default {
 
   filters: {
     transToUnlimit(val) {
-      return val === 0 ? 'Unlimit' : val
+      return val === 0 ? 'Unlimited' : val
     },
   },
 
