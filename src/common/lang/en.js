@@ -164,7 +164,7 @@ export default {
     max: 'Maximum',
     historicHigh: 'Historic High of',
     subscriptions: 'Subscriptions Count',
-    inflight: 'Inflight Queue Size',
+    inflight: 'Inflight Window Size',
     mqueue: 'Message Queue Size',
     awaiting_rel: 'Unconfirmed PUBREC Packets Count',
     recv_cnt_desc: 'Number of TCP Packets Received',
