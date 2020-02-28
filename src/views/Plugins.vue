@@ -23,9 +23,9 @@
           @change="loadPlugins">
           <el-option
             v-for="node in nodes"
-            :key="node.name"
-            :label="node.name"
-            :value="node.name">
+            :key="node.node"
+            :label="node.node"
+            :value="node.node">
           </el-option>
         </el-select>
       </div>
