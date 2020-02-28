@@ -25,9 +25,9 @@
           <!--<el-option value="cluster" :label="$t('select.cluster')"></el-option>-->
           <el-option
             v-for="item in nodes"
-            :key="item.name"
-            :label="item.name"
-            :value="item.name">
+            :key="item.node"
+            :label="item.node"
+            :value="item.node">
           </el-option>
         </el-select>
       </div>

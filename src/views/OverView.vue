@@ -9,9 +9,9 @@
         @change="loadData">
         <el-option
           v-for="node in nodes"
-          :key="node.name"
-          :label="node.name"
-          :value="node.name">
+          :key="node.node"
+          :label="node.node"
+          :value="node.node">
         </el-option>
       </el-select>
     </div>
@@ -75,7 +75,7 @@
       <div class="card-title">{{ $t('overview.nodes') }}({{ nodes.length }})</div>
       <el-table :data="nodes" border>
         <el-table-column
-          prop="name"
+          prop="node"
           min-width="200"
           :label="$t('overview.name')">
         </el-table-column>
