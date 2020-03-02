@@ -39,7 +39,8 @@ function getRule(item) {
   }
   rule.type = type
   // format first
-  if (validateType.includes(format)) {
+  // Can't create resources when deploy using docker cause host is service name, not IP if using url type rules
+  if (validateType.includes(format) && format !== 'url') {
     rule.type = format
   }
   rule.enum = type === 'enum' ? enumValue : undefined
