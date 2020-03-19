@@ -151,7 +151,7 @@ export default {
   props: {
     record: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
   },
 

@@ -62,7 +62,7 @@ export default {
   computed: {
     clientId() {
       return this.$route.params.id
-    }
+    },
   },
 
   created() {
@@ -87,13 +87,13 @@ export default {
     handleDisconnect() {
       const confirmMsg = this.basicRecord.connected
         ? this.$t('oper.confirmKickOut')
-          : this.$t('oper.confirmCleanSession')
+        : this.$t('oper.confirmCleanSession')
       this.$confirm(confirmMsg, this.$t('oper.warning'), {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
       }).then(() => {
-        this.$httpDelete(`/clients/${this.clientId}`).then(() => {
+        this.$httpDelete(`/clients/${encodeURIComponent(this.clientId)}`).then(() => {
           this.$message.success(this.$t('oper.disconnectSuccess'))
           this.$set(this.basicRecord, 'connected', false)
           setTimeout(() => {
