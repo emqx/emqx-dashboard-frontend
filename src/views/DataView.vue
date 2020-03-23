@@ -44,22 +44,22 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column prop="username" width="100px" :label="$t('clients.username')" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="ip_address" :label="$t('clients.ipAddr')" width="140px" show-overflow-tooltip>
+      <el-table-column prop="username" min-width="100px" :label="$t('clients.username')" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="ip_address" :label="$t('clients.ipAddr')" min-width="140px" show-overflow-tooltip>
         <template slot-scope="{ row }">
           {{ row.ip_address }}:{{ row.port }}
         </template>
       </el-table-column>
-      <el-table-column prop="keepalive" width="100px" :label="$t('clients.keepalive')"></el-table-column>
-      <el-table-column prop="expiry_interval" width="150px" :label="$t('clients.expiryInterval')"></el-table-column>
-      <el-table-column prop="subscriptions_cnt" width="160px" :label="$t('clients.subscriptionsCount')"></el-table-column>
-      <el-table-column prop="connected" width="120px" :label="$t('clients.connected')">
+      <el-table-column prop="keepalive" min-width="100px" :label="$t('clients.keepalive')"></el-table-column>
+      <el-table-column prop="expiry_interval" min-width="150px" :label="$t('clients.expiryInterval')"></el-table-column>
+      <el-table-column prop="subscriptions_cnt" min-width="160px" :label="$t('clients.subscriptionsCount')"></el-table-column>
+      <el-table-column prop="connected" min-width="120px" :label="$t('clients.connected')">
         <template slot-scope="{ row }">
           <span :class="[row.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
           {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
         </template>
       </el-table-column>
-      <el-table-column prop="created_at" :label="$t('clients.createdAt')" width="160px"></el-table-column>
+      <el-table-column prop="created_at" :label="$t('clients.createdAt')" min-width="160px"></el-table-column>
       <el-table-column width="120px" :label="$t('oper.oper')">
         <template slot-scope="{ row, $index, _self }">
           <el-popover
