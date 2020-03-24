@@ -81,6 +81,15 @@
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
           </el-button>
+          <el-button
+            v-if="hasManagePage(props.row.name)"
+            class="oper"
+            type="success"
+            size="mini"
+            :plain="true"
+            @click="handleManage(props.row)">
+            {{ $t('plugins.manage') }}
+          </el-button>
           <!-- <el-button
             type="success"
             size="mini"
@@ -210,6 +219,17 @@ export default {
         })
       }, 500)
     },
+    hasManagePage(name) {
+      const pluginsDict = {
+        emqx_auth_clientid: true,
+        emqx_auth_username: true,
+        emqx_auth_jwt: true,
+      }
+      return pluginsDict[name]
+    },
+    handleManage(row) {
+      console.log(row)
+    },
   },
   created() {
     this.loadData()
@@ -232,7 +252,7 @@ export default {
     margin-top: 20px;
   }
   .oper {
-    width: 50px;
+    min-width: 50px;
     font-size: 14px;
     margin-bottom: 4px;
   }
