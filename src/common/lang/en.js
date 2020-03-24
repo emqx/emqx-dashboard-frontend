@@ -204,6 +204,7 @@ export default {
     start: 'Start',
     stop: 'Stop',
     config: 'Config',
+    manage: 'Manage',
     tutorial: 'Tutorial',
     back: 'Back',
     advancedConfig: 'Advanced Config',

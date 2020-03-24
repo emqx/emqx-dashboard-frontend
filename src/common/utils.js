@@ -116,9 +116,7 @@ export function params2Form(params = {}, deepKey = '') {
     }
   })
 
-  model = model.sort((prev, next) => {
-    return prev.order - next.order
-  })
+  model = model.sort((prev, next) => prev.order - next.order)
   return { model, rules, resource }
 }
 
@@ -137,9 +135,8 @@ export function matchSearch(data, searchKey, searchValue) {
           const key = $[searchKey].toLowerCase().replace(/\s+/g, '')
           const value = searchValue.toLocaleLowerCase().replace(/\s+/g, '')
           return key.match(value)
-        } else {
-          return null
         }
+        return null
       })
       return resolve(filterData)
     } catch (error) {
@@ -149,6 +146,7 @@ export function matchSearch(data, searchKey, searchValue) {
 }
 
 export function ruleOldSqlCheck(sql) {
+  // eslint-disable-next-line no-useless-escape
   const $sql = sql.replace(/\"/g, '')
   const oldEvent = [
     'message.publish',
@@ -184,6 +182,7 @@ export function ruleNewSqlParser(sql, e) {
     'client.unsubscribe': '$events/session_unsubscribed',
   }
   let newEvent = oldEventDict[e]
+  // eslint-disable-next-line no-useless-escape
   const $sql = sql.replace(/\"/g, '')
   const ast = parser.parse($sql)
   if (newEvent === '') {

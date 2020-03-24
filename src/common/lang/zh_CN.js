@@ -204,6 +204,7 @@ export default {
     start: '启动',
     stop: '停止',
     config: '配置',
+    manage: '管理',
     tutorial: '使用文档',
     back: '返回',
     advancedConfig: '高级配置',
