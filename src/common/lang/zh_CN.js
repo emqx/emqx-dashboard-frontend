@@ -13,7 +13,7 @@ export default {
   },
   // success
   success: {
-    createSuccess: 'Create Success',
+    createSuccess: '创建成功',
   },
   // oper
   oper: {
@@ -217,6 +217,8 @@ export default {
     cacheNotice: '已放弃操作',
     emptyConfigOption: '默认配置项为空',
     searchByName: '按插件名称搜索',
+    usernameRequired: '请填写 username',
+    passwordRequired: '请填写 password',
   },
   // instances
   instances: {

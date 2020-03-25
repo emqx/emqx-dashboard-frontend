@@ -65,7 +65,12 @@ const routes = [
       {
         path: '/plugins',
         name: 'plugins',
-        component: () => import('~/views/Plugins'),
+        component: () => import('~/views/Plugins/Plugins'),
+      },
+      {
+        path: '/plugins/:pluginName',
+        name: 'plugins',
+        component: () => import('~/views/Plugins/PluginsManage'),
       },
       {
         path: '/listeners',
