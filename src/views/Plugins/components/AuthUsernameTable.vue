@@ -1,5 +1,5 @@
 <template>
-  <div class="username-table">
+  <div class="auth-username-table">
     <el-row :gutter="20">
       <el-form ref="record" :model="record" :rules="rules" @keyup.enter.native="save">
         <el-col :span="5">
@@ -83,7 +83,12 @@
         :model="editRecord">
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item prop="password" label="password">
+            <el-form-item prop="username" label="Username">
+              <el-input v-model="editRecord.username" disabled type="username"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item prop="password" label="Password">
               <el-input v-model="editRecord.password" type="password"></el-input>
             </el-form-item>
           </el-col>
@@ -117,7 +122,7 @@ import {
 } from 'element-ui'
 
 export default {
-  name: 'username-table',
+  name: 'auth-username-table',
   components: {
     'el-dialog': Dialog,
     'el-input': Input,
@@ -189,8 +194,10 @@ export default {
         if (!valid) {
           return
         }
-        const data = { ...this.editRecord }
-        this.$httpPut(`/auth_username/${data.username}`, data).then(() => {
+        const data = {
+          password: this.editRecord.password,
+        }
+        this.$httpPut(`/auth_username/${this.editRecord.username}`, data).then(() => {
           this.loadData()
           this.$message.success(this.$t('oper.editSuccess'))
           this.editRecord = {}
@@ -210,7 +217,7 @@ export default {
 
 
 <style lang="scss">
-.username-table {
+.auth-username-table {
   .el-button--success.add {
     border: none;
     position: relative;
