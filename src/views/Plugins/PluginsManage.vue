@@ -9,7 +9,10 @@
 
     <el-card class="el-card--self" v-loading="$store.state.loading">
       <template v-if="pluginName === 'emqx_auth_username'">
-        <username-table></username-table>
+        <auth-username-table></auth-username-table>
+      </template>
+      <template v-if="pluginName === 'emqx_auth_clientid'">
+        <auth-clientId-table></auth-clientId-table>
       </template>
     </el-card>
   </div>
@@ -20,7 +23,8 @@
 import {
   Breadcrumb, BreadcrumbItem, Card,
 } from 'element-ui'
-import UsernameTable from './components/UsernameTable'
+import AuthUsernameTable from './components/AuthUsernameTable'
+import AuthClientIdTable from './components/AuthClientIdTable'
 
 export default {
   name: 'plugin-manage',
@@ -28,7 +32,8 @@ export default {
     'el-breadcrumb': Breadcrumb,
     'el-breadcrumb-item': BreadcrumbItem,
     'el-card': Card,
-    UsernameTable,
+    AuthUsernameTable,
+    AuthClientIdTable,
   },
   data() {
     return {
