@@ -219,6 +219,7 @@ export default {
     searchByName: '按插件名称搜索',
     usernameRequired: '请填写 username',
     passwordRequired: '请填写 password',
+    clientidRequired: '请填写 Client ID',
   },
   // instances
   instances: {

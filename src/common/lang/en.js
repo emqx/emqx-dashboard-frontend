@@ -219,6 +219,7 @@ export default {
     searchByName: 'Search by plugin name',
     usernameRequired: 'username is required',
     passwordRequired: 'password is required',
+    clientidRequired: 'Client ID is required',
   },
   // instances
   instances: {
