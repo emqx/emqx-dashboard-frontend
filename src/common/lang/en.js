@@ -217,6 +217,8 @@ export default {
     cacheNotice: 'You have given up this change',
     emptyConfigOption: 'No Default Configuration',
     searchByName: 'Search by plugin name',
+    usernameRequired: 'username is required',
+    passwordRequired: 'password is required',
   },
   // instances
   instances: {

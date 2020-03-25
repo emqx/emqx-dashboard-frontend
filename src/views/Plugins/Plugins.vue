@@ -228,7 +228,9 @@ export default {
       return pluginsDict[name]
     },
     handleManage(row) {
-      console.log(row)
+      this.$router.push({
+        path: `/plugins/${row.name}`,
+      })
     },
   },
   created() {
