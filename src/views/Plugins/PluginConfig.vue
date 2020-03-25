@@ -25,22 +25,24 @@
         :model="record"
         @keyup.enter.native="updateConfig">
         <el-row :gutter="20">
-          <el-col v-for="item in configOptions" v-if="record[item.selfKey] !== undefined" :span="12" :key="item.key">
-            <el-form-item :prop="item.required ? item.selfKey : ''" :label="item.key">
-              <el-input
-                v-if="item.value.length < 36"
-                v-model="record[item.selfKey]"
-                :placeholder="item.desc">
-              </el-input>
-              <el-input
-                v-else
-                v-model="record[item.selfKey]"
-                :prop="item.required ? item.key : ''"
-                type="textarea"
-                :rows="2"
-                :placeholder="item.desc">
-              </el-input>
-            </el-form-item>
+          <el-col v-for="item in configOptions" :span="12" :key="item.key">
+            <template v-if="record[item.selfKey] !== undefined">
+              <el-form-item :prop="item.required ? item.selfKey : ''" :label="item.key">
+                <el-input
+                  v-if="item.value.length < 36"
+                  v-model="record[item.selfKey]"
+                  :placeholder="item.desc">
+                </el-input>
+                <el-input
+                  v-else
+                  v-model="record[item.selfKey]"
+                  :prop="item.required ? item.key : ''"
+                  type="textarea"
+                  :rows="2"
+                  :placeholder="item.desc">
+                </el-input>
+              </el-form-item>
+            </template>
           </el-col>
         </el-row>
       </el-form>
