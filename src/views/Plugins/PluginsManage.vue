@@ -14,6 +14,9 @@
       <template v-if="pluginName === 'emqx_auth_clientid'">
         <auth-clientId-table></auth-clientId-table>
       </template>
+      <template v-if="pluginName === 'emqx_auth_jwt'">
+        <generate-JWT></generate-JWT>
+      </template>
     </el-card>
   </div>
 </template>
@@ -25,6 +28,7 @@ import {
 } from 'element-ui'
 import AuthUsernameTable from './components/AuthUsernameTable'
 import AuthClientIdTable from './components/AuthClientIdTable'
+import GenerateJWT from './components/GenerateJWT'
 
 export default {
   name: 'plugin-manage',
@@ -34,10 +38,25 @@ export default {
     'el-card': Card,
     AuthUsernameTable,
     AuthClientIdTable,
+    GenerateJWT,
   },
   data() {
     return {
       pluginName: this.$route.params.pluginName,
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.pluginName === 'emqx_auth_jwt') {
+      this.$confirm(this.$t('plugins.leaveTokenPage'), this.$t('oper.warning'), {
+        confirmButtonClass: 'confirm-btn',
+        cancelButtonClass: 'cache-btn el-button--text',
+        type: 'warning',
+      }).then(() => {
+        next()
+      }).catch(() => {
+      })
+    } else {
+      next()
     }
   },
 }

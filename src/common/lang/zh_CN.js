@@ -54,6 +54,10 @@ export default {
     unsubscribe: '取消订阅',
     unsubscribeConfirm: '此操作将取消订阅该主题',
     pleaseEnter: '请输入',
+    copy: '复制',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败',
+    generate: '生成',
   },
   // topbar
   topbar: {
@@ -220,6 +224,15 @@ export default {
     usernameRequired: '请填写 username',
     passwordRequired: '请填写 password',
     clientidRequired: '请填写 Client ID',
+    algorithm: '加密算法',
+    secret: '密钥或私钥',
+    payloadDesc: 'Payload，可以使用 %u，%c 占位符分别替换你输入的 username 和 clientid，启用 verify_claims 时有效, 详见',
+    jwtDoc: 'JWT 认证',
+    dataDesc: '一行一组数据，使用逗号分割 username，clientid',
+    secretRequired: '请输入 Secret',
+    payloadRequired: '请输入 Payload 模版',
+    dataRequired: '请填写 Payload 数据',
+    leaveTokenPage: '离开页面后当前输入的配置与生成的 TOKEN 信息均不再保留，确认离开？',
   },
   // instances
   instances: {
@@ -430,5 +443,9 @@ export default {
     113: '用户已存在',
     114: '旧密码错误',
     115: '主题错误',
+  },
+  util: {
+    day: '天',
+    days: '天',
   },
 }

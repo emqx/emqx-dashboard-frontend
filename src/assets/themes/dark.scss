@@ -412,14 +412,18 @@
     }
   }
 
-  .monaco-container {
-    height: 100%;
-    border: 1px solid #37363d;
-  }
-
   .payload-type {
     background-color: rgba(55, 54, 61, 0.5);
     border: 1px solid #37363d;
     border-top: none;
   }
+}
+
+.monaco-container {
+  height: 100%;
+  border: 1px solid #37363d;
+}
+
+.jwt-payload-desc {
+  background: rgba(55, 54, 61, .5);
 }
