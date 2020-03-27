@@ -223,7 +223,6 @@ export default {
       const pluginsDict = {
         emqx_auth_clientid: true,
         emqx_auth_username: true,
-        emqx_auth_jwt: true,
       }
       return pluginsDict[name]
     },
