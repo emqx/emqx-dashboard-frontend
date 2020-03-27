@@ -139,8 +139,8 @@ export default {
   methods: {
     handleUnsub(row) {
       this.$msgbox.confirm(this.$t('oper.unsubscribeConfirm'), this.$t('oper.warning'), {
-          type: 'warning',
-        }).then(() => {
+        type: 'warning',
+      }).then(() => {
         const { topic, clientid } = row
         const body = {
           topic,
