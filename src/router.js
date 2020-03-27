@@ -69,7 +69,7 @@ const routes = [
       },
       {
         path: '/plugins/:pluginName',
-        name: 'pluginName',
+        name: 'pluginsName',
         component: () => import('~/views/Plugins/PluginsManage'),
       },
       {

@@ -55,6 +55,10 @@ export default {
     unsubscribe: 'Unsubscribe',
     unsubscribeConfirm: 'This action will cancel subscription to the topic',
     pleaseEnter: 'Please Enter',
+    copy: 'Copy',
+    copySuccess: 'Copy successfully',
+    copyFailed: 'Copy failed',
+    generate: 'Generate',
   },
   // topbar
   topbar: {
@@ -220,6 +224,15 @@ export default {
     usernameRequired: 'username is required',
     passwordRequired: 'password is required',
     clientidRequired: 'Client ID is required',
+    algorithm: 'Algorithm',
+    secret: 'Secret or Private key',
+    payloadDesc: 'Payload, you can use the% u and% c placeholders to replace the username and clientid you entered, which is valid when verify_claims is enabled. See details',
+    jwtDoc: 'JWT Authentication',
+    dataDesc: 'One line is a set of data, separated by comma username, clientid',
+    secretRequired: 'Secret is required',
+    payloadRequired: 'Payload template is required',
+    dataRequired: 'Payload data is required',
+    leaveTokenPage: 'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
   },
   // instances
   instances: {
@@ -434,5 +447,9 @@ export default {
     113: 'User already exist',
     114: 'Old password error',
     115: 'Bad topic',
+  },
+  util: {
+    day: 'day',
+    days: 'days',
   },
 }

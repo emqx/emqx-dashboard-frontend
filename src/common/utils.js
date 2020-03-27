@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import Clipboard from 'clipboard'
 import parser from 'js-sql-parser'
 import { pluginsZh, pluginsEn } from './urls_links'
 
@@ -191,6 +193,34 @@ export function ruleNewSqlParser(sql, e) {
   }
   ast.value.from.value[0].value.value.value = `"${newEvent}"`
   return parser.stringify(ast)
+}
+
+function clipboardSuccess() {
+  Vue.prototype.$message({
+    message: Vue.prototype.$t('oper.copySuccess'),
+    type: 'success',
+    duration: 1500,
+  })
+}
+function clipboardError() {
+  Vue.prototype.$message({
+    message: Vue.prototype.$t('oper.copyFailed'),
+    type: 'error',
+  })
+}
+export function handleClipboard(text, event) {
+  const clipboard = new Clipboard(event.target, {
+    text: () => text,
+  })
+  clipboard.on('success', () => {
+    clipboardSuccess()
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    clipboardError()
+    clipboard.destroy()
+  })
+  clipboard.onClick(event)
 }
 
 export default {}

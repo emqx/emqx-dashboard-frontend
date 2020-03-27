@@ -30,6 +30,7 @@ const i18n = new VueI18n({
 })
 
 ElementLocale.i18n((key, value) => i18n.t(key, value))
+Vue.prototype.$t = (key, value) => i18n.t(key, value)
 
 initThemes()
 

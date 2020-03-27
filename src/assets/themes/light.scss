@@ -383,11 +383,6 @@
     }
   }
 
-  .monaco-container {
-    height: 100%;
-    border: 1px solid #DCDFE6;
-  }
-
   .payload-type {
     background-color: rgba(223, 223, 223, 0.8);
     border: 1px solid #DCDFE6;
@@ -455,4 +450,13 @@
       color: #343434;
     }
   }
+}
+
+.monaco-container {
+  height: 100%;
+  border: 1px solid #DCDFE6;
+}
+
+.jwt-payload-desc {
+  background: rgba(223, 223, 223, 0.8);
 }
