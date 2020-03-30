@@ -226,7 +226,7 @@ export default {
     clientidRequired: 'Client ID is required',
     algorithm: 'Algorithm',
     secret: 'Secret or Private key',
-    payloadDesc: 'Payload, you can use the% u and% c placeholders to replace the username and clientid you entered, which is valid when verify_claims is enabled. See details',
+    payloadDesc: 'It is valid when verify_claims is enabled. You can use% u and% c placeholders to replace the entered user name and clientid respectively. For details, see',
     jwtDoc: 'JWT Authentication',
     dataDesc: 'One line is a set of data, separated by comma username, clientid',
     secretRequired: 'Secret is required',
@@ -449,7 +449,7 @@ export default {
     115: 'Bad topic',
   },
   util: {
-    day: 'day',
-    days: 'days',
+    day: 'day | days',
+    year: 'year | years',
   },
 }

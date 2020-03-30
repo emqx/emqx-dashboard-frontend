@@ -78,7 +78,7 @@
     <el-table border :data="records">
       <el-table-column prop="username" label="Username"></el-table-column>
       <el-table-column prop="clientid" label="Client ID"></el-table-column>
-      <el-table-column min-width="160px" prop="token" label="token"></el-table-column>
+      <el-table-column min-width="160px" prop="token" label="token" show-overflow-tooltip></el-table-column>
       <el-table-column width="140px" :label="$t('oper.oper')">
         <template slot-scope="{ row }">
           <el-button
@@ -149,33 +149,33 @@ export default {
         'ES384',
         'ES512',
       ],
-      payloadVisible: true,
+      payloadVisible: false,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         },
         shortcuts: [
           {
-            text: `1 ${this.$t('util.day')}`,
+            text: `180 ${this.$tc('util.day', 180)}`,
             onClick(picker) {
               const date = new Date()
-              date.setTime(date.getTime() + (3600 * 1000 * 24))
+              date.setTime(date.getTime() + (3600 * 1000 * 24 * 180))
               picker.$emit('pick', date)
             },
           },
           {
-            text: `7 ${this.$t('util.days')}`,
+            text: `1 ${this.$tc('util.year', 1)}`,
             onClick(picker) {
               const date = new Date()
-              date.setTime(date.getTime() + (3600 * 1000 * 24 * 7))
+              date.setTime(date.getTime() + (3600 * 1000 * 24 * 365))
               picker.$emit('pick', date)
             },
           },
           {
-            text: `30 ${this.$t('util.days')}`,
+            text: `3 ${this.$tc('util.year', 3)}`,
             onClick(picker) {
               const date = new Date()
-              date.setTime(date.getTime() + (3600 * 1000 * 24 * 30))
+              date.setTime(date.getTime() + (3600 * 1000 * 24 * 1095))
               picker.$emit('pick', date)
             },
           },
