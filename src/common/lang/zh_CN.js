@@ -226,7 +226,7 @@ export default {
     clientidRequired: '请填写 Client ID',
     algorithm: '加密算法',
     secret: '密钥或私钥',
-    payloadDesc: 'Payload，可以使用 %u，%c 占位符分别替换你输入的 username 和 clientid，启用 verify_claims 时有效, 详见',
+    payloadDesc: '启用 verify_claims 时有效, 可以使用 %u，%c 占位符分别替换输入的 username 和 clientid，详见',
     jwtDoc: 'JWT 认证',
     dataDesc: '一行一组数据，使用逗号分割 username，clientid',
     secretRequired: '请输入 Secret',
@@ -446,6 +446,6 @@ export default {
   },
   util: {
     day: '天',
-    days: '天',
+    year: '年',
   },
 }
