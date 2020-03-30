@@ -87,6 +87,7 @@
             type="success"
             size="mini"
             :plain="true"
+            :disabled="!props.row.active"
             @click="handleManage(props.row)">
             {{ $t('plugins.manage') }}
           </el-button>
