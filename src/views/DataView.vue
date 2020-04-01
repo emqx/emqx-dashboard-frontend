@@ -60,7 +60,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="created_at" :label="$t('clients.createdAt')" min-width="160px"></el-table-column>
-      <el-table-column width="120px" :label="$t('oper.oper')">
+      <el-table-column fixed="right" width="120px" :label="$t('oper.oper')">
         <template slot-scope="{ row, $index, _self }">
           <el-popover
            :ref="`popover-${$index}`"
