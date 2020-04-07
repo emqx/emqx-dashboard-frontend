@@ -29,6 +29,7 @@ export default {
     create: 'Create',
     view: 'View',
     viewMore: 'View More',
+    expand: 'Expand',
     collapse: 'Collapse',
     refresh: 'Refresh',
     add: 'Add',
@@ -59,6 +60,8 @@ export default {
     copySuccess: 'Copy successfully',
     copyFailed: 'Copy failed',
     generate: 'Generate',
+    search: 'Search',
+    reset: 'Reset',
   },
   // topbar
   topbar: {
