@@ -28,6 +28,7 @@ export default {
     create: '创建',
     view: '查看',
     viewMore: '查看更多',
+    expand: '展开',
     collapse: '收起',
     refresh: '刷新',
     add: '添加',
@@ -58,6 +59,8 @@ export default {
     copySuccess: '复制成功',
     copyFailed: '复制失败',
     generate: '生成',
+    search: '搜索',
+    reset: '重置',
   },
   // topbar
   topbar: {
