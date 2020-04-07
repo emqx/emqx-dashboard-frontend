@@ -4,6 +4,7 @@
       {{ $t(`leftbar.${activeTab}`) }}
       <div style="float: right" @keyup.enter.native="searchChild">
         <el-input
+          v-if="activeTab !== 'clients'"
           v-model="searchValue"
           class="input-radius"
           size="large"
@@ -22,7 +23,6 @@
           :placeholder="$t('select.placeholder')"
           :disabled="$store.state.loading"
           @change="loadChild(true)">
-          <!--<el-option value="cluster" :label="$t('select.cluster')"></el-option>-->
           <el-option
             v-for="item in nodes"
             :key="item.node"
@@ -32,6 +32,106 @@
         </el-select>
       </div>
     </div>
+
+    <el-card
+      v-if="activeTab === 'clients'"
+      class="el-card--self search-card">
+      <el-form
+        ref="clientFFuzzyParams"
+        :model="clientFFuzzyParams"
+        label-position="left"
+        label-width="110px">
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <el-form-item :label="$t('clients.clientId')">
+              <el-input
+                type="text"
+                size="small"
+                v-model="clientFFuzzyParams._like_clientid">
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item :label="$t('clients.username')">
+              <el-input
+                type="text"
+                size="small"
+                v-model="clientFFuzzyParams._like_username">
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+          <template v-if="showMoreQuery">
+            <el-col :span="8">
+              <el-form-item :label="$t('clients.ipAddr')">
+                <el-input
+                  type="text"
+                  size="small"
+                  v-model="clientFFuzzyParams.ip_address">
+                </el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item :label="$t('clients.connected')">
+                <el-select v-model="clientFFuzzyParams.conn_state">
+                  <el-option value="connected"></el-option>
+                  <el-option value="disconnected"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item :label="$t('clients.createdAt')">
+                <el-row class="form-item-row">
+                  <el-col :span="8">
+                    <el-select v-model="clientFFuzzyParams.comparator" class="comparator">
+                      <el-option label=">=" value="_gte"></el-option>
+                      <el-option label="<=" value="_lte"></el-option>
+                    </el-select>
+                  </el-col>
+                  <el-col :span="16">
+                    <el-date-picker
+                      v-model="clientFFuzzyParams._connected_at"
+                      class="datatime"
+                      type="datetime"
+                      value-format="timestamp">
+                    </el-date-picker>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item :label="$t('clients.protoName')">
+                <el-input
+                  type="text"
+                  size="small"
+                  v-model="clientFFuzzyParams.proto_name">
+                </el-input>
+              </el-form-item>
+            </el-col>
+          </template>
+
+          <span class="col-oper">
+            <el-button
+              size="small"
+              type="primary"
+              plain
+              @click="clientQuerySearch">
+              {{ $t('oper.search') }}
+            </el-button>
+            <el-button
+              size="small"
+              plain
+              @click="resetClientQuerySearch">
+              {{ $t('oper.reset') }}
+            </el-button>
+            <a href="javascript:;" class="show-more" @click="showMoreQuery = !showMoreQuery">
+              {{ showMoreQuery ? $t('oper.collapse') : $t('oper.expand') }}
+              <i :class="showMoreQuery ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i>
+            </a>
+          </span>
+        </el-row>
+      </el-form>
+    </el-card>
 
     <!-- clients -->
     <el-table v-show="activeTab==='clients'" v-loading="$store.state.loading" border :data="clients">
@@ -53,7 +153,7 @@
       <el-table-column prop="keepalive" min-width="100px" :label="$t('clients.keepalive')"></el-table-column>
       <el-table-column prop="expiry_interval" min-width="150px" :label="$t('clients.expiryInterval')"></el-table-column>
       <el-table-column prop="subscriptions_cnt" min-width="160px" :label="$t('clients.subscriptionsCount')"></el-table-column>
-      <el-table-column prop="connected" min-width="120px" :label="$t('clients.connected')">
+      <el-table-column prop="connected" min-width="140px" :label="$t('clients.connected')">
         <template slot-scope="{ row }">
           <span :class="[row.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
           {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
@@ -122,12 +222,23 @@
       @size-change="handleSizeChange"
       @current-change="loadChild">
     </el-pagination>
+    <div v-if="count === -1" class="custom-pagination">
+      <a :class="['prev', params._page === 1 ? 'disabled' : '']" href="javascript:;" @click="handlePrevClick">
+        <i class="el-icon-arrow-left"></i>
+      </a>
+      <a :class="['next', hasnext ? '' : 'disabled']" href="javascript:;" @click="handleNextClick">
+        <i class="el-icon-arrow-right"></i>
+      </a>
+    </div>
   </div>
 </template>
 
 
 <script>
-import { Pagination, Input, Select, Option, Table, TableColumn } from 'element-ui'
+/* eslint-disable camelcase */
+import {
+  Pagination, Input, Select, Option, Table, TableColumn, DatePicker,
+} from 'element-ui'
 import { mapActions } from 'vuex'
 
 export default {
@@ -139,6 +250,7 @@ export default {
     'el-option': Option,
     'el-table': Table,
     'el-table-column': TableColumn,
+    'el-date-picker': DatePicker,
   },
   data() {
     return {
@@ -146,6 +258,7 @@ export default {
       cluster: false,
       popoverVisible: false,
       count: 0,
+      hasnext: false,
       params: {
         _page: 1,
         _limit: 10,
@@ -157,12 +270,21 @@ export default {
       searchValue: '',
       searchPlaceholder: this.$t('clients.clientId'),
       clients: [],
+      clientFFuzzyParams: {
+        comparator: '_gte',
+      },
       topics: [],
       subscriptions: [],
+      showMoreQuery: false,
     }
   },
   watch: {
     $route: 'init',
+    activeTab() {
+      this.clientFFuzzyParams = {
+        comparator: '_gte',
+      }
+    },
   },
   computed: {
     iconStatus() {
@@ -205,7 +327,7 @@ export default {
         this.$message.error(error || this.$t('error.networkError'))
       })
     },
-    loadChild(reload = false) {
+    loadChild(reload = false, queryParams = null) {
       this.stashNode()
       this.searchView = false
       this.searchValue = ''
@@ -221,16 +343,27 @@ export default {
       if (this.activeTab === 'topics' || this.cluster) {
         url = this.activeTab === 'topics' ? 'routes' : this.activeTab
       }
-      this.$httpGet(url, this.params).then((response) => {
+      let params = {}
+      if (queryParams) {
+        params = {
+          ...queryParams,
+          ...this.params,
+        }
+      } else {
+        params = {
+          ...this.params,
+        }
+      }
+      this.$httpGet(url, params).then((response) => {
         this[this.activeTab] = response.data.items
         this.count = response.data.meta.count || 0
-        // this.params._page = response.data.meta.page || 1
+        this.hasnext = response.data.meta.hasnext
       }).catch((error) => {
         this.$message.error(error || this.$t('error.networkError'))
       })
     },
     searchChild() {
-      // click x button
+      // click clear button
       if (this.searchView) {
         this.loadChild()
         return
@@ -261,6 +394,22 @@ export default {
       this.params._limit = val
       this.loadChild(true)
     },
+    handlePrevClick() {
+      if (this.params._page === 1) {
+        return
+      }
+      this.params._page -= 1
+      const params = this.genQueryParams(this.clientFFuzzyParams)
+      this.loadChild(false, params)
+    },
+    handleNextClick() {
+      if (!this.hasnext) {
+        return
+      }
+      this.params._page += 1
+      const params = this.genQueryParams(this.clientFFuzzyParams)
+      this.loadChild(false, params)
+    },
     handleDisconnect(row, index, self) {
       this.$httpDelete(`/clients/${encodeURIComponent(row.clientid)}`).then(() => {
         this.loadData()
@@ -269,6 +418,33 @@ export default {
       }).catch((error) => {
         this.$message.error(error || this.$t('error.networkError'))
       })
+    },
+    genQueryParams(params) {
+      const {
+        _like_clientid, _like_username, ip_address, conn_state, proto_name, comparator, _connected_at,
+      } = params
+      const newParams = {
+        _like_clientid,
+        _like_username,
+        ip_address,
+        conn_state,
+        proto_name,
+      }
+      if (_connected_at) {
+        const connectedAtKey = `${comparator}_connected_at`
+        newParams[connectedAtKey] = Math.floor(_connected_at / 1000)
+      }
+      return newParams
+    },
+    clientQuerySearch() {
+      const params = this.genQueryParams(this.clientFFuzzyParams)
+      this.loadChild(true, params)
+    },
+    resetClientQuerySearch() {
+      this.clientFFuzzyParams = {
+        comparator: '>=',
+      }
+      this.init()
     },
   },
   created() {
@@ -307,6 +483,54 @@ export default {
 
   .el-select .el-input .el-select__caret {
     line-height: 12px;
+  }
+
+  .search-card {
+    margin-top: 24px;
+    border: none;
+    .el-card__body {
+      padding: 5px 12px;
+    }
+   .el-input, .el-select {
+      width: 100%;
+    }
+    .col-oper {
+      float: right;
+      position: relative;
+      top: 1px;
+      .show-more {
+        margin: 0px 10px;
+        font-size: 12px;
+      }
+      margin-bottom: 10px;
+    }
+    .form-item-row {
+      margin-top: 0px;
+     .el-select.comparator .el-input--medium .el-input__inner {
+        border-radius: 4px 0 0 4px;
+      }
+      .datatime.el-input .el-input__inner {
+        border-radius: 0 4px 4px 0;
+      }
+    }
+    .el-select .el-input .el-select__caret {
+      line-height: 36px;
+    }
+  }
+
+  .custom-pagination {
+    text-align: right;
+    margin-top: 10px;
+    a {
+      color: #606266;
+      &:hover {
+        color: #42d885;
+      }
+    }
+    a.disabled {
+      color: #C0C4CC;
+      cursor: not-allowed;
+    }
   }
 }
 </style>
