@@ -69,7 +69,7 @@ export default {
   // leftbar
   leftbar: {
     // MONITORING
-    monitoring: '监控',
+    monitor: '监控',
     overview: '控制台',
     clients: '客户端',
     connections: '连接',
@@ -94,6 +94,7 @@ export default {
     users: '用户',
     settings: '设置',
     help: '帮助',
+    general: '通用',
   },
   // overview
   overview: {
