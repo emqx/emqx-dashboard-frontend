@@ -10,12 +10,13 @@
       mode="vertical"
       router
       background-color="#242327"
-      text-color="#fff"
+      text-color="#A6A6A8"
       active-text-color="#34C388"
       :default-active="'/' + $route.path.split('/')[1]">
 
       <template v-for="(menu, index) in menus">
         <el-submenu
+          v-if="menu.children && menu.children.length > 0"
           :key="index"
           :index="`${index + 1}`">
           <template slot="title">
@@ -24,18 +25,28 @@
               {{ menu.title }}
             </el-badge>
           </template>
-          <template v-if="menu.children && menu.children.length > 0">
-            <el-menu-item
-              v-for="(submenu, subindex) in menu.children"
-              :key="subindex"
-              :index="submenu.index"
-              :class="submenu.class">
-              <el-badge :hidden="!submenu.hasNew" is-dot class="submenu-dot">
-                {{ submenu.title }}
-              </el-badge>
-            </el-menu-item>
-          </template>
+          <el-menu-item
+            v-for="(submenu, subindex) in menu.children"
+            :key="subindex"
+            :index="submenu.index"
+            :class="submenu.class">
+            <el-badge :hidden="!submenu.hasNew" is-dot class="submenu-dot">
+              {{ submenu.title }}
+            </el-badge>
+          </el-menu-item>
         </el-submenu>
+        <el-menu-item
+          v-else-if="!menu.children"
+          :key="index"
+          :index="menu.index"
+          :class="menu.class">
+          <template slot="title">
+            <i :class="['iconfont', menu.icon]"></i>
+            <el-badge :hidden="!menu.hasNew" is-dot class="menu-dot">
+              {{ menu.title }}
+            </el-badge>
+          </template>
+        </el-menu-item>
       </template>
 
       <div class="bar-footer">
@@ -65,39 +76,36 @@ export default {
       menus: [
         {
           id: 'monitor',
-          title: this.$t('leftbar.monitoring'),
+          title: this.$t('leftbar.monitor'),
           icon: 'icon-jiankong',
-          children: [
-            {
-              id: 'overview',
-              title: this.$t('leftbar.overview'),
-              index: '/',
-            },
-            {
-              id: 'clients',
-              title: this.$t('leftbar.clients'),
-              index: '/clients',
-            },
-            {
-              id: 'topics',
-              title: this.$t('leftbar.topics'),
-              index: '/topics',
-            },
-            {
-              id: 'subscriptions',
-              title: this.$t('leftbar.subscriptions'),
-              index: '/subscriptions',
-            },
-          ],
+          index: '/',
+        },
+        {
+          id: 'clients',
+          title: this.$t('leftbar.clients'),
+          index: '/clients',
+          icon: 'icon-guanlianshebei',
+        },
+        {
+          id: 'topics',
+          title: this.$t('leftbar.topics'),
+          index: '/topics',
+          icon: 'icon-zuzhiqunzu',
+        },
+        {
+          id: 'subscriptions',
+          title: this.$t('leftbar.subscriptions'),
+          index: '/subscriptions',
+          icon: 'icon-shebeiguanli',
         },
         {
           id: 'rule_engine',
           title: this.$t('leftbar.rule_engine'),
-          icon: 'icon-guize2',
+          icon: 'icon-guizeyinqing',
           children: [
             {
               id: 'rules',
-              title: this.$t('rule.message_rule'),
+              title: this.$t('rule.rule_engine'),
               index: '/rules',
             },
             {
@@ -108,26 +116,10 @@ export default {
           ],
         },
         {
-          id: 'management',
-          title: this.$t('leftbar.management'),
-          icon: 'icon-guanli',
-          children: [
-            {
-              id: 'plugins',
-              title: this.$t('leftbar.plugins'),
-              index: '/plugins',
-            },
-            {
-              id: 'listeners',
-              title: this.$t('leftbar.listeners'),
-              index: '/listeners',
-            },
-            {
-              id: 'applications',
-              title: this.$t('leftbar.applications'),
-              index: '/applications',
-            },
-          ],
+          id: 'plugins',
+          title: this.$t('leftbar.plugins'),
+          index: '/plugins',
+          icon: 'icon-kongjian',
         },
         {
           id: 'tools',
@@ -147,19 +139,30 @@ export default {
           ],
         },
         {
-          id: 'admin',
-          title: this.$t('leftbar.admin'),
-          icon: 'icon-xitong',
+          id: 'settings',
+          title: this.$t('leftbar.settings'),
+          index: '/settings',
+          icon: 'icon-icon_shezhi',
+        },
+        {
+          id: 'general',
+          title: this.$t('leftbar.general'),
+          icon: 'icon-fenzuguanli',
           children: [
+            {
+              id: 'applications',
+              title: this.$t('leftbar.applications'),
+              index: '/applications',
+            },
             {
               id: 'users',
               title: this.$t('leftbar.users'),
               index: '/users',
             },
             {
-              id: 'settings',
-              title: this.$t('leftbar.settings'),
-              index: '/settings',
+              id: 'listeners',
+              title: this.$t('leftbar.listeners'),
+              index: '/listeners',
             },
             {
               id: 'help',
@@ -204,6 +207,10 @@ export default {
               submenu.hasNew = false
             }
           })
+        } else if (data[menu.id]) {
+          menu.hasNew = true
+        } else if (menu.hasNew) {
+          menu.hasNew = false
         }
       })
     },
@@ -295,19 +302,45 @@ export default {
     border-right: none !important;
   }
 
+  .el-submenu__title {
+    padding-left: 27px !important;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .el-submenu {
+    .el-menu-item {
+      width: 157px !important;
+      min-width: initial;
+      margin-left: 11px;
+    }
+  }
+
   .el-menu-item {
-    height: 44px;
-    line-height: 44px;
-    background: #161616 !important;
+    height: 36px;
+    line-height: 36px;
+    background-color: #8F8E8E;
     color: #929299 !important;
-    padding-left: 51px !important;
+    border-radius: 4px;
+    width: 168px;
+    margin-left: 5px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    transition: border-color .3s, background-color .3s, color .3s, box-shadow .3s;
 
-    &:hover, &.is-active {
-      color: #34C388 !important;
+    &:hover {
+      color: #fff !important;
       background-color: #393A3E !important;
-
       i {
-        color: #34C388 !important;
+        color: #fff !important;
+      }
+    }
+    &.is-active {
+      color: #fff !important;
+      background-color: #00B173 !important;
+      box-shadow: 0px 0px 5px 0px #02d48a;
+      i {
+        color: #fff !important;
       }
     }
   }
@@ -317,8 +350,8 @@ export default {
   }
 
   .menu-dot .el-badge__content.is-fixed.is-dot {
-    top: 20px;
-    right: 3px;
+    top: 17px;
+    right: 0px;
   }
 
   .submenu-dot .el-badge__content.is-fixed.is-dot {

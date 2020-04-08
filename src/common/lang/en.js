@@ -70,7 +70,7 @@ export default {
   // leftbar
   leftbar: {
     // MONITORING
-    monitoring: 'MONITORING',
+    monitor: 'Monitor',
     overview: 'Overview',
     clients: 'Clients',
     connections: 'Connections',
@@ -78,22 +78,23 @@ export default {
     topics: 'Topics',
     subscriptions: 'Subscriptions',
     // RULES
-    rule_engine: 'RULE ENGINE',
+    rule_engine: 'Rule',
     // MANAGEMENT
-    management: 'MANAGEMENT',
+    management: 'Management',
     plugins: 'Plugins',
     listeners: 'Listeners',
     instances: 'Instances',
     // TOOLS
-    tools: 'TOOLS',
+    tools: 'Tools',
     websocket: 'Websocket',
     api: 'HTTP API',
     applications: 'Applications',
     // ADMIN
-    admin: 'ADMIN',
+    admin: 'Admin',
     users: 'Users',
     settings: 'Settings',
     help: 'Help',
+    general: 'General',
   },
   // overview
   overview: {
