@@ -3,19 +3,6 @@
     <div class="page-title">
       {{ $t(`leftbar.${activeTab}`) }}
       <div style="float: right" @keyup.enter.native="searchChild">
-        <el-input
-          v-if="activeTab !== 'clients'"
-          v-model="searchValue"
-          class="input-radius"
-          size="large"
-          style="float: right;padding-left: 20px"
-          :disabled="$store.state.loading"
-          :placeholder="searchPlaceholder"
-          @change="searchView = false"
-          @keyup.enter.native="searchChild">
-          <i slot="suffix" :class="[iconStatus, 'el-input__icon']" @click="searchChild"></i>
-        </el-input>
-
         <el-select
           v-if="activeTab !== 'topics'"
           v-model="nodeName"
@@ -33,12 +20,13 @@
       </div>
     </div>
 
+    <!-- Fuzzy search card -->
     <el-card
-      v-if="activeTab === 'clients'"
+      v-if="activeTab !== 'topics'"
       class="el-card--self search-card">
       <el-form
-        ref="clientFFuzzyParams"
-        :model="clientFFuzzyParams"
+        ref="fuzzyParams"
+        :model="fuzzyParams"
         label-position="left"
         label-width="110px">
         <el-row :gutter="20">
@@ -47,67 +35,110 @@
               <el-input
                 type="text"
                 size="small"
-                v-model="clientFFuzzyParams._like_clientid">
+                v-model="fuzzyParams._like_clientid">
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col v-if="activeTab === 'clients'" :span="8">
             <el-form-item :label="$t('clients.username')">
               <el-input
                 type="text"
                 size="small"
-                v-model="clientFFuzzyParams._like_username">
+                v-model="fuzzyParams._like_username">
               </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col v-else-if="activeTab === 'subscriptions'" :span="8">
+            <el-form-item :label="$t('topics.topic')">
+              <el-row class="form-item-row">
+                <el-col :span="9">
+                  <el-select v-model="fuzzyParams.match" class="match">
+                    <el-option value="pattern"></el-option>
+                    <el-option value="topic"></el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="15">
+                  <el-input
+                    type="text"
+                    size="small"
+                    v-model="fuzzyParams.topic">
+                  </el-input>
+                </el-col>
+              </el-row>
             </el-form-item>
           </el-col>
 
           <template v-if="showMoreQuery">
-            <el-col :span="8">
-              <el-form-item :label="$t('clients.ipAddr')">
-                <el-input
-                  type="text"
-                  size="small"
-                  v-model="clientFFuzzyParams.ip_address">
-                </el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item :label="$t('clients.connected')">
-                <el-select v-model="clientFFuzzyParams.conn_state">
-                  <el-option value="connected"></el-option>
-                  <el-option value="disconnected"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item :label="$t('clients.createdAt')">
-                <el-row class="form-item-row">
-                  <el-col :span="8">
-                    <el-select v-model="clientFFuzzyParams.comparator" class="comparator">
-                      <el-option label=">=" value="_gte"></el-option>
-                      <el-option label="<=" value="_lte"></el-option>
-                    </el-select>
-                  </el-col>
-                  <el-col :span="16">
-                    <el-date-picker
-                      v-model="clientFFuzzyParams._connected_at"
-                      class="datatime"
-                      type="datetime"
-                      value-format="timestamp">
-                    </el-date-picker>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item :label="$t('clients.protoName')">
-                <el-input
-                  type="text"
-                  size="small"
-                  v-model="clientFFuzzyParams.proto_name">
-                </el-input>
-              </el-form-item>
-            </el-col>
+            <template v-if="activeTab === 'clients'">
+              <el-col :span="8">
+                <el-form-item :label="$t('clients.ipAddr')">
+                  <el-input
+                    type="text"
+                    size="small"
+                    v-model="fuzzyParams.ip_address">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('clients.connected')">
+                  <el-select v-model="fuzzyParams.conn_state">
+                    <el-option value="connected"></el-option>
+                    <el-option value="disconnected"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('clients.createdAt')">
+                  <el-row class="form-item-row">
+                    <el-col :span="8">
+                      <el-select v-model="fuzzyParams.comparator" class="comparator">
+                        <el-option label=">=" value="_gte"></el-option>
+                        <el-option label="<=" value="_lte"></el-option>
+                      </el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-date-picker
+                        v-model="fuzzyParams._connected_at"
+                        class="datatime"
+                        type="datetime"
+                        value-format="timestamp">
+                      </el-date-picker>
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('clients.protoName')">
+                  <el-input
+                    type="text"
+                    size="small"
+                    v-model="fuzzyParams.proto_name">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </template>
+
+            <template v-else-if="activeTab === 'subscriptions'">
+              <el-col :span="8">
+                <el-form-item label="QoS">
+                  <el-select v-model="fuzzyParams.qos" clearable>
+                    <el-option :value="0"></el-option>
+                    <el-option :value="1"></el-option>
+                    <el-option :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8" class="col-share">
+                <el-form-item :label="$t('subscriptions.share')">
+                  <el-input
+                    type="text"
+                    size="small"
+                    v-model="fuzzyParams.share">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </template>
+
           </template>
 
           <span class="col-oper">
@@ -195,13 +226,13 @@
     </el-table>
 
     <!-- topics -->
-    <el-table v-show="activeTab==='topics'" v-loading="$store.state.loading" border :data="topics">
+    <el-table v-show="activeTab === 'topics'" v-loading="$store.state.loading" border :data="topics">
       <el-table-column prop="topic" :label="$t('topics.topic')"></el-table-column>
       <el-table-column prop="node" :label="$t('topics.node')"></el-table-column>
     </el-table>
 
     <!-- subscriptions -->
-    <el-table v-show="activeTab==='subscriptions'" v-loading="$store.state.loading" border :data="subscriptions">
+    <el-table v-show="activeTab === 'subscriptions'" v-loading="$store.state.loading" border :data="subscriptions">
       <el-table-column v-if="cluster" prop="node" min-width="160" :label="$t('clients.node')">
       </el-table-column>
       <el-table-column prop="clientid" :label="$t('subscriptions.clientId')"></el-table-column>
@@ -270,8 +301,9 @@ export default {
       searchValue: '',
       searchPlaceholder: this.$t('clients.clientId'),
       clients: [],
-      clientFFuzzyParams: {
+      fuzzyParams: {
         comparator: '_gte',
+        match: 'pattern',
       },
       topics: [],
       subscriptions: [],
@@ -281,8 +313,9 @@ export default {
   watch: {
     $route: 'init',
     activeTab() {
-      this.clientFFuzzyParams = {
+      this.fuzzyParams = {
         comparator: '_gte',
+        match: 'pattern',
       }
     },
   },
@@ -399,7 +432,7 @@ export default {
         return
       }
       this.params._page -= 1
-      const params = this.genQueryParams(this.clientFFuzzyParams)
+      const params = this.genQueryParams(this.fuzzyParams)
       this.loadChild(false, params)
     },
     handleNextClick() {
@@ -407,7 +440,7 @@ export default {
         return
       }
       this.params._page += 1
-      const params = this.genQueryParams(this.clientFFuzzyParams)
+      const params = this.genQueryParams(this.fuzzyParams)
       this.loadChild(false, params)
     },
     handleDisconnect(row, index, self) {
@@ -420,29 +453,48 @@ export default {
       })
     },
     genQueryParams(params) {
-      const {
-        _like_clientid, _like_username, ip_address, conn_state, proto_name, comparator, _connected_at,
-      } = params
-      const newParams = {
-        _like_clientid,
-        _like_username,
-        ip_address,
-        conn_state,
-        proto_name,
-      }
-      if (_connected_at) {
-        const connectedAtKey = `${comparator}_connected_at`
-        newParams[connectedAtKey] = Math.floor(_connected_at / 1000)
+      let newParams = {}
+      if (this.activeTab === 'clients') {
+        const {
+          _like_clientid, _like_username, ip_address, conn_state,
+          proto_name, comparator, _connected_at,
+        } = params
+        newParams = {
+          _like_clientid: _like_clientid || undefined,
+          _like_username: _like_username || undefined,
+          ip_address: ip_address || undefined,
+          conn_state: conn_state || undefined,
+          proto_name: proto_name || undefined,
+        }
+        if (_connected_at) {
+          const connectedAtKey = `${comparator}_connected_at`
+          newParams[connectedAtKey] = Math.floor(_connected_at / 1000)
+        }
+      } else if (this.activeTab === 'subscriptions') {
+        const {
+          _like_clientid, topic, qos, share, match,
+        } = params
+        newParams = {
+          clientid: _like_clientid || undefined,
+          qos: qos === '' ? undefined : qos,
+          share: share || undefined,
+        }
+        if (topic && match === 'pattern') {
+          newParams._match_topic = topic
+        } else if (topic && match === 'topic') {
+          newParams.topic = topic
+        }
       }
       return newParams
     },
     clientQuerySearch() {
-      const params = this.genQueryParams(this.clientFFuzzyParams)
+      const params = this.genQueryParams(this.fuzzyParams)
       this.loadChild(true, params)
     },
     resetClientQuerySearch() {
-      this.clientFFuzzyParams = {
+      this.fuzzyParams = {
         comparator: '>=',
+        match: 'pattern',
       }
       this.init()
     },
@@ -494,6 +546,13 @@ export default {
    .el-input, .el-select {
       width: 100%;
     }
+    .el-input--medium .el-input__inner {
+      height: 32px !important;
+    }
+    .col-share {
+      position: absolute;
+      bottom: -13px;
+    }
     .col-oper {
       float: right;
       position: relative;
@@ -506,10 +565,11 @@ export default {
     }
     .form-item-row {
       margin-top: 0px;
-     .el-select.comparator .el-input--medium .el-input__inner {
+     .el-select.comparator .el-input--medium .el-input__inner,
+     .el-select.match .el-input--medium .el-input__inner {
         border-radius: 4px 0 0 4px;
       }
-      .datatime.el-input .el-input__inner {
+      .el-input__inner {
         border-radius: 0 4px 4px 0;
       }
     }
