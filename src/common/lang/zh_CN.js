@@ -200,6 +200,7 @@ export default {
     clientId: '客户端 ID',
     topic: '主题',
     qoS: 'QoS',
+    share: '共享订阅',
   },
   // plugins
   plugins: {

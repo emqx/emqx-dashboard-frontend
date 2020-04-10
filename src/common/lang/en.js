@@ -199,6 +199,7 @@ export default {
     clientId: 'Client ID',
     topic: 'Topic',
     qoS: 'QoS',
+    share: 'Share',
   },
   // plugins
   plugins: {

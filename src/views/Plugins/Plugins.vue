@@ -55,8 +55,6 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="version" width="140" :label="$t('plugins.version')">
-      </el-table-column>
       <el-table-column prop="description" min-width="340" :label="$t('plugins.description')">
       </el-table-column>
       <el-table-column
