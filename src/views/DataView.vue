@@ -53,8 +53,8 @@
               <el-row class="form-item-row">
                 <el-col :span="9">
                   <el-select v-model="fuzzyParams.match" class="match">
-                    <el-option value="pattern"></el-option>
-                    <el-option value="topic"></el-option>
+                    <el-option label="filter" value="_match_topic"></el-option>
+                    <el-option label="topic" value="topic"></el-option>
                   </el-select>
                 </el-col>
                 <el-col :span="15">
@@ -303,7 +303,7 @@ export default {
       clients: [],
       fuzzyParams: {
         comparator: '_gte',
-        match: 'pattern',
+        match: '_match_topic',
       },
       topics: [],
       subscriptions: [],
@@ -315,7 +315,7 @@ export default {
     activeTab() {
       this.fuzzyParams = {
         comparator: '_gte',
-        match: 'pattern',
+        match: '_match_topic',
       }
     },
   },
@@ -479,10 +479,8 @@ export default {
           qos: qos === '' ? undefined : qos,
           share: share || undefined,
         }
-        if (topic && match === 'pattern') {
-          newParams._match_topic = topic
-        } else if (topic && match === 'topic') {
-          newParams.topic = topic
+        if (topic) {
+          newParams[match] = topic
         }
       }
       return newParams
@@ -494,7 +492,7 @@ export default {
     resetClientQuerySearch() {
       this.fuzzyParams = {
         comparator: '>=',
-        match: 'pattern',
+        match: '_match_topic',
       }
       this.init()
     },
