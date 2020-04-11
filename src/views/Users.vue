@@ -22,39 +22,41 @@
       <el-table-column prop="tags" :label="$t('users.remark')">
       </el-table-column>
       <el-table-column width="140" :label="$t('oper.oper')">
-        <template slot-scope="props">
+        <template slot-scope="{ row, $index, _self }">
           <el-button
             size="mini"
             type="warning"
             plain
-            @click="handleOperation(false, props.row)">
+            @click="handleOperation(false, row)">
             {{ $t('oper.edit') }}
           </el-button>
-          <el-popover placement="right" trigger="click" :value="popoverVisible">
+          <el-popover
+           :ref="`popover-${$index}`"
+           placement="right"
+           trigger="click">
             <p>{{ $t('oper.confirmDelete') }}</p>
             <div style="text-align: right">
               <el-button
                 size="mini"
                 type="text"
                 class="cache-btn"
-                @click="hidePopover">
+                @click="_self.$refs[`popover-${$index}`].doClose()">
                 {{ $t('oper.cancel') }}
               </el-button>
               <el-button
                 size="mini"
                 type="success"
-                :loading="$store.state.loading"
-                @click="deleteUser(props.row)">
+                @click="deleteUser(row, $index, _self)">
                 {{ $t('oper.confirm') }}
               </el-button>
             </div>
             <el-button
               slot="reference"
-              v-if="props.row.username!=='admin' && $store.state.user.username !== props.row.username"
+              v-show="row.username !== 'admin' && username !== row.username"
               size="mini"
-              plain
-              type="danger">
-              {{ $t('oper.delete') }}
+              type="danger"
+              plain>
+             {{ $t('oper.delete') }}
             </el-button>
           </el-popover>
         </template>
@@ -77,11 +79,6 @@
           <el-col :span="24">
             <el-form-item prop="username" :label="$t('users.username')">
               <el-input v-model="record.username" :disabled="oper==='edit'"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item prop="tags" :label="$t('users.remark')">
-              <el-input v-model="record.tags"></el-input>
             </el-form-item>
           </el-col>
           <!-- create new User -->
@@ -107,6 +104,11 @@
               </el-form-item>
             </el-col>
           </div>
+          <el-col :span="24">
+            <el-form-item prop="tags" :label="$t('users.remark')">
+              <el-input v-model="record.tags"></el-input>
+            </el-form-item>
+          </el-col>
           <!-- toggle-btn -->
           <el-col :span="24">
             <el-form-item>
@@ -115,7 +117,7 @@
                 class="cache-btn change-password"
                 type="text"
                 @click="changePassword = !changePassword">
-                {{ changePassword ? $t('users.dontChangePassword') : $t('users.changePassword')}}
+                {{ changePassword ? $t('users.dontChangePassword') : $t('users.changePassword') }}
               </el-button>
             </el-form-item>
           </el-col>
@@ -147,6 +149,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'users-view',
+
   components: {
     'el-dialog': Dialog,
     'el-input': Input,
@@ -159,6 +162,7 @@ export default {
     'el-row': Row,
     'el-col': Col,
   },
+
   data() {
     const checkRepeatPassword = (rule, value, callback) => {
       if (value !== this.record.newPassword) {
@@ -169,7 +173,6 @@ export default {
     }
     return {
       changePassword: false,
-      popoverVisible: false,
       dialogVisible: false,
       oper: 'new',
       users: [],
@@ -203,14 +206,15 @@ export default {
       },
     }
   },
+
+  computed: {
+    username() {
+      return this.$store.state.user.username
+    },
+  },
+
   methods: {
     ...mapActions(['USER_LOGIN']),
-    hidePopover() {
-      this.popoverVisible = true
-      setTimeout(() => {
-        this.popoverVisible = false
-      }, 0)
-    },
     handleOperation(create = true, row) {
       this.changePassword = false
       this.dialogVisible = true
@@ -298,11 +302,11 @@ export default {
         }
       })
     },
-    deleteUser(row) {
+    deleteUser(row, index, self) {
       this.$httpDelete(`/users/${row.username}`).then(() => {
         this.$message.success(`${this.$t('oper.delete')}${this.$t('alert.success')}`)
         this.loadData()
-        this.hidePopover()
+        self.$refs[`popover-${index}`].doClose()
       }).catch((error) => {
         this.$message.error(error || this.$t('error.networkError'))
       })
