@@ -317,8 +317,8 @@ export default {
   }
 
   .el-menu-item {
-    height: 36px;
-    line-height: 36px;
+    height: 36px !important;
+    line-height: 36px !important;
     background-color: #8F8E8E;
     color: #929299 !important;
     border-radius: 4px;
