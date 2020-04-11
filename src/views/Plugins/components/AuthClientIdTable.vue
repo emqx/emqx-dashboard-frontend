@@ -16,10 +16,12 @@
         </el-col>
         <el-col :span="2">
           <el-button
-            type="success"
             class="add"
+            round
+            plain
+            type="success"
             icon="el-icon-plus"
-            size="small"
+            size="medium"
             @click="save">
             {{ $t('oper.add') }}
           </el-button>
@@ -218,11 +220,6 @@ export default {
 
 <style lang="scss">
 .auth-clientid-table {
-  .el-button--success.add {
-    border: none;
-    position: relative;
-    top: 2px;
-  }
   .el-form-item__error {
     display: none;
   }

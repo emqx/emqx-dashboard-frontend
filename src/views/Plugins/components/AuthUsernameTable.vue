@@ -4,22 +4,24 @@
       <el-form ref="record" :model="record" :rules="rules" @keyup.enter.native="save">
         <el-col :span="5">
           <el-form-item prop="username">
-            <el-input size="small" v-model="record.username" placeholder="Username" class="input-radius">
+            <el-input v-model="record.username" placeholder="Username" class="input-radius">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="5">
           <el-form-item prop="password">
-            <el-input v-model="record.password" type="password" size="small" placeholder="Password" class="input-radius">
+            <el-input v-model="record.password" type="password" placeholder="Password" class="input-radius">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button
-            type="success"
             class="add"
+            round
+            plain
+            type="success"
             icon="el-icon-plus"
-            size="small"
+            size="medium"
             @click="save">
             {{ $t('oper.add') }}
           </el-button>
@@ -218,11 +220,6 @@ export default {
 
 <style lang="scss">
 .auth-username-table {
-  .el-button--success.add {
-    border: none;
-    position: relative;
-    top: 2px;
-  }
   .el-form-item__error {
     display: none;
   }

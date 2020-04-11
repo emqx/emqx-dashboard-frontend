@@ -100,12 +100,12 @@ export default {
         },
         {
           id: 'rule_engine',
-          title: this.$t('leftbar.rule_engine'),
+          title: this.$t('rule.rule_engine'),
           icon: 'icon-guizeyinqing',
           children: [
             {
               id: 'rules',
-              title: this.$t('rule.rule_engine'),
+              title: this.$t('leftbar.rule_engine'),
               index: '/rules',
             },
             {
