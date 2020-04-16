@@ -34,6 +34,10 @@
     border-bottom: none;
   }
 }
+.el-table__fixed::before,
+.el-table__fixed-right::before {
+  display: none;
+}
 
 /* Input, Select, Checkbox */
 .el-checkbox {

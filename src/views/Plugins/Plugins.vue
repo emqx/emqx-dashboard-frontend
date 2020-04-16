@@ -11,8 +11,8 @@
           style="float: right;padding-left: 20px"
           :disabled="$store.state.loading"
           :placeholder="$t('plugins.searchByName')"
-          @keyup.enter.native="searchPlugins">
-          <i slot="suffix" :class="[iconStatus, 'el-input__icon']" @click="searchPlugins"></i>
+          clearable
+          @input="searchPlugins">
         </el-input>
 
         <el-select
@@ -23,9 +23,9 @@
           @change="loadPlugins">
           <el-option
             v-for="node in nodes"
-            :key="node.name"
-            :label="node.name"
-            :value="node.name">
+            :key="node.node"
+            :label="node.node"
+            :value="node.node">
           </el-option>
         </el-select>
       </div>
@@ -55,8 +55,6 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="version" width="140" :label="$t('plugins.version')">
-      </el-table-column>
       <el-table-column prop="description" min-width="340" :label="$t('plugins.description')">
       </el-table-column>
       <el-table-column
@@ -80,6 +78,16 @@
             :type="props.row.active ? 'warning' : 'success'"
             @click="update(props.row)" :plain="true">
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
+          </el-button>
+          <el-button
+            v-if="hasManagePage(props.row.name)"
+            class="oper"
+            type="success"
+            size="mini"
+            :plain="true"
+            :disabled="!props.row.active"
+            @click="handleManage(props.row)">
+            {{ $t('plugins.manage') }}
           </el-button>
           <!-- <el-button
             type="success"
@@ -140,7 +148,7 @@ export default {
     loadData() {
       this.searchView = false
       this.$httpGet('/nodes').then((response) => {
-        this.nodeName = this.$store.state.nodeName || response.data[0].name
+        this.nodeName = this.$store.state.nodeName || response.data[0].node
         this.nodes = response.data
         this.loadPlugins()
       }).catch((error) => {
@@ -196,18 +204,31 @@ export default {
       windowUrl.opener = null
     },
     searchPlugins() {
-      if (this.searchView) {
-        this.searchValue = ''
+      if (!this.searchValue) {
         this.loadData()
         return
       }
-      matchSearch(this.tableData, 'name', this.searchValue).then((res) => {
-        if (res) {
-          this.enableTableData = res
-        }
-        this.searchView = true
-      }).catch(() => {
-        this.searchView = false
+      setTimeout(() => {
+        matchSearch(this.tableData, 'name', this.searchValue).then((res) => {
+          if (res) {
+            this.enableTableData = res
+          }
+        }).catch(() => {
+          // ignore
+        })
+      }, 500)
+    },
+    hasManagePage(name) {
+      const pluginsDict = {
+        emqx_auth_clientid: true,
+        emqx_auth_username: true,
+        emqx_auth_jwt: true,
+      }
+      return pluginsDict[name]
+    },
+    handleManage(row) {
+      this.$router.push({
+        path: `/plugins/${row.name}`,
       })
     },
   },
@@ -232,7 +253,7 @@ export default {
     margin-top: 20px;
   }
   .oper {
-    width: 50px;
+    min-width: 50px;
     font-size: 14px;
     margin-bottom: 4px;
   }

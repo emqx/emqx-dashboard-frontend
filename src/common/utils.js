@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import Clipboard from 'clipboard'
 import parser from 'js-sql-parser'
 import { pluginsZh, pluginsEn } from './urls_links'
 
@@ -39,7 +41,8 @@ function getRule(item) {
   }
   rule.type = type
   // format first
-  if (validateType.includes(format)) {
+  // Can't create resources when deploy using docker cause host is service name, not IP if using url type rules
+  if (validateType.includes(format) && format !== 'url') {
     rule.type = format
   }
   rule.enum = type === 'enum' ? enumValue : undefined
@@ -48,7 +51,7 @@ function getRule(item) {
 }
 
 export function params2Form(params = {}, deepKey = '') {
-  const model = []
+  let model = []
   let resource = ''
   const rules = {
     [deepKey]: {},
@@ -62,7 +65,7 @@ export function params2Form(params = {}, deepKey = '') {
       return
     }
 
-    const { format, enum: enumValue, input } = value
+    const { format, enum: enumValue, input, order } = value
     let { title, type, description, default: defaultValue } = value
     if (typeof title === 'object') {
       title = title[lang]
@@ -106,6 +109,7 @@ export function params2Form(params = {}, deepKey = '') {
       defaultValue,
       $attrs,
       description: (description || '').replace(/\n/g, '<br/>'),
+      order,
     })
     if (deepKey) {
       rules[deepKey][key] = getRule(item)
@@ -114,6 +118,7 @@ export function params2Form(params = {}, deepKey = '') {
     }
   })
 
+  model = model.sort((prev, next) => prev.order - next.order)
   return { model, rules, resource }
 }
 
@@ -132,9 +137,8 @@ export function matchSearch(data, searchKey, searchValue) {
           const key = $[searchKey].toLowerCase().replace(/\s+/g, '')
           const value = searchValue.toLocaleLowerCase().replace(/\s+/g, '')
           return key.match(value)
-        } else {
-          return null
         }
+        return null
       })
       return resolve(filterData)
     } catch (error) {
@@ -144,6 +148,7 @@ export function matchSearch(data, searchKey, searchValue) {
 }
 
 export function ruleOldSqlCheck(sql) {
+  // eslint-disable-next-line no-useless-escape
   const $sql = sql.replace(/\"/g, '')
   const oldEvent = [
     'message.publish',
@@ -179,6 +184,7 @@ export function ruleNewSqlParser(sql, e) {
     'client.unsubscribe': '$events/session_unsubscribed',
   }
   let newEvent = oldEventDict[e]
+  // eslint-disable-next-line no-useless-escape
   const $sql = sql.replace(/\"/g, '')
   const ast = parser.parse($sql)
   if (newEvent === '') {
@@ -187,6 +193,34 @@ export function ruleNewSqlParser(sql, e) {
   }
   ast.value.from.value[0].value.value.value = `"${newEvent}"`
   return parser.stringify(ast)
+}
+
+function clipboardSuccess() {
+  Vue.prototype.$message({
+    message: Vue.prototype.$t('oper.copySuccess'),
+    type: 'success',
+    duration: 1500,
+  })
+}
+function clipboardError() {
+  Vue.prototype.$message({
+    message: Vue.prototype.$t('oper.copyFailed'),
+    type: 'error',
+  })
+}
+export function handleClipboard(text, event) {
+  const clipboard = new Clipboard(event.target, {
+    text: () => text,
+  })
+  clipboard.on('success', () => {
+    clipboardSuccess()
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    clipboardError()
+    clipboard.destroy()
+  })
+  clipboard.onClick(event)
 }
 
 export default {}

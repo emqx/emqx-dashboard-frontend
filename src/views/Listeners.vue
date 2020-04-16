@@ -10,9 +10,9 @@
         @change="loadListeners">
         <el-option
           v-for="node in nodes"
-          :key="node.name"
-          :label="node.name"
-          :value="node.name">
+          :key="node.node"
+          :label="node.node"
+          :value="node.node">
         </el-option>
       </el-select>
     </div>
@@ -53,7 +53,7 @@ export default {
     ...mapActions(['CURRENT_NODE']),
     loadData() {
       this.$httpGet('/nodes').then((response) => {
-        this.nodeName = this.$store.state.nodeName || response.data[0].name
+        this.nodeName = this.$store.state.nodeName || response.data[0].node
         this.nodes = response.data
         this.loadListeners()
       }).catch((error) => {

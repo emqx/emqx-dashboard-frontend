@@ -65,8 +65,10 @@
 
     </el-table>
 
-
-    <el-dialog :title="$t('rule.rule_details')" :visible.sync="dialogVisible" @close="closeDialog">
+    <el-dialog
+      :title="$t('rule.rule_details')"
+      :visible.sync="dialogVisible"
+      @close="closeDialog">
       <div class="dialog-preview">
         <div class="option-item">
           <div class="option-title">{{ $t('rule.id') }}</div>

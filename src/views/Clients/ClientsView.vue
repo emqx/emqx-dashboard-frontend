@@ -17,9 +17,8 @@
       <el-button
         :class="[basicRecord.connected ? 'connected' : 'disconnected', 'connect-btn']"
         size="mini"
-        :disabled="!basicRecord.connected"
         @click="handleDisconnect">
-        {{ basicRecord.connected ? $t('websocket.disconnect') : $t('clients.disconnected') }}
+        {{ basicRecord.connected ? $t('clients.kickOut') : $t('websocket.cleanSession') }}
       </el-button>
     </div>
 
@@ -63,7 +62,7 @@ export default {
   computed: {
     clientId() {
       return this.$route.params.id
-    }
+    },
   },
 
   created() {
@@ -86,26 +85,32 @@ export default {
       this[command]()
     },
     handleDisconnect() {
-      this.$confirm(this.$t('oper.confirmDisconnect'), this.$t('oper.warning'), {
+      const confirmMsg = this.basicRecord.connected
+        ? this.$t('oper.confirmKickOut')
+        : this.$t('oper.confirmCleanSession')
+      this.$confirm(confirmMsg, this.$t('oper.warning'), {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
       }).then(() => {
-        this.$httpDelete(`/clients/${this.clientId}`).then(() => {
+        this.$httpDelete(`/clients/${encodeURIComponent(this.clientId)}`).then(() => {
           this.$message.success(this.$t('oper.disconnectSuccess'))
           this.$set(this.basicRecord, 'connected', false)
+          setTimeout(() => {
+            this.$router.push({ path: '/clients' })
+          }, 500)
         }).catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
       }).catch(() => {})
     },
     loadBasicData() {
-      this.$httpGet(`/clients/${this.clientId}`).then((res) => {
+      this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`).then((res) => {
         this.basicRecord = res.data[0]
       }).catch(() => {})
     },
     loadSubscription() {
-      this.$httpGet(`/subscriptions/${this.clientId}`).then((res) => {
+      this.$httpGet(`/subscriptions/${encodeURIComponent(this.clientId)}`).then((res) => {
         this.subscriptionsData = res.data
       }).catch(() => {})
     },
@@ -149,8 +154,7 @@ export default {
     padding: 10px 36px;
   }
   .card-subtitle {
-    color: #F8F8F8;
-    font-size: 14px;
+    font-size: 16px;
     margin: 24px 0;
   }
 }

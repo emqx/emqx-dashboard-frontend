@@ -32,13 +32,16 @@
             <el-form-item :label="$t('clients.port')" prop="port">
               <span>{{ record.port }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.isBridge')" prop="is_bridge">
-              <span>{{ record.is_bridge ? $t('oper.yes') : $t('oper.no') }}</span>
+            <el-form-item :label="$t('clients.keepalive')" prop="keepalive">
+              <span>{{ record.keepalive }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.connectedAt')" prop="connected_at">
+            <el-form-item :label="$t('clients.isBridge')" prop="is_bridge">
+              <span>{{ record.is_bridge }}</span>
+            </el-form-item>
+            <el-form-item v-if="record.connected" :label="$t('clients.connectedAt')" prop="connected_at">
               <span>{{ record.connected_at }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.disconnectAt')" prop="disconnected_at">
+            <el-form-item v-if="!record.connected" :label="$t('clients.disconnectAt')" prop="disconnected_at">
               <span>{{ record.disconnected_at }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.connected')" prop="connected">
@@ -56,9 +59,6 @@
             <el-form-item :label="record.proto_ver === 5 ? 'Clean Start' : 'Clean Session'" prop="clean_start">
               <span>{{ record.clean_start }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.keepalive')" prop="keepalive">
-              <span>{{ record.keepalive }}</span>
-            </el-form-item>
             <el-form-item :label="$t('clients.expiryInterval')" prop="expiry_interval">
               <span>{{ record.expiry_interval }}</span>
             </el-form-item>
@@ -66,22 +66,28 @@
               <span>{{ record.created_at }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.subscriptions')">
-              <span>{{ record.subscriptions_cnt }} / {{ record.max_subscriptions }}</span>
+              <span>{{ record.subscriptions_cnt }} / {{ record.max_subscriptions | transToUnlimit }}</span>
+            </el-form-item>
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.subscriptions')}`">
+              <span>{{ record.max_subscriptions | transToUnlimit }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.inflight')">
               <span>{{ record.inflight }} / {{ record.max_inflight }}</span>
             </el-form-item>
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.inflight')}`">
+              <span>{{ record.max_inflight }}</span>
+            </el-form-item>
             <el-form-item :label="$t('clients.mqueue')">
               <span>{{ record.mqueue_len }} / {{ record.max_mqueue }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.heapSize')" prop="heap_size">
-              <span>{{ record.heap_size }}</span>
+             <el-form-item :label="`${$t('clients.max')} ${$t('clients.mqueue')}`">
+              <span>{{ record.max_mqueue }}</span>
             </el-form-item>
-            <el-form-item :label="`OTP ${$t('clients.reductions')}`" prop="reductions">
-              <span>{{ record.reductions }}</span>
+            <el-form-item :label="$t('clients.awaiting_rel')" prop="awaiting_rel">
+              <span>{{ record.awaiting_rel }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.mailbox')" prop="mailbox_len">
-              <span>{{ record.mailbox_len }}</span>
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.awaiting_rel')}`" prop="max_awaiting_rel">
+              <span>{{ record.max_awaiting_rel }}</span>
             </el-form-item>
           </el-col>
         </el-form>
@@ -103,47 +109,31 @@
           label-suffix=":">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="awaiting_rel" prop="awaiting_rel">
-                <span>{{ record.awaiting_rel }}</span>
-                <span class="form-item-desc">{{ $t('clients.awaiting_rel_desc') }}</span>
-              </el-form-item>
-              <el-form-item label="max_awaiting_rel" prop="max_awaiting_rel">
-                <span>{{ record.max_awaiting_rel }}</span>
-                <span class="form-item-desc">{{ $t('clients.max_awaiting_rel_desc') }}</span>
-              </el-form-item>
-              <el-form-item label="recv_cnt" prop="recv_cnt">
+              <el-form-item :label="$t('clients.recv_cnt_desc')" prop="recv_cnt">
                 <span>{{ record.recv_cnt }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_cnt_desc') }}</span>
               </el-form-item>
-              <el-form-item label="recv_msg" prop="recv_msg">
+              <el-form-item :label="$t('clients.recv_msg_desc')" prop="recv_msg">
                 <span>{{ record.recv_msg }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_msg_desc') }}</span>
               </el-form-item>
-              <el-form-item label="recv_oct" prop="recv_oct">
+              <el-form-item :label="$t('clients.recv_oct_desc')" prop="recv_oct">
                 <span>{{ record.recv_oct }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_oct_desc') }}</span>
               </el-form-item>
-              <el-form-item label="recv_pkt" prop="recv_pkt">
+              <el-form-item :label="$t('clients.recv_pkt_desc')" prop="recv_pkt">
                 <span>{{ record.recv_pkt }}</span>
-                <span class="form-item-desc">{{ $t('clients.recv_pkt_desc') }}</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="send_cnt" prop="send_cnt">
+              <el-form-item :label="$t('clients.send_cnt_desc')" prop="send_cnt">
                 <span>{{ record.send_cnt }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_cnt_desc') }}</span>
               </el-form-item>
-              <el-form-item label="send_msg" prop="send_msg">
+              <el-form-item :label="$t('clients.send_msg_desc')" prop="send_msg">
                 <span>{{ record.send_msg }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_msg_desc') }}</span>
               </el-form-item>
-              <el-form-item label="send_oct" prop="send_oct">
+              <el-form-item :label="$t('clients.send_oct_desc')" prop="send_oct">
                 <span>{{ record.send_oct }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_oct_desc') }}</span>
               </el-form-item>
-              <el-form-item label="send_pkt" prop="send_pkt">
+              <el-form-item :label="$t('clients.send_pkt_desc')" prop="send_pkt">
                 <span>{{ record.send_pkt }}</span>
-                <span class="form-item-desc">{{ $t('clients.send_pkt_desc') }}</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -161,7 +151,13 @@ export default {
   props: {
     record: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
+    },
+  },
+
+  filters: {
+    transToUnlimit(val) {
+      return val === 0 ? 'Unlimited' : val
     },
   },
 

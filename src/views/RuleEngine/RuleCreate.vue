@@ -230,7 +230,7 @@ export default {
     },
     sqlProvider() {
       return ruleEngineProvider
-    }
+    },
   },
 
   watch: {

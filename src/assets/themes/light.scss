@@ -55,6 +55,15 @@
     }
   }
 }
+.el-table__body tr.hover-row>td,
+.el-table__body tr.hover-row.current-row>td,
+.el-table__body tr.hover-row.el-table__row--striped>td,
+.el-table__body tr.hover-row.el-table__row--striped.current-row>td {
+  background-color: #f5f5f5 !important;
+}
+.el-table__body tr:hover>td {
+  background-color: #f5f5f5 !important;
+}
 
 .el-checkbox {
   .el-checkbox__input.is-checked + .el-checkbox__label {
@@ -338,8 +347,8 @@
   }
 }
 
+/* Rule */
 .rule-create {
-
   .form-block--wrapper {
     border-bottom: 1px solid #DCDFE6;
   }
@@ -381,11 +390,6 @@
     .cm-keyword, .cm-operator {
       color: #aa1111;
     }
-  }
-
-  .monaco-container {
-    height: 100%;
-    border: 1px solid #DCDFE6;
   }
 
   .payload-type {
@@ -455,4 +459,18 @@
       color: #343434;
     }
   }
+}
+
+.monaco-container {
+  height: 100%;
+  border: 1px solid #DCDFE6;
+}
+
+.jwt-payload-desc {
+  background: rgba(223, 223, 223, 0.8);
+}
+
+/* Clients */
+.clients-view .card-subtitle {
+  color: #6E6E75;
 }

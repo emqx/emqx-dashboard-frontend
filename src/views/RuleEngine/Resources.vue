@@ -113,7 +113,9 @@
       @confirm="loadData">
     </resource-dialog>
 
-    <el-dialog :title="$t('rule.resource_details')" :visible.sync="viewDialogVisible">
+    <el-dialog
+      :title="$t('rule.resource_details')"
+      :visible.sync="viewDialogVisible">
       <div class="dialog-preview">
         <div class="option-item">
           <div class="option-title">

@@ -86,7 +86,8 @@
     <el-dialog
       :width="oper === 'view' ? '660px' : '500px'"
       :visible.sync="displayDialog"
-      :title="$t(`app.${oper}App`)">
+      :title="$t(`app.${oper}App`)"
+      @keyup.enter.native="createApp">
       <el-form
         class="el-form--public app-info"
         ref="record"

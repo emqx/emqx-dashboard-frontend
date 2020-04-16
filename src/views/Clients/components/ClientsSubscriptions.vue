@@ -28,7 +28,6 @@
       </el-row>
 
       <el-table class="client-sub-table" v-loading="$store.state.loading" border :data="tableData">
-        <el-table-column prop="clientid" :label="$t('subscriptions.clientId')"></el-table-column>
         <el-table-column prop="topic" :label="$t('subscriptions.topic')"></el-table-column>
         <el-table-column prop="qos" :label="$t('subscriptions.qoS')"></el-table-column>
         <el-table-column width="120px" :label="$t('oper.oper')">
@@ -49,7 +48,8 @@
       :title="$t('clients.addSubs')"
       width="400px"
       :visible.sync="addVisible"
-      class="create-subscribe">
+      class="create-subscribe"
+      @keyup.enter.native="handleAdd">
       <el-form
         ref="record"
         class="el-form--public"
@@ -139,8 +139,8 @@ export default {
   methods: {
     handleUnsub(row) {
       this.$msgbox.confirm(this.$t('oper.unsubscribeConfirm'), this.$t('oper.warning'), {
-          type: 'warning',
-        }).then(() => {
+        type: 'warning',
+      }).then(() => {
         const { topic, clientid } = row
         const body = {
           topic,

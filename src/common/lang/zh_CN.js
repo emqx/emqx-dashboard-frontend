@@ -13,7 +13,7 @@ export default {
   },
   // success
   success: {
-    createSuccess: 'Create Success',
+    createSuccess: '创建成功',
   },
   // oper
   oper: {
@@ -28,6 +28,7 @@ export default {
     create: '创建',
     view: '查看',
     viewMore: '查看更多',
+    expand: '展开',
     collapse: '收起',
     refresh: '刷新',
     add: '添加',
@@ -43,6 +44,7 @@ export default {
     notice: '注意',
     learnMore: '了解更多',
     confirmDisconnect: '确认断开连接？',
+    confirmKickOut: '确认踢除客户端？',
     confirmCleanSession: '确认清除会话？',
     yes: '是',
     no: '否',
@@ -53,6 +55,12 @@ export default {
     unsubscribe: '取消订阅',
     unsubscribeConfirm: '此操作将取消订阅该主题',
     pleaseEnter: '请输入',
+    copy: '复制',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败',
+    generate: '生成',
+    search: '搜索',
+    reset: '重置',
   },
   // topbar
   topbar: {
@@ -61,13 +69,15 @@ export default {
   // leftbar
   leftbar: {
     // MONITORING
-    monitoring: '监控',
+    monitor: '监控',
     overview: '控制台',
     clients: '客户端',
     connections: '连接',
     sessions: '会话',
     topics: '主题',
     subscriptions: '订阅',
+    // RULES
+    rule_engine: '规则引擎',
     // MANAGEMENT
     management: '管理',
     plugins: '插件',
@@ -84,6 +94,7 @@ export default {
     users: '用户',
     settings: '设置',
     help: '帮助',
+    general: '通用',
   },
   // overview
   overview: {
@@ -139,7 +150,7 @@ export default {
     keepalive: '心跳（秒）',
     back: '返回',
     subscriptionsCount: '当前订阅数量',
-    expiryInterval: '会话过期间隔',
+    expiryInterval: '会话过期间隔（秒）',
     maxInflight: '最大拥塞',
     inflightLen: '当前拥塞',
     mqueueLen: '当前缓存消息',
@@ -160,26 +171,24 @@ export default {
     isBridge: '是否为桥接',
     disconnectAt: '断开连接时间',
     session: '会话信息',
-    subscriptions: '当前 / 最大订阅数量',
-    inflight: '当前 / 最大飞行窗口',
-    mqueue: '当前 / 最大消息队列',
-    heapSize: '进程堆栈大小',
-    reductions: '调度递减计数',
-    mailbox: '进程邮箱中的消息数量',
-    awaiting_rel_desc: '正在等待 PUBREL 的 QoS2 消息数量',
-    max_awaiting_rel_desc: '允许同时等待 PUBREL 的 QoS2 消息的最大数量',
+    max: '最大',
+    subscriptions: '订阅数量',
+    inflight: '飞行窗口',
+    mqueue: '消息队列',
+    awaiting_rel: '未确认的 PUBREC 数据包计数',
     recv_cnt_desc: '接收的 TCP 报文数量',
     recv_msg_desc: '接收的 PUBLISH 报文数量',
-    recv_oct_desc: '接收字节数',
+    recv_oct_desc: '接收的字节数量',
     recv_pkt_desc: '接收的 MQTT 报文数量',
     send_cnt_desc: '发送的 TCP 报文数量',
     send_msg_desc: '发送的 PUBLISH 报文数量',
-    send_oct_desc: '发送字节数',
+    send_oct_desc: '发送的字节数量',
     send_pkt_desc: '发送的 MQTT 报文数量',
-    currentSubs: '当前订阅',
+    currentSubs: '当前订阅数',
     addSubs: '添加订阅',
     view: '详情',
     disconnected: '已断开',
+    kickOut: '踢除',
   },
   // topics
   topics: {
@@ -191,6 +200,7 @@ export default {
     clientId: '客户端 ID',
     topic: '主题',
     qoS: 'QoS',
+    share: '共享订阅',
   },
   // plugins
   plugins: {
@@ -203,6 +213,7 @@ export default {
     start: '启动',
     stop: '停止',
     config: '配置',
+    manage: '管理',
     tutorial: '使用文档',
     back: '返回',
     advancedConfig: '高级配置',
@@ -215,6 +226,18 @@ export default {
     cacheNotice: '已放弃操作',
     emptyConfigOption: '默认配置项为空',
     searchByName: '按插件名称搜索',
+    usernameRequired: '请填写 username',
+    passwordRequired: '请填写 password',
+    clientidRequired: '请填写 Client ID',
+    algorithm: '加密算法',
+    secret: '密钥或私钥',
+    payloadDesc: '启用 verify_claims 时有效, 可以使用 %u，%c 占位符分别替换输入的 username 和 clientid，详见',
+    jwtDoc: 'JWT 认证',
+    dataDesc: '一行一组数据，使用逗号分割 username，clientid',
+    secretRequired: '请输入 Secret',
+    payloadRequired: '请输入 Payload 模版',
+    dataRequired: '请填写 Payload 数据',
+    leaveTokenPage: '离开页面后当前输入的配置与生成的 TOKEN 信息均不再保留，确认离开？',
   },
   // instances
   instances: {
@@ -425,5 +448,9 @@ export default {
     113: '用户已存在',
     114: '旧密码错误',
     115: '主题错误',
+  },
+  util: {
+    day: '天',
+    year: '年',
   },
 }

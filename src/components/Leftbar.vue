@@ -10,92 +10,44 @@
       mode="vertical"
       router
       background-color="#242327"
-      text-color="#fff"
+      text-color="#A6A6A8"
       active-text-color="#34C388"
       :default-active="'/' + $route.path.split('/')[1]">
 
-      <!-- MONITORING -->
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="iconfont icon-jiankong"></i>
-          <span>{{ $t('leftbar.monitoring') }}</span>
-        </template>
-        <el-menu-item index="/">
-          {{ $t('leftbar.overview') }}
+      <template v-for="(menu, index) in menus">
+        <el-submenu
+          v-if="menu.children && menu.children.length > 0"
+          :key="index"
+          :index="`${index + 1}`">
+          <template slot="title">
+            <i :class="['iconfont', menu.icon]"></i>
+            <el-badge :hidden="!menu.hasNew" is-dot class="menu-dot">
+              {{ menu.title }}
+            </el-badge>
+          </template>
+          <el-menu-item
+            v-for="(submenu, subindex) in menu.children"
+            :key="subindex"
+            :index="submenu.index"
+            :class="submenu.class">
+            <el-badge :hidden="!submenu.hasNew" is-dot class="submenu-dot">
+              {{ submenu.title }}
+            </el-badge>
+          </el-menu-item>
+        </el-submenu>
+        <el-menu-item
+          v-else-if="!menu.children"
+          :key="index"
+          :index="menu.index"
+          :class="menu.class">
+          <template slot="title">
+            <i :class="['iconfont', menu.icon]"></i>
+            <el-badge :hidden="!menu.hasNew" is-dot class="menu-dot">
+              {{ menu.title }}
+            </el-badge>
+          </template>
         </el-menu-item>
-        <el-menu-item index="/clients">
-          {{ $t('leftbar.clients') }}
-        </el-menu-item>
-        <el-menu-item index="/topics">
-          {{ $t('leftbar.topics') }}
-        </el-menu-item>
-        <el-menu-item index="/subscriptions">
-          {{ $t('leftbar.subscriptions') }}
-        </el-menu-item>
-      </el-submenu>
-
-      <!-- 规则引擎 -->
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="iconfont icon-guize2"></i>
-          <span>{{ $t('rule.rule_engine') }}</span>
-        </template>
-        <!-- 消息规则 -->
-        <el-menu-item index="/rules">
-          {{ $t('rule.message_rule') }}
-        </el-menu-item>
-        <el-menu-item index="/resources">
-          {{ $t('rule.resource_title') }}
-        </el-menu-item>
-      </el-submenu>
-
-      <!-- MANAGEMENT -->
-      <el-submenu index="3">
-        <template slot="title">
-          <i class="iconfont icon-guanli"></i>
-          <span>{{ $t('leftbar.management') }}</span>
-        </template>
-        <el-menu-item index="/plugins">
-          {{ $t('leftbar.plugins') }}
-        </el-menu-item>
-        <el-menu-item index="/listeners">
-          {{ $t('leftbar.listeners') }}
-        </el-menu-item>
-        <el-menu-item index="/applications">
-          {{ $t('leftbar.applications') }}
-        </el-menu-item>
-      </el-submenu>
-
-      <!-- TOOLS -->
-      <el-submenu index="4">
-        <template slot="title">
-          <i class="iconfont icon-gongju1"></i>
-          <span>{{ $t('leftbar.tools') }}</span>
-        </template>
-        <el-menu-item index="/websocket">
-          {{ $t('leftbar.websocket') }}
-        </el-menu-item>
-        <el-menu-item index="/http_api">
-          {{ $t('leftbar.api') }}
-        </el-menu-item>
-      </el-submenu>
-
-      <!-- ADMIN -->
-      <el-submenu index="5">
-        <template slot="title">
-          <i class="iconfont icon-xitong"></i>
-          <span>{{ $t('leftbar.admin') }}</span>
-        </template>
-        <el-menu-item index="/users">
-          {{ $t('leftbar.users') }}
-        </el-menu-item>
-        <el-menu-item index="/settings">
-          {{ $t('leftbar.settings') }}
-        </el-menu-item>
-        <el-menu-item index="/help" class="last-item">
-          {{ $t('leftbar.help') }}
-        </el-menu-item>
-      </el-submenu>
+      </template>
 
       <div class="bar-footer">
         <span>{{ $store.state.user.username }}</span>
@@ -119,12 +71,152 @@ export default {
     'el-menu-item': MenuItem,
     'el-menu-item-group': MenuItemGroup,
   },
+  data() {
+    return {
+      menus: [
+        {
+          id: 'monitor',
+          title: this.$t('leftbar.monitor'),
+          icon: 'icon-jiankong',
+          index: '/',
+        },
+        {
+          id: 'clients',
+          title: this.$t('leftbar.clients'),
+          index: '/clients',
+          icon: 'icon-guanlianshebei',
+        },
+        {
+          id: 'topics',
+          title: this.$t('leftbar.topics'),
+          index: '/topics',
+          icon: 'icon-zuzhiqunzu',
+        },
+        {
+          id: 'subscriptions',
+          title: this.$t('leftbar.subscriptions'),
+          index: '/subscriptions',
+          icon: 'icon-shebeiguanli',
+        },
+        {
+          id: 'rule_engine',
+          title: this.$t('rule.rule_engine'),
+          icon: 'icon-guizeyinqing',
+          children: [
+            {
+              id: 'rules',
+              title: this.$t('leftbar.rule_engine'),
+              index: '/rules',
+            },
+            {
+              id: 'resources',
+              title: this.$t('rule.resource_title'),
+              index: '/resources',
+            },
+          ],
+        },
+        {
+          id: 'plugins',
+          title: this.$t('leftbar.plugins'),
+          index: '/plugins',
+          icon: 'icon-kongjian',
+        },
+        {
+          id: 'tools',
+          title: this.$t('leftbar.tools'),
+          icon: 'icon-gongju1',
+          children: [
+            {
+              id: 'websocket',
+              title: this.$t('leftbar.websocket'),
+              index: '/websocket',
+            },
+            {
+              id: 'http_api',
+              title: this.$t('leftbar.api'),
+              index: '/http_api',
+            },
+          ],
+        },
+        {
+          id: 'settings',
+          title: this.$t('leftbar.settings'),
+          index: '/settings',
+          icon: 'icon-icon_shezhi',
+        },
+        {
+          id: 'general',
+          title: this.$t('leftbar.general'),
+          icon: 'icon-fenzuguanli',
+          children: [
+            {
+              id: 'applications',
+              title: this.$t('leftbar.applications'),
+              index: '/applications',
+            },
+            {
+              id: 'users',
+              title: this.$t('leftbar.users'),
+              index: '/users',
+            },
+            {
+              id: 'listeners',
+              title: this.$t('leftbar.listeners'),
+              index: '/listeners',
+            },
+            {
+              id: 'help',
+              title: this.$t('leftbar.help'),
+              index: '/help',
+              class: 'last-item',
+            },
+          ],
+        },
+      ],
+    }
+  },
+  computed: {
+    showFeatOnLeftbar() {
+      return this.$store.state.showFeatOnLeftbar
+    },
+  },
+  watch: {
+    showFeatOnLeftbar: {
+      deep: true,
+      handler() {
+        this.setNewFeatOnleftbar()
+      },
+    },
+  },
   methods: {
     ...mapActions(['USER_LOGIN']),
     logout() {
       this.USER_LOGIN({ isLogOut: true })
       this.$router.push({ path: '/login' })
     },
+    setNewFeatOnleftbar() {
+      this.menus.forEach((menu) => {
+        const { data } = this.showFeatOnLeftbar
+        if (menu.children && menu.children.length > 0) {
+          menu.children.forEach((submenu) => {
+            if (data[submenu.id]) {
+              menu.hasNew = true
+              submenu.hasNew = true
+            } else if (menu.hasNew && submenu.hasNew) {
+              menu.hasNew = false
+              submenu.hasNew = false
+            }
+          })
+        } else if (data[menu.id]) {
+          menu.hasNew = true
+        } else if (menu.hasNew) {
+          menu.hasNew = false
+        }
+      })
+    },
+  },
+  created() {
+    this.setNewFeatOnleftbar()
   },
 }
 </script>
@@ -210,25 +302,61 @@ export default {
     border-right: none !important;
   }
 
+  .el-submenu__title {
+    padding-left: 27px !important;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .el-submenu {
+    .el-menu-item {
+      width: 157px !important;
+      min-width: initial;
+      margin-left: 11px;
+    }
+  }
+
   .el-menu-item {
-    height: 44px;
-    line-height: 44px;
-    background: #161616 !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    background-color: #8F8E8E;
     color: #929299 !important;
-    padding-left: 51px !important;
+    border-radius: 4px;
+    width: 168px;
+    margin-left: 5px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    transition: border-color .3s, background-color .3s, color .3s, box-shadow .3s;
 
-    &:hover, &.is-active {
-      color: #34C388 !important;
+    &:hover {
+      color: #fff !important;
       background-color: #393A3E !important;
-
       i {
-        color: #34C388 !important;
+        color: #fff !important;
+      }
+    }
+    &.is-active {
+      color: #fff !important;
+      background-color: #00B173 !important;
+      box-shadow: 0px 0px 5px 0px #02d48a;
+      i {
+        color: #fff !important;
       }
     }
   }
 
   .last-item {
     margin-bottom: 72px;
+  }
+
+  .menu-dot .el-badge__content.is-fixed.is-dot {
+    top: 17px;
+    right: 0px;
+  }
+
+  .submenu-dot .el-badge__content.is-fixed.is-dot {
+    right: 3px;
+    top: 14px;
   }
 }
 </style>

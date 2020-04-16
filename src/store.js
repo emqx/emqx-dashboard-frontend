@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Package from '../package.json'
+import newFeaturesMenu from './data_map/new_features_menu'
 
 Vue.use(Vuex)
 
@@ -11,10 +13,35 @@ function safeParse(jsonText) {
   }
 }
 
+function getShowFeatOnLeftbar() {
+  const currentShow = safeParse(localStorage.getItem('showFeatOnLeftbar'))
+  function genData() {
+    const data = {}
+    newFeaturesMenu.forEach((key) => {
+      data[key] = true
+    })
+    const res = {
+      version: Package.version,
+      data,
+    }
+    localStorage.setItem('showFeatOnLeftbar', JSON.stringify(res))
+    return res
+  }
+  if (!currentShow) {
+    return genData()
+  }
+  if (currentShow.version !== Package.version) {
+    localStorage.removeItem('showFeatOnLeftbar')
+    return genData()
+  }
+  return currentShow
+}
+
 const state = {
   loading: false,
   user: safeParse(sessionStorage.getItem('user')) || safeParse(localStorage.getItem('user')) || {},
   nodeName: '',
+  showFeatOnLeftbar: getShowFeatOnLeftbar(),
 }
 
 // login & logout
@@ -23,6 +50,8 @@ const USER_LOGIN = 'USER_LOGIN'
 const LOADING = 'LOADING'
 // current node name in cluster
 const CURRENT_NODE = 'CURRENT_NODE'
+// Cancel feature active on leftbar
+const CANCEL_FEAT_ON_LEFTBAR = 'CANCEL_FEAT_ON_LEFTBAR'
 
 const actions = {
   [USER_LOGIN]({ commit }, payload) {
@@ -45,6 +74,9 @@ const actions = {
   [LOADING]({ commit }, loading = false) {
     commit(LOADING, loading)
   },
+  [CANCEL_FEAT_ON_LEFTBAR]({ commit }, routeName) {
+    commit(CANCEL_FEAT_ON_LEFTBAR, routeName)
+  },
 }
 
 const mutations = {
@@ -60,6 +92,13 @@ const mutations = {
   },
   [LOADING](state, loading) {
     state.loading = loading
+  },
+  [CANCEL_FEAT_ON_LEFTBAR](state, payload) {
+    const $showFeatOnLeftbar = state.showFeatOnLeftbar
+    const { data } = $showFeatOnLeftbar
+    data[payload] = false
+    Vue.set(state, 'showFeatOnLeftbar', $showFeatOnLeftbar)
+    localStorage.setItem('showFeatOnLeftbar', JSON.stringify($showFeatOnLeftbar))
   },
 }
 

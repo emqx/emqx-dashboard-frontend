@@ -93,22 +93,22 @@ export default {
     learnEnterprise() {
       return this.lang === 'en'
         ? 'https://www.emqx.io/products/enterprise'
-          : 'https://www.emqx.io/cn/products/enterprise'
+        : 'https://www.emqx.io/cn/products/enterprise'
     },
     freeTrial() {
       return this.lang === 'en'
         ? 'https://www.emqx.io/downloads#enterprise'
-          : 'https://www.emqx.io/cn/downloads#enterprise'
+        : 'https://www.emqx.io/cn/downloads#enterprise'
     },
     docsLink() {
       return this.lang === 'en'
         ? 'https://docs.emqx.io/broker/v4/en'
-          : 'https://docs.emqx.io/broker/v4/cn'
+        : 'https://docs.emqx.io/broker/v4/cn'
     },
     faqLink() {
       return this.lang === 'en'
         ? 'https://docs.emqx.io/tutorial/v4/en/faq/faq.html'
-          : 'https://docs.emqx.io/tutorial/v4/zh/faq/faq.html'
+        : 'https://docs.emqx.io/tutorial/v4/zh/faq/faq.html'
     },
   },
 
