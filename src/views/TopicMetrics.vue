@@ -41,12 +41,12 @@
                 <div>
                   {{ $t('analysis.messageIn') }}
                   <span class="message-rate">
-                    {{ $t('analysis.rateItem', [getCurrentTopicCount('in', 'rate')]) }}
+                    {{ $t('analysis.rateItem', [getCurrentTopicData('in', 'rate')]) }}
                     {{ $t('analysis.rate') }}
                   </span>
                 </div>
                 <div class="message-card--body">
-                  {{ getCurrentTopicCount('in', 'count') }}
+                  {{ getCurrentTopicData('in', 'count') }}
                 </div>
               </div>
             </el-col>
@@ -55,12 +55,12 @@
                 <div>
                   {{ $t('analysis.messageOut') }}
                   <span class="message-rate">
-                    {{ $t('analysis.rateItem', [getCurrentTopicCount('in', 'rate')]) }}
+                    {{ $t('analysis.rateItem', [getCurrentTopicData('in', 'rate')]) }}
                     {{ $t('analysis.rate') }}
                   </span>
                 </div>
                 <div class="message-card--body">
-                  {{ getCurrentTopicCount('out', 'count') }}
+                  {{ getCurrentTopicData('out', 'count') }}
                 </div>
               </div>
             </el-col>
@@ -69,7 +69,9 @@
                 <div>
                   {{ $t('analysis.messageDrop') }}
                   <span class="message-rate">
-                    {{ $t('analysis.rateItem', [currentTopic['messages.dropped.rate']]) }}
+                    {{ $t('analysis.rateItem', [getCurrentTopicDropRate(
+                      currentTopic['messages.dropped.rate']
+                    )]) }}
                     {{ $t('analysis.rate') }}
                   </span>
                 </div>
@@ -166,6 +168,15 @@ export default {
 
   props: {},
 
+  watch: {
+    currentExpandRow: {
+      deep: true,
+      handler() {
+        clearInterval(this.timer)
+      },
+    },
+  },
+
   data() {
     return {
       expands: [],
@@ -174,6 +185,7 @@ export default {
       topicQos: 'all',
       timer: 0,
       topics: [],
+      currentExpandRow: {},
       currentTopic: {},
       record: {},
       rules: {
@@ -247,13 +259,19 @@ export default {
     },
     setLoadDetailInterval() {
       this.timer = setInterval(() => {
-        this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentTopic.topic)}`)
+        this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentExpandRow.topic)}`)
           .then((res) => {
             this.currentTopic = res.data
           }).catch(() => {})
-      }, 1000)
+      }, 10000)
     },
     handleExpandChange(row, expandedRows) {
+      if (!expandedRows.length) {
+        this.currentExpandRow = {}
+        clearInterval(this.timer)
+        return
+      }
+      this.currentExpandRow = row
       this.currentTopic = {}
       this.$httpGet(`/topic-metrics/${encodeURIComponent(row.topic)}`).then((res) => {
         this.currentTopic = res.data
@@ -262,7 +280,7 @@ export default {
         this.setLoadDetailInterval()
       }).catch(() => {})
     },
-    getCurrentTopicCount(type, analysis) {
+    getCurrentTopicData(type, analysis) {
       const label = {
         all: 'messages',
         qos0: 'messages.qos0',
@@ -276,10 +294,23 @@ export default {
       }
       return res
     },
+    getCurrentTopicDropRate(rate) {
+      if (rate) {
+        return rate.toFixed(2)
+      }
+      return rate
+    },
   },
 
   created() {
     this.loadData()
+  },
+  beforeRouteLeave(to, from, next) {
+    clearInterval(this.timer)
+    next()
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
 }
 </script>
