@@ -116,6 +116,18 @@ export default {
           ],
         },
         {
+          id: 'analysis',
+          title: this.$t('leftbar.analysis'),
+          icon: 'icon-shujukanban',
+          children: [
+            {
+              id: 'topic_metrics',
+              title: this.$t('leftbar.topicMetrics'),
+              index: '/topic_metrics',
+            },
+          ],
+        },
+        {
           id: 'plugins',
           title: this.$t('leftbar.plugins'),
           index: '/plugins',
@@ -323,7 +335,7 @@ export default {
     color: #929299 !important;
     border-radius: 4px;
     width: 168px;
-    margin-left: 5px;
+    margin-left: 7px;
     margin-bottom: 4px;
     margin-top: 4px;
     transition: border-color .3s, background-color .3s, color .3s, box-shadow .3s;

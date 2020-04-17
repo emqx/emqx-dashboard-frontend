@@ -75,7 +75,7 @@
         <el-button
           type="text"
           class="cache-btn"
-          @click="close">
+          @click="handleClose">
           {{ $t('oper.cancel') }}
         </el-button>
         <el-button
@@ -163,12 +163,12 @@ export default {
         const body = {}
         Object.assign(body, this.record)
         this.$httpPost('/mqtt/subscribe', body).then(() => {
-          this.close()
+          this.handleClose()
           this.reload()
         }).catch(() => {})
       })
     },
-    close() {
+    handleClose() {
       this.$refs.record.resetFields()
       this.addVisible = false
     },

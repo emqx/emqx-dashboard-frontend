@@ -95,6 +95,9 @@ export default {
     settings: 'Settings',
     help: 'Help',
     general: 'General',
+    // Analysis
+    analysis: 'Analysis',
+    topicMetrics: 'Topic metrics',
   },
   // overview
   overview: {
@@ -434,6 +437,21 @@ export default {
     faqDesc: 'The FAQ contains questions that we are often asked about. It is recommended to use the FAQ to retrieve problems you encounter during use.',
     forwardFaq: 'Go to FAQ',
     followUs: 'Follow us',
+  },
+  analysis: {
+    topicMetrics: 'Topic metrics',
+    metricsTip: '(The metrics are real-time refresh data, including all statistics since the addition.)',
+    messageIn: 'Message In',
+    messageOut: 'Message Out',
+    messageDrop: 'Message Drop',
+    addTopic: 'Add Topic',
+    details: 'Details',
+    all: 'All',
+    rateItem: '{0} / second',
+    rate: '(rate)',
+    messageInDesc: '(message in rate)',
+    messageOutDesc: '(message out rate)',
+    messageDropDesc: '(message drop rate)',
   },
   httpCode: {
     0: 'Success',

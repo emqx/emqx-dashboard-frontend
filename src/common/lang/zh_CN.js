@@ -95,6 +95,9 @@ export default {
     settings: '设置',
     help: '帮助',
     general: '通用',
+    // Analysis
+    analysis: '统计分析',
+    topicMetrics: '主题监控',
   },
   // overview
   overview: {
@@ -417,7 +420,6 @@ export default {
     importSuccess: '导入成功',
     notice: '使用备份的配置文件进行配置初始化/修改。<br/>注意: 配置文件可能包含有重要数据如数据库地址与认证信息，请妥善保管配置文件并合理使用备份功能。',
   },
-  // help
   help: {
     quickStart: '快速开始',
     emqxDesc: 'EMQ X 基于 Erlang/OTP 平台开发的 MQTT 消息服务器，是开源社区中最流行的 MQTT 消息服务器，支持丰富的物联网协议，包括 MQTT、LwM2M、MQTT-SN、CoAP、 LoRaWAN、 HTTP 和 WebSocket 等。欢迎 follow 我们的项目或参与构建。',
@@ -430,6 +432,21 @@ export default {
     faqDesc: 'FAQ 收录了所有可能出现的问题，优先推荐使用 FAQ 检索您使用过程中遇到的问题。',
     forwardFaq: '前往 FAQ',
     followUs: '关注我们',
+  },
+  analysis: {
+    topicMetrics: '主题监控',
+    metricsTip: '（数据统计为实时刷新数据，包含自添加以来全部统计数据。）',
+    messageIn: '消息流入',
+    messageOut: '消息流出',
+    messageDrop: '消息丢弃',
+    addTopic: '添加主题',
+    details: '详情数据',
+    all: '全部',
+    rateItem: '{0} 条/秒',
+    rate: '（速率）',
+    messageInDesc: '（消息流入速率）',
+    messageOutDesc: '（消息流出速率）',
+    messageDropDesc: '（消息丢弃速率）',
   },
   httpCode: {
     0: '成功',
