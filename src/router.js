@@ -63,6 +63,11 @@ const routes = [
         component: () => import('~/views/RuleEngine/Resources'),
       },
       {
+        path: '/topic_metrics',
+        name: 'topic_metrics',
+        component: () => import('~/views/TopicMetrics'),
+      },
+      {
         path: '/plugins',
         name: 'plugins',
         component: () => import('~/views/Plugins/Plugins'),
@@ -101,11 +106,6 @@ const routes = [
         path: '/settings',
         name: 'settings',
         component: () => import('~/views/Settings'),
-      },
-      {
-        path: '/test',
-        name: 'test',
-        component: () => import('~/views/Test'),
       },
       {
         path: '/help',

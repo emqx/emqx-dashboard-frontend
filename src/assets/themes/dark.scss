@@ -446,3 +446,18 @@
 .clients-view .card-subtitle {
   color: #F8F8F8;
 }
+
+/* Topic metrics */
+.topic-qos-radio {
+  .el-radio-button__inner {
+    background: #1B1C20;
+    color: #9E9E9F;
+    border: 1px solid #35363B;
+  }
+
+  .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    background-color: #42d885;
+    color: #fff;
+    box-shadow: none;
+  }
+}
