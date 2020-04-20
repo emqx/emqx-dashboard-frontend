@@ -10,7 +10,12 @@
         </el-col>
         <el-col :span="5">
           <el-form-item prop="password">
-            <el-input v-model="record.password" type="password" placeholder="Password" class="input-radius">
+            <el-input
+              v-model="record.password"
+              type="password"
+              placeholder="Password"
+              class="input-radius"
+              auto-complete="new-password">
             </el-input>
           </el-form-item>
         </el-col>

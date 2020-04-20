@@ -77,7 +77,7 @@ export default {
     topics: '主题',
     subscriptions: '订阅',
     // RULES
-    rule_engine: '规则引擎',
+    rule_engine: '规则',
     // MANAGEMENT
     management: '管理',
     plugins: '插件',
