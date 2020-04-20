@@ -1,3 +1,3 @@
 export default [
-  'topic_metrics',
+  'modules',
 ]
