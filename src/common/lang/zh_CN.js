@@ -10,6 +10,7 @@ export default {
   error: {
     networkError: '网络错误',
     initializationError: '初始化错误',
+    plugin_not_loaded: '相关模块未打开',
   },
   // success
   success: {
@@ -447,6 +448,8 @@ export default {
     messageInDesc: '（消息流入速率）',
     messageOutDesc: '（消息流出速率）',
     messageDropDesc: '（消息丢弃速率）',
+    loadAnalysis: '启用',
+    loadSuccess: '启用成功',
   },
   httpCode: {
     0: '成功',

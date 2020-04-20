@@ -4,6 +4,7 @@
       {{ $t('analysis.topicMetrics') }}
       <span class="sub-tip">{{ $t('analysis.metricsTip') }}</span>
       <el-button
+        v-if="!modClosed"
         class="confirm-btn"
         round
         plain
@@ -14,6 +15,18 @@
         :disable="$store.state.loading"
         @click="handleOperation">
         {{ $t('rule.create') }}
+      </el-button>
+      <el-button
+        v-else
+        class="confirm-btn"
+        round
+        plain
+        type="success"
+        size="medium"
+        style="float: right"
+        :disable="$store.state.loading"
+        @click="handleModLoad">
+        {{ $t('analysis.loadAnalysis') }}
       </el-button>
     </div>
     <el-table
@@ -182,6 +195,7 @@ export default {
       expands: [],
       addVisible: false,
       popoverVisible: false,
+      modClosed: false,
       topicQos: 'all',
       timer: 0,
       topics: [],
@@ -209,7 +223,11 @@ export default {
           messageOut: res.data[key]['messages.out.count'],
           messageDrop: res.data[key]['messages.dropped.count'],
         }))
-      }).catch(() => {})
+        this.modClosed = false
+      }).catch((error) => {
+        this.$message.warning(this.$t(`error.${error.message}`))
+        this.modClosed = true
+      })
     },
     hidePopover() {
       this.popoverVisible = true
@@ -219,6 +237,15 @@ export default {
     },
     handleOperation() {
       this.addVisible = true
+    },
+    handleModLoad() {
+      this.$httpPut('/modules/emqx_mod_topic_metrics/load').then(() => {
+        this.$message.success(this.$t('analysis.loadSuccess'))
+        this.loadData()
+        this.modClosed = false
+      }).catch((error) => {
+        this.$message.error(error || this.$t('error.networkError'))
+      })
     },
     deleteTopicMetric(row) {
       this.$httpDelete(`/topic-metrics/${encodeURIComponent(row.topic)}`).then(() => {
