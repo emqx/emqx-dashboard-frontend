@@ -134,6 +134,12 @@ export default {
           icon: 'icon-kongjian',
         },
         {
+          id: 'modules',
+          title: this.$t('leftbar.modules'),
+          index: '/modules',
+          icon: 'icon-changjingguanli',
+        },
+        {
           id: 'tools',
           title: this.$t('leftbar.tools'),
           icon: 'icon-gongju1',

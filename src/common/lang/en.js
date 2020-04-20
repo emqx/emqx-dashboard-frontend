@@ -38,6 +38,8 @@ export default {
     editSuccess: 'Edit success',
     startSuccess: 'Start Success',
     stopSuccess: 'Stop Success',
+    enableSuccess: 'Enable Success',
+    disabledSuccess: 'Disable Success',
     deleteSuccess: 'Delete Success',
     disconnectSuccess: 'Disconnect Success',
     from: 'From',
@@ -83,6 +85,7 @@ export default {
     // MANAGEMENT
     management: 'Management',
     plugins: 'Plugins',
+    modules: 'Modules',
     listeners: 'Listeners',
     instances: 'Instances',
     // TOOLS
@@ -242,6 +245,13 @@ export default {
     payloadRequired: 'Payload template is required',
     dataRequired: 'Payload data is required',
     leaveTokenPage: 'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
+  },
+  modules: {
+    name: 'Name',
+    enable: 'Enable',
+    disable: 'Disable',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
   },
   // instances
   instances: {

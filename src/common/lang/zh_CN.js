@@ -37,6 +37,8 @@ export default {
     editSuccess: '编辑成功',
     startSuccess: '启动成功',
     stopSuccess: '停止成功',
+    enableSuccess: '启用成功',
+    disabledSuccess: '停用成功',
     deleteSuccess: '删除成功',
     disconnectSuccess: '断开连接成功',
     from: '从',
@@ -82,6 +84,7 @@ export default {
     // MANAGEMENT
     management: '管理',
     plugins: '插件',
+    modules: '模块',
     listeners: '监听器',
     instances: '服务',
     // TOOLS
@@ -242,6 +245,13 @@ export default {
     payloadRequired: '请输入 Payload 模版',
     dataRequired: '请填写 Payload 数据',
     leaveTokenPage: '离开页面后当前输入的配置与生成的 TOKEN 信息均不再保留，确认离开？',
+  },
+  modules: {
+    name: '模块名称',
+    enable: '启用',
+    disable: '停用',
+    enabled: '已启用',
+    disabled: '已停用',
   },
   // instances
   instances: {

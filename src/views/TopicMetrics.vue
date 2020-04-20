@@ -26,7 +26,7 @@
         style="float: right"
         :disable="$store.state.loading"
         @click="handleModLoad">
-        {{ $t('analysis.loadAnalysis') }}
+        {{ $t('modules.enable') }}
       </el-button>
     </div>
     <el-table
@@ -240,7 +240,7 @@ export default {
     },
     handleModLoad() {
       this.$httpPut('/modules/emqx_mod_topic_metrics/load').then(() => {
-        this.$message.success(this.$t('analysis.loadSuccess'))
+        this.$message.success(this.$t('oper.enableSuccess'))
         this.loadData()
         this.modClosed = false
       }).catch((error) => {
