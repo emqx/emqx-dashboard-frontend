@@ -11,6 +11,7 @@ export default {
   error: {
     networkError: 'Network Error',
     initializationError: 'Initialization Error',
+    plugin_not_loaded: 'Related modules are not load',
   },
   // success
   success: {
@@ -452,6 +453,8 @@ export default {
     messageInDesc: '(message in rate)',
     messageOutDesc: '(message out rate)',
     messageDropDesc: '(message drop rate)',
+    loadAnalysis: 'Load',
+    loadSuccess: 'Load Success',
   },
   httpCode: {
     0: 'Success',

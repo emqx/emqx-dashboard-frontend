@@ -43,6 +43,13 @@ Axios.interceptors.request.use((config) => {
   store.dispatch('LOADING', false)
 })
 
+function handleErrorMessage(error) {
+  if (error.message === 'plugin_not_loaded') {
+    return
+  }
+  Message.error(error.message)
+}
+
 function handleError(error) {
   console.error(error)
   NProgress.done()
@@ -58,7 +65,7 @@ function handleError(error) {
   } else if (status === 404) {
     error.message = 'URL Not Found'
   } else {
-    Message.error(error.message)
+    handleErrorMessage(error)
   }
   return Promise.reject(error.message)
 }
