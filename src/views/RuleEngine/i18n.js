@@ -96,6 +96,7 @@ export const en = {
   value: 'Value',
   edit: 'Edit',
   add: 'Add',
+  startStop: 'Start/Stop',
 
   basic_info: 'Basic Info',
   rule_name_required: 'rule name required',
@@ -264,6 +265,7 @@ export const zh = {
   value: '值',
   edit: '编辑',
   add: '添加',
+  startStop: '启动/停止',
 
   basic_info: '基本信息',
   rule_name_required: '请输入规则名称',
