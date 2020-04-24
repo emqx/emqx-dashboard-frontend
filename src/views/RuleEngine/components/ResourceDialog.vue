@@ -45,7 +45,13 @@
           </el-form-item>
         </el-col>
 
-        <template v-if="record.type">
+        <el-col :span="12">
+          <el-form-item prop="description" :label="$t('rule.resource_name')">
+            <el-input v-model="record.description"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <div v-if="record.type">
           <el-col
             v-for="(item, index) in paramsList"
             :span="(item.type === 'object' || item.$attrs.type === 'textarea') ? 24 : 12"
@@ -95,14 +101,7 @@
 
             </el-form-item>
           </el-col>
-
-
-          <el-col :span="12">
-            <el-form-item prop="description" :label="$t('rule.description')">
-              <el-input v-model="record.description"></el-input>
-            </el-form-item>
-          </el-col>
-        </template>
+        </div>
 
       </el-row>
     </el-form>
@@ -172,6 +171,7 @@ export default {
     rules() {
       return {
         name: { required: true },
+        description: { required: true },
         type: { required: true },
         ...this.resourceRules,
       }

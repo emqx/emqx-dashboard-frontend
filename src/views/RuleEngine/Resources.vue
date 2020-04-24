@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
 
-      <!-- resource name -->
+      <!-- resource table -->
       <el-table-column prop="id" :label="$t('rule.id')">
         <template slot-scope="{ row }">
            <span class="" @click="viewResource(row)">
@@ -54,33 +54,10 @@
           </span>
         </template>
       </el-table-column>
-
+      <el-table-column prop="description" :label="$t('rule.resource_name')"></el-table-column>
       <el-table-column prop="type" :label="$t('rule.resource_type')"></el-table-column>
-
-
-      <el-table-column prop="description" :label="$t('rule.description')"></el-table-column>
-
-
-      <!--<el-table-column prop="status" :label="$t('rule.running_statue')">-->
-      <!--<template slot-scope="{ row }">-->
-      <!--<span :class="[row.status.is_alive ? 'running' : 'stopped', 'status']">-->
-      <!--{{ row.status.is_alive ? $t('rule.enabled') : $t('rule.disabled') }}-->
-      <!--</span>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-
       <el-table-column :label="$t('rule.oper')">
         <template slot-scope="{ row, $index }">
-          <!--<el-button-->
-          <!--v-if="!row.status.is_alive"-->
-          <!--:loading="reloadLoading && currentResource === row.id"-->
-          <!--plain-->
-          <!--type="success"-->
-          <!--size="mini"-->
-          <!--@click="handleReconnect(row)">-->
-          <!--{{ $t('rule.reconnect') }}-->
-          <!--</el-button>-->
-
           <el-button
             plain
             type="success"
@@ -131,7 +108,7 @@
         </div>
         <div class="option-item">
           <div class="option-title">
-            {{ $t('rule.description') }}
+            {{ $t('rule.resource_name') }}
           </div>
           <div class="option-value">{{ res.description }}</div>
         </div>
@@ -174,10 +151,8 @@
                 </div>
               </template>
             </div>
-
           </div>
         </div>
-
       </div>
 
       <div slot="footer">
@@ -308,9 +283,6 @@ export default {
   }
 
   .expand-column {
-    /*display: none;*/
-    /*width: 0 !important;*/
-    /*opacity: 0;*/
     .cell {
       opacity: 0;
     }

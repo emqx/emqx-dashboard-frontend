@@ -145,7 +145,7 @@ export const en = {
 <span> Forwarding messages to HTTP Webhook</span>`,
 
   resource_title: 'Resource',
-  resource_name: 'Name',
+  resource_name: 'Resource Name',
   resource_details: 'Details',
   config_info: 'Configuration',
 
