@@ -44,14 +44,30 @@
         :label="$t('rule.rule_matched_1')"
         :formatter="getMatchedCount"></el-table-column>
 
-      <el-table-column :label="$t('rule.oper')" min-width="70px">
+      <el-table-column :label="$t('rule.startStop')">
+        <template slot-scope="props">
+          <el-tooltip
+            :content="props.row.enabled ? $t('app.enableText') : $t('app.disableText')"
+            placement="left">
+            <el-switch
+              v-model="props.row.enabled"
+              active-text=""
+              inactive-text=""
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              @change="updateRule(props.row)">
+            </el-switch>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('rule.oper')" min-width="120px">
         <template slot-scope="{ row }">
           <el-button
             type="success"
             size="mini"
             plain
             @click="viewRule(row)">
-            {{ $t('rule.view') }}
+            {{ $t('rule.edit') }}
           </el-button>
           <el-button
             size="mini"
@@ -235,6 +251,9 @@ export default {
           this.rule = currentRule
         }
       })
+    },
+    updateRule(row) {
+      console.log(row)
     },
   },
 
