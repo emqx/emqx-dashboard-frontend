@@ -147,7 +147,7 @@
           class="confirm-btn"
           type="success"
           @click="handleCreate">
-          {{ $t('rule.create') }}
+          {{ isEdit ? $t('rule.confirm') : $t('rule.create') }}
         </el-button>
         <el-button
           class="cache-btn"
@@ -184,6 +184,7 @@ export default {
 
   data() {
     return {
+      isEdit: false,
       payloadType: 'json',
       eventsList: [],
       testOutPut: '',
@@ -217,16 +218,16 @@ export default {
 
   computed: {
     operationName() {
-      const oper = 'create'
+      const { rule } = this.$route.query
       const operationNameMap = {
         view: this.$t('rule.view'),
         edit: this.$t('rule.edit'),
         create: this.$t('rule.create'),
       }
-      if (this.id === '0' || this.id === 0) {
-        return operationNameMap.create
+      if (rule) {
+        return operationNameMap.edit
       }
-      return operationNameMap[oper]
+      return operationNameMap.create
     },
     sqlProvider() {
       return ruleEngineProvider
@@ -253,9 +254,9 @@ export default {
       if (!checkValues) {
         return
       }
-      this.sqlParse(val, checkValues[0])
+      this.sqlParseConfirm(val, checkValues[0])
     },
-    sqlParse(sql, oldEvent) {
+    sqlParseConfirm(sql, oldEvent) {
       this.$confirm(this.$t('rule.parse_confirm'), this.$t('oper.warning'), {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
@@ -271,7 +272,7 @@ export default {
       if (!checkValues) {
         return true
       }
-      this.sqlParse(sql, checkValues[0])
+      this.sqlParseConfirm(sql, checkValues[0])
       return false
     },
     handleTest() {
@@ -347,10 +348,12 @@ export default {
       this.$set(this.record, 'ctx', testFieldObject)
       this.rules.ctx = testFieldRules
     },
-    generateEventsSelect() {
+    generateEventsSelect(initSql) {
       this.eventOptions = this.eventsList
       this.selectedOption = this.eventsList[0]
-      this.record.rawsql = this._sqlFormatter(this.selectedOption.sql_example)
+      if (initSql) {
+        this.record.rawsql = this._sqlFormatter(this.selectedOption.sql_example)
+      }
     },
     _sqlFormatter(sql) {
       const newSQL = sqlFormatter.format(sql)
@@ -375,16 +378,44 @@ export default {
             this.$message.error(this.$t('rule.actions_required'))
             return
           }
-          this.$httpPost('/rules', this.record).then(() => {
-            this.$message.success(this.$t('rule.create_success'))
-            this.$router.push('/rules')
-          })
+          if (this.isEdit) {
+            const { rule } = this.$route.query
+            const { actions, ctx, description, rawsql } = this.record
+            const data = {
+              actions,
+              ctx,
+              description,
+              rawsql,
+            }
+            this.$httpPut(`/rules/${rule}`, data).then(() => {
+              this.$message.success(this.$t('rule.create_success'))
+              this.$router.push('/rules')
+            })
+          } else {
+            this.$httpPost('/rules', this.record).then(() => {
+              this.$message.success(this.$t('rule.create_success'))
+              this.$router.push('/rules')
+            })
+          }
         })
       }
     },
+    loadRule(ruleID) {
+      this.$httpGet(`/rules/${ruleID}`).then((res) => {
+        this.record = res.data
+      })
+    },
     async loadData() {
       this.eventsList = await loadRuleEvents()
-      this.generateEventsSelect()
+      const { rule } = this.$route.query
+      if (rule) {
+        this.isEdit = true
+        this.loadRule(rule)
+        this.generateEventsSelect()
+      } else {
+        this.isEdit = false
+        this.generateEventsSelect(true)
+      }
     },
     handleCancel() {
       this.$router.push('/rules')

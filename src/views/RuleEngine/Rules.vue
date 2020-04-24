@@ -47,7 +47,7 @@
       <el-table-column :label="$t('rule.startStop')">
         <template slot-scope="props">
           <el-tooltip
-            :content="props.row.enabled ? $t('app.enableText') : $t('app.disableText')"
+            :content="props.row.enabled ? $t('rule.ruleEnabled') : $t('rule.ruleDisabled')"
             placement="left">
             <el-switch
               v-model="props.row.enabled"
@@ -66,7 +66,7 @@
             type="success"
             size="mini"
             plain
-            @click="viewRule(row)">
+            @click="editRule(row)">
             {{ $t('rule.edit') }}
           </el-button>
           <el-button
@@ -210,6 +210,9 @@ export default {
         this.viewRule(row)
       }, 10 * 1000)
     },
+    editRule(row) {
+      this.$router.push(`/rules/create?rule=${row.id}`)
+    },
     loadDetails(id) {
       this.ruleDialogLoading = true
       this.$httpGet(`/rules/${id}`).then((res) => {
@@ -253,7 +256,12 @@ export default {
       })
     },
     updateRule(row) {
-      console.log(row)
+      const { id, enabled } = row
+      this.$httpPut(`/rules/${id}`, {
+        enabled,
+      }).then(() => {
+        this.$message.success(this.$t('oper.editSuccess'))
+      })
     },
   },
 
