@@ -76,5 +76,9 @@ export default {
       margin: 20px auto;
     }
   }
+  .el-input.input-radius,
+  .el-textarea.input-radius {
+    width: 100%;
+  }
 }
 </style>

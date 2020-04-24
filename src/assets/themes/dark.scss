@@ -446,6 +446,11 @@
 .clients-view .card-subtitle {
   color: #F8F8F8;
 }
+.custom-pagination {
+  a {
+    border: 1px solid  #292929;
+  }
+}
 
 /* Topic metrics */
 .topic-qos-radio {

@@ -64,6 +64,8 @@ export default {
     generate: '生成',
     search: '搜索',
     reset: '重置',
+    next: '下一页',
+    prev: '上一页',
   },
   // topbar
   topbar: {
@@ -138,9 +140,9 @@ export default {
     subscriptionsSharedMax: '峰值',
     // Metrics
     metrics: '度量指标',
-    packetsData: 'MQTT报文',
-    messagesData: '消息(数)',
-    bytesData: '流量收发统计(字节)',
+    packetsData: 'MQTT 报文',
+    messagesData: '消息',
+    bytesData: '流量收发(字节)',
     session: '会话',
     client: '客户端',
     delivery: 'Delivery',
@@ -446,7 +448,7 @@ export default {
   },
   analysis: {
     topicMetrics: '主题监控',
-    metricsTip: '（数据统计为实时刷新数据，包含自添加以来全部统计数据。）',
+    metricsTip: '（数据统计为实时刷新数据，包含自添加以来全部统计数据）',
     messageIn: '消息流入',
     messageOut: '消息流出',
     messageDrop: '消息丢弃',
