@@ -44,7 +44,7 @@ Axios.interceptors.request.use((config) => {
 })
 
 function handleErrorMessage(error) {
-  if (error.message === 'plugin_not_loaded') {
+  if (error.message === 'module_not_loaded') {
     return
   }
   Message.error(error.message)

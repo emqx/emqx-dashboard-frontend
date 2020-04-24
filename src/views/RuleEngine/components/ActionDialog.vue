@@ -58,15 +58,14 @@
               popper-class="el-select--public"
               style="width: 100%">
               <el-option
-                v-for="(item, index) in options"
+                v-for="(item, index) in resourcesOptions"
                 :key="index"
-                :label="item.name"
+                :label="item.description"
                 :value="item.id">
               </el-option>
             </el-select>
           </el-form-item>
         </el-col>
-
 
         <el-col
           v-for="(item, index) in paramsList"
@@ -190,7 +189,7 @@ export default {
           },
         },
       },
-      options: [],
+      resourcesOptions: [],
       action: {},
 
       actionsList: [],
@@ -225,7 +224,7 @@ export default {
     },
     close() {
       if (this.$refs.record) {
-        this.options = {}
+        this.resourcesOptions = []
         this.action = {}
         this.paramsList = []
         this.$refs.record.resetFields()
@@ -284,7 +283,7 @@ export default {
       const { types = [] } = this.action
       return this.$httpGet('/resources').then((response) => {
         const { data } = response
-        this.options = data.filter($ => types.includes($.type))
+        this.resourcesOptions = data.filter($ => types.includes($.type))
         // 清空 待选择
         this.$set(this.record, 'resource', resourceId)
       })

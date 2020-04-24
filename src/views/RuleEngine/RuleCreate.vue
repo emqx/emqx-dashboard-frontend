@@ -81,7 +81,7 @@
                       <div class="payload-type">
                         <el-radio-group v-model="payloadType">
                           <el-radio label="json">JSON</el-radio>
-                          <el-radio label="plaintext">RAW</el-radio>
+                          <el-radio label="plaintext">Plaintext</el-radio>
                         </el-radio-group>
                       </div>
                     </template>
@@ -509,6 +509,7 @@ export default {
 
 .code-sql {
   line-height: 18px !important;
+  margin-bottom: 44px;
 
   &.rawsql .el-form-item__content {
     height: 420px;

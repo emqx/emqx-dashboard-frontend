@@ -10,7 +10,7 @@ export default {
   error: {
     networkError: '网络错误',
     initializationError: '初始化错误',
-    plugin_not_loaded: '相关模块未打开',
+    module_not_loaded: '相关模块未打开',
   },
   // success
   success: {

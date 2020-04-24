@@ -11,7 +11,7 @@ export default {
   error: {
     networkError: 'Network Error',
     initializationError: 'Initialization Error',
-    plugin_not_loaded: 'Related modules are not load',
+    module_not_loaded: 'Related module are not load',
   },
   // success
   success: {
