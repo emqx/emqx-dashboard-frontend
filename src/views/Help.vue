@@ -108,7 +108,7 @@ export default {
     faqLink() {
       return this.lang === 'en'
         ? 'https://docs.emqx.io/tutorial/v4/en/faq/faq.html'
-        : 'https://docs.emqx.io/tutorial/v4/zh/faq/faq.html'
+        : 'https://docs.emqx.io/broker/latest/cn/faq/faq.html'
     },
   },
 

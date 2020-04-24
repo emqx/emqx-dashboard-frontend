@@ -65,6 +65,8 @@ export default {
     generate: 'Generate',
     search: 'Search',
     reset: 'Reset',
+    next: 'Next',
+    prev: 'Previous',
   },
   // topbar
   topbar: {
@@ -451,7 +453,7 @@ export default {
   },
   analysis: {
     topicMetrics: 'Topic metrics',
-    metricsTip: '(The metrics are real-time refresh data, including all statistics since the addition.)',
+    metricsTip: '(The metrics are real-time refresh data, including all statistics since the addition)',
     messageIn: 'Message In',
     messageOut: 'Message Out',
     messageDrop: 'Message Drop',

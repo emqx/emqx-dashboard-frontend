@@ -92,7 +92,6 @@
         class="el-form--public app-info"
         ref="record"
         size="medium"
-        :label-position="oper === 'view' ? 'left' : 'top'"
         :rules="oper === 'view' ? {} : rules"
         :model="record">
         <el-row :gutter="20">
@@ -233,8 +232,8 @@
           {{ this.$t('app.guide') }}
           <a
             :href="lang === 'zh'
-              ? 'https://docs.emqx.io/broker/v4/cn/rest.html'
-              : 'https://docs.emqx.io/broker/v4/en/rest.html'" target="_blank">
+              ? 'https://docs.emqx.io/broker/latest/cn/advanced/http-api.html'
+              : 'https://docs.emqx.io/broker/latest/en/advanced/http-api.html'" target="_blank">
             {{ $t('app.docs') }}
           </a>
         </div>

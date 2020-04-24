@@ -6,8 +6,7 @@
     :visible.sync="dialogVisible"
     :title="$t('rule.resource_mgmt')"
     @close="close"
-    @open="loadResourceTypes"
-    @keyup.enter.native="handleCreate">
+    @open="loadResourceTypes">
     <el-form
       class="el-form--public"
       ref="record"

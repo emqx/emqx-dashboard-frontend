@@ -1,14 +1,14 @@
 <template>
   <div class="auth-clientid-table">
-    <el-row :gutter="80">
+    <el-row :gutter="20">
       <el-form ref="record" :model="record" :rules="rules" @keyup.enter.native="save">
-        <el-col :span="5">
+        <el-col :span="6">
           <el-form-item prop="clientid">
             <el-input v-model="record.clientid" placeholder="Client ID" class="input-radius">
             </el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="5">
+        <el-col :span="6">
           <el-form-item prop="password">
             <el-input
               v-model="record.password"

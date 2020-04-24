@@ -109,11 +109,13 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('clients.protoName')">
-                  <el-input
-                    type="text"
-                    size="small"
-                    v-model="fuzzyParams.proto_name">
-                  </el-input>
+                  <el-select v-model="fuzzyParams.proto_name">
+                    <el-option
+                      v-for="name in protoNames"
+                      :key="name"
+                      :value="name">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
             </template>
@@ -133,7 +135,8 @@
                   <el-input
                     type="text"
                     size="small"
-                    v-model="fuzzyParams.share">
+                    v-model="fuzzyParams.share"
+                    placeholder="group_name">
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -240,26 +243,29 @@
       <el-table-column prop="qos" :label="$t('subscriptions.qoS')"></el-table-column>
     </el-table>
 
-    <!-- pagination -->
-    <el-pagination
-      v-if="count > 10"
-      background
-      small
-      layout="total, sizes, prev, pager, next"
-      :page-sizes="[10, 50, 100, 300, 500]"
-      :current-page.sync="params._page"
-      :page-size="params._limit"
-      :total="count"
-      @size-change="handleSizeChange"
-      @current-change="loadChild">
-    </el-pagination>
-    <div v-if="count === -1" class="custom-pagination">
-      <a :class="['prev', params._page === 1 ? 'disabled' : '']" href="javascript:;" @click="handlePrevClick">
-        <i class="el-icon-arrow-left"></i>
-      </a>
-      <a :class="['next', hasnext ? '' : 'disabled']" href="javascript:;" @click="handleNextClick">
-        <i class="el-icon-arrow-right"></i>
-      </a>
+    <div class="center-align">
+      <!-- pagination -->
+      <el-pagination
+        v-if="count > 10"
+        background
+        layout="total, sizes, prev, pager, next"
+        :page-sizes="[10, 50, 100, 300, 500]"
+        :current-page.sync="params._page"
+        :page-size="params._limit"
+        :total="count"
+        @size-change="handleSizeChange"
+        @current-change="loadChild">
+      </el-pagination>
+      <div v-if="(count === -1 && (clients.length || subscriptions.length))" class="custom-pagination">
+        <a :class="['prev', params._page === 1 ? 'disabled' : '']" href="javascript:;" @click="handlePrevClick">
+          <i class="el-icon-arrow-left"></i>
+          {{ $t('oper.prev') }}
+        </a>
+        <a :class="['next', hasnext ? '' : 'disabled']" href="javascript:;" @click="handleNextClick">
+          {{ $t('oper.next') }}
+          <i class="el-icon-arrow-right"></i>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -308,6 +314,13 @@ export default {
       topics: [],
       subscriptions: [],
       showMoreQuery: false,
+      protoNames: [
+        'MQTT',
+        'MQTT-SN',
+        'CoAP',
+        'HTTP',
+        'TCP',
+      ],
     }
   },
   watch: {
@@ -577,16 +590,23 @@ export default {
   }
 
   .custom-pagination {
-    text-align: right;
     margin-top: 10px;
     a {
-      color: #606266;
+      transition: all .3s ease;
+      color: #fff;
+      margin-right: 10px;
+      background: #42d885;
+      display: inline-block;
+      border-radius: 4px;
+      padding: 5px 8px;
       &:hover {
-        color: #42d885;
+        color: #fff;
       }
     }
     a.disabled {
-      color: #C0C4CC;
+      transition: all .3s ease;
+      color: #606266;
+      background: transparent;
       cursor: not-allowed;
     }
   }
