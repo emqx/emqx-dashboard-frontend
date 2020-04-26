@@ -96,7 +96,6 @@ export const en = {
   value: 'Value',
   edit: 'Edit',
   add: 'Add',
-  startStop: 'Start/Stop',
   ruleEnabled: 'Enabled',
   ruleDisabled: 'Disabled',
 
@@ -267,7 +266,6 @@ export const zh = {
   value: '值',
   edit: '编辑',
   add: '添加',
-  startStop: '启动/停止',
   ruleEnabled: '已启动',
   ruleDisabled: '已停止',
 

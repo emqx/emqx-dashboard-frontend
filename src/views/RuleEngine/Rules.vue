@@ -44,7 +44,7 @@
         :label="$t('rule.rule_matched_1')"
         :formatter="getMatchedCount"></el-table-column>
 
-      <el-table-column :label="$t('rule.startStop')">
+      <el-table-column :label="$t('rule.viewStates')">
         <template slot-scope="props">
           <el-tooltip
             :content="props.row.enabled ? $t('rule.ruleEnabled') : $t('rule.ruleDisabled')"
@@ -186,7 +186,6 @@ export default {
     },
     getHitRate({ matched = 0, nomatch = 0 }) {
       const rate = (matched / (matched + nomatch)) * 100
-      console.log(rate)
       if (rate.toString().split('.')[1] && rate.toString().split('.')[1].length > 2) {
         return rate.toFixed(2)
       }
