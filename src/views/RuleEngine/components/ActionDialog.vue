@@ -167,6 +167,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    editRecord: {
+      type: Object,
+      default: null,
+    },
+    recordIndex: {
+      type: Number,
+      default: null,
+    },
   },
 
   data() {
@@ -191,10 +199,28 @@ export default {
       },
       resourcesOptions: [],
       action: {},
-
       actionsList: [],
       paramsList: [],
     }
+  },
+
+  computed: {
+    dialogVisible: {
+      get() {
+        return this.visible
+      },
+      set(val) {
+        this.$emit('update:visible', val)
+      },
+    },
+    currentActionsMap() {
+      const dict = {}
+      this.currentActions.forEach((item) => {
+        const hash = JSON.stringify(item)
+        dict[hash] = true
+      })
+      return dict
+    },
   },
 
   methods: {
@@ -222,6 +248,22 @@ export default {
       }
       return !!val
     },
+    async open() {
+      if (this.$refs.record) {
+        this.$refs.record.clearValidate()
+      }
+      if (this.editRecord && this.recordIndex !== null) {
+        const { name, params } = this.editRecord
+        await this.handleActionChange(name)
+        this.record.action = name
+        this.record.params = { ...params }
+        this.action.params = { ...params }
+      } else {
+        this.record.params = {}
+        this.record.action = ''
+      }
+      this.loadActions()
+    },
     close() {
       if (this.$refs.record) {
         this.resourcesOptions = []
@@ -243,7 +285,7 @@ export default {
           this.$message.error(this.$t('rule.action_exists'))
           return
         }
-        this.$emit('confirm', action)
+        this.$emit('confirm', action, this.recordIndex)
         this.dialogVisible = false
       })
     },
@@ -304,7 +346,6 @@ export default {
         return
       }
       const { name, params = {} } = this.formData || formData
-
       // 加载资源
       await this.handleActionChange(name)
       // 填充数据
@@ -316,37 +357,11 @@ export default {
         this.$set(this.record, key, value)
       })
     },
-    open() {
-      // this.dialogVisible = true
-      // this.renderForm(formData)
-      this.record.params = {}
-      this.record.action = ''
-      this.loadActions()
-    },
   },
 
   async created() {
     await this.loadActions()
     await this.renderForm()
-  },
-
-  computed: {
-    dialogVisible: {
-      get() {
-        return this.visible
-      },
-      set(val) {
-        this.$emit('update:visible', val)
-      },
-    },
-    currentActionsMap() {
-      const dict = {}
-      this.currentActions.forEach((item) => {
-        const hash = JSON.stringify(item)
-        dict[hash] = true
-      })
-      return dict
-    },
   },
 }
 </script>

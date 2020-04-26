@@ -10,66 +10,12 @@
         </template>
       </el-table-column>
 
-
-      <!--<el-table-column-->
-      <!--v-if="!(has.delete || has.edit)"-->
-      <!--prop="metrics"-->
-      <!--type="expand">-->
-      <!--<template slot-scope="{ row }">-->
-
-      <!--<ul class="status-wrapper metrics">-->
-      <!--<li class="status-item" style="margin-bottom: 6px;font-size: 14px">-->
-      <!--{{ $t('rule.metrics') }}-->
-      <!--</li>-->
-
-      <!--&lt;!&ndash;<el-table :data="row.metrics" border>&ndash;&gt;-->
-      <!--&lt;!&ndash;<el-table-column label="节点" prop="node"></el-table-column>&ndash;&gt;-->
-      <!--&lt;!&ndash;<el-table-column label="成功数" prop="success"></el-table-column>&ndash;&gt;-->
-      <!--&lt;!&ndash;<el-table-column label="失败数" prop="failed"></el-table-column>&ndash;&gt;-->
-      <!--&lt;!&ndash;</el-table>&ndash;&gt;-->
-      <!--<li v-for="(item, i) in row.metrics || []" :key="i" class="status-item" style="margin-left: 10px">-->
-      <!--<span class="key">-->
-      <!--{{ item.node }}-->
-      <!--</span>-->
-
-      <!--<span type="info">-->
-      <!--{{$t('rule.success')}}:-->
-      <!--<span>{{ item.success }}</span>-->
-      <!--</span>-->
-
-      <!--<span type="info">-->
-      <!--{{$t('rule.failed')}}:-->
-      <!--<span>{{ item.failed }}</span>-->
-      <!--</span>-->
-
-      <!--</li>-->
-
-      <!--<li class="status-item" style="margin-left: 10px;margin-top: 4px">-->
-
-      <!--<span class="key">-->
-      <!--{{ $t('rule.all') }}-->
-      <!--</span>-->
-      <!--<span type="info">-->
-      <!--{{$t('rule.success')}}:-->
-      <!--<span>{{ getSum(row.metrics, 'success') }}</span>-->
-      <!--</span>-->
-
-      <!--<span type="info">-->
-      <!--{{$t('rule.failed')}}:-->
-      <!--<span>{{ getSum(row.metrics, 'failed') }}</span>-->
-      <!--</span>-->
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-
-
       <el-table-column v-if="has.delete || has.edit" :label="$t('rule.oper')">
         <template slot-scope="props">
+          <el-button v-if="has.edit" type="text" @click="handleEdit(props.row, props.$index)">{{ $t('rule.edit') }}</el-button>
           <el-button v-if="has.delete" type="text" @click="handleRemove(props)">
             {{ $t('rule.delete') }}
           </el-button>
-          <el-button v-if="has.edit" type="text">{{ $t('rule.edit') }}</el-button>
         </template>
       </el-table-column>
 
@@ -81,34 +27,21 @@
         <template slot-scope="{ row }">
 
           <ul class="status-wrapper metrics">
-            <!--<li class="status-item" style="margin-bottom: 6px;font-size: 14px">-->
-              <!--{{ $t('rule.metrics') }}-->
-            <!--</li>-->
-
-            <!--<el-table :data="row.metrics" border>-->
-            <!--<el-table-column label="节点" prop="node"></el-table-column>-->
-            <!--<el-table-column label="成功数" prop="success"></el-table-column>-->
-            <!--<el-table-column label="失败数" prop="failed"></el-table-column>-->
-            <!--</el-table>-->
             <li v-for="(item, i) in row.metrics || []" :key="i" class="status-item">
               <span class="key">
                 {{ item.node }}
               </span>
-
               <span type="info">
                 {{$t('rule.success')}}:
                 <span>{{ item.success }}</span>
               </span>
-
               <span type="info">
                 {{$t('rule.failed')}}:
                 <span>{{ item.failed }}</span>
               </span>
-
             </li>
 
             <li class="status-item" style="margin-top: 4px">
-
               <span class="key">
                 {{ $t('rule.all') }}
               </span>
@@ -116,7 +49,6 @@
                 {{$t('rule.success')}}:
                 <span>{{ getSum(row.metrics, 'success') }}</span>
               </span>
-
               <span type="info">
                 {{$t('rule.failed')}}:
                 <span>{{ getSum(row.metrics, 'failed') }}</span>
@@ -141,6 +73,8 @@
     <action-dialog
       :visible.sync="dialogVisible"
       :currentActions="record.actions"
+      :recordIndex="editIndex"
+      :editRecord="editForm"
       :params="params"
       @confirm="handleActionAdd"
     >
@@ -176,9 +110,20 @@ export default {
     },
   },
 
+  watch: {
+    dialogVisible(val) {
+      if (!val) {
+        this.editForm = null
+        this.editIndex = null
+      }
+    },
+  },
+
   data() {
     return {
       dialogVisible: false,
+      editForm: null,
+      editIndex: null,
     }
   },
   filters: {
@@ -204,13 +149,23 @@ export default {
      * { name: 'action_name', params: { ...params } }
      * @param action
      */
-    handleActionAdd(action) {
-      this.record.actions.push(action)
+    handleActionAdd(action, index) {
+      if (index !== null) {
+        this.record.actions.splice(index, 1, action)
+      } else {
+        this.record.actions.push(action)
+      }
     },
 
     handleRemove(props) {
       const { $index } = props
       this.record.actions = this.record.actions.filter((item, index) => index !== $index)
+    },
+
+    handleEdit(action, index) {
+      this.editIndex = index
+      this.editForm = action
+      this.dialogVisible = true
     },
   },
 
