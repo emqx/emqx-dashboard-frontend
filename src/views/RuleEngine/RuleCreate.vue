@@ -132,7 +132,7 @@
             <el-row style="max-width: 1366px;">
               <el-col :span="23">
                 <rule-actions
-                  :operations="['create', 'delete']"
+                  :operations="['create', 'delete', 'edit']"
                   :record="record">
                 </rule-actions>
               </el-col>
@@ -388,7 +388,7 @@ export default {
               rawsql,
             }
             this.$httpPut(`/rules/${rule}`, data).then(() => {
-              this.$message.success(this.$t('rule.create_success'))
+              this.$message.success(this.$t('oper.editSuccess'))
               this.$router.push('/rules')
             })
           } else {
