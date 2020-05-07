@@ -217,12 +217,16 @@ export default {
     },
     loadData() {
       this.$httpGet('/topic-metrics').then((res) => {
-        this.topics = Object.keys(res.data).map(key => ({
-          topic: key,
-          messageIn: res.data[key]['messages.in.count'],
-          messageOut: res.data[key]['messages.out.count'],
-          messageDrop: res.data[key]['messages.dropped.count'],
-        }))
+        const { data } = res
+        this.topics = data.map((item) => {
+          const { metrics } = item
+          return {
+            topic: item.topic,
+            messageIn: metrics['messages.in.count'],
+            messageOut: metrics['messages.out.count'],
+            messageDrop: metrics['messages.dropped.count'],
+          }
+        })
         this.modClosed = false
       }).catch((error) => {
         this.$message.warning(this.$t(`error.${error.message}`))
