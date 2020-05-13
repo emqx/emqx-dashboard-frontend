@@ -57,6 +57,7 @@
 
 <script>
 import { Button, Table, TableColumn, Card } from 'element-ui'
+import HttpFitlerData from '../data_map/http_fitler_data'
 
 export default {
   name: 'http-api',
@@ -142,6 +143,7 @@ export default {
         let data = JSON.stringify(response.data)
         data = data.replace(/:node/g, this.nodeName)
         data = JSON.parse(data)
+        data = data.filter(all => HttpFitlerData.every(fitler => fitler.path !== all.path))
         Object.keys(data).forEach((item) => {
           this.tableData.push({
             method: data[item].method,
