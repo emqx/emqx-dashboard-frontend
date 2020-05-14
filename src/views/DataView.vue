@@ -318,8 +318,7 @@ export default {
         'MQTT',
         'MQTT-SN',
         'CoAP',
-        'HTTP',
-        'TCP',
+        'LwM2M',
       ],
     }
   },

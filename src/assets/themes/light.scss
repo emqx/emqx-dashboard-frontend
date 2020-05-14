@@ -393,9 +393,17 @@
   }
 
   .payload-type {
-    background-color: rgba(223, 223, 223, 0.8);
+    background-color: #dfdfdfcc;
     border: 1px solid #DCDFE6;
     border-top: none;
+  }
+}
+.rule-actions {
+  .action-card {
+    background: #dfdfdfcc;
+    .action-footer {
+      border-top: 1px solid #DCDFE6;
+    }
   }
 }
 

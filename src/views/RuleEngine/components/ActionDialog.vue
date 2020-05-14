@@ -253,14 +253,16 @@ export default {
         this.$refs.record.clearValidate()
       }
       if (this.editRecord && this.recordIndex !== null) {
-        const { name, params } = this.editRecord
+        const { name, params, fallbacks } = this.editRecord
         await this.handleActionChange(name)
         this.record.action = name
         this.record.params = { ...params }
+        this.record.fallbacks = fallbacks
         this.action.params = { ...params }
       } else {
         this.record.params = {}
         this.record.action = ''
+        this.record.fallbacks = []
       }
       this.loadActions()
     },
@@ -278,8 +280,12 @@ export default {
           return
         }
         const { params, action: name } = this.record
+        let { fallbacks } = this.record
+        if (!fallbacks) {
+          fallbacks = []
+        }
         // 资源类型 资源参数
-        const action = { name, params: { ...params } }
+        const action = { name, params: { ...params }, fallbacks }
         const hash = JSON.stringify(action)
         if (this.currentActionsMap[hash]) {
           this.$message.error(this.$t('rule.action_exists'))
