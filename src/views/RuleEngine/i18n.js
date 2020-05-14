@@ -169,6 +169,9 @@ export const en = {
   session_subscribed: 'session subscribed',
   session_unsubscribed: 'session unsubscribed',
   parse_confirm: 'Detected incompatible old SQL syntax, confirm to automatically convert it to the new version?',
+  errorAction: 'Error action',
+  errorActionCreate: 'Set the action that will be performed when an action execution error occurs (optional)',
+  errorActionTip: 'Action to be performed when the action execution error',
 }
 
 export const zh = {
@@ -337,4 +340,7 @@ export const zh = {
   session_subscribed: '会话订阅',
   session_unsubscribed: '会话取消订阅',
   parse_confirm: '检测到不兼容的旧版 SQL 语法，是否自动转换为新版语法？',
+  errorAction: '错误操作',
+  errorActionCreate: '设置发生动作执行错误时将执行的动作（可选）',
+  errorActionTip: '动作执行错误时将执行的操作',
 }

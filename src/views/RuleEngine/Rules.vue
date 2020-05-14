@@ -303,7 +303,6 @@ export default {
   }
 
   span[type="info"] {
-    /*color: #101010;*/
     padding-right: 20px;
 
     & > span {

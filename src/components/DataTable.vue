@@ -120,7 +120,7 @@ export default {
       this.tableData.push({ key: '', value: '', __new: true })
     },
 
-    handleInput(row, isKey = true) {
+    handleInput(row) {
       if (row.__new) {
         this.$delete(row, '__new')
         if (row.key || row.value) {
