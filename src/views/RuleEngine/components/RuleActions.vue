@@ -21,7 +21,7 @@
           </el-button>
           <el-button
             v-if="has.delete"
-            :class="action.fallbacks.length ? '' : 'delete-btn'"
+            class="delete-btn"
             type="text"
             @click="handleActionRemove(index)">
             {{ $t('rule.delete') }}
@@ -30,14 +30,13 @@
             <el-popover
               placement="top-start"
               trigger="hover"
-              :content="$t('rule.errorActionCreate')">
+              :content="$t('rule.fallbackActionCreate')">
               <el-button
-                v-if="has.delete"
                 slot="reference"
                 type="text"
                 icon="el-icon-plus"
                 @click="handleAddFallbacks(action)">
-                {{ $t('rule.errorAction') }}
+                {{ $t('rule.fallbackAction') }}
               </el-button>
             </el-popover>
           </div>
@@ -93,7 +92,7 @@
             </el-button>
             <el-button
               v-if="has.delete"
-              :class="action.fallbacks.length ? '' : 'delete-btn'"
+              class="delete-btn"
               type="text"
               @click="handleFallbackRemove(action, index)">
               {{ $t('rule.delete') }}
@@ -102,9 +101,9 @@
               <el-popover
                 placement="top-start"
                 trigger="hover"
-                :content="$t('rule.errorActionTip')">
+                :content="$t('rule.fallbackActionTip')">
                 <span slot="reference">
-                  {{ $t('rule.errorAction') }}
+                  {{ $t('rule.fallbackAction') }}
                 </span>
               </el-popover>
             </div>
@@ -319,7 +318,6 @@ export default {
         margin-bottom: 0;
       }
       .title {
-        color: #ddd;
         margin-right: 10px;
       }
     }
@@ -333,6 +331,9 @@ export default {
         position: absolute;
         right: 0;
         bottom: 0;
+        .el-button [class*="el-icon-"] + span {
+          margin-left: 0px;
+        }
       }
     }
     &:last-child {
