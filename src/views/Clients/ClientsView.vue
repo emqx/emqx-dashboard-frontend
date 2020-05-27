@@ -56,6 +56,7 @@ export default {
       activeName: 'basic',
       basicRecord: {},
       subscriptionsData: [],
+      nodeName: '',
     }
   },
 
@@ -67,7 +68,6 @@ export default {
 
   created() {
     this.loadBasicData()
-    this.loadSubscription()
   },
 
   watch: {
@@ -107,10 +107,12 @@ export default {
     loadBasicData() {
       this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`).then((res) => {
         this.basicRecord = res.data[0]
+        this.nodeName = this.basicRecord.node
+        this.loadSubscription()
       }).catch(() => {})
     },
     loadSubscription() {
-      this.$httpGet(`/subscriptions/${encodeURIComponent(this.clientId)}`).then((res) => {
+      this.$httpGet(`/nodes/${this.nodeName}/subscriptions/${encodeURIComponent(this.clientId)}`).then((res) => {
         this.subscriptionsData = res.data
       }).catch(() => {})
     },
