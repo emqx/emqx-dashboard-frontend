@@ -68,7 +68,7 @@
                 <div>
                   {{ $t('analysis.messageOut') }}
                   <span class="message-rate">
-                    {{ $t('analysis.rateItem', [getCurrentTopicData('in', 'rate')]) }}
+                    {{ $t('analysis.rateItem', [getCurrentTopicData('out', 'rate')]) }}
                     {{ $t('analysis.rate') }}
                   </span>
                 </div>
