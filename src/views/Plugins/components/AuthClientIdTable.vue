@@ -91,7 +91,7 @@
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item prop="clientid" label="Client ID">
-              <el-input v-model="editRecord.clientid" disabled type="clientid"></el-input>
+              <el-input v-model="editRecord.clientid" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">

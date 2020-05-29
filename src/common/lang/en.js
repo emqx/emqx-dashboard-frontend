@@ -242,7 +242,7 @@ export default {
     secret: 'Secret or Private key',
     payloadDesc: 'It is valid when verify_claims is enabled. You can use% u and% c placeholders to replace the entered user name and clientid respectively. For details, see',
     jwtDoc: 'JWT Authentication',
-    dataDesc: 'One line is a set of data, separated by comma username, clientid',
+    dataDesc: 'One line is a set of data, separated by comma username,clientid',
     secretRequired: 'Secret is required',
     payloadRequired: 'Payload template is required',
     dataRequired: 'Payload data is required',

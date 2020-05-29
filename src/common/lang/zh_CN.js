@@ -242,7 +242,7 @@ export default {
     secret: '密钥或私钥',
     payloadDesc: '启用 verify_claims 时有效, 可以使用 %u，%c 占位符分别替换输入的 username 和 clientid，详见',
     jwtDoc: 'JWT 认证',
-    dataDesc: '一行一组数据，使用逗号分割 username，clientid',
+    dataDesc: '一行一组数据，使用逗号分割 username,clientid',
     secretRequired: '请输入 Secret',
     payloadRequired: '请输入 Payload 模版',
     dataRequired: '请填写 Payload 数据',
