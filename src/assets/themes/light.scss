@@ -490,3 +490,19 @@
 .clients-view .card-subtitle {
   color: #6E6E75;
 }
+
+/* Topic Metrics */
+.topic-metrics {
+  .message-card {
+    color: #fff;
+    &.in {
+      background: linear-gradient(0.25turn, #3E3AB4, #4C5AE0);
+    }
+    &.out {
+      background: linear-gradient(0.25turn, #0C7CD1, #19BCC2);
+    }
+    &.drop {
+      background: linear-gradient(0.25turn, #00AC70, #34C388);
+    }
+  }
+}

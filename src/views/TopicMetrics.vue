@@ -369,15 +369,6 @@ export default {
       height: 112px;
       border-radius: 4px;
       padding: 6px 12px;
-      &.in {
-        background: linear-gradient(0.25turn, #1D1E27, #272644);
-      }
-      &.out {
-        background: linear-gradient(0.25turn, #1C2023, #1E322D);
-      }
-      &.drop {
-        background: linear-gradient(0.25turn, #1A1F27, #212D44);
-      }
       .message-card--body {
         font-size: 28px;
         height: 80px;
