@@ -1,5 +1,6 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 
+// eslint-disable-next-line no-unused-vars
 function getInertText(text, preWord) {
   // let $text = text.replace(/\"/g, '')
   return text
@@ -7,7 +8,7 @@ function getInertText(text, preWord) {
 export function createMonacoComplete(hints, range, { word }) {
   let customHints = []
   if (hints.length) {
-    customHints = hints.map((doc) => ({
+    customHints = hints.map(doc => ({
       label: doc.name,
       // kind is icon
       kind: doc.type ? monaco.languages.CompletionItemKind[doc.type] : monaco.languages.CompletionItemKind.Function,
@@ -22,6 +23,7 @@ export function createMonacoComplete(hints, range, { word }) {
 
 
 function getValueName(hint) {
+  // eslint-disable-next-line prefer-const
   let { name, default: defaultValue, valueType } = hint
   if (valueType) {
     name = `${name}: ${valueType}`
@@ -37,7 +39,7 @@ export function createMonacoHover(key, hints) {
     }
     if (key === word) {
       contents.push({
-        value: getValueName(hint)
+        value: getValueName(hint),
       }, {
         value: hint.documentation,
       })

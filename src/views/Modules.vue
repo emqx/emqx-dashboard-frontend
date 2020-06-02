@@ -122,7 +122,7 @@ export default {
     },
     update(row) {
       const operation = row.active ? 'unload' : 'load'
-      this.$httpPut(`/modules/${row.name}/${operation}`).then(() => {
+      this.$httpPut(`/nodes/${this.nodeName}/modules/${row.name}/${operation}`).then(() => {
         this.$message.success(
           `${row.active ? this.$t('oper.disabledSuccess') : this.$t('oper.enableSuccess')}`,
         )
