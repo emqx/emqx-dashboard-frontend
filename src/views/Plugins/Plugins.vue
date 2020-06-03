@@ -47,7 +47,7 @@
             <a
               v-if="!props.row.name.includes('dashboard')
                 && !props.row.name.includes('management')
-                && getLinks(props.row.name) !== ''"
+                && getLinks(props.row.name) !== undefined"
               class="tutorial"
               href="javascript:;" @click="openLink(props.row)">
               <i class="iconfont icon-bangzhu"></i>
@@ -89,14 +89,6 @@
             @click="handleManage(props.row)">
             {{ $t('plugins.manage') }}
           </el-button>
-          <!-- <el-button
-            type="success"
-            size="mini"
-            :disabled="props.row.name.includes('dashboard') || props.row.name.includes('management')"
-            :plain="true"
-            @click="config(props.row)">
-            {{ $t('plugins.config') }}
-          </el-button> -->
         </template>
       </el-table-column>
     </el-table>
