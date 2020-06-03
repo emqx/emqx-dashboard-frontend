@@ -187,7 +187,7 @@ export default {
   computed: {
     jwtDoc() {
       return this.lang === 'en'
-        ? 'https://docs.emqx.io/broker/latest/en/plugins.html#jwt-authentication-plugin'
+        ? 'https://docs.emqx.io/broker/latest/en/advanced/auth-jwt.html'
         : 'https://docs.emqx.io/broker/latest/cn/advanced/auth-jwt.html'
     },
   },
