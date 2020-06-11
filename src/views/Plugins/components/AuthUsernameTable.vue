@@ -192,6 +192,8 @@ export default {
       this.editVisible = true
       this.$httpGet(`/auth_username/${row.username}`).then((response) => {
         this.editRecord = response.data
+        this.editRecord.password = ''
+        this.$refs.editRecord.resetFields()
       }).catch((error) => {
         this.$message.error(error || this.$t('error.networkError'))
       })
