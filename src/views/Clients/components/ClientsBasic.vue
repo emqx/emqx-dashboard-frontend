@@ -23,7 +23,10 @@
                 <span>{{ record.proto_name }} {{ mqttVersionMap[record.proto_ver] }}</span>
               </template>
               <template v-else>
-                <span>{{ record.proto_name }} v{{ record.proto_ver }}</span>
+                <span>
+                  {{ record.proto_name }}
+                  <span v-if="record.proto_ver"> v{{ record.proto_ver }}</span>
+                </span>
               </template>
             </el-form-item>
             <el-form-item :label="$t('clients.ipAddr')" prop="ip_address">
