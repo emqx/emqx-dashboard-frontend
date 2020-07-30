@@ -104,6 +104,7 @@ export default {
     // Analysis
     analysis: 'Analysis',
     topicMetrics: 'Topic metrics',
+    alarms: 'Alarms',
   },
   // overview
   overview: {
@@ -467,6 +468,10 @@ export default {
     messageDropDesc: '(message drop rate)',
     loadAnalysis: 'Load',
     loadSuccess: 'Load Success',
+    alarmName: 'Alarm Name',
+    alarmMessage: 'Alarm Message',
+    activateAt: 'Activate At',
+    deactivateAt: 'Deactivate At',
   },
   httpCode: {
     0: 'Success',

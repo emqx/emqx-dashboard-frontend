@@ -68,6 +68,11 @@ const routes = [
         component: () => import('~/views/TopicMetrics'),
       },
       {
+        path: '/alarms',
+        name: 'alarms',
+        component: () => import('~/views/Alarms'),
+      },
+      {
         path: '/plugins',
         name: 'plugins',
         component: () => import('~/views/Plugins/Plugins'),

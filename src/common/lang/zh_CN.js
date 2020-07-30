@@ -104,6 +104,7 @@ export default {
     // Analysis
     analysis: '统计分析',
     topicMetrics: '主题监控',
+    alarms: '告警',
   },
   // overview
   overview: {
@@ -462,6 +463,10 @@ export default {
     messageDropDesc: '（消息丢弃速率）',
     loadAnalysis: '启用',
     loadSuccess: '启用成功',
+    alarmName: '告警名称',
+    alarmMessage: '告警消息',
+    activateAt: '开始时间',
+    deactivateAt: '结束时间',
   },
   httpCode: {
     0: '成功',
