@@ -334,7 +334,8 @@ export default {
   // http_api
   httpApi: {
     introduction: '说明',
-    desc: '除了帮助页面，所有URI返回application/json格式的的资源，每个请求都需要HTTP基本认证。默认用户是admin / public。<br/>' +
+    desc:
+      '除了帮助页面，所有URI返回application/json格式的的资源，每个请求都需要HTTP基本认证。默认用户是admin / public。<br/>' +
       'emqx_dashboard插件提供了一个Web管理控制台, 用于监控服务器的运行状态，数据统计和MQTT包计数监控。',
     reference: '参考',
     method: '请求方法',
@@ -433,13 +434,16 @@ export default {
     ex: '导出',
     atLeastThree: '至少3个字符',
     importSuccess: '导入成功',
-    notice: '使用备份的配置文件进行配置初始化/修改。<br/>注意: 配置文件可能包含有重要数据如数据库地址与认证信息，请妥善保管配置文件并合理使用备份功能。',
+    notice:
+      '使用备份的配置文件进行配置初始化/修改。<br/>注意: 配置文件可能包含有重要数据如数据库地址与认证信息，请妥善保管配置文件并合理使用备份功能。',
   },
   help: {
     quickStart: '快速开始',
-    emqxDesc: 'EMQ X 基于 Erlang/OTP 平台开发的 MQTT 消息服务器，是开源社区中最流行的 MQTT 消息服务器，支持丰富的物联网协议，包括 MQTT、LwM2M、MQTT-SN、CoAP、 LoRaWAN、 HTTP 和 WebSocket 等。欢迎 follow 我们的项目或参与构建。',
+    emqxDesc:
+      'EMQ X 基于 Erlang/OTP 平台开发的 MQTT 消息服务器，是开源社区中最流行的 MQTT 消息服务器，支持丰富的物联网协议，包括 MQTT、LwM2M、MQTT-SN、CoAP、 LoRaWAN、 HTTP 和 WebSocket 等。欢迎 follow 我们的项目或参与构建。',
     emqxEnterprise: 'EMQ X 企业版',
-    enterpriseDesc: 'EMQ X 企业版内置了各种数据持久化支持、安全审计、运行监控等功能，为您提供功能更全面、稳定性与性能更强、数据安全与服务响应级别更高的服务。<br/>最新企业版包含全新的 Dashboard，让您可以轻松创建并管理数十个节点、数百万连接的 IoT Hub 集群。',
+    enterpriseDesc:
+      'EMQ X 企业版内置了各种数据持久化支持、安全审计、运行监控等功能，为您提供功能更全面、稳定性与性能更强、数据安全与服务响应级别更高的服务。<br/>最新企业版包含全新的 Dashboard，让您可以轻松创建并管理数十个节点、数百万连接的 IoT Hub 集群。',
     freeTrial: '免费试用',
     useDocs: '使用文档',
     docsDesc: '我们为您准备了齐全的使用文档，帮助您熟悉更多强大的功能。',

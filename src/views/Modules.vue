@@ -3,40 +3,34 @@
     <!-- modules list -->
     <div class="page-title">
       {{ $t('leftbar.modules') }}
-      <div style="float: right">
+      <div style="float: right;">
         <el-select
           v-model="nodeName"
           class="select-radius"
           :placeholder="$t('select.placeholder')"
           :disabled="$store.state.loading"
-          @change="loadModuls">
-          <el-option
-            v-for="node in nodes"
-            :key="node.node"
-            :label="node.node"
-            :value="node.node">
-          </el-option>
+          @change="loadModuls"
+        >
+          <el-option v-for="node in nodes" :key="node.node" :label="node.node" :value="node.node"> </el-option>
         </el-select>
       </div>
     </div>
 
-    <el-table
-      v-loading="$store.state.loading"
-      border
-      :data="enableTableData"
-      @filter-change="resetFilter">
-      <el-table-column prop="name" width="250" :label="$t('modules.name')">
-      </el-table-column>
-      <el-table-column prop="description" min-width="350" :label="$t('plugins.description')">
-      </el-table-column>
+    <el-table v-loading="$store.state.loading" border :data="enableTableData" @filter-change="resetFilter">
+      <el-table-column prop="name" width="250" :label="$t('modules.name')"> </el-table-column>
+      <el-table-column prop="description" min-width="350" :label="$t('plugins.description')"> </el-table-column>
       <el-table-column
         prop="active"
         width="150"
         :label="$t('plugins.status')"
-        :filters="[{ text: $t('modules.disabled'), value: false }, { text: $t('modules.enabled'), value: true }]">
+        :filters="[
+          { text: $t('modules.disabled'), value: false },
+          { text: $t('modules.enabled'), value: true },
+        ]"
+      >
         <template slot-scope="props">
           <span :class="[props.row.active ? 'running' : '', 'status']">
-            {{ props.row.active ? $t('modules.enabled'): $t('modules.disabled')}}
+            {{ props.row.active ? $t('modules.enabled') : $t('modules.disabled') }}
           </span>
         </template>
       </el-table-column>
@@ -47,7 +41,9 @@
             class="oper"
             size="mini"
             :type="props.row.active ? 'warning' : 'success'"
-            @click="update(props.row)" :plain="true">
+            @click="update(props.row)"
+            :plain="true"
+          >
             {{ props.row.active ? $t('modules.disable') : $t('modules.enable') }}
           </el-button>
         </template>
@@ -56,11 +52,8 @@
   </div>
 </template>
 
-
 <script>
-import {
-  Select, Option, Button, Table, TableColumn,
-} from 'element-ui'
+import { Select, Option, Button, Table, TableColumn } from 'element-ui'
 import { mapActions } from 'vuex'
 
 export default {
@@ -84,29 +77,33 @@ export default {
   methods: {
     ...mapActions(['CURRENT_NODE']),
     loadData() {
-      this.$httpGet('/nodes').then((response) => {
-        this.nodeName = this.$store.state.nodeName || response.data[0].node
-        this.nodes = response.data
-        this.loadModuls()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet('/nodes')
+        .then((response) => {
+          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodes = response.data
+          this.loadModuls()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     loadModuls() {
       this.CURRENT_NODE(this.nodeName)
       if (!this.nodeName) {
         return
       }
-      this.$httpGet(`/nodes/${this.nodeName}/modules`).then((response) => {
-        this.tableData = response.data
-        this.handleFilter()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet(`/nodes/${this.nodeName}/modules`)
+        .then((response) => {
+          this.tableData = response.data
+          this.handleFilter()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     handleFilter() {
       // No need to initialize Set
-      this.enableTableData = this.tableData.filter(item => !this.filterSet.has(item.active))
+      this.enableTableData = this.tableData.filter((item) => !this.filterSet.has(item.active))
     },
     resetFilter(e) {
       this.filterSet.clear()
@@ -122,15 +119,15 @@ export default {
     },
     update(row) {
       const operation = row.active ? 'unload' : 'load'
-      this.$httpPut(`/nodes/${this.nodeName}/modules/${row.name}/${operation}`).then(() => {
-        this.$message.success(
-          `${row.active ? this.$t('oper.disabledSuccess') : this.$t('oper.enableSuccess')}`,
-        )
-        this.loadModuls()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-        this.loadModuls()
-      })
+      this.$httpPut(`/nodes/${this.nodeName}/modules/${row.name}/${operation}`)
+        .then(() => {
+          this.$message.success(`${row.active ? this.$t('oper.disabledSuccess') : this.$t('oper.enableSuccess')}`)
+          this.loadModuls()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+          this.loadModuls()
+        })
     },
   },
   created() {
@@ -138,7 +135,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .modules-view {

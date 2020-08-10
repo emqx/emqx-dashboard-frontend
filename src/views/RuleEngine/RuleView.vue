@@ -14,12 +14,7 @@
         {{ $t('rule.basic_info') }}
       </div>
 
-      <el-form
-        :model="record"
-        label-position="left"
-        label-width="100px"
-        label-suffix=":"
-      >
+      <el-form :model="record" label-position="left" label-width="100px" label-suffix=":">
         <el-form-item :label="$t('rule.topic')">
           <span>{{ record.for.join(',') }}</span>
         </el-form-item>
@@ -52,14 +47,10 @@
         {{ $t('rule.set_action') }}
       </div>
 
-      <rule-actions
-        :record="record"
-        :operations="[]">
-      </rule-actions>
+      <rule-actions :record="record" :operations="[]"> </rule-actions>
     </el-card>
   </div>
 </template>
-
 
 <script>
 import RuleActions from './components/RuleActions'
@@ -90,9 +81,7 @@ export default {
         ],
         description: '',
         enabled: true,
-        for: [
-          'message.publish',
-        ],
+        for: ['message.publish'],
         id: 'rule:b35e3e59',
         metrics: [
           {
@@ -129,7 +118,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .rule-view {

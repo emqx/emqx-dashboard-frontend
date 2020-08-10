@@ -1,9 +1,6 @@
 <template>
   <div class="rule-actions">
-    <div
-      v-for="(action, index) in record.actions"
-      :key="index"
-      class="action-card">
+    <div v-for="(action, index) in record.actions" :key="index" class="action-card">
       <el-row class="action-body" type="flex">
         <el-col :span="12">
           <div class="filed-item">
@@ -19,23 +16,12 @@
           <el-button v-if="has.edit" type="text" @click="handleActionEdit(action, index)">
             {{ $t('rule.edit') }}
           </el-button>
-          <el-button
-            v-if="has.delete"
-            class="delete-btn"
-            type="text"
-            @click="handleActionRemove(index)">
+          <el-button v-if="has.delete" class="delete-btn" type="text" @click="handleActionRemove(index)">
             {{ $t('rule.delete') }}
           </el-button>
           <div v-if="!action.fallbacks.length" class="fallbacks">
-            <el-popover
-              placement="top-start"
-              trigger="hover"
-              :content="$t('rule.fallbackActionCreate')">
-              <el-button
-                slot="reference"
-                type="text"
-                icon="el-icon-plus"
-                @click="handleAddFallbacks(action)">
+            <el-popover placement="top-start" trigger="hover" :content="$t('rule.fallbackActionCreate')">
+              <el-button slot="reference" type="text" icon="el-icon-plus" @click="handleAddFallbacks(action)">
                 {{ $t('rule.fallbackAction') }}
               </el-button>
             </el-popover>
@@ -44,16 +30,16 @@
         <el-col v-if="!(has.delete || has.edit)" :span="12">
           <div class="status-wrapper filed-item">
             <div v-for="(item, i) in action.metrics || []" :key="i" class="status-item">
-              <div class="title">{{ $t('rule.metrics') }}: </div>
+              <div class="title">{{ $t('rule.metrics') }}:</div>
               <span class="key">
                 {{ item.node }}
               </span>
               <span type="info">
-                {{$t('rule.success')}}:
+                {{ $t('rule.success') }}:
                 <span>{{ item.success }}</span>
               </span>
               <span type="info">
-                {{$t('rule.failed')}}:
+                {{ $t('rule.failed') }}:
                 <span>{{ item.failed }}</span>
               </span>
             </div>
@@ -62,11 +48,11 @@
                 {{ $t('rule.all') }}
               </span>
               <span type="info">
-                {{$t('rule.success')}}:
+                {{ $t('rule.success') }}:
                 <span>{{ getSum(action.metrics, 'success') }}</span>
               </span>
               <span type="info">
-                {{$t('rule.failed')}}:
+                {{ $t('rule.failed') }}:
                 <span>{{ getSum(action.metrics, 'failed') }}</span>
               </span>
             </div>
@@ -90,18 +76,11 @@
             <el-button v-if="has.edit" type="text" @click="handleFallbackEdit(fallback, action, index)">
               {{ $t('rule.edit') }}
             </el-button>
-            <el-button
-              v-if="has.delete"
-              class="delete-btn"
-              type="text"
-              @click="handleFallbackRemove(action, index)">
+            <el-button v-if="has.delete" class="delete-btn" type="text" @click="handleFallbackRemove(action, index)">
               {{ $t('rule.delete') }}
             </el-button>
             <div class="fallbacks">
-              <el-popover
-                placement="top-start"
-                trigger="hover"
-                :content="$t('rule.fallbackActionTip')">
+              <el-popover placement="top-start" trigger="hover" :content="$t('rule.fallbackActionTip')">
                 <span slot="reference">
                   {{ $t('rule.fallbackAction') }}
                 </span>
@@ -111,16 +90,16 @@
           <el-col v-if="!(has.delete || has.edit)" :span="12">
             <div class="status-wrapper filed-item">
               <div v-for="(item, i) in fallback.metrics || []" :key="i" class="status-item">
-                <div class="title">{{ $t('rule.metrics') }}: </div>
+                <div class="title">{{ $t('rule.metrics') }}:</div>
                 <span class="key">
                   {{ item.node }}
                 </span>
                 <span type="info">
-                  {{$t('rule.success')}}:
+                  {{ $t('rule.success') }}:
                   <span>{{ item.success }}</span>
                 </span>
                 <span type="info">
-                  {{$t('rule.failed')}}:
+                  {{ $t('rule.failed') }}:
                   <span>{{ item.failed }}</span>
                 </span>
               </div>
@@ -129,11 +108,11 @@
                   {{ $t('rule.all') }}
                 </span>
                 <span type="info">
-                  {{$t('rule.success')}}:
+                  {{ $t('rule.success') }}:
                   <span>{{ getSum(fallback.metrics, 'success') }}</span>
                 </span>
                 <span type="info">
-                  {{$t('rule.failed')}}:
+                  {{ $t('rule.failed') }}:
                   <span>{{ getSum(fallback.metrics, 'failed') }}</span>
                 </span>
               </div>
@@ -149,8 +128,9 @@
       plain
       icon="el-icon-plus"
       size="small"
-      style="min-width: 80px"
-      @click="dialogVisible = true">
+      style="min-width: 80px;"
+      @click="dialogVisible = true"
+    >
       {{ $t('rule.add') }}
     </el-button>
 
@@ -165,7 +145,6 @@
     </action-dialog>
   </div>
 </template>
-
 
 <script>
 import ActionDialog from './ActionDialog'
@@ -291,11 +270,11 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .rule-actions {
   .status-wrapper {
-    .title, .status-item  {
+    .title,
+    .status-item {
       margin-bottom: 10px;
     }
     .key {
@@ -309,7 +288,8 @@ export default {
   .action-card {
     font-size: 14px;
     margin-bottom: 24px;
-    .action-body, .action-footer {
+    .action-body,
+    .action-footer {
       padding: 20px;
     }
     .filed-item {
@@ -331,7 +311,7 @@ export default {
         position: absolute;
         right: 0;
         bottom: 0;
-        .el-button [class*="el-icon-"] + span {
+        .el-button [class*='el-icon-'] + span {
           margin-left: 0px;
         }
       }

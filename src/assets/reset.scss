@@ -1,4 +1,4 @@
-@import "color";
+@import 'color';
 
 /* reset global style */
 
@@ -26,7 +26,8 @@
     width: 0;
   }
 
-  th, td {
+  th,
+  td {
     border-right: none;
   }
 
@@ -78,7 +79,8 @@
   min-height: 40px;
 }
 
-.el-input, .el-textarea {
+.el-input,
+.el-textarea {
   &.input-radius {
     width: 240px;
 
@@ -145,14 +147,14 @@
 }
 
 .el-loading-mask {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 /* Tabs */
 .el-tabs {
   &.normal-tabs {
     margin-top: 24px;
-    &>.el-tabs__header {
+    & > .el-tabs__header {
       border-bottom: 0px;
       margin-bottom: 0px;
       .el-tabs__nav {
@@ -161,13 +163,13 @@
       .el-tabs__item {
         min-width: 120px;
         text-align: center;
-        background: #1D1E24;
+        background: #1d1e24;
         border-radius: 4px 4px 0 0;
         margin-right: 8px;
         border: 1px solid transparent;
         border-bottom: 1px solid #1f1d1d;
         line-height: 38px;
-        color: #ADAFB4;
+        color: #adafb4;
         transition: all 0.5s;
         font-size: 16px;
       }

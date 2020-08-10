@@ -25,11 +25,7 @@
 
           <el-col class="operation-area" :span="24">
             <el-form-item>
-              <el-button
-                class="confirm-btn"
-                type="success"
-                :disabled="notChanged"
-                @click="applySetting">
+              <el-button class="confirm-btn" type="success" :disabled="notChanged" @click="applySetting">
                 {{ $t('settings.apply') }}
               </el-button>
             </el-form-item>
@@ -39,7 +35,6 @@
     </el-card>
   </div>
 </template>
-
 
 <script>
 import { Radio, RadioGroup, Button, Form, FormItem, Row, Col, Card } from 'element-ui'
@@ -115,7 +110,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .settings-view {
   .el-card {
@@ -125,7 +119,7 @@ export default {
     width: 80px;
   }
   .el-switch {
-    &.is-checked{
+    &.is-checked {
       .el-switch__core {
         background-color: #42d885;
         border-color: #42d885;

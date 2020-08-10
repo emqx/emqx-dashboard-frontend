@@ -13,14 +13,10 @@
     <div class="help-item">
       <h3>{{ $t('help.emqxEnterprise') }}</h3>
       <p v-html="$t('help.enterpriseDesc')"></p>
-      <a
-        target="_blank"
-        :href="learnEnterprise">
+      <a target="_blank" :href="learnEnterprise">
         {{ $t('oper.learnMore') }}
       </a>
-      <a
-        target="_blank"
-        :href="freeTrial">
+      <a target="_blank" :href="freeTrial">
         {{ $t('help.freeTrial') }}
       </a>
     </div>
@@ -30,9 +26,7 @@
     <div class="help-item">
       <h3>{{ $t('help.useDocs') }}</h3>
       <p>{{ $t('help.docsDesc') }}</p>
-      <a
-        target="_blank"
-        :href="docsLink">
+      <a target="_blank" :href="docsLink">
         {{ $t('help.forwardView') }}
       </a>
     </div>
@@ -42,9 +36,7 @@
     <div class="help-item">
       <h3>FAQ</h3>
       <p>{{ $t('help.faqDesc') }}</p>
-      <a
-        target="_blank"
-        :href="faqLink">
+      <a target="_blank" :href="faqLink">
         {{ $t('help.forwardFaq') }}
       </a>
     </div>
@@ -72,10 +64,8 @@
         <i class="iconfont icon-youtube"></i>
       </a>
     </div>
-
   </div>
 </template>
-
 
 <script>
 export default {
@@ -101,9 +91,7 @@ export default {
         : 'https://www.emqx.io/cn/downloads#enterprise'
     },
     docsLink() {
-      return this.lang === 'en'
-        ? 'https://docs.emqx.io/broker/v4/en'
-        : 'https://docs.emqx.io/broker/v4/cn'
+      return this.lang === 'en' ? 'https://docs.emqx.io/broker/v4/en' : 'https://docs.emqx.io/broker/v4/cn'
     },
     faqLink() {
       return this.lang === 'en'
@@ -112,11 +100,9 @@ export default {
     },
   },
 
-  methods: {
-  },
+  methods: {},
 }
 </script>
-
 
 <style lang="scss">
 .help-view {
@@ -128,7 +114,7 @@ export default {
     }
 
     p {
-      color: #B0B0B0;
+      color: #b0b0b0;
       line-height: 1.8;
     }
 
@@ -143,7 +129,7 @@ export default {
       text-align: center;
       line-height: 52px;
       background: #232429;
-      color: #9EA3B1;
+      color: #9ea3b1;
       margin-bottom: 20px;
       .iconfont {
         font-size: 24px;
@@ -153,7 +139,7 @@ export default {
 
   .el-divider {
     margin: 30px 0;
-    background-color: #2B2C30;
+    background-color: #2b2c30;
   }
 }
 

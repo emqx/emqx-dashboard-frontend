@@ -9,9 +9,10 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right"
+        style="float: right;"
         :disable="$store.state.loading"
-        @click="handleOperation">
+        @click="handleOperation"
+      >
         {{ $t('app.newApp') }}
       </el-button>
     </div>
@@ -27,16 +28,15 @@
       <el-table-column prop="desc" min-width="90px" :label="$t('app.desc')"></el-table-column>
       <el-table-column :label="$t('app.status')">
         <template slot-scope="props">
-          <el-tooltip
-            :content="props.row.status ? $t('app.enableText') : $t('app.disableText')"
-            placement="left">
+          <el-tooltip :content="props.row.status ? $t('app.enableText') : $t('app.disableText')" placement="left">
             <el-switch
               v-model="props.row.status"
               active-text=""
               inactive-text=""
               active-color="#13ce66"
               inactive-color="#ff4949"
-              @change="updateApp(true, props.row)">
+              @change="updateApp(true, props.row)"
+            >
             </el-switch>
           </el-tooltip>
         </template>
@@ -56,26 +56,15 @@
           <!-- delete -->
           <el-popover placement="right" trigger="click" :value="popoverVisible">
             <p>{{ $t('oper.confirmDelete') }}</p>
-            <div style="text-align: right">
-              <el-button
-                size="mini"
-                type="text"
-                class="cache-btn"
-                @click="hidePopover">
+            <div style="text-align: right;">
+              <el-button size="mini" type="text" class="cache-btn" @click="hidePopover">
                 {{ $t('oper.cancel') }}
               </el-button>
-              <el-button
-                size="mini"
-                type="success"
-                @click="deleteApp(props.row)">
+              <el-button size="mini" type="success" @click="deleteApp(props.row)">
                 {{ $t('oper.confirm') }}
               </el-button>
             </div>
-            <el-button
-              slot="reference"
-              size="mini"
-              type="danger"
-              plain>
+            <el-button slot="reference" size="mini" type="danger" plain>
               {{ $t('oper.delete') }}
             </el-button>
           </el-popover>
@@ -87,13 +76,15 @@
       :width="oper === 'view' ? '660px' : '500px'"
       :visible.sync="displayDialog"
       :title="$t(`app.${oper}App`)"
-      @keyup.enter.native="createApp">
+      @keyup.enter.native="createApp"
+    >
       <el-form
         class="el-form--public app-info"
         ref="record"
         size="medium"
         :rules="oper === 'view' ? {} : rules"
-        :model="record">
+        :model="record"
+      >
         <el-row :gutter="20">
           <template v-if="oper === 'view'">
             <el-col :span="12">
@@ -120,7 +111,8 @@
                   v-model="record.status"
                   class="el-select--public"
                   popper-class="el-select--public"
-                  :disabled="oper === 'view'">
+                  :disabled="oper === 'view'"
+                >
                   <el-option :label="$t('app.enable')" :value="true"></el-option>
                   <el-option :label="$t('app.disable')" :value="false"></el-option>
                 </el-select>
@@ -133,7 +125,8 @@
                   v-model="record.expired"
                   :picker-options="pickerDisable"
                   :placeholder="$t('app.expiredText')"
-                  :disabled="oper === 'view'">
+                  :disabled="oper === 'view'"
+                >
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -172,7 +165,8 @@
                   v-model="record.status"
                   class="el-select--public"
                   popper-class="el-select--public"
-                  :disabled="oper === 'view'">
+                  :disabled="oper === 'view'"
+                >
                   <el-option :label="$t('app.enable')" :value="true"></el-option>
                   <el-option :label="$t('app.disable')" :value="false"></el-option>
                 </el-select>
@@ -185,7 +179,8 @@
                   v-model="record.expired"
                   :picker-options="pickerDisable"
                   :placeholder="$t('app.expiredText')"
-                  :disabled="oper === 'view'">
+                  :disabled="oper === 'view'"
+                >
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -201,10 +196,7 @@
 
       <!-- create & edit footer -->
       <div v-if="oper !== 'view'" slot="footer">
-        <el-button
-          type="text"
-          class="cache-btn"
-          @click="displayDialog = false">
+        <el-button type="text" class="cache-btn" @click="displayDialog = false">
           {{ $t('oper.cancel') }}
         </el-button>
         <el-button
@@ -213,7 +205,8 @@
           class="confirm-btn"
           :loading="$store.state.loading"
           :disabled="$store.state.loading"
-          @click="updateApp(false)">
+          @click="updateApp(false)"
+        >
           {{ $t('oper.save') }}
         </el-button>
         <el-button
@@ -222,7 +215,8 @@
           class="confirm-btn"
           :loading="$store.state.loading"
           :disabled="$store.state.loading"
-          @click="createApp">
+          @click="createApp"
+        >
           {{ $t('oper.save') }}
         </el-button>
       </div>
@@ -231,9 +225,13 @@
         <div class="guide-doc">
           {{ this.$t('app.guide') }}
           <a
-            :href="lang === 'zh'
-              ? 'https://docs.emqx.io/broker/latest/cn/advanced/http-api.html'
-              : 'https://docs.emqx.io/broker/latest/en/advanced/http-api.html'" target="_blank">
+            :href="
+              lang === 'zh'
+                ? 'https://docs.emqx.io/broker/latest/cn/advanced/http-api.html'
+                : 'https://docs.emqx.io/broker/latest/en/advanced/http-api.html'
+            "
+            target="_blank"
+          >
             {{ $t('app.docs') }}
           </a>
         </div>
@@ -242,11 +240,23 @@
   </div>
 </template>
 
-
 <script>
 import {
-  Dialog, Input, Switch, Select, Option, Button, Form, FormItem,
-  Table, TableColumn, DatePicker, Popover, Tooltip, Row, Col,
+  Dialog,
+  Input,
+  Switch,
+  Select,
+  Option,
+  Button,
+  Form,
+  FormItem,
+  Table,
+  TableColumn,
+  DatePicker,
+  Popover,
+  Tooltip,
+  Row,
+  Col,
 } from 'element-ui'
 import dateformat from 'dateformat'
 
@@ -283,12 +293,8 @@ export default {
         status: true,
       },
       rules: {
-        app_id: [
-          { required: true, message: this.$t('app.errors') },
-        ],
-        name: [
-          { required: true, message: this.$t('app.errors') },
-        ],
+        app_id: [{ required: true, message: this.$t('app.errors') }],
+        name: [{ required: true, message: this.$t('app.errors') }],
       },
       popoverVisible: false,
       pickerDisable: {
@@ -301,11 +307,13 @@ export default {
   },
   methods: {
     loadData() {
-      this.$httpGet('/apps').then((response) => {
-        this.tableData = response.data
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet('/apps')
+        .then((response) => {
+          this.tableData = response.data
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     createApp() {
       this.$refs.record.validate((valid) => {
@@ -318,13 +326,15 @@ export default {
         } else {
           record.expired = undefined
         }
-        this.$httpPost('/apps', record).then(() => {
-          this.loadData()
-          this.$message.success(this.$t('success.createSuccess'))
-          this.displayDialog = false
-        }).catch((error) => {
-          this.$message.error(error || this.$t('error.networkError'))
-        })
+        this.$httpPost('/apps', record)
+          .then(() => {
+            this.loadData()
+            this.$message.success(this.$t('success.createSuccess'))
+            this.displayDialog = false
+          })
+          .catch((error) => {
+            this.$message.error(error || this.$t('error.networkError'))
+          })
       })
     },
     updateApp(fromTable = false, row) {
@@ -336,12 +346,14 @@ export default {
         } else {
           record.expired = undefined
         }
-        this.$httpPut(`/apps/${record.app_id}`, record).then(() => {
-          this.$message.success(this.$t('oper.editSuccess'))
-          this.loadData()
-        }).catch((error) => {
-          this.$message.error(error || this.$t('error.networkError'))
-        })
+        this.$httpPut(`/apps/${record.app_id}`, record)
+          .then(() => {
+            this.$message.success(this.$t('oper.editSuccess'))
+            this.loadData()
+          })
+          .catch((error) => {
+            this.$message.error(error || this.$t('error.networkError'))
+          })
       } else {
         this.$refs.record.validate((valid) => {
           if (!valid) {
@@ -353,36 +365,42 @@ export default {
           } else {
             record.expired = undefined
           }
-          this.$httpPut(`/apps/${record.app_id}`, record).then(() => {
-            this.displayDialog = false
-            this.$message.success(this.$t('oper.editSuccess'))
-            this.loadData()
-          }).catch((error) => {
-            this.$message.error(error || this.$t('error.networkError'))
-          })
+          this.$httpPut(`/apps/${record.app_id}`, record)
+            .then(() => {
+              this.displayDialog = false
+              this.$message.success(this.$t('oper.editSuccess'))
+              this.loadData()
+            })
+            .catch((error) => {
+              this.$message.error(error || this.$t('error.networkError'))
+            })
         })
       }
     },
     showApp(row) {
       this.oper = 'view'
-      this.$httpGet(`/apps/${row.app_id}`).then((response) => {
-        this.displayDialog = true
-        this.record = response.data
-        if (this.record.expired.toString().length === 10) {
-          this.record.expired = new Date(this.record.expired * 1000)
-        }
-        this.displayDialog = true
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet(`/apps/${row.app_id}`)
+        .then((response) => {
+          this.displayDialog = true
+          this.record = response.data
+          if (this.record.expired.toString().length === 10) {
+            this.record.expired = new Date(this.record.expired * 1000)
+          }
+          this.displayDialog = true
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     deleteApp(row) {
-      this.$httpDelete(`/apps/${row.app_id}`).then(() => {
-        this.loadData()
-        this.hidePopover()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpDelete(`/apps/${row.app_id}`)
+        .then(() => {
+          this.loadData()
+          this.hidePopover()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     handleOperation(create = true, row) {
       this.displayDialog = true
@@ -400,7 +418,10 @@ export default {
         } else {
           this.oper = 'edit'
           this.record = { ...row }
-          this.record.expired = this.record.expired && this.record.expired.toString().length === 10 ? new Date(this.record.expired * 1000) : ''
+          this.record.expired =
+            this.record.expired && this.record.expired.toString().length === 10
+              ? new Date(this.record.expired * 1000)
+              : ''
         }
         this.$refs.record.resetFields()
       }, 10)
@@ -413,9 +434,7 @@ export default {
     },
     dateFormat(date) {
       try {
-        return date.toString().length === 10
-          ? dateformat(date * 1000, 'yyyy-mm-dd')
-          : this.$t('app.expiredText')
+        return date.toString().length === 10 ? dateformat(date * 1000, 'yyyy-mm-dd') : this.$t('app.expiredText')
       } catch (e) {
         return this.$t('app.expiredText')
       }
@@ -427,10 +446,10 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .applications-view {
-  .el-select, .el-date-editor {
+  .el-select,
+  .el-date-editor {
     width: 100%;
   }
   .el-table {
@@ -440,7 +459,7 @@ export default {
     margin-top: 20px;
   }
   .search-btn {
-    margin-left: 8px
+    margin-left: 8px;
   }
   .el-breadcrumb {
     margin-top: 10px;

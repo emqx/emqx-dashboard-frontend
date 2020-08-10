@@ -1,3 +1,1 @@
-export default [
-  'alarms',
-]
+export default ['alarms']

@@ -47,7 +47,8 @@ export const en = {
   event_info: 'Available Field',
   suggest_sql: 'SQL Example',
   upgrade_tip: 'Upgrade Tip',
-  json_decode_upgrade: 'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
+  json_decode_upgrade:
+    'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
   events: {
     message_acked: 'message.acked',
     message_dropped: 'message.dropped',
@@ -155,11 +156,13 @@ export const en = {
   username_doc: 'Current MQTT username',
   event_doc: 'Trigger event name',
   id_doc: 'MQTT message id',
-  payload_doc: 'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
+  payload_doc:
+    'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
   peerhost_doc: 'Client peer name',
   qos_doc: 'Enumeration of message QoS 0,1,2',
   timestamp_doc: 'Timestamp(millisecond)',
-  topic_doc: 'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
+  topic_doc:
+    'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
   node_doc: 'Node name of the trigger event',
   message_delivered: 'message delivered',
   message_acked: 'message acked',
@@ -223,7 +226,8 @@ export const zh = {
   event_info: '可用字段',
   suggest_sql: '规则 SQL 示例',
   upgrade_tip: '升级提示',
-  json_decode_upgrade: '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
+  json_decode_upgrade:
+    '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
   events: {
     message_acked: '消息确认',
     message_dropped: '消息丢弃',
@@ -330,7 +334,8 @@ export const zh = {
   peerhost_doc: '客户端网络地址',
   qos_doc: '消息 QoS 0,1,2 中枚举',
   timestamp_doc: '当前毫秒级时间戳',
-  topic_doc: '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
+  topic_doc:
+    '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
   node_doc: '触发事件的节点名称',
   message_delivered: '消息投递',
   message_acked: '消息应答',

@@ -242,13 +242,15 @@ export default {
     clientidRequired: 'Client ID is required',
     algorithm: 'Algorithm',
     secret: 'Secret or Private key',
-    payloadDesc: 'It is valid when verify_claims is enabled. You can use% u and% c placeholders to replace the entered user name and clientid respectively. For details, see',
+    payloadDesc:
+      'It is valid when verify_claims is enabled. You can use% u and% c placeholders to replace the entered user name and clientid respectively. For details, see',
     jwtDoc: 'JWT Authentication',
     dataDesc: 'One line is a set of data, separated by comma username,clientid',
     secretRequired: 'Secret is required',
     payloadRequired: 'Payload template is required',
     dataRequired: 'Payload data is required',
-    leaveTokenPage: 'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
+    leaveTokenPage:
+      'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
   },
   modules: {
     name: 'Name',
@@ -330,14 +332,15 @@ export default {
     connected: 'CONNECTED',
     connecting: 'CONNECTING',
     disconnected: 'DISCONNECTED',
-    notSupport: 'Your browser doesn\'t support WebSocket',
+    notSupport: "Your browser doesn't support WebSocket",
   },
   // http_api
   httpApi: {
     introduction: 'Introduction',
-    desc: 'Apart from this help page, all URIs will serve only resources of type application/json, and will require HTTP basic authentication. The default user is admin / public.\n' +
+    desc:
+      'Apart from this help page, all URIs will serve only resources of type application/json, and will require HTTP basic authentication. The default user is admin / public.\n' +
       '<br/>' +
-      'The emqx_dashboard plugin provides a web management console. The Dashboard helps monitor broker\'s running status, statistics and metrics of MQTT packets.',
+      "The emqx_dashboard plugin provides a web management console. The Dashboard helps monitor broker's running status, statistics and metrics of MQTT packets.",
     reference: 'Reference',
     method: 'Method',
     path: 'Path',
@@ -379,7 +382,7 @@ export default {
     newPassword: 'New Password',
     confirmNewPassword: 'Confirm New Password',
     changePassword: 'Change Password',
-    dontChangePassword: 'Don\'t Change Password',
+    dontChangePassword: "Don't Change Password",
     confirm: 'Confirm',
     confirmDelete: 'Confirm Delete ?',
     usernameRequired: 'Username required',
@@ -438,18 +441,23 @@ export default {
     ex: 'Export',
     atLeastThree: 'At least three words',
     importSuccess: 'Import success',
-    notice: 'Use backup configuration files to configure initialization modification. <br/> Notice: configuration files may contain important data, such as database address and authentication information. Please keep good configuration files and use backup function reasonably.',
+    notice:
+      'Use backup configuration files to configure initialization modification. <br/> Notice: configuration files may contain important data, such as database address and authentication information. Please keep good configuration files and use backup function reasonably.',
   },
   help: {
     quickStart: 'Quick start',
-    emqxDesc: 'EMQ X is a MQTT broker developed on the Erlang/OTP platform, which is the most popular MQTT message middleware in the open source community. It supports common IoT protocols, including MQTT, LwM2M, MQTT-SN, CoAP, LoRaWAN, HTTP, and WebSocket. Welcome to follow our project or participate in development.',
+    emqxDesc:
+      'EMQ X is a MQTT broker developed on the Erlang/OTP platform, which is the most popular MQTT message middleware in the open source community. It supports common IoT protocols, including MQTT, LwM2M, MQTT-SN, CoAP, LoRaWAN, HTTP, and WebSocket. Welcome to follow our project or participate in development.',
     emqxEnterprise: 'EMQ X Enterprise Edition',
-    enterpriseDesc: 'EMQ X Enterprise Edition has built-in data persistence support, security auditing, operation monitoring and other functions, providing you with the service of more comprehensive functions, enhanced stability and performance, and higher level of data security and service response.<br/>The latest Enterprise Edition includes a new Dashboard, which allows you to easily create and manage IoT Hub clusters with dozens of nodes and millions of connections.',
+    enterpriseDesc:
+      'EMQ X Enterprise Edition has built-in data persistence support, security auditing, operation monitoring and other functions, providing you with the service of more comprehensive functions, enhanced stability and performance, and higher level of data security and service response.<br/>The latest Enterprise Edition includes a new Dashboard, which allows you to easily create and manage IoT Hub clusters with dozens of nodes and millions of connections.',
     freeTrial: 'Free Trial',
     useDocs: 'Documentation',
-    docsDesc: 'We have prepared a comprehensive documentation to help you familiarize yourself with more powerful features.',
+    docsDesc:
+      'We have prepared a comprehensive documentation to help you familiarize yourself with more powerful features.',
     forwardView: 'View documentation',
-    faqDesc: 'The FAQ contains questions that we are often asked about. It is recommended to use the FAQ to retrieve problems you encounter during use.',
+    faqDesc:
+      'The FAQ contains questions that we are often asked about. It is recommended to use the FAQ to retrieve problems you encounter during use.',
     forwardFaq: 'Go to FAQ',
     followUs: 'Follow us',
   },
