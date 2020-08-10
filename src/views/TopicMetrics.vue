@@ -11,9 +11,10 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right"
+        style="float: right;"
         :disable="$store.state.loading"
-        @click="handleOperation">
+        @click="handleOperation"
+      >
         {{ $t('rule.create') }}
       </el-button>
       <el-button
@@ -23,9 +24,10 @@
         plain
         type="success"
         size="medium"
-        style="float: right"
+        style="float: right;"
         :disable="$store.state.loading"
-        @click="handleModLoad">
+        @click="handleModLoad"
+      >
         {{ $t('modules.enable') }}
       </el-button>
     </div>
@@ -36,7 +38,8 @@
       :data="topics"
       :row-key="getRowKeys"
       :expand-row-keys="expands"
-      @expand-change="handleExpandChange">
+      @expand-change="handleExpandChange"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <div class="expand-header">
@@ -82,9 +85,7 @@
                 <div>
                   {{ $t('analysis.messageDrop') }}
                   <span class="message-rate">
-                    {{ $t('analysis.rateItem', [getCurrentTopicDropRate(
-                      currentTopic['messages.dropped.rate']
-                    )]) }}
+                    {{ $t('analysis.rateItem', [getCurrentTopicDropRate(currentTopic['messages.dropped.rate'])]) }}
                     {{ $t('analysis.rate') }}
                   </span>
                 </div>
@@ -107,26 +108,15 @@
           </el-button>
           <el-popover placement="right" trigger="click" :value="popoverVisible">
             <p>{{ $t('oper.confirmDelete') }}</p>
-            <div style="text-align: right">
-              <el-button
-                size="mini"
-                type="text"
-                class="cache-btn"
-                @click="hidePopover">
+            <div style="text-align: right;">
+              <el-button size="mini" type="text" class="cache-btn" @click="hidePopover">
                 {{ $t('oper.cancel') }}
               </el-button>
-              <el-button
-                size="mini"
-                type="success"
-                @click="deleteTopicMetric(props.row)">
+              <el-button size="mini" type="success" @click="deleteTopicMetric(props.row)">
                 {{ $t('oper.confirm') }}
               </el-button>
             </div>
-            <el-button
-              slot="reference"
-              size="mini"
-              type="danger"
-              plain>
+            <el-button slot="reference" size="mini" type="danger" plain>
               {{ $t('oper.delete') }}
             </el-button>
           </el-popover>
@@ -139,39 +129,25 @@
       width="400px"
       :visible.sync="addVisible"
       class="create-subscribe"
-      @keyup.enter.native="handleAdd">
-      <el-form
-        ref="record"
-        class="el-form--public"
-        :model="record"
-        :rules="rules"
-        size="small"
-        label-position="top">
+      @keyup.enter.native="handleAdd"
+    >
+      <el-form ref="record" class="el-form--public" :model="record" :rules="rules" size="small" label-position="top">
         <el-form-item prop="topic" :label="$t('subscriptions.topic')">
           <el-input v-model="record.topic" placeholder="Topic"></el-input>
         </el-form-item>
       </el-form>
 
       <div slot="footer">
-        <el-button
-          type="text"
-          class="cache-btn"
-          @click="handleClose">
+        <el-button type="text" class="cache-btn" @click="handleClose">
           {{ $t('oper.cancel') }}
         </el-button>
-        <el-button
-          type="success"
-          class="confirm-btn"
-          :loading="$store.state.loading"
-          @click="handleAdd">
+        <el-button type="success" class="confirm-btn" :loading="$store.state.loading" @click="handleAdd">
           {{ $t('oper.add') }}
         </el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
-
 
 <script>
 export default {
@@ -216,22 +192,24 @@ export default {
       return row.topic
     },
     loadData() {
-      this.$httpGet('/topic-metrics').then((res) => {
-        const { data } = res
-        this.topics = data.map((item) => {
-          const { metrics } = item
-          return {
-            topic: item.topic,
-            messageIn: metrics['messages.in.count'],
-            messageOut: metrics['messages.out.count'],
-            messageDrop: metrics['messages.dropped.count'],
-          }
+      this.$httpGet('/topic-metrics')
+        .then((res) => {
+          const { data } = res
+          this.topics = data.map((item) => {
+            const { metrics } = item
+            return {
+              topic: item.topic,
+              messageIn: metrics['messages.in.count'],
+              messageOut: metrics['messages.out.count'],
+              messageDrop: metrics['messages.dropped.count'],
+            }
+          })
+          this.modClosed = false
         })
-        this.modClosed = false
-      }).catch((error) => {
-        this.$message.warning(this.$t(`error.${error.message}`))
-        this.modClosed = true
-      })
+        .catch((error) => {
+          this.$message.warning(this.$t(`error.${error.message}`))
+          this.modClosed = true
+        })
     },
     hidePopover() {
       this.popoverVisible = true
@@ -243,21 +221,25 @@ export default {
       this.addVisible = true
     },
     handleModLoad() {
-      this.$httpPut('/modules/emqx_mod_topic_metrics/load').then(() => {
-        this.$message.success(this.$t('oper.enableSuccess'))
-        this.loadData()
-        this.modClosed = false
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpPut('/modules/emqx_mod_topic_metrics/load')
+        .then(() => {
+          this.$message.success(this.$t('oper.enableSuccess'))
+          this.loadData()
+          this.modClosed = false
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     deleteTopicMetric(row) {
-      this.$httpDelete(`/topic-metrics/${encodeURIComponent(row.topic)}`).then(() => {
-        this.loadData()
-        this.hidePopover()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpDelete(`/topic-metrics/${encodeURIComponent(row.topic)}`)
+        .then(() => {
+          this.loadData()
+          this.hidePopover()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     handleAdd() {
       this.$refs.record.validate((valid) => {
@@ -266,10 +248,12 @@ export default {
         }
         const body = {}
         Object.assign(body, this.record)
-        this.$httpPost('/topic-metrics', body).then(() => {
-          this.handleClose()
-          this.loadData()
-        }).catch(() => {})
+        this.$httpPost('/topic-metrics', body)
+          .then(() => {
+            this.handleClose()
+            this.loadData()
+          })
+          .catch(() => {})
       })
     },
     handleClose() {
@@ -283,17 +267,20 @@ export default {
       }
     },
     loadDetail() {
-      this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentTopic.topic)}`).then((res) => {
-        this.currentTopic = res.data
-        this.loadData()
-      }).catch(() => {})
+      this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentTopic.topic)}`)
+        .then((res) => {
+          this.currentTopic = res.data
+          this.loadData()
+        })
+        .catch(() => {})
     },
     setLoadDetailInterval() {
       this.timer = setInterval(() => {
         this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentExpandRow.topic)}`)
           .then((res) => {
             this.currentTopic = res.data
-          }).catch(() => {})
+          })
+          .catch(() => {})
       }, 10000)
     },
     handleExpandChange(row, expandedRows) {
@@ -304,12 +291,14 @@ export default {
       }
       this.currentExpandRow = row
       this.currentTopic = {}
-      this.$httpGet(`/topic-metrics/${encodeURIComponent(row.topic)}`).then((res) => {
-        this.currentTopic = res.data
-        this.$refs.crudTable.store.states.expandRows = expandedRows.length ? [row] : []
-        this.loadData()
-        this.setLoadDetailInterval()
-      }).catch(() => {})
+      this.$httpGet(`/topic-metrics/${encodeURIComponent(row.topic)}`)
+        .then((res) => {
+          this.currentTopic = res.data
+          this.$refs.crudTable.store.states.expandRows = expandedRows.length ? [row] : []
+          this.loadData()
+          this.setLoadDetailInterval()
+        })
+        .catch(() => {})
     },
     getCurrentTopicData(type, analysis) {
       const label = {
@@ -346,12 +335,11 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .topic-metrics {
   .sub-tip {
     font-size: 14px;
-    color: #9E9E9F;
+    color: #9e9e9f;
     text-transform: none;
     margin-right: 10px;
   }

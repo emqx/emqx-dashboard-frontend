@@ -8,7 +8,7 @@ function getInertText(text, preWord) {
 export function createMonacoComplete(hints, range, { word }) {
   let customHints = []
   if (hints.length) {
-    customHints = hints.map(doc => ({
+    customHints = hints.map((doc) => ({
       label: doc.name,
       // kind is icon
       kind: doc.type ? monaco.languages.CompletionItemKind[doc.type] : monaco.languages.CompletionItemKind.Function,
@@ -20,7 +20,6 @@ export function createMonacoComplete(hints, range, { word }) {
   }
   return customHints
 }
-
 
 function getValueName(hint) {
   // eslint-disable-next-line prefer-const
@@ -38,11 +37,14 @@ export function createMonacoHover(key, hints) {
       word = hint.name.split('/')[1].replace('"', '')
     }
     if (key === word) {
-      contents.push({
-        value: getValueName(hint),
-      }, {
-        value: hint.documentation,
-      })
+      contents.push(
+        {
+          value: getValueName(hint),
+        },
+        {
+          value: hint.documentation,
+        },
+      )
     }
   })
   return contents

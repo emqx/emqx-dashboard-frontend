@@ -9,14 +9,8 @@
       <el-table-column prop="name" :label="$t('analysis.alarmName')"></el-table-column>
       <el-table-column prop="message" min-width="140px" :label="$t('analysis.alarmMessage')" show-overflow-tooltip>
         <template slot-scope="{ row }">
-          <el-popover
-            placement="top"
-            trigger="hover"
-            width="160"
-            :open-delay="500">
-            <div v-for="(value, label) in row.details" :key="label">
-              {{ label }}: {{ value }}
-            </div>
+          <el-popover placement="top" trigger="hover" width="160" :open-delay="500">
+            <div v-for="(value, label) in row.details" :key="label">{{ label }}: {{ value }}</div>
             <span slot="reference" class="details">
               <i class="iconfont icon-bangzhu"></i>
             </span>
@@ -37,31 +31,17 @@
       </el-table-column>
       <el-table-column fixed="right" width="120px" :label="$t('oper.oper')">
         <template slot-scope="{ row, $index, _self }">
-          <el-popover
-           :ref="`popover-${$index}`"
-           placement="right"
-           trigger="click">
+          <el-popover :ref="`popover-${$index}`" placement="right" trigger="click">
             <p>{{ $t('analysis.confirmDeactivate') }}</p>
-            <div style="text-align: right">
-              <el-button
-                size="mini"
-                type="text"
-                class="cache-btn"
-                @click="_self.$refs[`popover-${$index}`].doClose()">
+            <div style="text-align: right;">
+              <el-button size="mini" type="text" class="cache-btn" @click="_self.$refs[`popover-${$index}`].doClose()">
                 {{ $t('oper.cancel') }}
               </el-button>
-              <el-button
-                size="mini"
-                type="success"
-                @click="handleCancelAlarm(row, $index, _self)">
+              <el-button size="mini" type="success" @click="handleCancelAlarm(row, $index, _self)">
                 {{ $t('oper.confirm') }}
               </el-button>
             </div>
-            <el-button
-              slot="reference"
-              size="mini"
-              type="danger"
-              plain>
+            <el-button slot="reference" size="mini" type="danger" plain>
               {{ $t('analysis.deactivate') }}
             </el-button>
           </el-popover>
@@ -77,7 +57,8 @@
         type="danger"
         plain
         :disabled="!historicalTableData.length"
-        @click="handleClearAll">
+        @click="handleClearAll"
+      >
         {{ $t('analysis.clearAll') }}
       </el-button>
     </div>
@@ -85,14 +66,8 @@
       <el-table-column prop="name" :label="$t('analysis.alarmName')"></el-table-column>
       <el-table-column prop="message" min-width="140px" :label="$t('analysis.alarmMessage')" show-overflow-tooltip>
         <template slot-scope="{ row }">
-          <el-popover
-            placement="top"
-            trigger="hover"
-            width="160"
-            :open-delay="500">
-            <div v-for="(value, label) in row.details" :key="label">
-              {{ label }}: {{ value }}
-            </div>
+          <el-popover placement="top" trigger="hover" width="160" :open-delay="500">
+            <div v-for="(value, label) in row.details" :key="label">{{ label }}: {{ value }}</div>
             <span slot="reference" class="details">
               <i class="iconfont icon-bangzhu"></i>
             </span>
@@ -115,11 +90,8 @@
   </div>
 </template>
 
-
 <script>
-import {
-  Table, TableColumn, Popover, Tooltip,
-} from 'element-ui'
+import { Table, TableColumn, Popover, Tooltip } from 'element-ui'
 import { getDateDiff } from '~/common/utils'
 import dateformat from 'dateformat'
 
@@ -146,21 +118,23 @@ export default {
     },
     loadAlarmData(type, tableData) {
       this.loading = true
-      this.$httpGet(`/alarms/${type}`).then((response) => {
-        const res = response.data
-        const data = []
-        res.forEach((item) => {
-          item.alarms.forEach((alarm) => {
-            alarm.node = item.node
-            data.push(alarm)
+      this.$httpGet(`/alarms/${type}`)
+        .then((response) => {
+          const res = response.data
+          const data = []
+          res.forEach((item) => {
+            item.alarms.forEach((alarm) => {
+              alarm.node = item.node
+              data.push(alarm)
+            })
           })
+          this[tableData] = data
+          this.loading = false
         })
-        this[tableData] = data
-        this.loading = false
-      }).catch((error) => {
-        this.loading = false
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+        .catch((error) => {
+          this.loading = false
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     getDuration(activateAt) {
       return getDateDiff(activateAt / 1000, Date.now())
@@ -176,25 +150,31 @@ export default {
         node: row.node,
         name: row.name,
       }
-      this.$httpPost('/alarms/deactivated', body).then(() => {
-        self.$refs[`popover-${index}`].doClose()
-        this.loadData()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpPost('/alarms/deactivated', body)
+        .then(() => {
+          self.$refs[`popover-${index}`].doClose()
+          this.loadData()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     handleClearAll() {
       this.$confirm(this.$t('analysis.confirmClear'), this.$t('oper.warning'), {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
-      }).then(() => {
-        this.$httpDelete('/alarms/deactivated').then(() => {
-          this.loadData()
-        }).catch((error) => {
-          this.$message.error(error || this.$t('error.networkError'))
+      })
+        .then(() => {
+          this.$httpDelete('/alarms/deactivated')
+            .then(() => {
+              this.loadData()
+            })
+            .catch((error) => {
+              this.$message.error(error || this.$t('error.networkError'))
+            })
         })
-      }).catch(() => {})
+        .catch(() => {})
     },
   },
   created() {
@@ -202,7 +182,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .alarms-view {

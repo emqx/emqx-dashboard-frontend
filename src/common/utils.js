@@ -89,9 +89,14 @@ export function params2Form(params = {}, deepKey = '') {
     if (enumValue || type === 'boolean') {
       type = 'emq-select'
       if (enumValue) {
-        $attrs.field = { options: enumValue.map($ => ({ value: $, label: $ })) }
+        $attrs.field = { options: enumValue.map(($) => ({ value: $, label: $ })) }
       } else {
-        $attrs.field = { options: [{ label: true, value: true }, { label: false, value: false }] }
+        $attrs.field = {
+          options: [
+            { label: true, value: true },
+            { label: false, value: false },
+          ],
+        }
       }
     }
     if (type === 'object' && !defaultValue) {
@@ -170,7 +175,6 @@ export function ruleOldSqlCheck(sql) {
   })
   return matchRes
 }
-
 
 export function ruleNewSqlParser(sql, e) {
   const oldEventDict = {

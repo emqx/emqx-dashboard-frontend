@@ -2,22 +2,13 @@
   <div class="overview-view">
     <div class="page-title">
       {{ $t('leftbar.overview') }}
-      <el-select
-        v-model="nodeName"
-        class="select-radius"
-        :placeholder="$t('select.placeholder')"
-        @change="loadData">
-        <el-option
-          v-for="node in nodes"
-          :key="node.node"
-          :label="node.node"
-          :value="node.node">
-        </el-option>
+      <el-select v-model="nodeName" class="select-radius" :placeholder="$t('select.placeholder')" @change="loadData">
+        <el-option v-for="node in nodes" :key="node.node" :label="node.node" :value="node.node"> </el-option>
       </el-select>
     </div>
 
     <!-- Broker -->
-    <div class="card-box" style="margin-top: 54px">
+    <div class="card-box" style="margin-top: 54px;">
       <div class="card-title">{{ $t('overview.broker') }}</div>
       <el-row class="broker-card" :gutter="10">
         <el-col :span="6">
@@ -35,7 +26,7 @@
         <el-col :span="6">
           <div class="card-item">
             <div class="icon">
-              <i class="iconfont icon-version" style="font-weight: 600"></i>
+              <i class="iconfont icon-version" style="font-weight: 600;"></i>
             </div>
             <div class="desc">
               <h3>{{ $t('overview.version') }}</h3>
@@ -58,8 +49,8 @@
 
         <el-col :span="6">
           <div class="card-item">
-            <div class="icon" style="line-height: 46px">
-              <i class="iconfont icon-Systemtime" style="font-size: 36px;top: 2px"></i>
+            <div class="icon" style="line-height: 46px;">
+              <i class="iconfont icon-Systemtime" style="font-size: 36px; top: 2px;"></i>
             </div>
             <div class="desc">
               <h3>{{ $t('overview.systemTime') }}</h3>
@@ -74,16 +65,8 @@
     <div class="card-box">
       <div class="card-title">{{ $t('overview.nodes') }}({{ nodes.length }})</div>
       <el-table :data="nodes" border>
-        <el-table-column
-          prop="node"
-          min-width="200"
-          :label="$t('overview.name')">
-        </el-table-column>
-        <el-table-column
-          prop="otp_release"
-          min-width="200"
-          :label="$t('overview.erlangOTPRelease')">
-        </el-table-column>
+        <el-table-column prop="node" min-width="200" :label="$t('overview.name')"> </el-table-column>
+        <el-table-column prop="otp_release" min-width="200" :label="$t('overview.erlangOTPRelease')"> </el-table-column>
         <el-table-column :label="$t('overview.erlangProcesses')">
           <el-table-column min-width="150" prop="process" label="(used/avaliable)">
             <template slot-scope="scope">
@@ -105,8 +88,7 @@
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column prop="max_fds" min-width="120" :label="$t('overview.maxFds')">
-        </el-table-column>
+        <el-table-column prop="max_fds" min-width="120" :label="$t('overview.maxFds')"> </el-table-column>
         <el-table-column min-width="120" :label="$t('overview.status')">
           <template slot-scope="props">
             <span :class="[props.row.node_status === 'Running' ? 'running' : 'stopped', 'status']">
@@ -121,41 +103,30 @@
     <div class="card-box">
       <div class="card-title">{{ $t('overview.stats') }}({{ stats.length }})</div>
       <el-table :data="stats" border class="stats-table">
-        <el-table-column prop="node" min-width="150" :label="$t('overview.name')">
-        </el-table-column>
+        <el-table-column prop="node" min-width="150" :label="$t('overview.name')"> </el-table-column>
         <el-table-column :label="$t('overview.connectionsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.connections_count }} / {{ row.connections_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.connections_count }} / {{ row.connections_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.topicsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.topics_count }} / {{ row.topics_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.topics_count }} / {{ row.topics_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.retainedCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.retained_count }} / {{ row.retained_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.retained_count }} / {{ row.retained_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.sessionsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.sessions_count }} / {{ row.sessions_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.sessions_count }} / {{ row.sessions_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.subscriptionsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.subscriptions_count }} / {{ row.subscriptions_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.subscriptions_count }} / {{ row.subscriptions_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.subscriptionsSharedCount')">
@@ -174,69 +145,44 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <el-table :data="metrics.client">
-            <el-table-column
-              min-width="200"
-              prop="key"
-              :label="$t('overview.client')">
-            </el-table-column>
+            <el-table-column min-width="200" prop="key" :label="$t('overview.client')"> </el-table-column>
             <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
         <el-col :span="8">
           <el-table :data="metrics.delivery">
-            <el-table-column
-              min-width="160"
-              prop="key"
-              :label="$t('overview.delivery')">
-            </el-table-column>
+            <el-table-column min-width="160" prop="key" :label="$t('overview.delivery')"> </el-table-column>
             <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
         <el-col :span="8">
           <el-table :data="metrics.session">
-            <el-table-column
-              min-width="200"
-              prop="key"
-              :label="$t('overview.session')">
-            </el-table-column>
+            <el-table-column min-width="200" prop="key" :label="$t('overview.session')"> </el-table-column>
             <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
-
       </el-row>
 
       <el-row :gutter="20">
         <el-col :span="8">
           <el-table :data="metrics.packets">
-            <el-table-column
-              min-width="200"
-              prop="key"
-              :label="$t('overview.packetsData')">
-            </el-table-column>
+            <el-table-column min-width="200" prop="key" :label="$t('overview.packetsData')"> </el-table-column>
             <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
         <el-col :span="8">
           <el-table :data="metrics.messages">
-            <el-table-column
-              min-width="200"
-              prop="key"
-              :label="$t('overview.messagesData')">
-            </el-table-column>
+            <el-table-column min-width="200" prop="key" :label="$t('overview.messagesData')"> </el-table-column>
             <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
 
         <el-col :span="8">
           <el-table :data="metrics.bytes">
-            <el-table-column
-              min-width="160"
-              prop="key"
-              :label="$t('overview.bytesData')">
-            </el-table-column>
+            <el-table-column min-width="160" prop="key" :label="$t('overview.bytesData')"> </el-table-column>
             <el-table-column sortable prop="value" label=""></el-table-column>
           </el-table>
         </el-col>
@@ -244,7 +190,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import { Select, Option, Table, TableColumn, Row, Col } from 'element-ui'
@@ -281,18 +226,20 @@ export default {
     ...mapActions(['CURRENT_NODE']),
     init() {
       // load nodes every page
-      this.$httpGet('/nodes').then((response) => {
-        // set default of select not clan
-        this.nodeName = this.$store.state.nodeName || response.data[0].node
-        this.nodes = response.data
-        this.CURRENT_NODE(this.nodeName)
-        this.refreshInterval()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-        setTimeout(() => {
-          this.init()
-        }, 1000 * 20)
-      })
+      this.$httpGet('/nodes')
+        .then((response) => {
+          // set default of select not clan
+          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodes = response.data
+          this.CURRENT_NODE(this.nodeName)
+          this.refreshInterval()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+          setTimeout(() => {
+            this.init()
+          }, 1000 * 20)
+        })
     },
     refreshInterval() {
       this.loadData()
@@ -348,12 +295,68 @@ export default {
         }
         const dict = { ...response.data }
         const indexTable = {
-          packets: ['received', 'sent', 'connect', 'connack', 'auth', 'disconnect.sent', 'disconnect.received', 'pingreq', 'pingresp', 'publish.received', 'publish.sent', 'puback.received', 'puback.sent', 'puback.missed', 'pubcomp.received', 'pubcomp.sent', 'pubcomp.missed', 'pubrec.received', 'pubrec.sent', 'pubrec.missed', 'pubrel.received', 'pubrel.sent', 'pubrel.missed', 'subscribe', 'suback', 'unsubscribe', 'unsuback'],
-          messages: ['received', 'sent', 'dropped', 'retained', 'qos0.received', 'qos0.sent', 'qos1.received', 'qos1.sent', 'qos2.received', 'qos2.expired', 'qos2.sent', 'qos2.dropped'],
+          packets: [
+            'received',
+            'sent',
+            'connect',
+            'connack',
+            'auth',
+            'disconnect.sent',
+            'disconnect.received',
+            'pingreq',
+            'pingresp',
+            'publish.received',
+            'publish.sent',
+            'puback.received',
+            'puback.sent',
+            'puback.missed',
+            'pubcomp.received',
+            'pubcomp.sent',
+            'pubcomp.missed',
+            'pubrec.received',
+            'pubrec.sent',
+            'pubrec.missed',
+            'pubrel.received',
+            'pubrel.sent',
+            'pubrel.missed',
+            'subscribe',
+            'suback',
+            'unsubscribe',
+            'unsuback',
+          ],
+          messages: [
+            'received',
+            'sent',
+            'dropped',
+            'retained',
+            'qos0.received',
+            'qos0.sent',
+            'qos1.received',
+            'qos1.sent',
+            'qos2.received',
+            'qos2.expired',
+            'qos2.sent',
+            'qos2.dropped',
+          ],
           bytes: ['received', 'sent'],
-          client: ['connected', 'authenticate', 'auth.anonymous', 'check_acl', 'subscribe', 'unsubscribe', 'disconnected'],
+          client: [
+            'connected',
+            'authenticate',
+            'auth.anonymous',
+            'check_acl',
+            'subscribe',
+            'unsubscribe',
+            'disconnected',
+          ],
           session: ['created', 'resumed', 'takeovered', 'discarded', 'terminated'],
-          delivery: ['dropped', 'dropped.no_local', 'dropped.too_large', 'dropped.qos0_msg', 'dropped.queue_full', 'dropped.expired'],
+          delivery: [
+            'dropped',
+            'dropped.no_local',
+            'dropped.too_large',
+            'dropped.qos0_msg',
+            'dropped.queue_full',
+            'dropped.expired',
+          ],
         }
         Object.keys(indexTable).forEach((item) => {
           indexTable[item].forEach((item2) => {
@@ -389,7 +392,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .overview-view {
   * {
@@ -423,7 +425,8 @@ export default {
       }
     }
 
-    .stats-table.el-table--medium th, .el-table--medium td {
+    .stats-table.el-table--medium th,
+    .el-table--medium td {
       padding: 4px 0;
     }
 

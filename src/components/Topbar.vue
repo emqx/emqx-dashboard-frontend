@@ -3,30 +3,24 @@
     <div class="top-area">
       <div class="topbar-right">
         <div class="help-link">
-          <el-tooltip
-            effect="light"
-            :content="$t('leftbar.help')"
-            :open-delay="500"
-            placement="bottom">
-            <router-link
-              :class="['link', activeLink ? 'active' : '']" :to="{ path: '/help' }">
+          <el-tooltip effect="light" :content="$t('leftbar.help')" :open-delay="500" placement="bottom">
+            <router-link :class="['link', activeLink ? 'active' : '']" :to="{ path: '/help' }">
               <i class="iconfont icon-bangzhu"></i>
             </router-link>
           </el-tooltip>
         </div>
-          <el-button size="medium" class="github-btn" @click="openLink('github')">
-            GitHub
-            <i class="iconfont icon-git"></i>
-          </el-button>
-          <el-button size="medium" class="enterprise-btn" @click="openLink('enterprise')">
-            {{ $t('topbar.tryEnterprise') }}
-            <i class="iconfont icon-arrow"></i>
-          </el-button>
+        <el-button size="medium" class="github-btn" @click="openLink('github')">
+          GitHub
+          <i class="iconfont icon-git"></i>
+        </el-button>
+        <el-button size="medium" class="enterprise-btn" @click="openLink('enterprise')">
+          {{ $t('topbar.tryEnterprise') }}
+          <i class="iconfont icon-arrow"></i>
+        </el-button>
       </div>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -50,8 +44,9 @@ export default {
     openLink(type) {
       let link = ''
       if (type === 'enterprise') {
-        link = this.lang === 'en'
-          ? 'https://www.emqx.io/downloads#enterprise'
+        link =
+          this.lang === 'en'
+            ? 'https://www.emqx.io/downloads#enterprise'
             : 'https://www.emqx.io/cn/downloads#enterprise'
       } else if (type === 'github') {
         link = 'https://github.com/emqx/emqx'
@@ -62,7 +57,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .topbar {
@@ -85,9 +79,9 @@ export default {
         line-height: 32px;
         .link {
           display: inline-block;
-          color: #82858F;
+          color: #82858f;
           padding: 0 20px;
-          border-right: 1px solid #2B2C30;
+          border-right: 1px solid #2b2c30;
           position: relative;
           top: 3px;
           .icon-bangzhu {
@@ -95,7 +89,7 @@ export default {
           }
         }
         a.active {
-          color: #34C388;
+          color: #34c388;
         }
       }
       .el-button {
@@ -108,16 +102,16 @@ export default {
         line-height: 15px;
         background: transparent;
         &.enterprise-btn {
-          color: #34C388;
-          border-color: #34C388;
+          color: #34c388;
+          border-color: #34c388;
           .icon-arrow {
             position: relative;
             top: 1px;
           }
         }
         &.github-btn {
-          color: #ADAFB4;
-          border-color: #ADAFB4;
+          color: #adafb4;
+          border-color: #adafb4;
         }
         .iconfont {
           margin-left: 5px;

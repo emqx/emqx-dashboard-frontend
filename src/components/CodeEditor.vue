@@ -4,7 +4,6 @@
   </div>
 </template>
 
-
 <script>
 /* eslint-disable */
 import CodeMirror from 'codemirror'
@@ -115,7 +114,9 @@ export default {
         if (change.origin === '+input delete after+++') {
           const { text } = change
           if (text && (text[0] === ' ' || text[0] === ',')) {
-            setTimeout(function() { editor.execCommand('autocomplete') }, 20)
+            setTimeout(function () {
+              editor.execCommand('autocomplete')
+            }, 20)
           }
         }
         this.$emit('changed', cm.getValue())
@@ -130,7 +131,7 @@ export default {
     getTheme() {
       let theme = 'default'
       const langTheme = {
-        'python': 'dracula',
+        python: 'dracula',
         'text/x-sql': 'dracula',
         'application/json': 'lesser-dark',
       }
@@ -147,7 +148,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .code-editor {
   height: 100%;
@@ -155,6 +155,6 @@ export default {
 }
 
 .code-editor >>> .cm-s-rubyblue span.cm-string {
-  color: #F08047;
+  color: #f08047;
 }
 </style>

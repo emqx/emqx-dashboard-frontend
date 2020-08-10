@@ -26,22 +26,27 @@ Object.assign(Axios.defaults, {
 let timer = 0
 
 // Add auth headers
-Axios.interceptors.request.use((config) => {
-  if (store.state.user.username) {
-    config.auth = {
-      username: store.state.user.username,
-      password: store.state.user.password,
+Axios.interceptors.request.use(
+  (config) => {
+    if (store.state.user.username) {
+      config.auth = {
+        username: store.state.user.username,
+        password: store.state.user.password,
+      }
+    } else {
+      router.push({ path: '/login', query: { to: router.fullPath } })
     }
-  } else {
-    router.push({ path: '/login', query: { to: router.fullPath } })
-  }
-  NProgress.start()
-  timer = setTimeout(() => { store.dispatch('LOADING', true) }, 100)
-  return config
-}, (error) => {
-  console.warn('Request Error: ', error)
-  store.dispatch('LOADING', false)
-})
+    NProgress.start()
+    timer = setTimeout(() => {
+      store.dispatch('LOADING', true)
+    }, 100)
+    return config
+  },
+  (error) => {
+    console.warn('Request Error: ', error)
+    store.dispatch('LOADING', false)
+  },
+)
 
 function handleErrorMessage(error) {
   if (error.message === 'module_not_loaded') {

@@ -23,15 +23,13 @@
         size="medium"
         :rules="rules"
         :model="record"
-        @keyup.enter.native="updateConfig">
+        @keyup.enter.native="updateConfig"
+      >
         <el-row :gutter="20">
           <el-col v-for="item in configOptions" :span="12" :key="item.key">
             <template v-if="record[item.selfKey] !== undefined">
               <el-form-item :prop="item.required ? item.selfKey : ''" :label="item.key">
-                <el-input
-                  v-if="item.value.length < 36"
-                  v-model="record[item.selfKey]"
-                  :placeholder="item.desc">
+                <el-input v-if="item.value.length < 36" v-model="record[item.selfKey]" :placeholder="item.desc">
                 </el-input>
                 <el-input
                   v-else
@@ -39,7 +37,8 @@
                   :prop="item.required ? item.key : ''"
                   type="textarea"
                   :rows="2"
-                  :placeholder="item.desc">
+                  :placeholder="item.desc"
+                >
                 </el-input>
               </el-form-item>
             </template>
@@ -48,11 +47,7 @@
       </el-form>
 
       <div v-if="configOptions.length !== 0" class="operation-area">
-        <el-button
-          class="confirm-btn"
-          type="success"
-          :disabled="!configChanged"
-          @click="updateConfig">
+        <el-button class="confirm-btn" type="success" :disabled="!configChanged" @click="updateConfig">
           {{ $t('oper.confirm') }}
         </el-button>
         <el-button class="cache-btn" type="text" @click="cacheConfig">
@@ -67,7 +62,8 @@
         v-if="!$store.state.loading && configOptions.length === 0"
         type="text"
         icon="el-icon-arrow-left"
-        @click="$router.push('/plugins')">
+        @click="$router.push('/plugins')"
+      >
         {{ $t('plugins.back') }}
       </el-button>
     </el-card>
@@ -76,13 +72,14 @@
       width="500px"
       :title="$t('plugins.advancedConfig')"
       :visible.sync="selecting"
-      @keyup.enter.native="moreConfig">
+      @keyup.enter.native="moreConfig"
+    >
       <div class="advanced-config" :gutter="20">
-          <el-checkbox-group v-model="selectedAdvancedConfig">
-            <el-checkbox v-for="item in advancedConfig" :label="item" :key="item.key">
-              {{ item.key }}
-            </el-checkbox>
-          </el-checkbox-group>
+        <el-checkbox-group v-model="selectedAdvancedConfig">
+          <el-checkbox v-for="item in advancedConfig" :label="item" :key="item.key">
+            {{ item.key }}
+          </el-checkbox>
+        </el-checkbox-group>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="text" class="cache-btn" @click="selecting = false">
@@ -96,11 +93,24 @@
   </div>
 </template>
 
-
 <script>
 import {
-  Dialog, Input, Checkbox, CheckboxGroup, Select, Option, Button, Table, TableColumn,
-  Breadcrumb, BreadcrumbItem, Form, FormItem, Row, Col, Card,
+  Dialog,
+  Input,
+  Checkbox,
+  CheckboxGroup,
+  Select,
+  Option,
+  Button,
+  Table,
+  TableColumn,
+  Breadcrumb,
+  BreadcrumbItem,
+  Form,
+  FormItem,
+  Row,
+  Col,
+  Card,
 } from 'element-ui'
 
 export default {
@@ -156,18 +166,20 @@ export default {
         this.$router.hook('/plugins')
         return
       }
-      this.$httpGet(`/nodes/${this.nodeName}/plugin_configs/${this.pluginName}`).then((response) => {
-        response.data.forEach((item) => {
-          this.defaultOptions.push({
-            selfKey: item.key.replace(/\./g, '__'),
-            ...item,
+      this.$httpGet(`/nodes/${this.nodeName}/plugin_configs/${this.pluginName}`)
+        .then((response) => {
+          response.data.forEach((item) => {
+            this.defaultOptions.push({
+              selfKey: item.key.replace(/\./g, '__'),
+              ...item,
+            })
           })
+          this.handleConfigOptions()
+          this.cancel = false
         })
-        this.handleConfigOptions()
-        this.cancel = false
-      }).catch((error) => {
-        this.$message.error(error.message || this.$t('error.networkError'))
-      })
+        .catch((error) => {
+          this.$message.error(error.message || this.$t('error.networkError'))
+        })
     },
     handleConfigOptions() {
       this.configOptions = []
@@ -194,10 +206,12 @@ export default {
       this.rules = {}
       this.configOptions.forEach((item) => {
         if (item.required) {
-          this.rules[item.selfKey] = [{
-            required: true,
-            message: `${item.key} ${this.$t('alert.required')}`,
-          }]
+          this.rules[item.selfKey] = [
+            {
+              required: true,
+              message: `${item.key} ${this.$t('alert.required')}`,
+            },
+          ]
         }
       })
     },
@@ -214,13 +228,15 @@ export default {
           }
           record[key.replace(/__/g, '.')] = this.record[key]
         })
-        this.$httpPut(`/nodes/${this.nodeName}/plugin_configs/${this.pluginName}`, record).then(() => {
-          this.$message.success(this.$t('plugins.configSuccess'))
-          this.configHash = JSON.stringify(this.record)
-          this.$router.push('/plugins')
-        }).catch(() => {
-          this.$message.error(this.$t('plugins.configFailure'))
-        })
+        this.$httpPut(`/nodes/${this.nodeName}/plugin_configs/${this.pluginName}`, record)
+          .then(() => {
+            this.$message.success(this.$t('plugins.configSuccess'))
+            this.configHash = JSON.stringify(this.record)
+            this.$router.push('/plugins')
+          })
+          .catch(() => {
+            this.$message.error(this.$t('plugins.configFailure'))
+          })
       })
     },
     cacheConfig() {
@@ -231,11 +247,13 @@ export default {
           cancelButtonClass: 'cache-btn el-button--text',
           cancelButtonText: this.$t('oper.cancel'),
           type: 'warning',
-        }).then(() => {
-          this.$message.warning(this.$t('plugins.cacheNotice'))
-          this.cancel = true
-          this.$router.push('/plugins')
-        }).catch()
+        })
+          .then(() => {
+            this.$message.warning(this.$t('plugins.cacheNotice'))
+            this.cancel = true
+            this.$router.push('/plugins')
+          })
+          .catch()
       } else {
         this.cancel = true
         this.$router.push('/plugins')
@@ -273,7 +291,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .plugin-config {

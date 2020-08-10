@@ -21,11 +21,8 @@
   </div>
 </template>
 
-
 <script>
-import {
-  Breadcrumb, BreadcrumbItem, Card,
-} from 'element-ui'
+import { Breadcrumb, BreadcrumbItem, Card } from 'element-ui'
 import AuthUsernameTable from './components/AuthUsernameTable'
 import AuthClientIdTable from './components/AuthClientIdTable'
 import GenerateJWT from './components/GenerateJWT'
@@ -51,17 +48,17 @@ export default {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
-      }).then(() => {
-        next()
-      }).catch(() => {
       })
+        .then(() => {
+          next()
+        })
+        .catch(() => {})
     } else {
       next()
     }
   },
 }
 </script>
-
 
 <style lang="scss">
 .plugin-manage {

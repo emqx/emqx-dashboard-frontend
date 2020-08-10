@@ -3,16 +3,17 @@
     <!-- plugin list -->
     <div class="page-title">
       {{ $t('leftbar.plugins') }}
-      <div style="float: right">
+      <div style="float: right;">
         <el-input
           v-model="searchValue"
           class="input-radius"
           size="large"
-          style="float: right;padding-left: 20px"
+          style="float: right; padding-left: 20px;"
           :disabled="$store.state.loading"
           :placeholder="$t('plugins.searchByName')"
           clearable
-          @input="searchPlugins">
+          @input="searchPlugins"
+        >
         </el-input>
 
         <el-select
@@ -20,51 +21,46 @@
           class="select-radius"
           :placeholder="$t('select.placeholder')"
           :disabled="$store.state.loading"
-          @change="loadPlugins">
-          <el-option
-            v-for="node in nodes"
-            :key="node.node"
-            :label="node.node"
-            :value="node.node">
-          </el-option>
+          @change="loadPlugins"
+        >
+          <el-option v-for="node in nodes" :key="node.node" :label="node.node" :value="node.node"> </el-option>
         </el-select>
       </div>
     </div>
 
-    <el-table
-      v-loading="$store.state.loading"
-      border
-      :data="enableTableData"
-      @filter-change="resetFilter">
+    <el-table v-loading="$store.state.loading" border :data="enableTableData" @filter-change="resetFilter">
       <el-table-column prop="name" width="230" :label="$t('plugins.name')">
         <template slot-scope="props">
           {{ props.row.name }}
-          <el-tooltip
-            effect="light"
-            :content="$t('plugins.tutorial')"
-            :open-delay="500"
-            placement="top">
+          <el-tooltip effect="light" :content="$t('plugins.tutorial')" :open-delay="500" placement="top">
             <a
-              v-if="!props.row.name.includes('dashboard')
-                && !props.row.name.includes('management')
-                && getLinks(props.row.name) !== undefined"
+              v-if="
+                !props.row.name.includes('dashboard') &&
+                !props.row.name.includes('management') &&
+                getLinks(props.row.name) !== undefined
+              "
               class="tutorial"
-              href="javascript:;" @click="openLink(props.row)">
+              href="javascript:;"
+              @click="openLink(props.row)"
+            >
               <i class="iconfont icon-bangzhu"></i>
             </a>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="description" min-width="340" :label="$t('plugins.description')">
-      </el-table-column>
+      <el-table-column prop="description" min-width="340" :label="$t('plugins.description')"> </el-table-column>
       <el-table-column
         prop="active"
         width="150"
         :label="$t('plugins.status')"
-        :filters="[{ text: $t('plugins.stopped'), value: false }, { text: $t('plugins.running'), value: true }]">
+        :filters="[
+          { text: $t('plugins.stopped'), value: false },
+          { text: $t('plugins.running'), value: true },
+        ]"
+      >
         <template slot-scope="props">
           <span :class="[props.row.active ? 'running' : '', 'status']">
-            {{ props.row.active ? $t('plugins.running'): $t('plugins.stopped')}}
+            {{ props.row.active ? $t('plugins.running') : $t('plugins.stopped') }}
           </span>
         </template>
       </el-table-column>
@@ -76,7 +72,9 @@
             size="mini"
             :disabled="props.row.name.indexOf('dashboard') !== -1 || props.row.name.includes('management')"
             :type="props.row.active ? 'warning' : 'success'"
-            @click="update(props.row)" :plain="true">
+            @click="update(props.row)"
+            :plain="true"
+          >
             {{ props.row.active ? $t('plugins.stop') : $t('plugins.start') }}
           </el-button>
           <el-button
@@ -86,7 +84,8 @@
             size="mini"
             :plain="true"
             :disabled="!props.row.active"
-            @click="handleManage(props.row)">
+            @click="handleManage(props.row)"
+          >
             {{ $t('plugins.manage') }}
           </el-button>
         </template>
@@ -95,12 +94,8 @@
   </div>
 </template>
 
-
 <script>
-import {
-  Input, Select, Option, Button, Table, TableColumn,
-  Form, FormItem, Row, Col, Card,
-} from 'element-ui'
+import { Input, Select, Option, Button, Table, TableColumn, Form, FormItem, Row, Col, Card } from 'element-ui'
 import { mapActions } from 'vuex'
 import { getPluginLink, matchSearch } from '~/common/utils'
 
@@ -139,29 +134,33 @@ export default {
     ...mapActions(['CURRENT_NODE']),
     loadData() {
       this.searchView = false
-      this.$httpGet('/nodes').then((response) => {
-        this.nodeName = this.$store.state.nodeName || response.data[0].node
-        this.nodes = response.data
-        this.loadPlugins()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet('/nodes')
+        .then((response) => {
+          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodes = response.data
+          this.loadPlugins()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     loadPlugins() {
       this.CURRENT_NODE(this.nodeName)
       if (!this.nodeName) {
         return
       }
-      this.$httpGet(`/nodes/${this.nodeName}/plugins`).then((response) => {
-        this.tableData = response.data
-        this.handleFilter()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet(`/nodes/${this.nodeName}/plugins`)
+        .then((response) => {
+          this.tableData = response.data
+          this.handleFilter()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     handleFilter() {
       // No need to initialize Set
-      this.enableTableData = this.tableData.filter(item => !this.filterSet.has(item.active))
+      this.enableTableData = this.tableData.filter((item) => !this.filterSet.has(item.active))
     },
     resetFilter(e) {
       this.filterSet.clear()
@@ -177,15 +176,17 @@ export default {
     },
     update(row) {
       const operation = row.active ? 'unload' : 'load'
-      this.$httpPut(`/nodes/${this.nodeName}/plugins/${row.name}/${operation}`).then(() => {
-        this.$message.success(
-          `${row.active ? this.$t('plugins.stop') : this.$t('plugins.start')}${this.$t('alert.success')}`,
-        )
-        this.loadPlugins()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-        this.loadPlugins()
-      })
+      this.$httpPut(`/nodes/${this.nodeName}/plugins/${row.name}/${operation}`)
+        .then(() => {
+          this.$message.success(
+            `${row.active ? this.$t('plugins.stop') : this.$t('plugins.start')}${this.$t('alert.success')}`,
+          )
+          this.loadPlugins()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+          this.loadPlugins()
+        })
     },
     getLinks(name) {
       return getPluginLink(name)
@@ -201,13 +202,15 @@ export default {
         return
       }
       setTimeout(() => {
-        matchSearch(this.tableData, 'name', this.searchValue).then((res) => {
-          if (res) {
-            this.enableTableData = res
-          }
-        }).catch(() => {
-          // ignore
-        })
+        matchSearch(this.tableData, 'name', this.searchValue)
+          .then((res) => {
+            if (res) {
+              this.enableTableData = res
+            }
+          })
+          .catch(() => {
+            // ignore
+          })
       }, 500)
     },
     hasManagePage(name) {
@@ -229,7 +232,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .plugins-view {
@@ -253,7 +255,7 @@ export default {
     margin-left: 5px;
     color: #a7a7a7;
     &:hover {
-      color: #34C388;
+      color: #34c388;
     }
   }
 }

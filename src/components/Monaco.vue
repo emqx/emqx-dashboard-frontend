@@ -2,7 +2,6 @@
   <div :id="`monaco-${id}`" class="monaco-view"></div>
 </template>
 
-
 <script>
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import Monokai from '../assets/themes/monokai.json'
@@ -173,7 +172,7 @@ export default {
           }
           const { word } = model.getWordAtPosition(position)
           return {
-            contents: createMonacoHover(word, this.provider)
+            contents: createMonacoHover(word, this.provider),
           }
         },
       })
@@ -212,7 +211,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .monaco-view {
