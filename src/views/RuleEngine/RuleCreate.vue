@@ -39,7 +39,7 @@
                 </el-form-item>
 
                 <el-form-item prop="id" :label="$t('rule.rule_id')">
-                  <el-input v-model="record.id"></el-input>
+                  <el-input v-model="record.id" :disabled="isEdit"></el-input>
                 </el-form-item>
 
                 <el-form-item :label="$t('rule.description')">
