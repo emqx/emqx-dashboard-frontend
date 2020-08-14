@@ -141,6 +141,7 @@ export default {
       record: {
         type: '',
         config: {},
+        description: '',
         id: '',
       },
     }
@@ -228,6 +229,7 @@ export default {
         this.record = {
           type: '',
           config: {},
+          description: '',
           id: '',
         }
         if (this.resourceType) {
