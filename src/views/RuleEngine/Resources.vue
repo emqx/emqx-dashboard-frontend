@@ -54,7 +54,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="description" :label="$t('rule.resource_name')"></el-table-column>
+      <el-table-column prop="description" :label="$t('rule.resource_des')"></el-table-column>
       <el-table-column prop="type" :label="$t('rule.resource_type')"></el-table-column>
       <el-table-column :label="$t('rule.oper')">
         <template slot-scope="{ row, $index }">
@@ -89,7 +89,7 @@
         </div>
         <div class="option-item">
           <div class="option-title">
-            {{ $t('rule.resource_name') }}
+            {{ $t('rule.resource_des') }}
           </div>
           <div class="option-value">{{ res.description }}</div>
         </div>

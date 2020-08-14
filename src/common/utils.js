@@ -241,4 +241,17 @@ export function getDateDiff(beginTime, endTime) {
   return `${hours}:${minutes}:${seconds}`
 }
 
+export const verifyID = (rule, value, callback) => {
+  const reg = /^[0-9a-zA-Z_:]{1,64}$/
+  if (!value) {
+    callback(new Error(`ID ${Vue.prototype.$t('rule.is_required')}`))
+  } else if (value.length > 64) {
+    callback(new Error(Vue.prototype.$t('rule.id_len_tip')))
+  } else if (!reg.test(value)) {
+    callback(new Error(Vue.prototype.$t('rule.id_char_tip')))
+  } else {
+    callback()
+  }
+}
+
 export default {}

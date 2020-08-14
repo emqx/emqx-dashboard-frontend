@@ -103,6 +103,7 @@ export const en = {
   basic_info: 'Basic Info',
   rule_name_required: 'rule name required',
   rule_sql: 'SQL',
+  rule_id: 'Rule ID',
   rule_descr_placeholder: 'e.g.message render to Webhook',
   rule_sql_tips_title: 'Write SQL statements for conditional filtering and data processing:',
   sql_tips_html: `<p>EMQ X will trigger the Rule Engine when the message is published and the event is triggered, and the rules meeting the triggering conditions will execute their respective SQL statements to filter and process the context information of the message and event.</p>
@@ -148,7 +149,11 @@ export const en = {
 <span> Forwarding messages to HTTP Webhook</span>`,
 
   resource_title: 'Resource',
-  resource_name: 'Resource Name',
+  resource_des: 'Description',
+  resource_id: 'Resource ID',
+  id_len_tip: 'The longest 64',
+  id_char_tip: 'Only Numbers, letters, underscores, and colons are supported',
+  type_required: 'Type is required',
   resource_details: 'Details',
   config_info: 'Configuration',
 
@@ -279,6 +284,7 @@ export const zh = {
   basic_info: '基本信息',
   rule_name_required: '请输入规则名称',
   rule_sql: '规则 SQL',
+  rule_id: '规则 ID',
   rule_descr_placeholder: 'e.g.消息转发到 Webhook',
   rule_sql_tips_title: '编写 SQL 进行条件过滤与数据处理：',
   sql_tips_html: `<p>EMQ X 在消息发布、事件触发时将触发规则引擎，满足触发条件的规则将执行各自的 SQL 语句筛选并处理消息和事件的上下文信息。</p>
@@ -318,7 +324,11 @@ export const zh = {
 <span>将消息转发至 HTTP Webhook</span>`,
 
   resource_title: '资源',
-  resource_name: '资源名称',
+  resource_des: '描述',
+  resource_id: '资源 ID',
+  id_len_tip: '最长64位',
+  id_char_tip: '仅支持数字、字母、下划线和冒号',
+  type_required: '类型必选',
   resource_details: '资源详情',
   config_info: '配置信息',
 

@@ -38,6 +38,10 @@
                   </div>
                 </el-form-item>
 
+                <el-form-item prop="id" :label="$t('rule.rule_id')">
+                  <el-input v-model="record.id"></el-input>
+                </el-form-item>
+
                 <el-form-item :label="$t('rule.description')">
                   <el-input v-model="record.description" :placeholder="$t('rule.rule_descr_placeholder')"> </el-input>
                 </el-form-item>
@@ -141,7 +145,7 @@ import sqlFormatter from 'sql-formatter'
 import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
 import { ruleEngineProvider } from '~/common/provider'
-import { ruleNewSqlParser, ruleOldSqlCheck } from '~/common/utils'
+import { ruleNewSqlParser, ruleOldSqlCheck, verifyID } from '~/common/utils'
 
 import Monaco from '~/components/Monaco'
 import RuleActions from './components/RuleActions'
@@ -176,6 +180,7 @@ export default {
       },
       rules: {
         rawsql: { required: true, message: this.$t('rule.sql_required') },
+        id: { required: true, validator: verifyID },
       },
       selectedOption: {
         event: '$events/messagepublish',

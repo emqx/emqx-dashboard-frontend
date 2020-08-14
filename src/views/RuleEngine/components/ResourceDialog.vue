@@ -42,8 +42,14 @@
         </el-col>
 
         <el-col :span="12">
-          <el-form-item prop="description" :label="$t('rule.resource_name')">
-            <el-input v-model="record.description"></el-input>
+          <el-form-item prop="id" :label="$t('rule.resource_id')">
+            <el-input v-model="record.id"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item prop="description" :label="$t('rule.resource_des')">
+            <el-input type="textarea" v-model="record.description"></el-input>
           </el-form-item>
         </el-col>
 
@@ -104,7 +110,7 @@
 
 <script>
 import EmqSelect from '~/components/EmqSelect'
-import { params2Form } from '~/common/utils'
+import { params2Form, verifyID } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
@@ -133,10 +139,9 @@ export default {
       resourceRules: {},
       resourceTypes: [],
       record: {
-        name: '',
         type: '',
         config: {},
-        description: '',
+        id: '',
       },
     }
   },
@@ -152,9 +157,8 @@ export default {
     },
     rules() {
       return {
-        name: { required: true },
-        description: { required: true },
-        type: { required: true },
+        id: { required: true, validator: verifyID },
+        type: { required: true, message: this.$t('rule.type_required') },
         ...this.resourceRules,
       }
     },
@@ -222,10 +226,9 @@ export default {
     loadResourceTypes() {
       this.$httpGet('/resource_types').then((response) => {
         this.record = {
-          name: '',
           type: '',
           config: {},
-          description: '',
+          id: '',
         }
         if (this.resourceType) {
           this.record.type = this.resourceType

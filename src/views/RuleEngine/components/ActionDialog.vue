@@ -52,7 +52,7 @@
               <el-option
                 v-for="(item, index) in resourcesOptions"
                 :key="index"
-                :label="item.description"
+                :label="item.id"
                 :value="item.id"
               >
               </el-option>
