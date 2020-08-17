@@ -262,7 +262,11 @@ export default {
       this.needCheckSql = true
       this.$refs.record.validate((valid) => {
         if (!valid) {
-          return
+          if (this.inTest && !this.record.id) {
+            this.$refs.record.clearValidate('id')
+          } else {
+            return
+          }
         }
         if (!this.beforeSqlValid(this.record.rawsql)) {
           return
