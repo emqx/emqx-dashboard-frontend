@@ -118,11 +118,6 @@ export default {
               title: this.$t('leftbar.topicMetrics'),
               index: '/topic_metrics',
             },
-            {
-              id: 'alarms',
-              title: this.$t('leftbar.alarms'),
-              index: '/alarms',
-            },
           ],
         },
         {
@@ -153,6 +148,12 @@ export default {
               index: '/http_api',
             },
           ],
+        },
+        {
+          id: 'alarms',
+          title: this.$t('leftbar.alarms'),
+          index: '/alarms',
+          icon: 'icon-gaojingkongxin',
         },
         {
           id: 'settings',
