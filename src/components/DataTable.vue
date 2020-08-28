@@ -1,10 +1,11 @@
 <template>
   <el-table
     class="data-table"
-    style="margin-top: 0"
+    style="margin-top: 0;"
     border
-    :class="{ 'disable': disabled, 'el-table--public': isRaw}"
-    :data="tableData">
+    :class="{ disable: disabled, 'el-table--public': isRaw }"
+    :data="tableData"
+  >
     <el-table-column prop="key" :label="_option.keyLabel">
       <template slot-scope="{ row }">
         <span class="data-value">{{ row.key }}</span>
@@ -13,8 +14,9 @@
           class="data-input"
           size="mini"
           :placeholder="row.__new ? 'Key' : ''"
-          :class="{ 'is-error': row.__has_error && !row.__new}"
-          @input="handleInput(row)">
+          :class="{ 'is-error': row.__has_error && !row.__new }"
+          @input="handleInput(row)"
+        >
           <template v-if="row.__has_error" slot="append">
             {{ $t('rule.exists') }}
           </template>
@@ -30,20 +32,21 @@
           class="data-input"
           size="mini"
           :placeholder="row.__new ? 'Value' : ''"
-          @input="handleInput(row, false)">
+          @input="handleInput(row, false)"
+        >
         </el-input>
 
         <i
           v-if="!disabled"
           :class="{ 'el-icon-close': !row.__new, 'oper-icon': true }"
-          @click="handleOper('remove', $index, true)">
+          @click="handleOper('remove', $index, true)"
+        >
           {{ row.__new ? '&nbsp;' : '' }}
         </i>
       </template>
     </el-table-column>
   </el-table>
 </template>
-
 
 <script>
 export default {
@@ -120,7 +123,7 @@ export default {
       this.tableData.push({ key: '', value: '', __new: true })
     },
 
-    handleInput(row, isKey = true) {
+    handleInput(row) {
       if (row.__new) {
         this.$delete(row, '__new')
         if (row.key || row.value) {
@@ -145,7 +148,7 @@ export default {
         }
         if (keyMap[key] && !this.allowedArray) {
           this.$set(row, '__has_error', true)
-          const lastRow = this.tableData.find($ => key === $.key)
+          const lastRow = this.tableData.find(($) => key === $.key)
           if (lastRow) {
             this.$set(lastRow, '__has_error', true)
           }
@@ -196,7 +199,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .data-table {

@@ -9,44 +9,29 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right"
+        style="float: right;"
         :disabled="$store.state.loading"
-        @click="handleOperation(true)">
+        @click="handleOperation(true)"
+      >
         {{ $t('users.newUser') }}
       </el-button>
     </div>
 
     <el-table v-loading="$store.state.loading" border :data="users">
-      <el-table-column prop="username" :label="$t('users.username')">
-      </el-table-column>
-      <el-table-column prop="tags" :label="$t('users.remark')">
-      </el-table-column>
+      <el-table-column prop="username" :label="$t('users.username')"> </el-table-column>
+      <el-table-column prop="tags" :label="$t('users.remark')"> </el-table-column>
       <el-table-column width="140" :label="$t('oper.oper')">
         <template slot-scope="{ row, $index, _self }">
-          <el-button
-            size="mini"
-            type="warning"
-            plain
-            @click="handleOperation(false, row)">
+          <el-button size="mini" type="warning" plain @click="handleOperation(false, row)">
             {{ $t('oper.edit') }}
           </el-button>
-          <el-popover
-           :ref="`popover-${$index}`"
-           placement="right"
-           trigger="click">
+          <el-popover :ref="`popover-${$index}`" placement="right" trigger="click">
             <p>{{ $t('oper.confirmDelete') }}</p>
-            <div style="text-align: right">
-              <el-button
-                size="mini"
-                type="text"
-                class="cache-btn"
-                @click="_self.$refs[`popover-${$index}`].doClose()">
+            <div style="text-align: right;">
+              <el-button size="mini" type="text" class="cache-btn" @click="_self.$refs[`popover-${$index}`].doClose()">
                 {{ $t('oper.cancel') }}
               </el-button>
-              <el-button
-                size="mini"
-                type="success"
-                @click="deleteUser(row, $index, _self)">
+              <el-button size="mini" type="success" @click="deleteUser(row, $index, _self)">
                 {{ $t('oper.confirm') }}
               </el-button>
             </div>
@@ -55,8 +40,9 @@
               v-show="row.username !== 'admin' && username !== row.username"
               size="mini"
               type="danger"
-              plain>
-             {{ $t('oper.delete') }}
+              plain
+            >
+              {{ $t('oper.delete') }}
             </el-button>
           </el-popover>
         </template>
@@ -67,18 +53,13 @@
       width="500px"
       :visible.sync="dialogVisible"
       :title="oper === 'new' ? $t('users.newUser') : $t('users.editUser')"
-      @keyup.enter.native="createUser">
-      <el-form
-        class="el-form--public"
-        ref="record"
-        label-position="top"
-        size="medium"
-        :model="record"
-        :rules="rules">
+      @keyup.enter.native="createUser"
+    >
+      <el-form class="el-form--public" ref="record" label-position="top" size="medium" :model="record" :rules="rules">
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item prop="username" :label="$t('users.username')">
-              <el-input v-model="record.username" :disabled="oper==='edit'"></el-input>
+              <el-input v-model="record.username" :disabled="oper === 'edit'"></el-input>
             </el-form-item>
           </el-col>
           <!-- create new User -->
@@ -116,7 +97,8 @@
                 v-if="oper === 'edit'"
                 class="cache-btn change-password"
                 type="text"
-                @click="changePassword = !changePassword">
+                @click="changePassword = !changePassword"
+              >
                 {{ changePassword ? $t('users.dontChangePassword') : $t('users.changePassword') }}
               </el-button>
             </el-form-item>
@@ -124,24 +106,16 @@
         </el-row>
       </el-form>
       <div slot="footer">
-        <el-button
-          type="text"
-          class="cache-btn"
-          @click="dialogVisible = false">
+        <el-button type="text" class="cache-btn" @click="dialogVisible = false">
           {{ $t('oper.cancel') }}
         </el-button>
-        <el-button
-          type="success"
-          class="confirm-btn"
-          :loading="$store.state.loading"
-          @click="createUser">
+        <el-button type="success" class="confirm-btn" :loading="$store.state.loading" @click="createUser">
           {{ $t('oper.save') }}
         </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
-
 
 <script>
 import { Dialog, Input, Button, Table, TableColumn, Popover, Form, FormItem, Row, Col } from 'element-ui'
@@ -188,9 +162,7 @@ export default {
           { required: true, message: this.$t('users.usernameRequired') },
           { min: 2, max: 32, message: this.$t('users.usernameIllegal'), trigger: 'change' },
         ],
-        tags: [
-          { required: true, message: this.$t('users.remarkRequired') },
-        ],
+        tags: [{ required: true, message: this.$t('users.remarkRequired') }],
         password: [
           { required: true, message: this.$t('users.passwordRequired') },
           { min: 3, max: 255, message: this.$t('users.passwordIllegal'), trigger: 'change' },
@@ -237,11 +209,13 @@ export default {
       }
     },
     loadData() {
-      this.$httpGet('/users').then((response) => {
-        this.users = response.data
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet('/users')
+        .then((response) => {
+          this.users = response.data
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     createUser() {
       if (this.oper === 'edit') {
@@ -252,13 +226,15 @@ export default {
         if (!valid) {
           return
         }
-        this.$httpPost('/users', this.record).then(() => {
-          this.$message.success(`${this.$t('users.createUser')}`)
-          this.loadData()
-          this.dialogVisible = false
-        }).catch((error) => {
-          this.$message.error(error || this.$t('error.networkError'))
-        })
+        this.$httpPost('/users', this.record)
+          .then(() => {
+            this.$message.success(`${this.$t('users.createUser')}`)
+            this.loadData()
+            this.dialogVisible = false
+          })
+          .catch((error) => {
+            this.$message.error(error || this.$t('error.networkError'))
+          })
       })
     },
     updateUser() {
@@ -274,42 +250,50 @@ export default {
           }
           this.$httpPut(`/users/${this.record.username}`, this.record).then(() => {
             // change password
-            this.$httpPut(`/change_pwd/${this.record.username}`, user).then(() => {
-              // re login
-              if (this.$store.state.user.username === this.record.username &&
-                this.record.password !== this.record.newPassword) {
-                this.$message.error(this.$t('users.authenticate'))
-                this.USER_LOGIN({ isLogOut: true })
-                this.$router.push('/login')
-              } else {
-                this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
-                this.dialogVisible = false
-                this.loadData()
-              }
-            }).catch((error) => {
-              this.$message.error(error || this.$t('error.networkError'))
-            })
+            this.$httpPut(`/change_pwd/${this.record.username}`, user)
+              .then(() => {
+                // re login
+                if (
+                  this.$store.state.user.username === this.record.username &&
+                  this.record.password !== this.record.newPassword
+                ) {
+                  this.$message.error(this.$t('users.authenticate'))
+                  this.USER_LOGIN({ isLogOut: true })
+                  this.$router.push('/login')
+                } else {
+                  this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
+                  this.dialogVisible = false
+                  this.loadData()
+                }
+              })
+              .catch((error) => {
+                this.$message.error(error || this.$t('error.networkError'))
+              })
           })
         } else {
-          this.$httpPut(`/users/${this.record.username}`, this.record).then(() => {
-            // change password
-            this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
-            this.dialogVisible = false
-            this.loadData()
-          }).catch((error) => {
-            this.$message.error(error || this.$t('error.networkError'))
-          })
+          this.$httpPut(`/users/${this.record.username}`, this.record)
+            .then(() => {
+              // change password
+              this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
+              this.dialogVisible = false
+              this.loadData()
+            })
+            .catch((error) => {
+              this.$message.error(error || this.$t('error.networkError'))
+            })
         }
       })
     },
     deleteUser(row, index, self) {
-      this.$httpDelete(`/users/${row.username}`).then(() => {
-        this.$message.success(`${this.$t('oper.delete')}${this.$t('alert.success')}`)
-        this.loadData()
-        self.$refs[`popover-${index}`].doClose()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpDelete(`/users/${row.username}`)
+        .then(() => {
+          this.$message.success(`${this.$t('oper.delete')}${this.$t('alert.success')}`)
+          this.loadData()
+          self.$refs[`popover-${index}`].doClose()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
   },
   created() {
@@ -317,7 +301,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .users-view {

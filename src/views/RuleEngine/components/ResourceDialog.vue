@@ -7,30 +7,25 @@
     :title="$t('rule.resource_mgmt')"
     @close="close"
     @open="loadResourceTypes"
-    @keyup.enter.native="handleCreate">
-    <el-form
-      class="el-form--public"
-      ref="record"
-      :model="record"
-      :rules="rules">
+  >
+    <el-form class="el-form--public" ref="record" :model="record" :rules="rules">
       <el-row :gutter="20">
-
         <el-col :span="12">
           <el-form-item prop="type" :label="$t('rule.resource_type')">
             <el-select
               v-model="record.type"
               class="el-select--public"
               popper-class="el-select--public"
-              style="width: 100%"
+              style="width: 100%;"
               :disabled="!!resourceType"
-              @change="handleTypeChange">
-              <div
-                v-for="(item, index) in resourceTypes"
-                :key="index">
+              @change="handleTypeChange"
+            >
+              <div v-for="(item, index) in resourceTypes" :key="index">
                 <el-option
                   v-if="enableItem.length === 0 ? true : enableItem.includes(item.name)"
                   :label="item.titleLabel"
-                  :value="item.name">
+                  :value="item.name"
+                >
                 </el-option>
               </div>
             </el-select>
@@ -46,37 +41,43 @@
           </el-form-item>
         </el-col>
 
-        <template v-if="record.type">
+        <el-col :span="12">
+          <el-form-item prop="id" :label="$t('rule.resource_id')">
+            <el-input v-model="record.id"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item prop="description" :label="$t('rule.resource_des')">
+            <el-input type="textarea" v-model="record.description"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <div v-if="record.type">
           <el-col
             v-for="(item, index) in paramsList"
-            :span="(item.type === 'object' || item.$attrs.type === 'textarea') ? 24 : 12"
-            :key="index">
+            :span="item.type === 'object' || item.$attrs.type === 'textarea' ? 24 : 12"
+            :key="index"
+          >
             <el-form-item :prop="`config.${item.prop}`">
-
               <template slot="label">
                 {{ item.label }}
 
-                <el-popover
-                  v-if="item.description"
-                  placement="right"
-                  width="200"
-                  trigger="hover">
+                <el-popover v-if="item.description" placement="right" width="200" trigger="hover">
                   <div v-html="item.description"></div>
                   <span tabindex="-1" class="el-icon-question" slot="reference"></span>
                 </el-popover>
               </template>
 
-              <data-table
-                v-if="item.type === 'object'"
-                v-model="record.config[item.key]"
-              ></data-table>
+              <data-table v-if="item.type === 'object'" v-model="record.config[item.key]"></data-table>
 
               <emq-select
                 v-else-if="item.type === 'emq-select'"
                 v-bind="item.$attrs"
                 v-model="record.config[item.key]"
                 class="el-select--public"
-                popper-class="el-select--public">
+                popper-class="el-select--public"
+              >
               </emq-select>
 
               <!-- Number field -->
@@ -84,32 +85,19 @@
                 v-else-if="item.type === 'number'"
                 type="number"
                 v-bind="item.$attrs"
-                v-model.number="record.config[item.key]">
+                v-model.number="record.config[item.key]"
+              >
               </el-input>
 
               <!-- String field -->
-              <el-input
-                v-else
-                v-bind="item.$attrs"
-                v-model="record.config[item.key]">
-              </el-input>
-
+              <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
             </el-form-item>
           </el-col>
-
-
-          <el-col :span="12">
-            <el-form-item prop="description" :label="$t('rule.description')">
-              <el-input v-model="record.description"></el-input>
-            </el-form-item>
-          </el-col>
-        </template>
-
+        </div>
       </el-row>
     </el-form>
 
     <div slot="footer">
-
       <el-button class="cache-btn" type="text" @click="dialogVisible = false">
         {{ $t('rule.cancel') }}
       </el-button>
@@ -117,14 +105,12 @@
         {{ $t('rule.create') }}
       </el-button>
     </div>
-
   </el-dialog>
 </template>
 
-
 <script>
 import EmqSelect from '~/components/EmqSelect'
-import { params2Form } from '~/common/utils'
+import { params2Form, verifyID } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
@@ -153,10 +139,10 @@ export default {
       resourceRules: {},
       resourceTypes: [],
       record: {
-        name: '',
         type: '',
         config: {},
         description: '',
+        id: '',
       },
     }
   },
@@ -172,8 +158,8 @@ export default {
     },
     rules() {
       return {
-        name: { required: true },
-        type: { required: true },
+        id: { required: true, validator: verifyID },
+        type: { required: true, message: this.$t('rule.type_required') },
         ...this.resourceRules,
       }
     },
@@ -196,21 +182,23 @@ export default {
           return
         }
         const url = isCreate ? '/resources' : '/resources?test=true'
-        this.$httpPost(url, this.record).then((res) => {
-          if (!isCreate) {
-            this.$message.success(this.$t('rule.conf_test_success'))
-            return
-          }
-          this.$message.success(this.$t('rule.create_success'))
-          this.dialogVisible = false
-          this.$emit('confirm', res.data)
-        }).catch(() => {})
+        this.$httpPost(url, this.record)
+          .then((res) => {
+            if (!isCreate) {
+              this.$message.success(this.$t('rule.conf_test_success'))
+              return
+            }
+            this.$message.success(this.$t('rule.create_success'))
+            this.dialogVisible = false
+            this.$emit('confirm', res.data)
+          })
+          .catch(() => {})
       })
     },
     handleTypeChange(val) {
       this.paramsList = []
       this.resourceRules = {}
-      const resourceType = this.resourceTypes.find($ => $.name === val)
+      const resourceType = this.resourceTypes.find(($) => $.name === val)
       if (!resourceType) {
         return
       }
@@ -239,10 +227,10 @@ export default {
     loadResourceTypes() {
       this.$httpGet('/resource_types').then((response) => {
         this.record = {
-          name: '',
           type: '',
           config: {},
           description: '',
+          id: '',
         }
         if (this.resourceType) {
           this.record.type = this.resourceType
@@ -260,7 +248,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .resource-dialog {

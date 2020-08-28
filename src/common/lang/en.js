@@ -11,6 +11,7 @@ export default {
   error: {
     networkError: 'Network Error',
     initializationError: 'Initialization Error',
+    module_not_loaded: 'Related module are not load',
   },
   // success
   success: {
@@ -37,8 +38,11 @@ export default {
     editSuccess: 'Edit success',
     startSuccess: 'Start Success',
     stopSuccess: 'Stop Success',
+    enableSuccess: 'Enable Success',
+    disabledSuccess: 'Disable Success',
     deleteSuccess: 'Delete Success',
     disconnectSuccess: 'Disconnect Success',
+    clear: 'Clear Success',
     from: 'From',
     stop: 'Stop',
     start: 'Start',
@@ -62,6 +66,8 @@ export default {
     generate: 'Generate',
     search: 'Search',
     reset: 'Reset',
+    next: 'Next',
+    prev: 'Previous',
   },
   // topbar
   topbar: {
@@ -82,6 +88,7 @@ export default {
     // MANAGEMENT
     management: 'Management',
     plugins: 'Plugins',
+    modules: 'Modules',
     listeners: 'Listeners',
     instances: 'Instances',
     // TOOLS
@@ -95,6 +102,10 @@ export default {
     settings: 'Settings',
     help: 'Help',
     general: 'General',
+    // Analysis
+    analysis: 'Analysis',
+    topicMetrics: 'Topic metrics',
+    alarms: 'Alarms',
   },
   // overview
   overview: {
@@ -231,13 +242,22 @@ export default {
     clientidRequired: 'Client ID is required',
     algorithm: 'Algorithm',
     secret: 'Secret or Private key',
-    payloadDesc: 'It is valid when verify_claims is enabled. You can use% u and% c placeholders to replace the entered user name and clientid respectively. For details, see',
+    payloadDesc:
+      'It is valid when verify_claims is enabled. You can use% u and% c placeholders to replace the entered user name and clientid respectively. For details, see',
     jwtDoc: 'JWT Authentication',
-    dataDesc: 'One line is a set of data, separated by comma username, clientid',
+    dataDesc: 'One line is a set of data, separated by comma username,clientid',
     secretRequired: 'Secret is required',
     payloadRequired: 'Payload template is required',
     dataRequired: 'Payload data is required',
-    leaveTokenPage: 'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
+    leaveTokenPage:
+      'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
+  },
+  modules: {
+    name: 'Name',
+    enable: 'Enable',
+    disable: 'Disable',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
   },
   // instances
   instances: {
@@ -312,14 +332,15 @@ export default {
     connected: 'CONNECTED',
     connecting: 'CONNECTING',
     disconnected: 'DISCONNECTED',
-    notSupport: 'Your browser doesn\'t support WebSocket',
+    notSupport: "Your browser doesn't support WebSocket",
   },
   // http_api
   httpApi: {
     introduction: 'Introduction',
-    desc: 'Apart from this help page, all URIs will serve only resources of type application/json, and will require HTTP basic authentication. The default user is admin / public.\n' +
+    desc:
+      'Apart from this help page, all URIs will serve only resources of type application/json, and will require HTTP basic authentication. The default user is admin / public.\n' +
       '<br/>' +
-      'The emqx_dashboard plugin provides a web management console. The Dashboard helps monitor broker\'s running status, statistics and metrics of MQTT packets.',
+      "The emqx_dashboard plugin provides a web management console. The Dashboard helps monitor broker's running status, statistics and metrics of MQTT packets.",
     reference: 'Reference',
     method: 'Method',
     path: 'Path',
@@ -361,7 +382,7 @@ export default {
     newPassword: 'New Password',
     confirmNewPassword: 'Confirm New Password',
     changePassword: 'Change Password',
-    dontChangePassword: 'Don\'t Change Password',
+    dontChangePassword: "Don't Change Password",
     confirm: 'Confirm',
     confirmDelete: 'Confirm Delete ?',
     usernameRequired: 'Username required',
@@ -420,20 +441,53 @@ export default {
     ex: 'Export',
     atLeastThree: 'At least three words',
     importSuccess: 'Import success',
-    notice: 'Use backup configuration files to configure initialization modification. <br/> Notice: configuration files may contain important data, such as database address and authentication information. Please keep good configuration files and use backup function reasonably.',
+    notice:
+      'Use backup configuration files to configure initialization modification. <br/> Notice: configuration files may contain important data, such as database address and authentication information. Please keep good configuration files and use backup function reasonably.',
   },
   help: {
     quickStart: 'Quick start',
-    emqxDesc: 'EMQ X is a MQTT broker developed on the Erlang/OTP platform, which is the most popular MQTT message middleware in the open source community. It supports common IoT protocols, including MQTT, LwM2M, MQTT-SN, CoAP, LoRaWAN, HTTP, and WebSocket. Welcome to follow our project or participate in development.',
+    emqxDesc:
+      'EMQ X is a MQTT broker developed on the Erlang/OTP platform, which is the most popular MQTT message middleware in the open source community. It supports common IoT protocols, including MQTT, LwM2M, MQTT-SN, CoAP, LoRaWAN, HTTP, and WebSocket. Welcome to follow our project or participate in development.',
     emqxEnterprise: 'EMQ X Enterprise Edition',
-    enterpriseDesc: 'EMQ X Enterprise Edition has built-in data persistence support, security auditing, operation monitoring and other functions, providing you with the service of more comprehensive functions, enhanced stability and performance, and higher level of data security and service response.<br/>The latest Enterprise Edition includes a new Dashboard, which allows you to easily create and manage IoT Hub clusters with dozens of nodes and millions of connections.',
+    enterpriseDesc:
+      'EMQ X Enterprise Edition has built-in data persistence support, security auditing, operation monitoring and other functions, providing you with the service of more comprehensive functions, enhanced stability and performance, and higher level of data security and service response.<br/>The latest Enterprise Edition includes a new Dashboard, which allows you to easily create and manage IoT Hub clusters with dozens of nodes and millions of connections.',
     freeTrial: 'Free Trial',
     useDocs: 'Documentation',
-    docsDesc: 'We have prepared a comprehensive documentation to help you familiarize yourself with more powerful features.',
+    docsDesc:
+      'We have prepared a comprehensive documentation to help you familiarize yourself with more powerful features.',
     forwardView: 'View documentation',
-    faqDesc: 'The FAQ contains questions that we are often asked about. It is recommended to use the FAQ to retrieve problems you encounter during use.',
+    faqDesc:
+      'The FAQ contains questions that we are often asked about. It is recommended to use the FAQ to retrieve problems you encounter during use.',
     forwardFaq: 'Go to FAQ',
     followUs: 'Follow us',
+  },
+  analysis: {
+    topicMetrics: 'Topic metrics',
+    metricsTip: '(The metrics are real-time refresh data, including all statistics since the addition)',
+    messageIn: 'Message In',
+    messageOut: 'Message Out',
+    messageDrop: 'Message Drop',
+    addTopic: 'Add Topic',
+    details: 'Details',
+    all: 'All',
+    rateItem: '{0} / second',
+    rate: '(rate)',
+    messageInDesc: '(message in rate)',
+    messageOutDesc: '(message out rate)',
+    messageDropDesc: '(message drop rate)',
+    loadAnalysis: 'Load',
+    loadSuccess: 'Load Success',
+    alarmName: 'Alarm Name',
+    alarmMessage: 'Alarm Message',
+    activateAt: 'Activate At',
+    deactivateAt: 'Deactivate At',
+    duration: 'Duration',
+    currentAlarms: 'Current Alarms',
+    historicalAlarm: 'Historical Alarms',
+    deactivate: 'Deactivate',
+    clearAll: 'Clear All',
+    confirmClear: 'Confirm clear all alarms?',
+    confirmDeactivate: 'Confirm deactivate this alarm?',
   },
   httpCode: {
     0: 'Success',

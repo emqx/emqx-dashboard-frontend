@@ -1,13 +1,12 @@
 <template>
   <div class="home-view">
-    <Leftbar/>
-    <Topbar/>
+    <Leftbar />
+    <Topbar />
     <div class="home-content">
-      <RouterView/>
+      <RouterView />
     </div>
   </div>
 </template>
-
 
 <script>
 import Leftbar from './Leftbar'
@@ -22,14 +21,13 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
-  .home-view {
-    box-sizing: border-box;
-    min-height: 100%;
-    .home-content {
-      margin: 0 32px 0 212px;
-      padding: 60px 0 20px 0;
-    }
+.home-view {
+  box-sizing: border-box;
+  min-height: 100%;
+  .home-content {
+    margin: 0 32px 0 212px;
+    padding: 60px 0 20px 0;
   }
+}
 </style>

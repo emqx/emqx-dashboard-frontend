@@ -9,9 +9,10 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right"
+        style="float: right;"
         :disable="$store.state.loading"
-        @click="handleOperation">
+        @click="handleOperation"
+      >
         {{ $t('rule.create') }}
       </el-button>
     </div>
@@ -42,33 +43,37 @@
         prop="metrics.matched"
         min-width="110px"
         :label="$t('rule.rule_matched_1')"
-        :formatter="getMatchedCount"></el-table-column>
+        :formatter="getMatchedCount"
+      ></el-table-column>
 
-      <el-table-column :label="$t('rule.oper')" min-width="70px">
+      <el-table-column :label="$t('rule.viewStates')">
+        <template slot-scope="props">
+          <el-tooltip :content="props.row.enabled ? $t('rule.ruleEnabled') : $t('rule.ruleDisabled')" placement="left">
+            <el-switch
+              v-model="props.row.enabled"
+              active-text=""
+              inactive-text=""
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              @change="updateRule(props.row)"
+            >
+            </el-switch>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('rule.oper')" min-width="120px">
         <template slot-scope="{ row }">
-          <el-button
-            type="success"
-            size="mini"
-            plain
-            @click="viewRule(row)">
-            {{ $t('rule.view') }}
+          <el-button type="success" size="mini" plain @click="editRule(row)">
+            {{ $t('rule.edit') }}
           </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            plain
-            @click="handleDelete(row)">
+          <el-button size="mini" type="danger" plain @click="handleDelete(row)">
             {{ $t('rule.delete') }}
           </el-button>
         </template>
       </el-table-column>
-
     </el-table>
 
-    <el-dialog
-      :title="$t('rule.rule_details')"
-      :visible.sync="dialogVisible"
-      @close="closeDialog">
+    <el-dialog :title="$t('rule.rule_details')" :visible.sync="dialogVisible" @close="closeDialog">
       <div class="dialog-preview">
         <div class="option-item">
           <div class="option-title">{{ $t('rule.id') }}</div>
@@ -97,16 +102,16 @@
           </div>
           <div class="option-all">
             <span size="mini" type="info">
-                {{$t('rule.rule_matched_1')}}: <span>{{ rule.metrics.matched }}</span> {{$t('rule.match_unit')}}
-              </span>
-            <span size="mini" type="info">
-              {{$t('rule.speed_current')}}: <span>{{ rule.metrics.speed }}</span> {{$t('rule.speed_unit')}}
+              {{ $t('rule.rule_matched_1') }}: <span>{{ rule.metrics.matched }}</span> {{ $t('rule.match_unit') }}
             </span>
             <span size="mini" type="info">
-              {{$t('rule.speed_max_1')}}: <span>{{ rule.metrics.speed_max }}</span> {{$t('rule.speed_unit')}}
+              {{ $t('rule.speed_current') }}: <span>{{ rule.metrics.speed }}</span> {{ $t('rule.speed_unit') }}
             </span>
             <span size="mini" type="info">
-              {{$t('rule.speed_last5m_1')}}: <span>{{ rule.metrics.speed_last5m }}</span> {{$t('rule.speed_unit')}}
+              {{ $t('rule.speed_max_1') }}: <span>{{ rule.metrics.speed_max }}</span> {{ $t('rule.speed_unit') }}
+            </span>
+            <span size="mini" type="info">
+              {{ $t('rule.speed_last5m_1') }}: <span>{{ rule.metrics.speed_last5m }}</span> {{ $t('rule.speed_unit') }}
             </span>
           </div>
         </div>
@@ -117,11 +122,7 @@
             <i v-show="ruleDialogLoading" class="el-icon-loading"></i>
           </div>
           <div class="option-all">
-            <rule-actions
-              in-dialog
-              :record="rule"
-              :operations="[]">
-            </rule-actions>
+            <rule-actions in-dialog :record="rule" :operations="[]"> </rule-actions>
           </div>
         </div>
       </div>
@@ -134,7 +135,6 @@
     </el-dialog>
   </div>
 </template>
-
 
 <script>
 import RuleActions from '~/views/RuleEngine/components/RuleActions'
@@ -170,7 +170,6 @@ export default {
     },
     getHitRate({ matched = 0, nomatch = 0 }) {
       const rate = (matched / (matched + nomatch)) * 100
-      console.log(rate)
       if (rate.toString().split('.')[1] && rate.toString().split('.')[1].length > 2) {
         return rate.toFixed(2)
       }
@@ -181,7 +180,7 @@ export default {
         this.$router.push(`/rules/${row.id}`)
         return
       }
-      const data = (await this.$httpGet(`/rules/${row.id}`) || {}).data || {}
+      const data = ((await this.$httpGet(`/rules/${row.id}`)) || {}).data || {}
       if (!data) {
         this.rule = row
       } else {
@@ -194,17 +193,22 @@ export default {
         this.viewRule(row)
       }, 10 * 1000)
     },
+    editRule(row) {
+      this.$router.push(`/rules/create?rule=${row.id}`)
+    },
     loadDetails(id) {
       this.ruleDialogLoading = true
-      this.$httpGet(`/rules/${id}`).then((res) => {
-        const { data } = res
-        this.rule = data
-        setTimeout(() => {
+      this.$httpGet(`/rules/${id}`)
+        .then((res) => {
+          const { data } = res
+          this.rule = data
+          setTimeout(() => {
+            this.ruleDialogLoading = false
+          }, 500)
+        })
+        .catch(() => {
           this.ruleDialogLoading = false
-        }, 500)
-      }).catch(() => {
-        this.ruleDialogLoading = false
-      })
+        })
     },
     closeDialog() {
       clearInterval(this.timer)
@@ -217,12 +221,14 @@ export default {
         cancelButtonClass: 'cache-btn el-button--text',
         cancelButtonText: this.$t('oper.cancel'),
         type: 'warning',
-      }).then(() => {
-        this.$httpDelete(`/rules/${row.id}`).then(() => {
-          this.$message.success(this.$t('rule.delete_success'))
-          this.loadData()
+      })
+        .then(() => {
+          this.$httpDelete(`/rules/${row.id}`).then(() => {
+            this.$message.success(this.$t('rule.delete_success'))
+            this.loadData()
+          })
         })
-      }).catch()
+        .catch()
     },
     handleOperation() {
       this.$router.push('/rules/create')
@@ -230,17 +236,25 @@ export default {
     loadData() {
       this.$httpGet('/rules').then((response) => {
         this.tableData = response.data
-        const currentRule = this.tableData.find($ => $.id === this.rule.id)
+        const currentRule = this.tableData.find(($) => $.id === this.rule.id)
         if (currentRule) {
           this.rule = currentRule
         }
+      })
+    },
+    updateRule(row) {
+      const { id, enabled } = row
+      this.$httpPut(`/rules/${id}`, {
+        enabled,
+      }).then(() => {
+        this.$message.success(this.$t('oper.editSuccess'))
       })
     },
   },
 
   filters: {
     actionsFilter(actions) {
-      return actions.map($ => $.name).join(',  ')
+      return actions.map(($) => $.name).join(',  ')
     },
   },
 
@@ -255,7 +269,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .rules-view {
@@ -276,8 +289,7 @@ export default {
     }
   }
 
-  span[type="info"] {
-    /*color: #101010;*/
+  span[type='info'] {
     padding-right: 20px;
 
     & > span {

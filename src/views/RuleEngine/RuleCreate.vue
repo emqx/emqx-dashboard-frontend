@@ -12,13 +12,7 @@
     </div>
 
     <el-card class="el-card--self">
-      <el-form
-        label-position="right"
-        label-width="108px"
-        ref="record"
-        :model="record"
-        :rules="rules">
-
+      <el-form label-position="right" label-width="108px" ref="record" :model="record" :rules="rules">
         <!-- 基本信息 -->
         <div class="form-block--wrapper">
           <div class="form-block__title">
@@ -29,7 +23,7 @@
           </div>
 
           <div class="form-block__body">
-            <el-row style="max-width: 1366px">
+            <el-row style="max-width: 1366px;">
               <el-col :span="14">
                 <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql rawsql">
                   <div class="monaco-container">
@@ -38,23 +32,24 @@
                       v-model="record.rawsql"
                       lang="sql"
                       :provider="sqlProvider"
-                      @qucik-save="handleTest">
+                      @qucik-save="handleTest"
+                    >
                     </monaco>
                   </div>
                 </el-form-item>
 
+                <el-form-item prop="id" :label="$t('rule.rule_id')">
+                  <el-input v-model="record.id" :disabled="isEdit"></el-input>
+                </el-form-item>
+
                 <el-form-item :label="$t('rule.description')">
-                  <el-input v-model="record.description" :placeholder="$t('rule.rule_descr_placeholder')">
-                  </el-input>
+                  <el-input v-model="record.description" :placeholder="$t('rule.rule_descr_placeholder')"> </el-input>
                 </el-form-item>
 
                 <!-- sql test -->
                 <el-form-item :label="$t('rule.input_test_data')">
                   <el-switch v-model="inTest" inactive-color="#a7a7a7"></el-switch>
-                  <el-popover
-                    placement="right"
-                    width="200"
-                    trigger="hover">
+                  <el-popover placement="right" width="200" trigger="hover">
                     {{ $t('rule.input_test_data_tips') }}
                     <i tabindex="-1" class="el-icon-question" slot="reference"></i>
                   </el-popover>
@@ -63,25 +58,20 @@
                 <template v-if="inTest">
                   <el-form-item
                     v-for="k in Object.keys(selectedOption.test_columns)"
-                    :class="{ 'code-sql': k === 'payload', 'payload': k === 'payload' }"
+                    :class="{ 'code-sql': k === 'payload', payload: k === 'payload' }"
                     v-bind="{ label: k, prop: `ctx.${k}` }"
-                    :key="k">
-                    <el-input
-                      v-if="k !== 'payload'"
-                      v-model="record.ctx[k]"></el-input>
+                    :key="k"
+                  >
+                    <el-input v-if="k !== 'payload'" v-model="record.ctx[k]"></el-input>
                     <template v-else>
                       <div class="monaco-container">
-                        <monaco
-                          id="payload"
-                          v-model="record.ctx.payload"
-                          :lang="payloadType"
-                          @qucik-save="handleTest">
+                        <monaco id="payload" v-model="record.ctx.payload" :lang="payloadType" @qucik-save="handleTest">
                         </monaco>
                       </div>
                       <div class="payload-type">
                         <el-radio-group v-model="payloadType">
                           <el-radio label="json">JSON</el-radio>
-                          <el-radio label="plaintext">RAW</el-radio>
+                          <el-radio label="plaintext">Plaintext</el-radio>
                         </el-radio-group>
                       </div>
                     </template>
@@ -99,7 +89,8 @@
                       type="textarea"
                       :rows="4"
                       :placeholder="$t('rule.no_test_output')"
-                      readonly>
+                      readonly
+                    >
                     </el-input>
                   </el-form-item>
                 </template>
@@ -115,13 +106,12 @@
               </el-col>
             </el-row>
           </div>
-
         </div>
 
         <!-- 触发动作 -->
         <div class="form-block--wrapper" style="clear: both;">
           <div class="form-block__title">
-            <span style="color: #ff6d6d">*</span>
+            <span style="color: #ff6d6d;">*</span>
             {{ $t('rule.set_action') }}
             <div class="form-block__title-tips">
               {{ $t('rule.actions_tips') }}
@@ -131,28 +121,18 @@
           <div class="form-block__body">
             <el-row style="max-width: 1366px;">
               <el-col :span="23">
-                <rule-actions
-                  :operations="['create', 'delete']"
-                  :record="record">
-                </rule-actions>
+                <rule-actions :operations="['create', 'delete', 'edit']" :record="record"> </rule-actions>
               </el-col>
             </el-row>
           </div>
         </div>
-
       </el-form>
 
       <div>
-        <el-button
-          class="confirm-btn"
-          type="success"
-          @click="handleCreate">
-          {{ $t('rule.create') }}
+        <el-button class="confirm-btn" type="success" @click="handleCreate">
+          {{ isEdit ? $t('rule.confirm') : $t('rule.create') }}
         </el-button>
-        <el-button
-          class="cache-btn"
-          type="text"
-          @click="handleCancel">
+        <el-button class="cache-btn" type="text" @click="handleCancel">
           {{ $t('rule.cancel') }}
         </el-button>
       </div>
@@ -160,13 +140,12 @@
   </div>
 </template>
 
-
 <script>
 import sqlFormatter from 'sql-formatter'
 import EmqSelect from '~/components/EmqSelect'
 import { loadRuleEvents } from '~/api/rule'
 import { ruleEngineProvider } from '~/common/provider'
-import { ruleNewSqlParser, ruleOldSqlCheck } from '~/common/utils'
+import { ruleNewSqlParser, ruleOldSqlCheck, verifyID } from '~/common/utils'
 
 import Monaco from '~/components/Monaco'
 import RuleActions from './components/RuleActions'
@@ -184,6 +163,7 @@ export default {
 
   data() {
     return {
+      isEdit: false,
       payloadType: 'json',
       eventsList: [],
       testOutPut: '',
@@ -200,6 +180,7 @@ export default {
       },
       rules: {
         rawsql: { required: true, message: this.$t('rule.sql_required') },
+        id: { required: true, validator: verifyID },
       },
       selectedOption: {
         event: '$events/messagepublish',
@@ -217,16 +198,16 @@ export default {
 
   computed: {
     operationName() {
-      const oper = 'create'
+      const { rule } = this.$route.query
       const operationNameMap = {
         view: this.$t('rule.view'),
         edit: this.$t('rule.edit'),
         create: this.$t('rule.create'),
       }
-      if (this.id === '0' || this.id === 0) {
-        return operationNameMap.create
+      if (rule) {
+        return operationNameMap.edit
       }
-      return operationNameMap[oper]
+      return operationNameMap.create
     },
     sqlProvider() {
       return ruleEngineProvider
@@ -253,25 +234,27 @@ export default {
       if (!checkValues) {
         return
       }
-      this.sqlParse(val, checkValues[0])
+      this.sqlParseConfirm(val, checkValues[0])
     },
-    sqlParse(sql, oldEvent) {
+    sqlParseConfirm(sql, oldEvent) {
       this.$confirm(this.$t('rule.parse_confirm'), this.$t('oper.warning'), {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
-      }).then(() => {
-        this.record.rawsql = this._sqlFormatter(ruleNewSqlParser(sql, oldEvent))
-      }).catch(() => {
-        this.needCheckSql = false
       })
+        .then(() => {
+          this.record.rawsql = this._sqlFormatter(ruleNewSqlParser(sql, oldEvent))
+        })
+        .catch(() => {
+          this.needCheckSql = false
+        })
     },
     beforeSqlValid(sql) {
       const checkValues = ruleOldSqlCheck(sql)
       if (!checkValues) {
         return true
       }
-      this.sqlParse(sql, checkValues[0])
+      this.sqlParseConfirm(sql, checkValues[0])
       return false
     },
     handleTest() {
@@ -279,7 +262,11 @@ export default {
       this.needCheckSql = true
       this.$refs.record.validate((valid) => {
         if (!valid) {
-          return
+          if (this.inTest && !this.record.id) {
+            this.$refs.record.clearValidate('id')
+          } else {
+            return
+          }
         }
         if (!this.beforeSqlValid(this.record.rawsql)) {
           return
@@ -325,7 +312,7 @@ export default {
       if (value === this.selectedOption.event) {
         return
       }
-      this.selectedOption = this.eventsList.find($ => $.event === value) || { columns: {}, test_columns: {} }
+      this.selectedOption = this.eventsList.find(($) => $.event === value) || { columns: {}, test_columns: {} }
       this.sqlPrimaryKey = this.selectedOption.columns
       this.initTestFormItem()
     },
@@ -347,10 +334,12 @@ export default {
       this.$set(this.record, 'ctx', testFieldObject)
       this.rules.ctx = testFieldRules
     },
-    generateEventsSelect() {
+    generateEventsSelect(initSql) {
       this.eventOptions = this.eventsList
       this.selectedOption = this.eventsList[0]
-      this.record.rawsql = this._sqlFormatter(this.selectedOption.sql_example)
+      if (initSql) {
+        this.record.rawsql = this._sqlFormatter(this.selectedOption.sql_example)
+      }
     },
     _sqlFormatter(sql) {
       const newSQL = sqlFormatter.format(sql)
@@ -359,7 +348,10 @@ export default {
       if (paramsRe) {
         const paramsText = paramsRe[1]
         if (paramsText) {
-          const newParamsText = paramsText.replace(/(!#!|\s)/g, ' ').split(/[,，]/).join(', ')
+          const newParamsText = paramsText
+            .replace(/(!#!|\s)/g, ' ')
+            .split(/[,，]/)
+            .join(', ')
           text = text.replace(paramsText, `${newParamsText}`)
         }
       }
@@ -375,16 +367,44 @@ export default {
             this.$message.error(this.$t('rule.actions_required'))
             return
           }
-          this.$httpPost('/rules', this.record).then(() => {
-            this.$message.success(this.$t('rule.create_success'))
-            this.$router.push('/rules')
-          })
+          if (this.isEdit) {
+            const { rule } = this.$route.query
+            const { actions, ctx, description, rawsql } = this.record
+            const data = {
+              actions,
+              ctx,
+              description,
+              rawsql,
+            }
+            this.$httpPut(`/rules/${rule}`, data).then(() => {
+              this.$message.success(this.$t('oper.editSuccess'))
+              this.$router.push('/rules')
+            })
+          } else {
+            this.$httpPost('/rules', this.record).then(() => {
+              this.$message.success(this.$t('rule.create_success'))
+              this.$router.push('/rules')
+            })
+          }
         })
       }
     },
+    loadRule(ruleID) {
+      this.$httpGet(`/rules/${ruleID}`).then((res) => {
+        this.record = res.data
+      })
+    },
     async loadData() {
       this.eventsList = await loadRuleEvents()
-      this.generateEventsSelect()
+      const { rule } = this.$route.query
+      if (rule) {
+        this.isEdit = true
+        this.loadRule(rule)
+        this.generateEventsSelect()
+      } else {
+        this.isEdit = false
+        this.generateEventsSelect(true)
+      }
     },
     handleCancel() {
       this.$router.push('/rules')
@@ -398,10 +418,8 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .rule-create {
-
   .page-title .el-breadcrumb {
     text-transform: none;
   }
@@ -486,7 +504,8 @@ export default {
       margin: 8px 12px;
     }
 
-    code, span {
+    code,
+    span {
       font-size: 12px;
       margin-bottom: 12px;
     }
@@ -509,6 +528,7 @@ export default {
 
 .code-sql {
   line-height: 18px !important;
+  margin-bottom: 44px;
 
   &.rawsql .el-form-item__content {
     height: 420px;

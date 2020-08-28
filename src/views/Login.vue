@@ -10,7 +10,8 @@
             v-model="user.username"
             :class="{ error: loginError.username }"
             :placeholder="loginError.username"
-            @focus="loginError.username=''">
+            @focus="loginError.username = ''"
+          >
           </el-input>
         </el-form-item>
         <el-form-item :label="$t('login.password')">
@@ -19,7 +20,8 @@
             v-model="user.password"
             :class="{ error: loginError.password }"
             :placeholder="loginError.password"
-            @focus="loginError.password=''">
+            @focus="loginError.password = ''"
+          >
           </el-input>
         </el-form-item>
       </el-form>
@@ -32,14 +34,14 @@
           class="confirm-btn"
           :loading="$store.state.loading"
           :disabled="$store.state.loading"
-          @click="login">{{ $t('login.loginButton') }}
+          @click="login"
+          >{{ $t('login.loginButton') }}
         </el-button>
       </div>
       <div class="clear-fix"></div>
     </el-card>
   </div>
 </template>
-
 
 <script>
 import { Col, Row, Card, Form, FormItem, Input, Checkbox, Button } from 'element-ui'
@@ -80,22 +82,23 @@ export default {
         this.loginError.password = this.$t('login.passwordRequired')
         return false
       }
-      this.$axios.post('/auth', this.user).then(() => {
-        this.USER_LOGIN({ user: this.user, remember: this.remember })
-        this.$router.push(this.$route.query.redirect || '/')
-      }).catch(() => {
-        this.loginError.username = this.$t('login.error')
-        this.user = {
-          username: '',
-          password: '',
-        }
-      })
+      this.$axios
+        .post('/auth', this.user)
+        .then(() => {
+          this.USER_LOGIN({ user: this.user, remember: this.remember })
+          this.$router.push(this.$route.query.redirect || '/')
+        })
+        .catch(() => {
+          this.loginError.username = this.$t('login.error')
+          this.user = {
+            username: '',
+            password: '',
+          }
+        })
     },
   },
-
 }
 </script>
-
 
 <style lang="scss">
 .login-view {
@@ -113,7 +116,7 @@ export default {
     }
   }
   .error input {
-    border:2px solid #e0b4b4;
+    border: 2px solid #e0b4b4;
   }
   .login-footer {
     margin-top: 40px;

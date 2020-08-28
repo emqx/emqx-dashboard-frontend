@@ -12,11 +12,7 @@
     <el-card class="el-card--self">
       <div slot="header">
         <span v-if="!responseDate">{{ $t('httpApi.reference') }}</span>
-        <el-button
-          v-if="responseDate"
-          type="text"
-          class="refresh-btn"
-          @click="loadResponse(null, false)">
+        <el-button v-if="responseDate" type="text" class="refresh-btn" @click="loadResponse(null, false)">
           <i class="el-icon-arrow-left"></i>
           {{ $t('httpApi.back') }}
         </el-button>
@@ -28,7 +24,8 @@
             <a
               href="javascript:;"
               :class="['link', isLink(props.row) ? '' : 'link-disabled']"
-              @click="loadResponse(props.row)">
+              @click="loadResponse(props.row)"
+            >
               {{ props.row.path }}
             </a>
           </template>
@@ -39,11 +36,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="responseDate"
-        class="response-container">
+      <div v-if="responseDate" class="response-container">
         <div class="response-header">
-          <h3>{{ $t('httpApi.linkAddress') }} :
+          <h3>
+            {{ $t('httpApi.linkAddress') }} :
             <a href="javascript:;">{{ uri }}</a>
           </h3>
           <h3>{{ $t('httpApi.data') }} :</h3>
@@ -54,9 +50,9 @@
   </div>
 </template>
 
-
 <script>
 import { Button, Table, TableColumn, Card } from 'element-ui'
+import HttpFitlerData from '../data_map/http_fitler_data'
 
 export default {
   name: 'http-api',
@@ -95,13 +91,15 @@ export default {
     },
     init() {
       const currentNodeName = this.$store.state.nodeName
-      this.$httpGet('/nodes').then((response) => {
-        this.nodeName = currentNodeName || response.data[0].node
-        this.nodes = response.data
-        this.setApiData()
-      }).catch((error) => {
-        this.$message.error(error || this.$t('error.networkError'))
-      })
+      this.$httpGet('/nodes')
+        .then((response) => {
+          this.nodeName = currentNodeName || response.data[0].node
+          this.nodes = response.data
+          this.setApiData()
+        })
+        .catch((error) => {
+          this.$message.error(error || this.$t('error.networkError'))
+        })
     },
     loadResponse(props, isLoad = true) {
       if (!isLoad) {
@@ -142,6 +140,7 @@ export default {
         let data = JSON.stringify(response.data)
         data = data.replace(/:node/g, this.nodeName)
         data = JSON.parse(data)
+        data = data.filter((all) => HttpFitlerData.every((fitler) => fitler.path !== all.path))
         Object.keys(data).forEach((item) => {
           this.tableData.push({
             method: data[item].method,
@@ -158,7 +157,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 .http-api {

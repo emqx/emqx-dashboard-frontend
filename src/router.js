@@ -63,6 +63,16 @@ const routes = [
         component: () => import('~/views/RuleEngine/Resources'),
       },
       {
+        path: '/topic_metrics',
+        name: 'topic_metrics',
+        component: () => import('~/views/TopicMetrics'),
+      },
+      {
+        path: '/alarms',
+        name: 'alarms',
+        component: () => import('~/views/Alarms'),
+      },
+      {
         path: '/plugins',
         name: 'plugins',
         component: () => import('~/views/Plugins/Plugins'),
@@ -71,6 +81,11 @@ const routes = [
         path: '/plugins/:pluginName',
         name: 'pluginsName',
         component: () => import('~/views/Plugins/PluginsManage'),
+      },
+      {
+        path: '/modules',
+        name: 'modules',
+        component: () => import('~/views/Modules'),
       },
       {
         path: '/listeners',
@@ -101,11 +116,6 @@ const routes = [
         path: '/settings',
         name: 'settings',
         component: () => import('~/views/Settings'),
-      },
-      {
-        path: '/test',
-        name: 'test',
-        component: () => import('~/views/Test'),
       },
       {
         path: '/help',

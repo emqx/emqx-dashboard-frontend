@@ -47,7 +47,8 @@ export const en = {
   event_info: 'Available Field',
   suggest_sql: 'SQL Example',
   upgrade_tip: 'Upgrade Tip',
-  json_decode_upgrade: 'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
+  json_decode_upgrade:
+    'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
   events: {
     message_acked: 'message.acked',
     message_dropped: 'message.dropped',
@@ -96,10 +97,13 @@ export const en = {
   value: 'Value',
   edit: 'Edit',
   add: 'Add',
+  ruleEnabled: 'Enabled',
+  ruleDisabled: 'Disabled',
 
   basic_info: 'Basic Info',
   rule_name_required: 'rule name required',
   rule_sql: 'SQL',
+  rule_id: 'Rule ID',
   rule_descr_placeholder: 'e.g.message render to Webhook',
   rule_sql_tips_title: 'Write SQL statements for conditional filtering and data processing:',
   sql_tips_html: `<p>EMQ X will trigger the Rule Engine when the message is published and the event is triggered, and the rules meeting the triggering conditions will execute their respective SQL statements to filter and process the context information of the message and event.</p>
@@ -145,7 +149,11 @@ export const en = {
 <span> Forwarding messages to HTTP Webhook</span>`,
 
   resource_title: 'Resource',
-  resource_name: 'Name',
+  resource_des: 'Description',
+  resource_id: 'Resource ID',
+  id_len_tip: 'The longest 64',
+  id_char_tip: 'Only Numbers, letters, underscores, and colons are supported',
+  type_required: 'Type is required',
   resource_details: 'Details',
   config_info: 'Configuration',
 
@@ -153,11 +161,13 @@ export const en = {
   username_doc: 'Current MQTT username',
   event_doc: 'Trigger event name',
   id_doc: 'MQTT message id',
-  payload_doc: 'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
+  payload_doc:
+    'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
   peerhost_doc: 'Client peer name',
   qos_doc: 'Enumeration of message QoS 0,1,2',
   timestamp_doc: 'Timestamp(millisecond)',
-  topic_doc: 'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
+  topic_doc:
+    'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
   node_doc: 'Node name of the trigger event',
   message_delivered: 'message delivered',
   message_acked: 'message acked',
@@ -167,6 +177,9 @@ export const en = {
   session_subscribed: 'session subscribed',
   session_unsubscribed: 'session unsubscribed',
   parse_confirm: 'Detected incompatible old SQL syntax, confirm to automatically convert it to the new version?',
+  fallbackAction: 'Fallback Actions',
+  fallbackActionCreate: 'Set the action that will be performed when an action execution error occurs (optional)',
+  fallbackActionTip: 'Action to be performed when the action execution error',
 }
 
 export const zh = {
@@ -218,7 +231,8 @@ export const zh = {
   event_info: '可用字段',
   suggest_sql: '规则 SQL 示例',
   upgrade_tip: '升级提示',
-  json_decode_upgrade: '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
+  json_decode_upgrade:
+    '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
   events: {
     message_acked: '消息确认',
     message_dropped: '消息丢弃',
@@ -264,10 +278,13 @@ export const zh = {
   value: '值',
   edit: '编辑',
   add: '添加',
+  ruleEnabled: '已启动',
+  ruleDisabled: '已停止',
 
   basic_info: '基本信息',
   rule_name_required: '请输入规则名称',
   rule_sql: '规则 SQL',
+  rule_id: '规则 ID',
   rule_descr_placeholder: 'e.g.消息转发到 Webhook',
   rule_sql_tips_title: '编写 SQL 进行条件过滤与数据处理：',
   sql_tips_html: `<p>EMQ X 在消息发布、事件触发时将触发规则引擎，满足触发条件的规则将执行各自的 SQL 语句筛选并处理消息和事件的上下文信息。</p>
@@ -307,7 +324,11 @@ export const zh = {
 <span>将消息转发至 HTTP Webhook</span>`,
 
   resource_title: '资源',
-  resource_name: '资源名称',
+  resource_des: '描述',
+  resource_id: '资源 ID',
+  id_len_tip: '最长64位',
+  id_char_tip: '仅支持数字、字母、下划线和冒号',
+  type_required: '类型必选',
   resource_details: '资源详情',
   config_info: '配置信息',
 
@@ -323,7 +344,8 @@ export const zh = {
   peerhost_doc: '客户端网络地址',
   qos_doc: '消息 QoS 0,1,2 中枚举',
   timestamp_doc: '当前毫秒级时间戳',
-  topic_doc: '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
+  topic_doc:
+    '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
   node_doc: '触发事件的节点名称',
   message_delivered: '消息投递',
   message_acked: '消息应答',
@@ -333,4 +355,7 @@ export const zh = {
   session_subscribed: '会话订阅',
   session_unsubscribed: '会话取消订阅',
   parse_confirm: '检测到不兼容的旧版 SQL 语法，是否自动转换为新版语法？',
+  fallbackAction: '失败备选动作',
+  fallbackActionCreate: '设置发生动作执行错误时将执行的动作（可选）',
+  fallbackActionTip: '动作执行错误时将执行的操作',
 }

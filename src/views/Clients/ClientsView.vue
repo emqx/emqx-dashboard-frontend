@@ -17,27 +17,23 @@
       <el-button
         :class="[basicRecord.connected ? 'connected' : 'disconnected', 'connect-btn']"
         size="mini"
-        @click="handleDisconnect">
+        @click="handleDisconnect"
+      >
         {{ basicRecord.connected ? $t('clients.kickOut') : $t('websocket.cleanSession') }}
       </el-button>
     </div>
 
     <el-tabs class="normal-tabs" v-model="activeName" type="card">
       <el-tab-pane :label="$t('clients.basicInfo')" name="basic">
-        <clients-basic :record="basicRecord">
-        </clients-basic>
+        <clients-basic :record="basicRecord"> </clients-basic>
       </el-tab-pane>
       <el-tab-pane :label="$t('clients.subsInfo')" name="subscription">
-        <clients-subscriptions
-          :clientId="clientId"
-          :tableData="subscriptionsData"
-          :reload="loadSubscription">
+        <clients-subscriptions :clientId="clientId" :tableData="subscriptionsData" :reload="loadSubscription">
         </clients-subscriptions>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
-
 
 <script>
 import ClientsBasic from './components/ClientsBasic'
@@ -56,6 +52,7 @@ export default {
       activeName: 'basic',
       basicRecord: {},
       subscriptionsData: [],
+      nodeName: '',
     }
   },
 
@@ -67,7 +64,6 @@ export default {
 
   created() {
     this.loadBasicData()
-    this.loadSubscription()
   },
 
   watch: {
@@ -92,39 +88,48 @@ export default {
         confirmButtonClass: 'confirm-btn',
         cancelButtonClass: 'cache-btn el-button--text',
         type: 'warning',
-      }).then(() => {
-        this.$httpDelete(`/clients/${encodeURIComponent(this.clientId)}`).then(() => {
-          this.$message.success(this.$t('oper.disconnectSuccess'))
-          this.$set(this.basicRecord, 'connected', false)
-          setTimeout(() => {
-            this.$router.push({ path: '/clients' })
-          }, 500)
-        }).catch((error) => {
-          this.$message.error(error || this.$t('error.networkError'))
+      })
+        .then(() => {
+          this.$httpDelete(`/clients/${encodeURIComponent(this.clientId)}`)
+            .then(() => {
+              this.$message.success(this.$t('oper.disconnectSuccess'))
+              this.$set(this.basicRecord, 'connected', false)
+              setTimeout(() => {
+                this.$router.push({ path: '/clients' })
+              }, 500)
+            })
+            .catch((error) => {
+              this.$message.error(error || this.$t('error.networkError'))
+            })
         })
-      }).catch(() => {})
+        .catch(() => {})
     },
     loadBasicData() {
-      this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`).then((res) => {
-        this.basicRecord = res.data[0]
-      }).catch(() => {})
+      this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`)
+        .then((res) => {
+          this.basicRecord = res.data[0]
+          this.nodeName = this.basicRecord.node
+          this.loadSubscription()
+        })
+        .catch(() => {})
     },
     loadSubscription() {
-      this.$httpGet(`/subscriptions/${encodeURIComponent(this.clientId)}`).then((res) => {
-        this.subscriptionsData = res.data
-      }).catch(() => {})
+      this.$httpGet(`/nodes/${this.nodeName}/subscriptions/${encodeURIComponent(this.clientId)}`)
+        .then((res) => {
+          this.subscriptionsData = res.data
+        })
+        .catch(() => {})
     },
   },
 }
 </script>
-
 
 <style lang="scss">
 .clients-view {
   .client-oper {
     float: right;
     margin-top: -32px;
-    color: #ADAFB4;
+    color: #adafb4;
 
     .connect-btn {
       border: 1px solid;
@@ -139,8 +144,8 @@ export default {
         color: #ff6d6d;
       }
       &.connected {
-        border-color: #ADAFB4;
-        color: #ADAFB4;
+        border-color: #adafb4;
+        color: #adafb4;
       }
       &:hover {
         background: transparent !important;

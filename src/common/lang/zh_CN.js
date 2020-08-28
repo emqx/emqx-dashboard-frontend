@@ -10,6 +10,7 @@ export default {
   error: {
     networkError: '网络错误',
     initializationError: '初始化错误',
+    module_not_loaded: '相关模块未打开',
   },
   // success
   success: {
@@ -36,8 +37,11 @@ export default {
     editSuccess: '编辑成功',
     startSuccess: '启动成功',
     stopSuccess: '停止成功',
+    enableSuccess: '启用成功',
+    disabledSuccess: '停用成功',
     deleteSuccess: '删除成功',
     disconnectSuccess: '断开连接成功',
+    clear: '清空成功',
     from: '从',
     stop: '停止',
     start: '启动',
@@ -61,6 +65,8 @@ export default {
     generate: '生成',
     search: '搜索',
     reset: '重置',
+    next: '下一页',
+    prev: '上一页',
   },
   // topbar
   topbar: {
@@ -77,10 +83,11 @@ export default {
     topics: '主题',
     subscriptions: '订阅',
     // RULES
-    rule_engine: '规则引擎',
+    rule_engine: '规则',
     // MANAGEMENT
     management: '管理',
     plugins: '插件',
+    modules: '模块',
     listeners: '监听器',
     instances: '服务',
     // TOOLS
@@ -95,6 +102,10 @@ export default {
     settings: '设置',
     help: '帮助',
     general: '通用',
+    // Analysis
+    analysis: '统计分析',
+    topicMetrics: '主题监控',
+    alarms: '告警',
   },
   // overview
   overview: {
@@ -131,9 +142,9 @@ export default {
     subscriptionsSharedMax: '峰值',
     // Metrics
     metrics: '度量指标',
-    packetsData: 'MQTT报文',
-    messagesData: '消息(数)',
-    bytesData: '流量收发统计(字节)',
+    packetsData: 'MQTT 报文',
+    messagesData: '消息',
+    bytesData: '流量收发(字节)',
     session: '会话',
     client: '客户端',
     delivery: 'Delivery',
@@ -233,11 +244,18 @@ export default {
     secret: '密钥或私钥',
     payloadDesc: '启用 verify_claims 时有效, 可以使用 %u，%c 占位符分别替换输入的 username 和 clientid，详见',
     jwtDoc: 'JWT 认证',
-    dataDesc: '一行一组数据，使用逗号分割 username，clientid',
+    dataDesc: '一行一组数据，使用逗号分割 username,clientid',
     secretRequired: '请输入 Secret',
     payloadRequired: '请输入 Payload 模版',
     dataRequired: '请填写 Payload 数据',
     leaveTokenPage: '离开页面后当前输入的配置与生成的 TOKEN 信息均不再保留，确认离开？',
+  },
+  modules: {
+    name: '模块名称',
+    enable: '启用',
+    disable: '停用',
+    enabled: '已启用',
+    disabled: '已停用',
   },
   // instances
   instances: {
@@ -316,7 +334,8 @@ export default {
   // http_api
   httpApi: {
     introduction: '说明',
-    desc: '除了帮助页面，所有URI返回application/json格式的的资源，每个请求都需要HTTP基本认证。默认用户是admin / public。<br/>' +
+    desc:
+      '除了帮助页面，所有URI返回application/json格式的的资源，每个请求都需要HTTP基本认证。默认用户是admin / public。<br/>' +
       'emqx_dashboard插件提供了一个Web管理控制台, 用于监控服务器的运行状态，数据统计和MQTT包计数监控。',
     reference: '参考',
     method: '请求方法',
@@ -415,14 +434,16 @@ export default {
     ex: '导出',
     atLeastThree: '至少3个字符',
     importSuccess: '导入成功',
-    notice: '使用备份的配置文件进行配置初始化/修改。<br/>注意: 配置文件可能包含有重要数据如数据库地址与认证信息，请妥善保管配置文件并合理使用备份功能。',
+    notice:
+      '使用备份的配置文件进行配置初始化/修改。<br/>注意: 配置文件可能包含有重要数据如数据库地址与认证信息，请妥善保管配置文件并合理使用备份功能。',
   },
-  // help
   help: {
     quickStart: '快速开始',
-    emqxDesc: 'EMQ X 基于 Erlang/OTP 平台开发的 MQTT 消息服务器，是开源社区中最流行的 MQTT 消息服务器，支持丰富的物联网协议，包括 MQTT、LwM2M、MQTT-SN、CoAP、 LoRaWAN、 HTTP 和 WebSocket 等。欢迎 follow 我们的项目或参与构建。',
+    emqxDesc:
+      'EMQ X 基于 Erlang/OTP 平台开发的 MQTT 消息服务器，是开源社区中最流行的 MQTT 消息服务器，支持丰富的物联网协议，包括 MQTT、LwM2M、MQTT-SN、CoAP、 LoRaWAN、 HTTP 和 WebSocket 等。欢迎 follow 我们的项目或参与构建。',
     emqxEnterprise: 'EMQ X 企业版',
-    enterpriseDesc: 'EMQ X 企业版内置了各种数据持久化支持、安全审计、运行监控等功能，为您提供功能更全面、稳定性与性能更强、数据安全与服务响应级别更高的服务。<br/>最新企业版包含全新的 Dashboard，让您可以轻松创建并管理数十个节点、数百万连接的 IoT Hub 集群。',
+    enterpriseDesc:
+      'EMQ X 企业版内置了各种数据持久化支持、安全审计、运行监控等功能，为您提供功能更全面、稳定性与性能更强、数据安全与服务响应级别更高的服务。<br/>最新企业版包含全新的 Dashboard，让您可以轻松创建并管理数十个节点、数百万连接的 IoT Hub 集群。',
     freeTrial: '免费试用',
     useDocs: '使用文档',
     docsDesc: '我们为您准备了齐全的使用文档，帮助您熟悉更多强大的功能。',
@@ -430,6 +451,34 @@ export default {
     faqDesc: 'FAQ 收录了所有可能出现的问题，优先推荐使用 FAQ 检索您使用过程中遇到的问题。',
     forwardFaq: '前往 FAQ',
     followUs: '关注我们',
+  },
+  analysis: {
+    topicMetrics: '主题监控',
+    metricsTip: '（数据统计为实时刷新数据，包含自添加以来全部统计数据）',
+    messageIn: '消息流入',
+    messageOut: '消息流出',
+    messageDrop: '消息丢弃',
+    addTopic: '添加主题',
+    details: '详情数据',
+    all: '全部',
+    rateItem: '{0} 条/秒',
+    rate: '（速率）',
+    messageInDesc: '（消息流入速率）',
+    messageOutDesc: '（消息流出速率）',
+    messageDropDesc: '（消息丢弃速率）',
+    loadAnalysis: '启用',
+    loadSuccess: '启用成功',
+    alarmName: '告警名称',
+    alarmMessage: '告警消息',
+    activateAt: '开始时间',
+    deactivateAt: '结束时间',
+    duration: '持续时间',
+    currentAlarms: '当前告警',
+    historicalAlarm: '历史告警',
+    deactivate: '取消告警',
+    clearAll: '清除全部',
+    confirmClear: '确认清除全部告警信息？',
+    confirmDeactivate: '确认取消该告警信息？',
   },
   httpCode: {
     0: '成功',

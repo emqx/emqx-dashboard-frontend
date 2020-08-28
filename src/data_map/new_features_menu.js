@@ -1,4 +1,1 @@
-export default [
-  'clients',
-  'subscriptions',
-]
+export default ['alarms']

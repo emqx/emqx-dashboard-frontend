@@ -4,10 +4,10 @@
     class="json-input"
     type="textarea"
     :placeholder="$attrs.placeholder || objectPlaceholder"
-    :rows="5">
+    :rows="5"
+  >
   </el-input>
 </template>
-
 
 <script>
 export default {
@@ -28,9 +28,13 @@ export default {
 
   data() {
     return {
-      objectPlaceholder: `JSON, e.g: \n${JSON.stringify({
-        Authorization: 'Basic YWRtaW46cHVibGlj',
-      }, null, 2)}`,
+      objectPlaceholder: `JSON, e.g: \n${JSON.stringify(
+        {
+          Authorization: 'Basic YWRtaW46cHVibGlj',
+        },
+        null,
+        2,
+      )}`,
       sourceValue: '',
     }
   },
@@ -81,8 +85,5 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
-.json-input {
-}
 </style>

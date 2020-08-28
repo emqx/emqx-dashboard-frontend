@@ -1,4 +1,4 @@
-@import "color";
+@import 'color';
 
 /* reset themes color */
 $--color-success: $themes-color-native;
@@ -9,20 +9,22 @@ $--color-danger: $themes-color-danger;
 
 /* reset default size */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
-@import "~element-ui/packages/theme-chalk/src/index";
+@import '~element-ui/packages/theme-chalk/src/index';
 
 .dark-themes {
-  @import "themes/dark";
+  @import 'themes/dark';
 }
 
 .light-themes {
-  @import "themes/light";
+  @import 'themes/light';
 }
 
 /* reset global style */
-@import "reset";
+@import 'reset';
 
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   margin: 0;
 }
@@ -31,11 +33,12 @@ html, body, #app {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local('Roboto Light'), local('Roboto-Light'), url(/static/fonts/Roboto-Light.woff) format('woff'), url(/static/fonts/Roboto-Light.ttf) format('truetype');
+  src: local('Roboto Light'), local('Roboto-Light'), url(/static/fonts/Roboto-Light.woff) format('woff'),
+    url(/static/fonts/Roboto-Light.ttf) format('truetype');
 }
 
 body {
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Work sans", Arial, sans-serif;
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Work sans', Arial, sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
   font-size: 14px;
   font-weight: 400;
@@ -64,7 +67,8 @@ a {
   clear: both;
 }
 
-::-ms-clear, ::-ms-reveal {
+::-ms-clear,
+::-ms-reveal {
   display: none;
 }
 
@@ -148,7 +152,7 @@ input {
 }
 
 .status:before {
-  content: "";
+  content: '';
   display: inline-block;
   height: 8px;
   width: 8px;
@@ -201,7 +205,7 @@ input {
     padding: 6px;
     min-height: 32px;
     line-height: 32px;
-    clear:both;
+    clear: both;
     .option-title {
       width: 48%;
       float: left;
@@ -244,4 +248,8 @@ input {
   &.status-circle {
     background: $themes-color-danger;
   }
+}
+
+.center-align {
+  text-align: center;
 }

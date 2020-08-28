@@ -89,9 +89,14 @@ export function params2Form(params = {}, deepKey = '') {
     if (enumValue || type === 'boolean') {
       type = 'emq-select'
       if (enumValue) {
-        $attrs.field = { options: enumValue.map($ => ({ value: $, label: $ })) }
+        $attrs.field = { options: enumValue.map(($) => ({ value: $, label: $ })) }
       } else {
-        $attrs.field = { options: [{ label: true, value: true }, { label: false, value: false }] }
+        $attrs.field = {
+          options: [
+            { label: true, value: true },
+            { label: false, value: false },
+          ],
+        }
       }
     }
     if (type === 'object' && !defaultValue) {
@@ -171,7 +176,6 @@ export function ruleOldSqlCheck(sql) {
   return matchRes
 }
 
-
 export function ruleNewSqlParser(sql, e) {
   const oldEventDict = {
     'message.publish': '',
@@ -221,6 +225,33 @@ export function handleClipboard(text, event) {
     clipboard.destroy()
   })
   clipboard.onClick(event)
+}
+
+export function getDateDiff(beginTime, endTime) {
+  const dateDiff = endTime - beginTime
+  const leave1 = dateDiff % (24 * 3600 * 1000)
+  const hours = Math.floor(leave1 / (3600 * 1000))
+
+  const leave2 = leave1 % (3600 * 1000)
+  const minutes = Math.floor(leave2 / (60 * 1000))
+
+  const leave3 = leave2 % (60 * 1000)
+  const seconds = Math.round(leave3 / 1000)
+
+  return `${hours}:${minutes}:${seconds}`
+}
+
+export const verifyID = (rule, value, callback) => {
+  const reg = /^[0-9a-zA-Z_:]{1,64}$/
+  if (!value) {
+    callback(new Error(`ID ${Vue.prototype.$t('rule.is_required')}`))
+  } else if (value.length > 64) {
+    callback(new Error(Vue.prototype.$t('rule.id_len_tip')))
+  } else if (!reg.test(value)) {
+    callback(new Error(Vue.prototype.$t('rule.id_char_tip')))
+  } else {
+    callback()
+  }
 }
 
 export default {}

@@ -2,7 +2,7 @@
   <div class="left-bar">
     <div class="bar-title">
       <div>
-        <img class="logo" src="../assets/emqlogo.svg">
+        <img class="logo" src="../assets/emqlogo.svg" />
       </div>
       <h3>Dashboard</h3>
     </div>
@@ -12,13 +12,10 @@
       background-color="#242327"
       text-color="#A6A6A8"
       active-text-color="#34C388"
-      :default-active="'/' + $route.path.split('/')[1]">
-
+      :default-active="'/' + $route.path.split('/')[1]"
+    >
       <template v-for="(menu, index) in menus">
-        <el-submenu
-          v-if="menu.children && menu.children.length > 0"
-          :key="index"
-          :index="`${index + 1}`">
+        <el-submenu v-if="menu.children && menu.children.length > 0" :key="index" :index="`${index + 1}`">
           <template slot="title">
             <i :class="['iconfont', menu.icon]"></i>
             <el-badge :hidden="!menu.hasNew" is-dot class="menu-dot">
@@ -29,17 +26,14 @@
             v-for="(submenu, subindex) in menu.children"
             :key="subindex"
             :index="submenu.index"
-            :class="submenu.class">
+            :class="submenu.class"
+          >
             <el-badge :hidden="!submenu.hasNew" is-dot class="submenu-dot">
               {{ submenu.title }}
             </el-badge>
           </el-menu-item>
         </el-submenu>
-        <el-menu-item
-          v-else-if="!menu.children"
-          :key="index"
-          :index="menu.index"
-          :class="menu.class">
+        <el-menu-item v-else-if="!menu.children" :key="index" :index="menu.index" :class="menu.class">
           <template slot="title">
             <i :class="['iconfont', menu.icon]"></i>
             <el-badge :hidden="!menu.hasNew" is-dot class="menu-dot">
@@ -52,13 +46,12 @@
       <div class="bar-footer">
         <span>{{ $store.state.user.username }}</span>
         <a href="javascript:;" @click="logout">
-          <img src="../assets/exit.png">
+          <img src="../assets/exit.png" />
         </a>
       </div>
     </el-menu>
   </div>
 </template>
-
 
 <script>
 import { Menu, MenuItem, MenuItemGroup } from 'element-ui'
@@ -116,10 +109,28 @@ export default {
           ],
         },
         {
+          id: 'analysis',
+          title: this.$t('leftbar.analysis'),
+          icon: 'icon-shujukanban',
+          children: [
+            {
+              id: 'topic_metrics',
+              title: this.$t('leftbar.topicMetrics'),
+              index: '/topic_metrics',
+            },
+          ],
+        },
+        {
           id: 'plugins',
           title: this.$t('leftbar.plugins'),
           index: '/plugins',
           icon: 'icon-kongjian',
+        },
+        {
+          id: 'modules',
+          title: this.$t('leftbar.modules'),
+          index: '/modules',
+          icon: 'icon-changjingguanli',
         },
         {
           id: 'tools',
@@ -137,6 +148,12 @@ export default {
               index: '/http_api',
             },
           ],
+        },
+        {
+          id: 'alarms',
+          title: this.$t('leftbar.alarms'),
+          index: '/alarms',
+          icon: 'icon-gaojingkongxin',
         },
         {
           id: 'settings',
@@ -221,7 +238,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .left-bar {
   position: fixed;
@@ -246,7 +262,7 @@ export default {
     top: 0;
     z-index: 1003;
     width: 180px;
-    border-bottom: 1px solid #2B2C30;
+    border-bottom: 1px solid #2b2c30;
     color: #fff !important;
     background-color: #242327;
     text-align: center;
@@ -274,7 +290,7 @@ export default {
     height: 47px;
     line-height: 47px;
     background: inherit;
-    border-top: 1px solid #2B2C30;
+    border-top: 1px solid #2b2c30;
     color: #fff !important;
 
     span {
@@ -319,25 +335,25 @@ export default {
   .el-menu-item {
     height: 36px !important;
     line-height: 36px !important;
-    background-color: #8F8E8E;
+    background-color: #8f8e8e;
     color: #929299 !important;
     border-radius: 4px;
     width: 168px;
-    margin-left: 5px;
+    margin-left: 7px;
     margin-bottom: 4px;
     margin-top: 4px;
-    transition: border-color .3s, background-color .3s, color .3s, box-shadow .3s;
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s;
 
     &:hover {
       color: #fff !important;
-      background-color: #393A3E !important;
+      background-color: #393a3e !important;
       i {
         color: #fff !important;
       }
     }
     &.is-active {
       color: #fff !important;
-      background-color: #00B173 !important;
+      background-color: #00b173 !important;
       box-shadow: 0px 0px 5px 0px #02d48a;
       i {
         color: #fff !important;

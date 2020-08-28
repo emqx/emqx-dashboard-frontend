@@ -1,131 +1,126 @@
 <template>
   <div class="rule-actions">
-    <el-table border :class="{ 'el-table--public': inDialog }" :data="record.actions" default-expand-all>
-      <el-table-column prop="name" :label="$t('rule.type')" min-width="80px"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="params" :label="$t('rule.params')" min-width="200px">
-        <template slot-scope="{ row }">
-          <div v-for="(item, i) in Object.entries(row.params)" class="action-item" :key="i">
-            {{ item[0] === '$resource' ? $t('rule.rely_resource') : item[0] }}: {{ item[1] }}
+    <div v-for="(action, index) in record.actions" :key="index" class="action-card">
+      <el-row class="action-body" type="flex">
+        <el-col :span="12">
+          <div class="filed-item">
+            <label class="title">{{ $t('rule.type') }}: </label>
+            <span class="desc">{{ action.name }}</span>
           </div>
-        </template>
-      </el-table-column>
-
-
-      <!--<el-table-column-->
-      <!--v-if="!(has.delete || has.edit)"-->
-      <!--prop="metrics"-->
-      <!--type="expand">-->
-      <!--<template slot-scope="{ row }">-->
-
-      <!--<ul class="status-wrapper metrics">-->
-      <!--<li class="status-item" style="margin-bottom: 6px;font-size: 14px">-->
-      <!--{{ $t('rule.metrics') }}-->
-      <!--</li>-->
-
-      <!--&lt;!&ndash;<el-table :data="row.metrics" border>&ndash;&gt;-->
-      <!--&lt;!&ndash;<el-table-column label="节点" prop="node"></el-table-column>&ndash;&gt;-->
-      <!--&lt;!&ndash;<el-table-column label="成功数" prop="success"></el-table-column>&ndash;&gt;-->
-      <!--&lt;!&ndash;<el-table-column label="失败数" prop="failed"></el-table-column>&ndash;&gt;-->
-      <!--&lt;!&ndash;</el-table>&ndash;&gt;-->
-      <!--<li v-for="(item, i) in row.metrics || []" :key="i" class="status-item" style="margin-left: 10px">-->
-      <!--<span class="key">-->
-      <!--{{ item.node }}-->
-      <!--</span>-->
-
-      <!--<span type="info">-->
-      <!--{{$t('rule.success')}}:-->
-      <!--<span>{{ item.success }}</span>-->
-      <!--</span>-->
-
-      <!--<span type="info">-->
-      <!--{{$t('rule.failed')}}:-->
-      <!--<span>{{ item.failed }}</span>-->
-      <!--</span>-->
-
-      <!--</li>-->
-
-      <!--<li class="status-item" style="margin-left: 10px;margin-top: 4px">-->
-
-      <!--<span class="key">-->
-      <!--{{ $t('rule.all') }}-->
-      <!--</span>-->
-      <!--<span type="info">-->
-      <!--{{$t('rule.success')}}:-->
-      <!--<span>{{ getSum(row.metrics, 'success') }}</span>-->
-      <!--</span>-->
-
-      <!--<span type="info">-->
-      <!--{{$t('rule.failed')}}:-->
-      <!--<span>{{ getSum(row.metrics, 'failed') }}</span>-->
-      <!--</span>-->
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-
-
-      <el-table-column v-if="has.delete || has.edit" :label="$t('rule.oper')">
-        <template slot-scope="props">
-          <el-button v-if="has.delete" type="text" @click="handleRemove(props)">
+          <div v-for="(item, i) in Object.entries(action.params)" :key="i" class="filed-item">
+            <label class="title"> {{ item[0] === '$resource' ? $t('rule.rely_resource') : item[0] }}: </label>
+            <span class="desc">{{ item[1] }}</span>
+          </div>
+        </el-col>
+        <el-col v-if="has.delete || has.edit" :span="12" class="action-oper">
+          <el-button v-if="has.edit" type="text" @click="handleActionEdit(action, index)">
+            {{ $t('rule.edit') }}
+          </el-button>
+          <el-button v-if="has.delete" class="delete-btn" type="text" @click="handleActionRemove(index)">
             {{ $t('rule.delete') }}
           </el-button>
-          <el-button v-if="has.edit" type="text">{{ $t('rule.edit') }}</el-button>
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        v-if="!(has.delete || has.edit)"
-        prop="metrics"
-        min-width="130px"
-        :label="$t('rule.metrics')">
-        <template slot-scope="{ row }">
-
-          <ul class="status-wrapper metrics">
-            <!--<li class="status-item" style="margin-bottom: 6px;font-size: 14px">-->
-              <!--{{ $t('rule.metrics') }}-->
-            <!--</li>-->
-
-            <!--<el-table :data="row.metrics" border>-->
-            <!--<el-table-column label="节点" prop="node"></el-table-column>-->
-            <!--<el-table-column label="成功数" prop="success"></el-table-column>-->
-            <!--<el-table-column label="失败数" prop="failed"></el-table-column>-->
-            <!--</el-table>-->
-            <li v-for="(item, i) in row.metrics || []" :key="i" class="status-item">
+          <div v-if="!action.fallbacks.length" class="fallbacks">
+            <el-popover placement="top-start" trigger="hover" :content="$t('rule.fallbackActionCreate')">
+              <el-button slot="reference" type="text" icon="el-icon-plus" @click="handleAddFallbacks(action)">
+                {{ $t('rule.fallbackAction') }}
+              </el-button>
+            </el-popover>
+          </div>
+        </el-col>
+        <el-col v-if="!(has.delete || has.edit)" :span="12">
+          <div class="status-wrapper filed-item">
+            <div v-for="(item, i) in action.metrics || []" :key="i" class="status-item">
+              <div class="title">{{ $t('rule.metrics') }}:</div>
               <span class="key">
                 {{ item.node }}
               </span>
-
               <span type="info">
-                {{$t('rule.success')}}:
+                {{ $t('rule.success') }}:
                 <span>{{ item.success }}</span>
               </span>
-
               <span type="info">
-                {{$t('rule.failed')}}:
+                {{ $t('rule.failed') }}:
                 <span>{{ item.failed }}</span>
               </span>
-
-            </li>
-
-            <li class="status-item" style="margin-top: 4px">
-
+            </div>
+            <div class="status-item">
               <span class="key">
                 {{ $t('rule.all') }}
               </span>
               <span type="info">
-                {{$t('rule.success')}}:
-                <span>{{ getSum(row.metrics, 'success') }}</span>
+                {{ $t('rule.success') }}:
+                <span>{{ getSum(action.metrics, 'success') }}</span>
               </span>
-
               <span type="info">
-                {{$t('rule.failed')}}:
-                <span>{{ getSum(row.metrics, 'failed') }}</span>
+                {{ $t('rule.failed') }}:
+                <span>{{ getSum(action.metrics, 'failed') }}</span>
               </span>
-            </li>
-          </ul>
-        </template>
-      </el-table-column>
-    </el-table>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <template v-if="action.fallbacks && action.fallbacks.length">
+        <el-row v-for="(fallback, index) in action.fallbacks" :key="index" class="action-footer" type="flex">
+          <el-col :span="12">
+            <div class="filed-item">
+              <label class="title">{{ $t('rule.type') }}: </label>
+              <span class="desc">{{ fallback.name }}</span>
+            </div>
+            <div v-for="(item, i) in Object.entries(fallback.params)" :key="i" class="filed-item">
+              <label class="title"> {{ item[0] === '$resource' ? $t('rule.rely_resource') : item[0] }}: </label>
+              <span class="desc">{{ item[1] }}</span>
+            </div>
+          </el-col>
+          <el-col v-if="has.delete || has.edit" :span="12" class="action-oper">
+            <el-button v-if="has.edit" type="text" @click="handleFallbackEdit(fallback, action, index)">
+              {{ $t('rule.edit') }}
+            </el-button>
+            <el-button v-if="has.delete" class="delete-btn" type="text" @click="handleFallbackRemove(action, index)">
+              {{ $t('rule.delete') }}
+            </el-button>
+            <div class="fallbacks">
+              <el-popover placement="top-start" trigger="hover" :content="$t('rule.fallbackActionTip')">
+                <span slot="reference">
+                  {{ $t('rule.fallbackAction') }}
+                </span>
+              </el-popover>
+            </div>
+          </el-col>
+          <el-col v-if="!(has.delete || has.edit)" :span="12">
+            <div class="status-wrapper filed-item">
+              <div v-for="(item, i) in fallback.metrics || []" :key="i" class="status-item">
+                <div class="title">{{ $t('rule.metrics') }}:</div>
+                <span class="key">
+                  {{ item.node }}
+                </span>
+                <span type="info">
+                  {{ $t('rule.success') }}:
+                  <span>{{ item.success }}</span>
+                </span>
+                <span type="info">
+                  {{ $t('rule.failed') }}:
+                  <span>{{ item.failed }}</span>
+                </span>
+              </div>
+              <div class="status-item">
+                <span class="key">
+                  {{ $t('rule.all') }}
+                </span>
+                <span type="info">
+                  {{ $t('rule.success') }}:
+                  <span>{{ getSum(fallback.metrics, 'success') }}</span>
+                </span>
+                <span type="info">
+                  {{ $t('rule.failed') }}:
+                  <span>{{ getSum(fallback.metrics, 'failed') }}</span>
+                </span>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+      </template>
+    </div>
 
     <el-button
       v-if="has.create"
@@ -133,21 +128,23 @@
       plain
       icon="el-icon-plus"
       size="small"
-      style="margin-top:24px; min-width: 80px"
-      @click="dialogVisible = true">
+      style="min-width: 80px;"
+      @click="dialogVisible = true"
+    >
       {{ $t('rule.add') }}
     </el-button>
 
     <action-dialog
       :visible.sync="dialogVisible"
       :currentActions="record.actions"
+      :recordIndex="editIndex"
+      :editRecord="editForm"
       :params="params"
       @confirm="handleActionAdd"
     >
     </action-dialog>
   </div>
 </template>
-
 
 <script>
 import ActionDialog from './ActionDialog'
@@ -176,11 +173,37 @@ export default {
     },
   },
 
+  watch: {
+    dialogVisible(val) {
+      if (!val) {
+        this.editForm = null
+        this.editIndex = null
+        this.currentAction = {}
+        this.isFallBacks = false
+      }
+    },
+  },
+
+  computed: {
+    has() {
+      const dict = []
+      this.operations.forEach((item) => {
+        dict[item] = true
+      })
+      return dict
+    },
+  },
+
   data() {
     return {
       dialogVisible: false,
+      editForm: null,
+      editIndex: null,
+      isFallBacks: false,
+      currentAction: {},
     }
   },
+
   filters: {
     jsonFormat(val) {
       return JSON.stringify(val, null, 2)
@@ -201,59 +224,101 @@ export default {
     },
     /**
      * 新建好一个 action
-     * { name: 'action_name', params: { ...params } }
+     * { name: 'action_name', params: { ...params }, fallbacks: [] }
      * @param action
      */
-    handleActionAdd(action) {
-      this.record.actions.push(action)
+    handleActionAdd(action, index) {
+      if (this.isFallBacks) {
+        if (this.editIndex !== null) {
+          this.currentAction.fallbacks = []
+        }
+        this.currentAction.fallbacks.push(action)
+        return
+      }
+      if (index !== null) {
+        this.record.actions.splice(index, 1, action)
+      } else {
+        this.record.actions.push(action)
+      }
     },
 
-    handleRemove(props) {
-      const { $index } = props
-      this.record.actions = this.record.actions.filter((item, index) => index !== $index)
+    handleActionRemove(index) {
+      const removeIndex = index
+      this.record.actions = this.record.actions.filter((item, index) => index !== removeIndex)
     },
-  },
-
-  created() {
-  },
-
-  computed: {
-    has() {
-      const dict = []
-      this.operations.forEach((item) => {
-        dict[item] = true
-      })
-      return dict
+    handleActionEdit(action, index) {
+      this.editIndex = index
+      this.editForm = action
+      this.dialogVisible = true
+    },
+    handleAddFallbacks(action) {
+      this.currentAction = action
+      this.isFallBacks = true
+      this.dialogVisible = true
+    },
+    handleFallbackRemove(action) {
+      action.fallbacks = []
+    },
+    handleFallbackEdit(fallback, action, index) {
+      this.currentAction = action
+      this.isFallBacks = true
+      this.editIndex = index
+      this.editForm = fallback
+      this.dialogVisible = true
     },
   },
 }
 </script>
 
-
 <style lang="scss">
 .rule-actions {
   .status-wrapper {
-    padding: 0;
-    list-style-type: none;
-
-    &.metrics {
-      .key {
-        display: inline-block;
-        width: 120px;
-      }
-    }
-
+    .title,
     .status-item {
-      padding: 2px 6px;
-
-      & > span {
-        margin-right: 12px;
-      }
+      margin-bottom: 10px;
+    }
+    .key {
+      width: 120px;
+      display: inline-block;
     }
   }
-
   .action-item {
     margin: 2px auto;
+  }
+  .action-card {
+    font-size: 14px;
+    margin-bottom: 24px;
+    .action-body,
+    .action-footer {
+      padding: 20px;
+    }
+    .filed-item {
+      margin-bottom: 16px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .title {
+        margin-right: 10px;
+      }
+    }
+    .action-oper {
+      text-align: right;
+      position: relative;
+      .delete-btn {
+        margin-bottom: 40px;
+      }
+      .fallbacks {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        .el-button [class*='el-icon-'] + span {
+          margin-left: 0px;
+        }
+      }
+    }
+    &:last-child {
+      margin-bottom: 0px;
+    }
   }
 
   .el-table__expanded-cell {

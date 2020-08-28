@@ -2,11 +2,7 @@
   <div class="clients-basic">
     <el-card class="el-card--self tabs-card">
       <el-row>
-        <el-form
-          ref="record"
-          class="clients-basic-form"
-          :model="record"
-          label-suffix=":">
+        <el-form ref="record" class="clients-basic-form" :model="record" label-suffix=":">
           <el-col :span="12">
             <div class="card-subtitle">{{ $t('clients.connectInfo') }}</div>
             <el-form-item :label="$t('clients.node')" prop="node">
@@ -23,7 +19,10 @@
                 <span>{{ record.proto_name }} {{ mqttVersionMap[record.proto_ver] }}</span>
               </template>
               <template v-else>
-                <span>{{ record.proto_name }} v{{ record.proto_ver }}</span>
+                <span>
+                  {{ record.proto_name }}
+                  <span v-if="record.proto_ver"> v{{ record.proto_ver }}</span>
+                </span>
               </template>
             </el-form-item>
             <el-form-item :label="$t('clients.ipAddr')" prop="ip_address">
@@ -80,7 +79,7 @@
             <el-form-item :label="$t('clients.mqueue')">
               <span>{{ record.mqueue_len }} / {{ record.max_mqueue }}</span>
             </el-form-item>
-             <el-form-item :label="`${$t('clients.max')} ${$t('clients.mqueue')}`">
+            <el-form-item :label="`${$t('clients.max')} ${$t('clients.mqueue')}`">
               <span>{{ record.max_mqueue }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.awaiting_rel')" prop="awaiting_rel">
@@ -101,12 +100,7 @@
       </div>
 
       <el-collapse-transition>
-        <el-form
-          v-if="showMore"
-          ref="record"
-          class="clients-basic-form"
-          :model="record"
-          label-suffix=":">
+        <el-form v-if="showMore" ref="record" class="clients-basic-form" :model="record" label-suffix=":">
           <el-row>
             <el-col :span="12">
               <el-form-item :label="$t('clients.recv_cnt_desc')" prop="recv_cnt">
@@ -143,7 +137,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: 'clients-basic',
@@ -174,17 +167,16 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .clients-basic {
   .clients-basic-form {
     .form-item-desc {
-      color: #5F6067;
+      color: #5f6067;
       margin-left: 20px;
       font-size: 14px;
     }
     .el-form-item__content {
-      color: #F8F8F8;
+      color: #f8f8f8;
     }
     .el-form-item {
       margin-bottom: 12px;
