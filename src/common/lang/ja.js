@@ -69,7 +69,7 @@ export default {
   },
   // topbar
   topbar: {
-    tryEnterprise: 'EMQ X Enterpriseを試す',
+    tryEnterprise: 'を試す',
   },
   // leftbar
   leftbar: {
