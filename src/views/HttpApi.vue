@@ -113,21 +113,20 @@ export default {
       this.uri = `/api/v4${props.target}`
       this.scrollTop = document.documentElement.scrollTop
       document.documentElement.scrollTop = 0
+      const httpRequest = (method) => {
+        method(props.target)
+          .then(this.handleSuccess)
+          .catch(this.handleError)
+      }
       switch (props.method) {
         case 'GET':
-          this.$httpGet(props.target)
-            .then(this.handleSuccess)
-            .catch(this.handleError)
+          httpRequest(this.$httpGet)
           break
         case 'POST':
-          this.$httpPost(props.target)
-            .then(this.handleSuccess)
-            .catch(this.handleError)
+          httpRequest(this.$httpPost)
           break
         case 'PUT':
-          this.$httpPut(props.target)
-            .then(this.handleSuccess)
-            .catch(this.handleError)
+          httpRequest(this.$httpPut)
           break
         default:
           this.responseDate = null
