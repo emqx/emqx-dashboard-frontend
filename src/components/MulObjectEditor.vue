@@ -3,7 +3,6 @@
   <el-table class="mul-object-editor" :data="tableData" :render-header="labelHeads" size="mini">
     <el-table-column :label="item" v-for="(item, index) in headers" :key="index">
       <template slot-scope="{ row }">
-        {{ row[item].type }}
         <emq-select
           v-if="row[item].type === 'emq-select'"
           v-bind="row[item].$attrs"
@@ -75,8 +74,6 @@ export default {
       defaultConfig: {},
     }
   },
-
-  computed: {},
 
   created() {
     this.initData()
