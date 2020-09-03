@@ -1,47 +1,49 @@
 <template>
-  <el-table class="mul-object-editor" :data="tableData" :render-header="labelHeads" size="mini">
-    <el-table-column :label="item" v-for="(item, index) in headers" :key="index">
-      <template slot-scope="{ row }">
-        <emq-select
-          v-if="row[item].type === 'emq-select'"
-          v-bind="row[item].$attrs"
-          v-model="row[row[item].key]"
-          class="el-select--public"
-          popper-class="el-select--public"
-          @change="atInputChange"
-        >
-        </emq-select>
-        <!-- Number field -->
-        <el-input
-          v-else-if="row[item].type === 'number'"
-          type="number"
-          v-bind="row[item].$attrs"
-          v-model.number="row[row[item].key]"
-          @input="atInputChange"
-        >
-        </el-input>
-        <!-- String field -->
-        <el-input v-else v-bind="row[item].$attrs" v-model="row[row[item].key]" @input="atInputChange"> </el-input>
-      </template>
-    </el-table-column>
-    <el-table-column width="60px">
-      <span slot="header" class="btn" @click="addColumn">
-        {{ $t('rule.add') }}
-      </span>
-      <template slot-scope="{ row }">
-        <span class="btn" @click="deleteItem(row)">
-          {{ $t('rule.delete') }}
+  <div class="array-editor light-themes">
+    <el-table style="margin-top: 1px;" :data="tableData" :render-header="labelHeads" size="mini">
+      <el-table-column :label="item" v-for="(item, index) in headers" :key="index">
+        <template slot-scope="{ row }">
+          <emq-select
+            v-if="row[item].type === 'emq-select'"
+            v-bind="row[item].$attrs"
+            v-model="row[row[item].key]"
+            class="el-select--public"
+            popper-class="el-select--public"
+            @change="atInputChange"
+          >
+          </emq-select>
+          <!-- Number field -->
+          <el-input
+            v-else-if="row[item].type === 'number'"
+            type="number"
+            v-bind="row[item].$attrs"
+            v-model.number="row[row[item].key]"
+            @input="atInputChange"
+          >
+          </el-input>
+          <!-- String field -->
+          <el-input v-else v-bind="row[item].$attrs" v-model="row[row[item].key]" @input="atInputChange"> </el-input>
+        </template>
+      </el-table-column>
+      <el-table-column width="60px">
+        <span slot="header" class="btn" @click="addColumn">
+          {{ $t('rule.add') }}
         </span>
-      </template>
-    </el-table-column>
-  </el-table>
+        <template slot-scope="{ row }">
+          <span class="btn" @click="deleteItem(row)">
+            {{ $t('rule.delete') }}
+          </span>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
 import EmqSelect from './EmqSelect'
 
 export default {
-  name: 'MulObjectEditor',
+  name: 'ArrayEditor',
 
   components: { EmqSelect },
 
@@ -131,21 +133,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.key-and-value-editor {
-  font-size: 12px !important;
-
-  .el-input {
-    width: 100% !important;
-
-    &.key-input {
-      width: 120px !important;
-    }
-  }
-
-  .el-table__empty-block {
-    min-height: 40px;
-  }
-}
-</style>
