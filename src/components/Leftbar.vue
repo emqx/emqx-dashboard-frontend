@@ -243,7 +243,7 @@ export default {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 180px;
+  width: 200px;
   z-index: 1002;
   overflow-y: auto;
   overflow-x: hidden;
@@ -338,7 +338,7 @@ export default {
     background-color: #8f8e8e;
     color: #929299 !important;
     border-radius: 4px;
-    width: 168px;
+    width: 180px;
     margin-left: 7px;
     margin-bottom: 4px;
     margin-top: 4px;

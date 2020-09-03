@@ -140,10 +140,10 @@ export function params2Form(params = {}, deepKey = '') {
 }
 
 export function getPluginLink(pluginName) {
-  if (lang === 'en') {
-    return pluginsEn[pluginName]
+  if (lang === 'zh') {
+    return pluginsZh[pluginName]
   }
-  return pluginsZh[pluginName]
+  return pluginsEn[pluginName]
 }
 
 export function matchSearch(data, searchKey, searchValue) {
