@@ -56,7 +56,7 @@
         <div v-if="record.type">
           <el-col
             v-for="(item, index) in paramsList"
-            :span="item.type === 'object' || item.$attrs.type === 'textarea' ? 24 : 12"
+            :span="item.type === 'object' || item.type === 'mulobject' || item.$attrs.type === 'textarea' ? 24 : 12"
             :key="index"
           >
             <el-form-item :prop="`config.${item.prop}`">
@@ -70,6 +70,13 @@
               </template>
 
               <data-table v-if="item.type === 'object'" v-model="record.config[item.key]"></data-table>
+
+              <template v-else-if="item.type === 'mulobject'">
+                <mul-object-editor
+                  v-model="record.config[item.key]"
+                  :data="item.mulObjectData"
+                ></mul-object-editor>
+              </template>
 
               <emq-select
                 v-else-if="item.type === 'emq-select'"
@@ -110,13 +117,14 @@
 
 <script>
 import EmqSelect from '~/components/EmqSelect'
+import MulObjectEditor from '~/components/MulObjectEditor'
 import { params2Form, verifyID } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
 export default {
   name: 'resource-dialog',
-  components: { EmqSelect },
+  components: { EmqSelect, MulObjectEditor },
   inheritAttrs: false,
 
   props: {
@@ -181,6 +189,17 @@ export default {
         if (!valid) {
           return
         }
+        const { config } = this.record
+        // String to Boolean
+        Object.keys(config).forEach((label) => {
+          const value = config[label]
+          if (value === 'true') {
+            this.record.config[label] = true
+          }
+          if (value === 'false') {
+            this.record.config[label] = false
+          }
+        })
         const url = isCreate ? '/resources' : '/resources?test=true'
         this.$httpPost(url, this.record)
           .then((res) => {
