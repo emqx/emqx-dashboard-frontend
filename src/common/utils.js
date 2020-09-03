@@ -39,7 +39,7 @@ function getRule(item) {
     rule.required = true
     rule.message = `${title || key} ${dictMap.is_required[lang]}`
   }
-  if (type === 'mulobject' || 'boolean') {
+  if (type === 'array' || 'boolean') {
     return
   }
   rule.type = type
@@ -59,7 +59,8 @@ export function params2Form(params = {}, deepKey = '') {
   const rules = {
     [deepKey]: {},
   }
-  let mulObjectData = {}
+  // 数组中的一个对象
+  let oneObjOfArray = {}
 
   Object.entries(params).forEach(item => {
     const [key, value] = item
@@ -69,7 +70,7 @@ export function params2Form(params = {}, deepKey = '') {
       return
     }
 
-    const { format, enum: enumValue, input, order, schema } = value
+    const { format, enum: enumValue, input, order, items } = value
     let { title, type, description, default: defaultValue } = value
     if (typeof title === 'object') {
       title = title[lang]
@@ -104,8 +105,9 @@ export function params2Form(params = {}, deepKey = '') {
       defaultValue = {}
     }
 
-    if (type === 'mulobject') {
-      mulObjectData = params2Form(schema, 'config')
+    if (type === 'array' && items.type === 'object') {
+      const { schema } = items
+      oneObjOfArray = params2Form(schema, 'config')
       if (!defaultValue.length) {
         defaultValue = []
       }
@@ -124,7 +126,7 @@ export function params2Form(params = {}, deepKey = '') {
       $attrs,
       description: (description || '').replace(/\n/g, '<br/>'),
       order,
-      mulObjectData,
+      oneObjOfArray,
     })
     if (deepKey) {
       rules[deepKey][key] = getRule(item)
