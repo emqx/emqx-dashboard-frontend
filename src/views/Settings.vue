@@ -116,9 +116,6 @@ export default {
   .el-card {
     margin-top: 24px;
   }
-  .el-button {
-    width: 80px;
-  }
   .el-switch {
     &.is-checked {
       .el-switch__core {

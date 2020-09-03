@@ -93,7 +93,7 @@ export default {
         }
       }
       .el-button {
-        width: 135px;
+        width: 160px;
         border-radius: 40px;
         border-width: 2px;
         margin-left: 20px;

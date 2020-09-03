@@ -47,7 +47,8 @@ export const en = {
   event_info: 'Available Field',
   suggest_sql: 'SQL Example',
   upgrade_tip: 'Upgrade Tip',
-  json_decode_upgrade: 'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
+  json_decode_upgrade:
+    'The current version cancels the automatic JSON decoding of the payload. Select the field in the payload and use json_decode to decode it, as in the SQL example.',
   events: {
     message_acked: 'message.acked',
     message_dropped: 'message.dropped',
@@ -160,11 +161,13 @@ export const en = {
   username_doc: 'Current MQTT username',
   event_doc: 'Trigger event name',
   id_doc: 'MQTT message id',
-  payload_doc: 'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
+  payload_doc:
+    'The payload, if in JSON format, will be automatically decoded, and the object information will be obtained by using payload.x in SQL',
   peerhost_doc: 'Client peer name',
   qos_doc: 'Enumeration of message QoS 0,1,2',
   timestamp_doc: 'Timestamp(millisecond)',
-  topic_doc: 'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
+  topic_doc:
+    'Currently MQTT topic can be filtered by wildcards in SQL.  When multiple topics are included in subscribe and unsubscribe, only the first one will be obtained here. To obtain all topics, please use topic_filters',
   node_doc: 'Node name of the trigger event',
   message_delivered: 'message delivered',
   message_acked: 'message acked',
@@ -228,7 +231,8 @@ export const zh = {
   event_info: '可用字段',
   suggest_sql: '规则 SQL 示例',
   upgrade_tip: '升级提示',
-  json_decode_upgrade: '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
+  json_decode_upgrade:
+    '当前版本取消对 payload 的自动 JSON 解码，选择 payload 中的字段请使用 json_decode 解码，如 SQL 示例。',
   events: {
     message_acked: '消息确认',
     message_dropped: '消息丢弃',
@@ -340,7 +344,8 @@ export const zh = {
   peerhost_doc: '客户端网络地址',
   qos_doc: '消息 QoS 0,1,2 中枚举',
   timestamp_doc: '当前毫秒级时间戳',
-  topic_doc: '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
+  topic_doc:
+    '当前 MQTT 主题, SQL 中可以使用通配符进行筛选.\nSubscribe 与 Unsubscribe 请求中包含多个主题时, 这里只会获取到第一个, 如需获取全部请使用 topic_filters',
   node_doc: '触发事件的节点名称',
   message_delivered: '消息投递',
   message_acked: '消息应答',
@@ -356,11 +361,11 @@ export const zh = {
 }
 
 export const ja = {
-  viewStates: 'ビューのステータス',
+  viewStates: 'ステータス',
   topic: 'トピック',
   node: 'ノード',
   all: '合計',
-  connectSuccess: '接続成功',
+  connectSuccess: '接続に成功しました',
   speed_unit: '回/秒',
   match_unit: '回',
   match_rate: 'ヒット率',
@@ -395,7 +400,7 @@ export const ja = {
   test: 'テスト',
   input_test_data: 'SQLテスト',
   input_test_data_tips: 'SQLテスト用のカスタムシミュレーションデータ、テスト用のみ',
-  is_required: '必須項目接続テスト',
+  is_required: 'を入力してください',
   conf_test: '接続テスト',
   conf_test_success: '接続可能',
   conf_test_fail: '接続不可能',
@@ -417,7 +422,7 @@ export const ja = {
   },
   trigger_events: 'トリガーイベント',
   id: 'ID',
-  exists: 'キー重複',
+  exists: '重複キー',
   data_key: 'キー',
   data_value: '値',
   rely_resource: '関連リソース',
@@ -431,8 +436,8 @@ export const ja = {
   actions: '応答アクション',
   action: 'アクション',
   resource: 'リソース',
-  oper: 'オペレーティング',
-  view: 'プレビュー',
+  oper: 'オペレーション',
+  view: '詳細',
   confirm: '確認',
   delete: '削除',
   rule_details: 'ルール詳細',
@@ -450,15 +455,15 @@ export const ja = {
   value: '値',
   edit: '編集',
   add: '追加',
-  ruleEnabled: '有効',
-  ruleDisabled: '無効',
+  ruleEnabled: '有効になります',
+  ruleDisabled: '無効になります',
 
   basic_info: '基本情報',
   rule_name_required: 'ルール名を入力してください',
   rule_sql: 'ルールSQL',
   rule_id: 'ルールID',
   rule_descr_placeholder: '例：Webhookへ転送されたメッセージ',
-  rule_sql_tips_title: '条件付きフィルタリングとデータ処理のためのSQLの記述：',
+  rule_sql_tips_title: 'SQLによる条件付きフィルタリングとデータ処理：',
   sql_tips_html: `<p>EMQXは、メッセージが公開されてイベントがトリガーされると、ルールエンジンをトリガーします。トリガー条件を適応するルールは、自体のSQLを実行し、メッセージとイベントのコンテキスト情報をフィルター処理します。</p>
   <p class="item">ルールエンジンは、応答アクションを利用して、特定のトピックのメッセージの処理結果をデータベースに格納し、HTTPサーバーに送信し、メッセージキューKafkaまたはRabbitMQに転送し、新しいトピックまたは別のBrokerクラスターに再発行できます。各ルールに対して、複数の応答アクションをデプロイ可能です。</p>
 
@@ -485,9 +490,9 @@ export const ja = {
   condition_screening: '条件付きフィルタリング',
   topic_condition: 'トピック条件',
   message_publish_topic: 'メッセージ公開トピック',
-  set_action: 'アクションハンドラ',
+  set_action: '応答アクション',
   sql_required: 'SQLを入力してください',
-  actions_required: '必要なアクション',
+  actions_required: 'アクションを選択してください',
   rule_action_tips_title: 'アクションを定義する',
   action_tips_html: `
 <p>1. メッセージをメッセージサーバに再公開</p>
@@ -499,8 +504,8 @@ export const ja = {
   resource_des: 'リソース詳細',
   resource_id: 'リソースID',
   id_len_tip: '最大64ビットまで',
-  id_char_tip: '入力可能文字：半角英数字・「_（アンダースコア）」・「:（コロン）」のみをご入力ください',
-  type_required: '必要なタイプ',
+  id_char_tip: '入力可能文字：半角英数字・「_（アンダースコア）」・「:（コロン）」のみ',
+  type_required: 'リソースタイプを選択してください',
   resource_details: 'リソース詳細',
   config_info: '構成情報',
 
@@ -516,7 +521,7 @@ export const ja = {
   peerhost_doc: 'クライアントアドレス',
   qos_doc: 'QoS 0、1、2 のメッセージ中の列挙型',
   timestamp_doc: 'タイムスタンプ（ミリ秒）',
-  topic_doc: 'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
+  topic_doc:'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
   node_doc: 'トリガ・イベントのノード名',
   message_delivered: 'メッセージ配信',
   message_acked: 'メッセージの肯定応答',
