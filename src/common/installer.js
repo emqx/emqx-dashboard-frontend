@@ -3,7 +3,7 @@ import DataTable from '~/components/DataTable'
 
 import API from './api'
 
-export default (Vue) => {
+export default Vue => {
   Vue.prototype.$httpGet = (url, params = {}) => {
     // fix IE cache application/json response
     params._ = Date.now()

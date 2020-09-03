@@ -17,7 +17,7 @@ function getShowFeatOnLeftbar() {
   const currentShow = safeParse(localStorage.getItem('showFeatOnLeftbar'))
   function genData() {
     const data = {}
-    newFeaturesMenu.forEach((key) => {
+    newFeaturesMenu.forEach(key => {
       data[key] = true
     })
     const res = {

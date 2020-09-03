@@ -167,8 +167,8 @@ export default {
         return
       }
       this.$httpGet(`/nodes/${this.nodeName}/plugin_configs/${this.pluginName}`)
-        .then((response) => {
-          response.data.forEach((item) => {
+        .then(response => {
+          response.data.forEach(item => {
             this.defaultOptions.push({
               selfKey: item.key.replace(/\./g, '__'),
               ...item,
@@ -177,14 +177,14 @@ export default {
           this.handleConfigOptions()
           this.cancel = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error.message || this.$t('error.networkError'))
         })
     },
     handleConfigOptions() {
       this.configOptions = []
       this.advancedConfig = []
-      this.defaultOptions.forEach((item) => {
+      this.defaultOptions.forEach(item => {
         if (item.key.includes('$id')) {
           return
         }
@@ -204,7 +204,7 @@ export default {
     },
     handleValidateRules() {
       this.rules = {}
-      this.configOptions.forEach((item) => {
+      this.configOptions.forEach(item => {
         if (item.required) {
           this.rules[item.selfKey] = [
             {
@@ -216,13 +216,13 @@ export default {
       })
     },
     updateConfig() {
-      this.$refs.record.validate((valid) => {
+      this.$refs.record.validate(valid => {
         if (!valid) {
           return
         }
         // format record
         const record = {}
-        Object.keys(this.record).forEach((key) => {
+        Object.keys(this.record).forEach(key => {
           if (!this.record[key]) {
             return
           }
@@ -262,7 +262,7 @@ export default {
     moreConfig() {
       const selectedKeyList = []
       // remove cancel select && add selected options
-      this.selectedAdvancedConfig.forEach((config) => {
+      this.selectedAdvancedConfig.forEach(config => {
         // add
         if (this.record[config.selfKey] === undefined) {
           this.$set(this.record, config.selfKey, config.value)
@@ -270,7 +270,7 @@ export default {
         selectedKeyList.push(config.selfKey)
         // remove
       })
-      this.advancedConfig.forEach((item) => {
+      this.advancedConfig.forEach(item => {
         if (!selectedKeyList.includes(item.selfKey)) {
           this.$delete(this.record, item.selfKey)
         }

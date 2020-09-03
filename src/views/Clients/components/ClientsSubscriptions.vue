@@ -134,7 +134,7 @@ export default {
       this.record.clientid = this.clientId
     },
     handleAdd() {
-      this.$refs.record.validate((valid) => {
+      this.$refs.record.validate(valid => {
         if (!valid) {
           return
         }

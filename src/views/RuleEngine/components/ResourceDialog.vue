@@ -34,7 +34,9 @@
 
         <el-col :span="12">
           <el-form-item>
-            <template slot="label">&nbsp;</template>
+            <template slot="label"
+              >&nbsp;</template
+            >
             <el-button type="primary" @click="handleCreate(false)">
               {{ $t('rule.conf_test') }}
             </el-button>
@@ -72,10 +74,7 @@
               <data-table v-if="item.type === 'object'" v-model="record.config[item.key]"></data-table>
 
               <template v-else-if="item.type === 'mulobject'">
-                <mul-object-editor
-                  v-model="record.config[item.key]"
-                  :data="item.mulObjectData"
-                ></mul-object-editor>
+                <mul-object-editor v-model="record.config[item.key]" :data="item.mulObjectData"></mul-object-editor>
               </template>
 
               <emq-select
@@ -175,7 +174,7 @@ export default {
 
   methods: {
     clearTabIndex() {
-      document.querySelectorAll('.el-icon-question').forEach((el) => {
+      document.querySelectorAll('.el-icon-question').forEach(el => {
         el.setAttribute('tabindex', '-1')
       })
     },
@@ -185,13 +184,13 @@ export default {
       }
     },
     handleCreate(isCreate = true) {
-      this.$refs.record.validate((valid) => {
+      this.$refs.record.validate(valid => {
         if (!valid) {
           return
         }
         const { config } = this.record
         // String to Boolean
-        Object.keys(config).forEach((label) => {
+        Object.keys(config).forEach(label => {
           const value = config[label]
           if (value === 'true') {
             this.record.config[label] = true
@@ -202,7 +201,7 @@ export default {
         })
         const url = isCreate ? '/resources' : '/resources?test=true'
         this.$httpPost(url, this.record)
-          .then((res) => {
+          .then(res => {
             if (!isCreate) {
               this.$message.success(this.$t('rule.conf_test_success'))
               return
@@ -217,7 +216,7 @@ export default {
     handleTypeChange(val) {
       this.paramsList = []
       this.resourceRules = {}
-      const resourceType = this.resourceTypes.find(($) => $.name === val)
+      const resourceType = this.resourceTypes.find($ => $.name === val)
       if (!resourceType) {
         return
       }
@@ -236,7 +235,7 @@ export default {
       }
       this.$set(this.record, 'config', {})
       // 设置默认值
-      this.paramsList.forEach((item) => {
+      this.paramsList.forEach(item => {
         this.$set(this.record.config, item.key, item.defaultValue)
       })
       setTimeout(() => {
@@ -244,7 +243,7 @@ export default {
       }, 30)
     },
     loadResourceTypes() {
-      this.$httpGet('/resource_types').then((response) => {
+      this.$httpGet('/resource_types').then(response => {
         this.record = {
           type: '',
           config: {},
@@ -254,7 +253,7 @@ export default {
         if (this.resourceType) {
           this.record.type = this.resourceType
         }
-        this.resourceTypes = response.data.map((item) => {
+        this.resourceTypes = response.data.map(item => {
           item.titleLabel = typeof item.title === 'object' ? item.title[lang] : item.title
           return item
         })

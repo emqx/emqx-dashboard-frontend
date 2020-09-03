@@ -36,8 +36,8 @@
             <a
               v-if="
                 !props.row.name.includes('dashboard') &&
-                !props.row.name.includes('management') &&
-                getLinks(props.row.name) !== undefined
+                  !props.row.name.includes('management') &&
+                  getLinks(props.row.name) !== undefined
               "
               class="tutorial"
               href="javascript:;"
@@ -53,10 +53,7 @@
         prop="active"
         width="150"
         :label="$t('plugins.status')"
-        :filters="[
-          { text: $t('plugins.stopped'), value: false },
-          { text: $t('plugins.running'), value: true },
-        ]"
+        :filters="[{ text: $t('plugins.stopped'), value: false }, { text: $t('plugins.running'), value: true }]"
       >
         <template slot-scope="props">
           <span :class="[props.row.active ? 'running' : '', 'status']">
@@ -135,12 +132,12 @@ export default {
     loadData() {
       this.searchView = false
       this.$httpGet('/nodes')
-        .then((response) => {
+        .then(response => {
           this.nodeName = this.$store.state.nodeName || response.data[0].node
           this.nodes = response.data
           this.loadPlugins()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -150,22 +147,22 @@ export default {
         return
       }
       this.$httpGet(`/nodes/${this.nodeName}/plugins`)
-        .then((response) => {
+        .then(response => {
           this.tableData = response.data
           this.handleFilter()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     handleFilter() {
       // No need to initialize Set
-      this.enableTableData = this.tableData.filter((item) => !this.filterSet.has(item.active))
+      this.enableTableData = this.tableData.filter(item => !this.filterSet.has(item.active))
     },
     resetFilter(e) {
       this.filterSet.clear()
-      Object.keys(e).forEach((item) => {
-        e[item].forEach((active) => {
+      Object.keys(e).forEach(item => {
+        e[item].forEach(active => {
           this.filterSet.add(!active)
         })
       })
@@ -183,7 +180,7 @@ export default {
           )
           this.loadPlugins()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error || this.$t('error.networkError'))
           this.loadPlugins()
         })
@@ -203,7 +200,7 @@ export default {
       }
       setTimeout(() => {
         matchSearch(this.tableData, 'name', this.searchValue)
-          .then((res) => {
+          .then(res => {
             if (res) {
               this.enableTableData = res
             }

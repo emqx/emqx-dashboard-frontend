@@ -20,7 +20,7 @@ Vue.prototype.$ELEMENT = { size: 'medium' }
 
 Vue.use(Mount)
 
-Object.keys(filter).forEach((name) => {
+Object.keys(filter).forEach(name => {
   Vue.filter(name, filter[name])
 })
 

@@ -49,12 +49,7 @@
               popper-class="el-select--public"
               style="width: 100%;"
             >
-              <el-option
-                v-for="(item, index) in resourcesOptions"
-                :key="index"
-                :label="item.id"
-                :value="item.id"
-              >
+              <el-option v-for="(item, index) in resourcesOptions" :key="index" :label="item.id" :value="item.id">
               </el-option>
             </el-select>
           </el-form-item>
@@ -199,7 +194,7 @@ export default {
     },
     currentActionsMap() {
       const dict = {}
-      this.currentActions.forEach((item) => {
+      this.currentActions.forEach(item => {
         const hash = JSON.stringify(item)
         dict[hash] = true
       })
@@ -209,7 +204,7 @@ export default {
 
   methods: {
     clearTabIndex() {
-      document.querySelectorAll('.el-icon-question').forEach((el) => {
+      document.querySelectorAll('.el-icon-question').forEach(el => {
         el.setAttribute('tabindex', '-1')
       })
     },
@@ -259,7 +254,7 @@ export default {
       }
     },
     handleAdd() {
-      this.$refs.record.validate((valid) => {
+      this.$refs.record.validate(valid => {
         if (!valid) {
           return
         }
@@ -282,7 +277,7 @@ export default {
     handleActionChange(val) {
       this.paramsList = []
       this.enableItem = []
-      this.action = this.actionsList.find(($) => $.name === val)
+      this.action = this.actionsList.find($ => $.name === val)
       if (!this.action) {
         return
       }
@@ -292,7 +287,7 @@ export default {
       this.rules.params = { ...this.rules.params, ...rules }
       // fillData
       this.$set(this.record, 'params', {})
-      model.forEach((item) => {
+      model.forEach(item => {
         const { key, defaultValue } = item
         this.$set(this.record.params, key, defaultValue === undefined ? '' : defaultValue)
       })
@@ -313,17 +308,17 @@ export default {
       // 清空 待选择
       this.$set(this.record, 'resource', resourceId)
       const { types = [] } = this.action
-      return this.$httpGet('/resources').then((response) => {
+      return this.$httpGet('/resources').then(response => {
         const { data } = response
-        this.resourcesOptions = data.filter(($) => types.includes($.type))
+        this.resourcesOptions = data.filter($ => types.includes($.type))
         // 清空 待选择
         this.$set(this.record, 'resource', resourceId)
       })
     },
 
     loadActions() {
-      return this.$httpGet('/actions', this.params).then((response) => {
-        this.actionsList = response.data.map(($) => {
+      return this.$httpGet('/actions', this.params).then(response => {
+        this.actionsList = response.data.map($ => {
           $.label = ($.title || {})[lang]
           $.descriptionLabel = ($.description || {})[lang]
           return $
@@ -342,7 +337,7 @@ export default {
       this.fillData(params)
     },
     fillData(data) {
-      Object.entries(data).forEach((item) => {
+      Object.entries(data).forEach(item => {
         const [key, value] = item
         this.$set(this.record, key, value)
       })
