@@ -43,19 +43,18 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="12">
-          <el-form-item prop="id" :label="$t('rule.resource_id')">
-            <el-input v-model="record.id"></el-input>
-          </el-form-item>
-        </el-col>
+        <template v-if="record.type">
+          <el-col :span="12">
+            <el-form-item prop="id" :label="$t('rule.resource_id')">
+              <el-input v-model="record.id"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="description" :label="$t('rule.resource_des')">
+              <el-input type="textarea" v-model="record.description"></el-input>
+            </el-form-item>
+          </el-col>
 
-        <el-col :span="12">
-          <el-form-item prop="description" :label="$t('rule.resource_des')">
-            <el-input type="textarea" v-model="record.description"></el-input>
-          </el-form-item>
-        </el-col>
-
-        <div v-if="record.type">
           <el-col
             v-for="(item, index) in paramsList"
             :span="item.type === 'object' || item.type === 'array' || item.$attrs.type === 'textarea' ? 24 : 12"
@@ -99,7 +98,7 @@
               <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
             </el-form-item>
           </el-col>
-        </div>
+        </template>
       </el-row>
     </el-form>
 
