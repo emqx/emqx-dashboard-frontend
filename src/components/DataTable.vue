@@ -1,7 +1,7 @@
 <template>
   <el-table
     class="data-table"
-    style="margin-top: 0;"
+    style="margin-top: 1px;"
     border
     :class="{ disable: disabled, 'el-table--public': isRaw }"
     :data="tableData"

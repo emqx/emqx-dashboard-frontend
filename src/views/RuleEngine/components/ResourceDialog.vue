@@ -58,7 +58,7 @@
         <div v-if="record.type">
           <el-col
             v-for="(item, index) in paramsList"
-            :span="item.type === 'object' || item.type === 'mulobject' || item.$attrs.type === 'textarea' ? 24 : 12"
+            :span="item.type === 'object' || item.type === 'array' || item.$attrs.type === 'textarea' ? 24 : 12"
             :key="index"
           >
             <el-form-item :prop="`config.${item.prop}`">
@@ -73,8 +73,8 @@
 
               <data-table v-if="item.type === 'object'" v-model="record.config[item.key]"></data-table>
 
-              <template v-else-if="item.type === 'mulobject'">
-                <mul-object-editor v-model="record.config[item.key]" :data="item.mulObjectData"></mul-object-editor>
+              <template v-else-if="item.type === 'array'">
+                <array-editor v-model="record.config[item.key]" :data="item.oneObjOfArray"></array-editor>
               </template>
 
               <emq-select
@@ -116,14 +116,14 @@
 
 <script>
 import EmqSelect from '~/components/EmqSelect'
-import MulObjectEditor from '~/components/MulObjectEditor'
+import ArrayEditor from '~/components/ArrayEditor'
 import { params2Form, verifyID } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
 export default {
   name: 'resource-dialog',
-  components: { EmqSelect, MulObjectEditor },
+  components: { EmqSelect, ArrayEditor },
   inheritAttrs: false,
 
   props: {
