@@ -118,7 +118,7 @@ export default {
         },
       })
       // event changed
-      this.editor.onDidChangeModelContent((event) => {
+      this.editor.onDidChangeModelContent(event => {
         const value = this.editor.getValue()
         if (value !== this.value) {
           this.$emit('input', value, event)

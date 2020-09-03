@@ -44,7 +44,7 @@ import EmqSelect from './EmqSelect'
 export default {
   name: 'MulObjectEditor',
 
-  components: {EmqSelect},
+  components: { EmqSelect },
 
   model: {
     prop: 'value',
@@ -85,7 +85,7 @@ export default {
         for (let i = 0; i < this.value.length; i += 1) {
           this.addColumn()
         }
-        this.value.forEach((item) => {
+        this.value.forEach(item => {
           const index = this.value.indexOf(item)
           Object.assign(this.tableData[index], item)
         })
@@ -109,9 +109,9 @@ export default {
     },
     atInputChange() {
       const data = []
-      this.tableData.forEach((item) => {
+      this.tableData.forEach(item => {
         const tempConfig = {}
-        Object.keys(this.defaultConfig).forEach((key) => {
+        Object.keys(this.defaultConfig).forEach(key => {
           tempConfig[key] = item[key]
         })
         data.push(tempConfig)
@@ -119,12 +119,14 @@ export default {
       this.$emit('update', data)
     },
     deleteItem(row) {
-      this.tableData = this.tableData.filter(($) => $.key !== row.key)
+      this.tableData = this.tableData.filter($ => $.key !== row.key)
       this.atInputChange()
     },
     addColumn() {
       const row = { ...this.oneRow }
-      row.key = Math.random().toString(16).slice(3)
+      row.key = Math.random()
+        .toString(16)
+        .slice(3)
       this.tableData.push(row)
     },
   },

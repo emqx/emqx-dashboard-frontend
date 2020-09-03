@@ -187,7 +187,7 @@ export default {
   computed: {
     has() {
       const dict = []
-      this.operations.forEach((item) => {
+      this.operations.forEach(item => {
         dict[item] = true
       })
       return dict
@@ -216,7 +216,7 @@ export default {
         return 0
       }
       let sum = 0
-      list.forEach((item) => {
+      list.forEach(item => {
         const value = item[key] || 0
         sum += value
       })

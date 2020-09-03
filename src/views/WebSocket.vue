@@ -248,7 +248,9 @@ export default {
       password: '',
       keepalive: 60,
       clean: true,
-      clientId: `mqttjs_${Math.random().toString(16).substr(2, 10)}`,
+      clientId: `mqttjs_${Math.random()
+        .toString(16)
+        .substr(2, 10)}`,
       subQos: 0,
       publishQos: 0,
       publishMessage: '{ "msg": "Hello, World!" }',
@@ -321,7 +323,7 @@ export default {
           NProgress.done()
         })
         this.client.on('reconnect', this.handleReconnect)
-        this.client.on('error', (error) => {
+        this.client.on('error', error => {
           this.$message.error(error.toString() || this.$t('error.networkError'))
           // to prevent reconnect
           this.retryTimes = 0
@@ -393,7 +395,7 @@ export default {
         }
         // to mark which trigger the reconnect
         this.sending = true
-        this.client.publish(this.publishTopic, this.publishMessage, options, (error) => {
+        this.client.publish(this.publishTopic, this.publishMessage, options, error => {
           if (error) {
             NProgress.done()
             this.$message.error(error.toString())
@@ -417,7 +419,7 @@ export default {
         this.$message.error(this.$t('websocket.connectLeave'))
         return
       }
-      this.client.unsubscribe(topic, (error) => {
+      this.client.unsubscribe(topic, error => {
         if (error) {
           this.$message.error(`${this.$t('websocket.unsubscribeFailure')} ${error.toString()}!`)
           return
@@ -478,14 +480,14 @@ export default {
     loadConnect() {
       if (MQTTConnect.client && MQTTConnect.client.connected) {
         this.client = MQTTConnect.client
-        Object.keys(MQTTConnect.options).forEach((item) => {
+        Object.keys(MQTTConnect.options).forEach(item => {
           this[item] = MQTTConnect.options[item]
         })
       }
     },
     stashConnect() {
       MQTTConnect.client = this.client
-      Object.keys(MQTTConnect.options).forEach((item) => {
+      Object.keys(MQTTConnect.options).forEach(item => {
         MQTTConnect.options[item] = this[item]
       })
     },

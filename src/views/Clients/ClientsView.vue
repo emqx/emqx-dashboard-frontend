@@ -98,7 +98,7 @@ export default {
                 this.$router.push({ path: '/clients' })
               }, 500)
             })
-            .catch((error) => {
+            .catch(error => {
               this.$message.error(error || this.$t('error.networkError'))
             })
         })
@@ -106,7 +106,7 @@ export default {
     },
     loadBasicData() {
       this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`)
-        .then((res) => {
+        .then(res => {
           this.basicRecord = res.data[0]
           this.nodeName = this.basicRecord.node
           this.loadSubscription()
@@ -115,7 +115,7 @@ export default {
     },
     loadSubscription() {
       this.$httpGet(`/nodes/${this.nodeName}/subscriptions/${encodeURIComponent(this.clientId)}`)
-        .then((res) => {
+        .then(res => {
           this.subscriptionsData = res.data
         })
         .catch(() => {})

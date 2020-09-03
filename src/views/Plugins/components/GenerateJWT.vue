@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     save() {
-      this.$refs.record.validate((valid) => {
+      this.$refs.record.validate(valid => {
         if (!valid) {
           return
         }
@@ -181,7 +181,7 @@ export default {
     },
     getPayloadJWTData(template, data) {
       let payloadStr = JSON.stringify(template)
-      return data.split('\n').map((item) => {
+      return data.split('\n').map(item => {
         const [username = '', clientid = ''] = item.split(',')
         payloadStr = template.replace(/%u/g, username).replace(/%c/g, clientid)
         const payload = JSON.parse(payloadStr)
