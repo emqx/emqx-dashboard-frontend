@@ -104,13 +104,13 @@ export default {
         return
       }
       this.tableData = []
-      Object.entries(val).forEach((item) => {
+      Object.entries(val).forEach(item => {
         const [key, value] = item
         if (!key) {
           return
         }
         if (value && Array.isArray(value)) {
-          value.forEach((valueItem) => {
+          value.forEach(valueItem => {
             this.tableData.push({ key, value: valueItem })
           })
         } else {
@@ -140,7 +140,7 @@ export default {
     setObject() {
       const obj = {}
       const keyMap = {}
-      this.tableData.forEach((row) => {
+      this.tableData.forEach(row => {
         this.$set(row, '__has_error', false)
         const { key, value = '', __new } = row
         if (!key || __new) {
@@ -148,7 +148,7 @@ export default {
         }
         if (keyMap[key] && !this.allowedArray) {
           this.$set(row, '__has_error', true)
-          const lastRow = this.tableData.find(($) => key === $.key)
+          const lastRow = this.tableData.find($ => key === $.key)
           if (lastRow) {
             this.$set(lastRow, '__has_error', true)
           }

@@ -92,12 +92,12 @@ export default {
     init() {
       const currentNodeName = this.$store.state.nodeName
       this.$httpGet('/nodes')
-        .then((response) => {
+        .then(response => {
           this.nodeName = currentNodeName || response.data[0].node
           this.nodes = response.data
           this.setApiData()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -115,13 +115,19 @@ export default {
       document.documentElement.scrollTop = 0
       switch (props.method) {
         case 'GET':
-          this.$httpGet(props.target).then(this.handleSuccess).catch(this.handleError)
+          this.$httpGet(props.target)
+            .then(this.handleSuccess)
+            .catch(this.handleError)
           break
         case 'POST':
-          this.$httpPost(props.target).then(this.handleSuccess).catch(this.handleError)
+          this.$httpPost(props.target)
+            .then(this.handleSuccess)
+            .catch(this.handleError)
           break
         case 'PUT':
-          this.$httpPut(props.target).then(this.handleSuccess).catch(this.handleError)
+          this.$httpPut(props.target)
+            .then(this.handleSuccess)
+            .catch(this.handleError)
           break
         default:
           this.responseDate = null
@@ -135,13 +141,13 @@ export default {
       this.$message.error(error || this.$t('error.networkError'))
     },
     setApiData() {
-      this.$httpGet('/').then((response) => {
+      this.$httpGet('/').then(response => {
         this.tableData = []
         let data = JSON.stringify(response.data)
         data = data.replace(/:node/g, this.nodeName)
         data = JSON.parse(data)
-        data = data.filter((all) => HttpFitlerData.every((fitler) => fitler.path !== all.path))
-        Object.keys(data).forEach((item) => {
+        data = data.filter(all => HttpFitlerData.every(fitler => fitler.path !== all.path))
+        Object.keys(data).forEach(item => {
           this.tableData.push({
             method: data[item].method,
             path: `/api/v4${data[item].path.startsWith('/') ? data[item].path : `/${data[item].path}`}`,

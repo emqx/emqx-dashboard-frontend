@@ -193,9 +193,9 @@ export default {
     },
     loadData() {
       this.$httpGet('/topic-metrics')
-        .then((res) => {
+        .then(res => {
           const { data } = res
-          this.topics = data.map((item) => {
+          this.topics = data.map(item => {
             const { metrics } = item
             return {
               topic: item.topic,
@@ -206,7 +206,7 @@ export default {
           })
           this.modClosed = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.warning(this.$t(`error.${error.message}`))
           this.modClosed = true
         })
@@ -227,7 +227,7 @@ export default {
           this.loadData()
           this.modClosed = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -237,12 +237,12 @@ export default {
           this.loadData()
           this.hidePopover()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     handleAdd() {
-      this.$refs.record.validate((valid) => {
+      this.$refs.record.validate(valid => {
         if (!valid) {
           return
         }
@@ -268,7 +268,7 @@ export default {
     },
     loadDetail() {
       this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentTopic.topic)}`)
-        .then((res) => {
+        .then(res => {
           this.currentTopic = res.data
           this.loadData()
         })
@@ -277,7 +277,7 @@ export default {
     setLoadDetailInterval() {
       this.timer = setInterval(() => {
         this.$httpGet(`/topic-metrics/${encodeURIComponent(this.currentExpandRow.topic)}`)
-          .then((res) => {
+          .then(res => {
             this.currentTopic = res.data
           })
           .catch(() => {})
@@ -292,7 +292,7 @@ export default {
       this.currentExpandRow = row
       this.currentTopic = {}
       this.$httpGet(`/topic-metrics/${encodeURIComponent(row.topic)}`)
-        .then((res) => {
+        .then(res => {
           this.currentTopic = res.data
           this.$refs.crudTable.store.states.expandRows = expandedRows.length ? [row] : []
           this.loadData()
