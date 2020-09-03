@@ -248,7 +248,7 @@ export default {
           type: '',
           config: {},
           description: '',
-          id: '',
+          id: 'resource:' + Math.random().toString().slice(3, 9),
         }
         if (this.resourceType) {
           this.record.type = this.resourceType
