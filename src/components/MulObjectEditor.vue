@@ -1,5 +1,4 @@
 <template>
-  <!-- eslint-disable -->
   <el-table class="mul-object-editor" :data="tableData" :render-header="labelHeads" size="mini">
     <el-table-column :label="item" v-for="(item, index) in headers" :key="index">
       <template slot-scope="{ row }">
