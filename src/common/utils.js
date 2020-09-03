@@ -39,6 +39,9 @@ function getRule(item) {
     rule.required = true
     rule.message = `${title || key} ${dictMap.is_required[lang]}`
   }
+  if (type === 'mulobject' || 'boolean') {
+    return
+  }
   rule.type = type
   // format first
   // Can't create resources when deploy using docker cause host is service name, not IP if using url type rules
@@ -56,6 +59,7 @@ export function params2Form(params = {}, deepKey = '') {
   const rules = {
     [deepKey]: {},
   }
+  let mulObjectData = {}
 
   Object.entries(params).forEach((item) => {
     const [key, value] = item
@@ -65,7 +69,7 @@ export function params2Form(params = {}, deepKey = '') {
       return
     }
 
-    const { format, enum: enumValue, input, order } = value
+    const { format, enum: enumValue, input, order, schema } = value
     let { title, type, description, default: defaultValue } = value
     if (typeof title === 'object') {
       title = title[lang]
@@ -102,6 +106,14 @@ export function params2Form(params = {}, deepKey = '') {
     if (type === 'object' && !defaultValue) {
       defaultValue = {}
     }
+
+    if (type === 'mulobject') {
+      mulObjectData = params2Form(schema, 'config')
+      if (!defaultValue.length) {
+        defaultValue = []
+      }
+    }
+
     if (input === 'textarea') {
       $attrs.type = 'textarea'
       $attrs.rows = 5
@@ -115,6 +127,7 @@ export function params2Form(params = {}, deepKey = '') {
       $attrs,
       description: (description || '').replace(/\n/g, '<br/>'),
       order,
+      mulObjectData,
     })
     if (deepKey) {
       rules[deepKey][key] = getRule(item)
