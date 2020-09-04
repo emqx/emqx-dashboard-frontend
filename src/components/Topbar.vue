@@ -45,9 +45,9 @@ export default {
       let link = ''
       if (type === 'enterprise') {
         link =
-          this.lang === 'en'
-            ? 'https://www.emqx.io/downloads#enterprise'
-            : 'https://www.emqx.io/cn/downloads#enterprise'
+          this.lang === 'zh'
+            ? 'https://www.emqx.io/cn/downloads#enterprise'
+            : 'https://www.emqx.io/downloads#enterprise'
       } else if (type === 'github') {
         link = 'https://github.com/emqx/emqx'
       }
@@ -93,7 +93,6 @@ export default {
         }
       }
       .el-button {
-        width: 135px;
         border-radius: 40px;
         border-width: 2px;
         margin-left: 20px;

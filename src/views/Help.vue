@@ -81,22 +81,22 @@ export default {
 
   computed: {
     learnEnterprise() {
-      return this.lang === 'en'
-        ? 'https://www.emqx.io/products/enterprise'
-        : 'https://www.emqx.io/cn/products/enterprise'
+      return this.lang === 'zh'
+        ? 'https://www.emqx.io/cn/products/enterprise'
+        : 'https://www.emqx.io/products/enterprise'
     },
     freeTrial() {
-      return this.lang === 'en'
-        ? 'https://www.emqx.io/downloads#enterprise'
-        : 'https://www.emqx.io/cn/downloads#enterprise'
+      return this.lang === 'zh'
+        ? 'https://www.emqx.io/cn/downloads#enterprise'
+        : 'https://www.emqx.io/downloads#enterprise'
     },
     docsLink() {
-      return this.lang === 'en' ? 'https://docs.emqx.io/broker/v4/en' : 'https://docs.emqx.io/broker/v4/cn'
+      return this.lang === 'zh' ? 'https://docs.emqx.io/broker/v4/cn' : 'https://docs.emqx.io/broker/v4/en'
     },
     faqLink() {
-      return this.lang === 'en'
-        ? 'https://docs.emqx.io/tutorial/v4/en/faq/faq.html'
-        : 'https://docs.emqx.io/broker/latest/cn/faq/faq.html'
+      return this.lang === 'zh'
+        ? 'https://docs.emqx.io/broker/latest/cn/faq/faq.html'
+        : 'https://docs.emqx.io/tutorial/v4/en/faq/faq.html'
     },
   },
 

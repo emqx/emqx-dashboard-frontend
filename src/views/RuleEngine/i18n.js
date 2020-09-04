@@ -359,3 +359,179 @@ export const zh = {
   fallbackActionCreate: '设置发生动作执行错误时将执行的动作（可选）',
   fallbackActionTip: '动作执行错误时将执行的操作',
 }
+
+export const ja = {
+  viewStates: 'ステータス',
+  topic: 'トピック',
+  node: 'ノード',
+  all: '合計',
+  connectSuccess: '接続に成功しました',
+  speed_unit: '回/秒',
+  match_unit: '回',
+  match_rate: 'ヒット率',
+  success: '成功',
+  failed: '失敗',
+  params: 'パラメータ',
+  matched_line: '(一致/不一致)',
+  speed_line: '(カレント/最大/直近5分間)',
+  current: 'カレント',
+  max: '最大',
+  last5m: '直近5分間',
+  metrics: '基準',
+  speed: 'スピード(秒)',
+  speed_max: '最大ヒットスピード',
+  speed_last5m: '5分間の平均スピード',
+  rule_matched: 'ルール一致数',
+  rule_nomatch: 'ルール不一致数',
+  speed_current: 'ヒットスピード',
+  speed_max_1: '最大ヒットスピード',
+  speed_last5m_1: '5分間の平均スピード',
+  rule_matched_1: '一致',
+  rule_nomatch_1: '不一致',
+  enabled: '利用可能',
+  disabled: '利用不可',
+  running_statue: '稼働状況',
+  reconnect: '再接続',
+  connect: '接続',
+  stopped: '停止',
+  running: '稼働中',
+  no_test_output: '結果なし',
+  test_output: 'テスト出力',
+  test: 'テスト',
+  input_test_data: 'SQLテスト',
+  input_test_data_tips: 'SQLテスト用のカスタムシミュレーションデータ、テスト用のみ',
+  is_required: 'を入力してください',
+  conf_test: '接続テスト',
+  conf_test_success: '接続可能',
+  conf_test_fail: '接続不可能',
+  new_resource: '新規リソース',
+  action_type: 'アクションタイプ',
+  event_info: '利用可能なフィールド',
+  suggest_sql: 'SQLサンプル',
+  upgrade_tip: 'アップグレードヒント',
+  json_decode_upgrade: 'カレントバージョンでは自動的にpayloadのJSONにデコード機能が廃棄されました。payloadのフィールドを選択して、json_decodeでデコードしてください。例として、',
+  events: {
+    message_acked: 'メッセージの肯定応答',
+    message_dropped: 'メッセージドロップ',
+    message_publish: 'メッセージ送信',
+    message_delivered: 'メッセージ配信',
+    client_unsubscribe: 'クライアントアンサブスクリプション',
+    client_subscribe: 'サブスクリプション登録',
+    client_disconnected: '接続切れ',
+    client_connected: '接続済',
+  },
+  trigger_events: 'トリガーイベント',
+  id: 'ID',
+  exists: '重複キー',
+  data_key: 'キー',
+  data_value: '値',
+  rely_resource: '関連リソース',
+  actions_tips: 'ヒットルールメッセージの処理',
+  conditional_tips: 'SQLによってルール条件とデータ処理方法を定義する',
+  conditional: 'ルール条件',
+  rule_engine: 'ルールエンジン',
+  message_rule: 'ルール',
+  create: '新規',
+  rule_name: 'ルール名',
+  actions: '応答アクション',
+  action: 'アクション',
+  resource: 'リソース',
+  oper: 'オペレーション',
+  view: '詳細',
+  confirm: '確認',
+  delete: '削除',
+  rule_details: 'ルール詳細',
+  rule_desc: 'ルール詳細',
+  confirm_stop_delete: '停止して削除することを確認しますか？',
+  delete_success: '削除が成功しました',
+  action_exists: 'アクションがすでに存在されました',
+  cancel: 'キャンセル',
+  resource_mgmt: 'リソース管理',
+  name: '名前',
+  resource_type: 'リソースタイプ',
+  description: '備考',
+  create_success: '新規作成に成功しました',
+  type: 'タイプ',
+  value: '値',
+  edit: '編集',
+  add: '追加',
+  ruleEnabled: '有効になります',
+  ruleDisabled: '無効になります',
+
+  basic_info: '基本情報',
+  rule_name_required: 'ルール名を入力してください',
+  rule_sql: 'ルールSQL',
+  rule_id: 'ルールID',
+  rule_descr_placeholder: '例：Webhookへ転送されたメッセージ',
+  rule_sql_tips_title: 'SQLによる条件付きフィルタリングとデータ処理：',
+  sql_tips_html: `<p>EMQXは、メッセージが公開されてイベントがトリガーされると、ルールエンジンをトリガーします。トリガー条件を適応するルールは、自体のSQLを実行し、メッセージとイベントのコンテキスト情報をフィルター処理します。</p>
+  <p class="item">ルールエンジンは、応答アクションを利用して、特定のトピックのメッセージの処理結果をデータベースに格納し、HTTPサーバーに送信し、メッセージキューKafkaまたはRabbitMQに転送し、新しいトピックまたは別のBrokerクラスターに再発行できます。各ルールに対して、複数の応答アクションをデプロイ可能です。</p>
+
+  <p>1. トピックt/#'のメッセージを選択し、全てのフィールドを絞る：</p>
+
+  <div class="code">
+    <code>SELECT * FROM  "t/#"</code>
+  </div>
+
+  <p>2. トピック't/a'のメッセージを選択し、JSON形式のメッセージからフィールド"x"を絞る：</p>
+
+  <div class="code">
+    <code>SELECT payload.x as x FROM "t/a"</code>
+  </div>
+
+  <p class="item">ルールエンジンは$events/で始まる仮トピック（イベントトピック）を使用して、EMQX内部のイベントを処理します，内部イベントはもっと細かいメッセージ制御およびクライアントアクション処理機能を提供し、QoS 1 QoS 2メッセージ到着レコード、デバイスのオンラインおよびオフラインレコードなどのサービスで使用できます。<p>
+
+  <p>1. クライアント接続イベントを選択し、ユーザ名'emqx'の設備を接続して接続情報を取得する：</p>
+  <div class="code">
+    <code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = 'emqx'</code>
+  </div>
+
+  <p>ルールエンジンとSQLの詳細説明について、EMQXのドキュメントを参考してください。</p>`,
+  condition_screening: '条件付きフィルタリング',
+  topic_condition: 'トピック条件',
+  message_publish_topic: 'メッセージ公開トピック',
+  set_action: '応答アクション',
+  sql_required: 'SQLを入力してください',
+  actions_required: 'アクションを選択してください',
+  rule_action_tips_title: 'アクションを定義する',
+  action_tips_html: `
+<p>1. メッセージをメッセージサーバに再公開</p>
+<span>メッセージをbrokerに再公開、目標トピックが必要</span>
+<p>2. メッセージをWebhookへ転送する</p>
+<span>メッセージをHTTP Webhookへ転送する</span>`,
+
+  resource_title: 'リソース',
+  resource_des: 'リソース詳細',
+  resource_id: 'リソースID',
+  id_len_tip: '最大64ビットまで',
+  id_char_tip: '入力可能文字：半角英数字・「_（アンダースコア）」・「:（コロン）」のみ',
+  type_required: 'リソースタイプを選択してください',
+  resource_details: 'リソース詳細',
+  config_info: '構成情報',
+
+  events_rule: 'イベントルール',
+  create_rule: '新規ルール',
+  events_type: 'イベントタイプ',
+
+  clientid_doc: 'カレントMQTTクライアントID',
+  username_doc: 'カレントMQTTユーザ名',
+  event_doc: 'トリガーイベント名',
+  id_doc: 'MQTTメッセージid',
+  payload_doc: 'JSONフォーマットの場合、payloadが自動的にデコードされます。 SQL文中にpayload.xでオブジェクト情報を取得することができます',
+  peerhost_doc: 'クライアントアドレス',
+  qos_doc: 'QoS 0、1、2 のメッセージ中の列挙型',
+  timestamp_doc: 'タイムスタンプ（ミリ秒）',
+  topic_doc:'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
+  node_doc: 'トリガ・イベントのノード名',
+  message_delivered: 'メッセージ配信',
+  message_acked: 'メッセージの肯定応答',
+  message_dropped: 'メッセージドロップ',
+  client_connected: '接続済',
+  client_disconnected: '未接続',
+  session_subscribed: 'セッションサブスクライブ',
+  session_unsubscribed: 'セッションアンサブスクライブ',
+  parse_confirm: '互換性がないの古いバージョンのSQL文が見つかりました。新しいバージョンに変更しますか？',
+  fallbackAction: 'フォールバックアクション',
+  fallbackActionCreate: 'アクション実行エラーが発生したとき、エラー処理の動作を設定します（任意）',
+  fallbackActionTip: 'アクション実行エラーが発生したときの動作',
+}

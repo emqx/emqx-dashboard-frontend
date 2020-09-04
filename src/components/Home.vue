@@ -26,7 +26,7 @@ export default {
   box-sizing: border-box;
   min-height: 100%;
   .home-content {
-    margin: 0 32px 0 212px;
+    margin: 0 32px 0 232px;
     padding: 60px 0 20px 0;
   }
 }

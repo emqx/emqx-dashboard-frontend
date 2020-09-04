@@ -19,6 +19,7 @@
               <el-radio-group v-model="options.language">
                 <el-radio label="en">EN</el-radio>
                 <el-radio label="zh">中文</el-radio>
+                <el-radio label="ja">日本語</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -76,7 +77,7 @@ export default {
       this.options.themes = currentThemes
       this.defaultThemes = currentThemes
       this.options.language = window.localStorage.getItem('language') || 'en'
-      this.options.language = this.options.language === 'zh' ? 'zh' : 'en'
+      this.options.language = ['zh', 'en', 'ja'].includes(this.options.language) ? this.options.language : 'en'
       this.defaultLanguage = this.options.language
       this.defaultConfig = JSON.stringify(this.options)
     },
@@ -114,9 +115,6 @@ export default {
 .settings-view {
   .el-card {
     margin-top: 24px;
-  }
-  .el-button {
-    width: 80px;
   }
   .el-switch {
     &.is-checked {
