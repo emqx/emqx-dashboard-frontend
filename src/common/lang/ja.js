@@ -1,7 +1,7 @@
-import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import jaLocale from 'element-ui/lib/locale/lang/ja'
 
 export default {
-  ...zhLocale,
+  ...jaLocale,
   // グローバル
   select: {
     cluster: '全てのノード',
