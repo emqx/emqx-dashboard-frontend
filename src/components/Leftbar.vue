@@ -261,7 +261,7 @@ export default {
     position: fixed;
     top: 0;
     z-index: 1003;
-    width: 180px;
+    width: 200px;
     border-bottom: 1px solid #2b2c30;
     color: #fff !important;
     background-color: #242327;
@@ -338,7 +338,7 @@ export default {
     background-color: #8f8e8e;
     color: #929299 !important;
     border-radius: 4px;
-    width: 180px;
+    width: 185px;
     margin-left: 7px;
     margin-bottom: 4px;
     margin-top: 4px;
