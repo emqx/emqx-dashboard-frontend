@@ -313,7 +313,7 @@ export default {
   }
 
   .el-menu {
-    width: 180px;
+    width: 200px;
     min-height: 100%;
     border-right: none !important;
   }
