@@ -28,7 +28,7 @@
         <clients-basic :record="basicRecord"> </clients-basic>
       </el-tab-pane>
       <el-tab-pane :label="$t('clients.subsInfo')" name="subscription">
-        <clients-subscriptions :clientId="clientId" :tableData="subscriptionsData" :reload="loadSubscription">
+        <clients-subscriptions :clientId="clientId" :tableData="subscriptionsData" :reload="loadSubscription" :mountpoint="mountpoint">
         </clients-subscriptions>
       </el-tab-pane>
     </el-tabs>
@@ -53,6 +53,7 @@ export default {
       basicRecord: {},
       subscriptionsData: [],
       nodeName: '',
+      mountpoint: '',
     }
   },
 
@@ -109,6 +110,9 @@ export default {
         .then(res => {
           this.basicRecord = res.data[0]
           this.nodeName = this.basicRecord.node
+          if (res.data[0].mountpoint) {
+            this.mountpoint = res.data[0].mountpoint
+          }
           this.loadSubscription()
         })
         .catch(() => {})
