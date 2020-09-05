@@ -87,6 +87,10 @@ export default {
       type: Function,
       default: () => {},
     },
+    mountpoint: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
@@ -117,8 +121,9 @@ export default {
         })
         .then(() => {
           const { topic, clientid } = row
+          let topicVal = this.mountpoint ? topic.replace(this.mountpoint, '') : topic
           const body = {
-            topic,
+            topic: topicVal,
             clientid,
           }
           this.$httpPost('/mqtt/unsubscribe', body)
