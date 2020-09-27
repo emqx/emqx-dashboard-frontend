@@ -3,7 +3,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
 
-import router from '../router'
 import store from '../store'
 import lang from '../common/lang'
 
@@ -14,28 +13,60 @@ const { httpCode } = lang[i18nLanguage] || lang.en
 
 NProgress.configure({ showSpinner: false })
 
-Object.assign(Axios.defaults, {
+let timer = 0
+
+const authInstance = Axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
   },
-  baseURL: '/api/v4',
+  baseURL: '/api',
   timeout: 10 * 1000,
 })
-
-let timer = 0
-
-// Add auth headers
-Axios.interceptors.request.use(
-  config => {
-    if (store.state.user.username) {
-      config.auth = {
-        username: store.state.user.username,
-        password: store.state.user.password,
+const getRefreshToken = async () => {
+  const user = JSON.parse(localStorage.getItem('user')) || {}
+  if (user.token && user.refreshToken) {
+    const { username, userId, remember, ...tokenBody } = user
+    try {
+      const res = await authInstance.post('/token', {
+        ...tokenBody
+      })
+      const refreshUser = {
+        username,
+        userId,
+        remember,
+        token: res.data.token,
+        refreshToken: tokenBody.refreshToken,
       }
-    } else {
-      router.push({ path: '/login', query: { to: router.fullPath } })
+      localStorage.setItem('user', JSON.stringify(refreshUser))
+      return refreshUser.token
+    } catch (error) {
+      setTimeout(() => {
+        window.location.replace('/web/login?auth=expired')
+      }, 500)
+      return Promise.reject(error)
     }
+  }
+  return false
+}
+
+const currentNode = JSON.parse(localStorage.getItem('currentNode')) || {}
+const nodeID = currentNode.id
+const baseURL = `/api/nano/${nodeID}`
+const baseInstance = Axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',
+  },
+  baseURL,
+  timeout: 10 * 1000,
+})
+// Add auth headers
+baseInstance.interceptors.request.use(
+  config => {
+    const user = JSON.parse(localStorage.getItem('user')) || {}
+    config.headers.Authorization = user.token
+    config.params = config.params || {}
     NProgress.start()
     timer = setTimeout(() => {
       store.dispatch('LOADING', true)
@@ -48,37 +79,44 @@ Axios.interceptors.request.use(
   },
 )
 
-function handleErrorMessage(error) {
+function handleModuleErrorMessage(error) {
   if (error.message === 'module_not_loaded') {
     return
   }
   Message.error(error.message)
 }
-
-function handleError(error) {
+async function handleError(error) {
   console.error(error)
   NProgress.done()
   clearTimeout(timer)
   store.dispatch('LOADING', false)
   const status = error.response && error.response.status
+  const { data } = error.response
+  const originalRequest = error.config
   if (error.response && error.response.data.message) {
     error.message = error.response.data.message
   }
-  if (status === 401) {
-    store.dispatch('USER_LOGIN', { isLogOut: true })
-    router.push({ path: '/login', query: { to: router.fullPath } })
+  const isExpired = status === 401 && data.indexOf('token is expired by') !== -1 && !originalRequest._retry
+  if (isExpired) {
+    originalRequest._retry = true
+    await getRefreshToken()
+    originalRequest.url = originalRequest.url.replace(baseURL, '')
+    return baseInstance(originalRequest)
   } else if (status === 404) {
     error.message = 'URL Not Found'
   } else {
-    handleErrorMessage(error)
+    handleModuleErrorMessage(error)
   }
   return Promise.reject(error.message)
 }
 
 // Response interceptors
-Axios.interceptors.response.use(response => {
+baseInstance.interceptors.response.use(response => {
   let res = {}
   let error = ''
+  if (response.data.token) {
+    return response
+  }
   if (typeof response.data === 'object') {
     const { status } = response
     const { code, meta, message } = response.data
@@ -104,4 +142,4 @@ Axios.interceptors.response.use(response => {
   return res
 }, handleError)
 
-export default Axios
+export default baseInstance

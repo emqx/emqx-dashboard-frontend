@@ -8,12 +8,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('~/views/Login'),
-    meta: { requiresAuth: false },
-  },
-  {
     path: '/',
     component: () => import('~/components/Home'),
     children: [
@@ -108,11 +102,6 @@ const routes = [
         component: () => import('~/views/Applications'),
       },
       {
-        path: '/users',
-        name: 'users',
-        component: () => import('~/views/Users'),
-      },
-      {
         path: '/settings',
         name: 'settings',
         component: () => import('~/views/Settings'),
@@ -137,12 +126,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const { requiresAuth = true } = to.meta
+  const user = JSON.parse(localStorage.getItem('user')) || {}
   if (requiresAuth) {
-    if (!store.state.user.password) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath },
-      })
+    if (!user.token) {
+      window.location.replace('/web/login?auth=failed')
     } else {
       if (newFeaturesMenu.indexOf(to.name) > -1) {
         store.dispatch('CANCEL_FEAT_ON_LEFTBAR', to.name)

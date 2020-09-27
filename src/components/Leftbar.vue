@@ -42,13 +42,6 @@
           </template>
         </el-menu-item>
       </template>
-
-      <div class="bar-footer">
-        <span>{{ $store.state.user.username }}</span>
-        <a href="javascript:;" @click="logout">
-          <img src="../assets/exit.png" />
-        </a>
-      </div>
     </el-menu>
   </div>
 </template>
@@ -172,11 +165,6 @@ export default {
               index: '/applications',
             },
             {
-              id: 'users',
-              title: this.$t('leftbar.users'),
-              index: '/users',
-            },
-            {
               id: 'listeners',
               title: this.$t('leftbar.listeners'),
               index: '/listeners',
@@ -207,10 +195,6 @@ export default {
   },
   methods: {
     ...mapActions(['USER_LOGIN']),
-    logout() {
-      this.USER_LOGIN({ isLogOut: true })
-      this.$router.push({ path: '/login' })
-    },
     setNewFeatOnleftbar() {
       this.menus.forEach(menu => {
         const { data } = this.showFeatOnLeftbar

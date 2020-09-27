@@ -14,7 +14,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item :label="$t('settings.language')">
               <el-radio-group v-model="options.language">
                 <el-radio label="en">EN</el-radio>
@@ -22,7 +22,7 @@
                 <el-radio label="ja">日本語</el-radio>
               </el-radio-group>
             </el-form-item>
-          </el-col>
+          </el-col> -->
 
           <el-col class="operation-area" :span="24">
             <el-form-item>
