@@ -8,8 +8,14 @@
             <el-form-item :label="$t('clients.node')" prop="node">
               <span>{{ record.node }}</span>
             </el-form-item>
-            <el-form-item :label="$t('clients.clientId')" prop="clientid">
-              <span>{{ record.clientid }}</span>
+            <el-form-item v-if="record.clientid" :label="$t('clients.clientId')" prop="clientid">
+              <el-popover
+                v-if="record.clientid.length > 60"
+                placement="top-start"
+                trigger="hover"
+                :content="record.clientid">
+                <span slot="reference">{{ interceptString(record.clientid, 60) }}</span>
+              </el-popover>
             </el-form-item>
             <el-form-item :label="$t('clients.username')" prop="username">
               <span>{{ record.username }}</span>
@@ -138,6 +144,8 @@
 </template>
 
 <script>
+import { intercept } from '../../../common/utils'
+
 export default {
   name: 'clients-basic',
 
@@ -163,6 +171,12 @@ export default {
         5: 'v5.0',
       },
     }
+  },
+
+  methods: {
+    interceptString(text, len) {
+      return intercept(text, len)
+    },
   },
 }
 </script>
