@@ -13,13 +13,7 @@
 
     <div class="client-oper">
       <span :class="[basicRecord.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
-      <el-popover
-        v-if="clientId.length > 90"
-        placement="top-start"
-        trigger="hover"
-        :content="clientId">
-        <span slot="reference">{{ interceptString(clientId, 90) }}</span>
-      </el-popover>
+      <span>{{ clientId }}</span>
       <el-button
         :class="[basicRecord.connected ? 'connected' : 'disconnected', 'connect-btn']"
         size="mini"
@@ -44,7 +38,6 @@
 <script>
 import ClientsBasic from './components/ClientsBasic'
 import ClientsSubscriptions from './components/ClientsSubscriptions'
-import { intercept } from '../../common/utils'
 
 export default {
   name: 'clients-view',
@@ -85,9 +78,6 @@ export default {
   },
 
   methods: {
-    interceptString(text, len) {
-      return intercept(text, len)
-    },
     handleCommand(command) {
       this[command]()
     },
