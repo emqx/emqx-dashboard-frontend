@@ -266,4 +266,11 @@ export const verifyID = (rule, value, callback) => {
   }
 }
 
+export const intercept = (text, len) => {
+  if (text && text.length > len) {
+    return `${text.substring(0, len)}...`
+  }
+  return text
+}
+
 export default {}
