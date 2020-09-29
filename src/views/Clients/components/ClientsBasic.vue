@@ -16,6 +16,7 @@
                 :content="record.clientid">
                 <span slot="reference">{{ interceptString(record.clientid, 60) }}</span>
               </el-popover>
+              <span v-else>{{ record.clientid }}</span>
             </el-form-item>
             <el-form-item :label="$t('clients.username')" prop="username">
               <span>{{ record.username }}</span>

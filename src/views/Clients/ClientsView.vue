@@ -20,6 +20,7 @@
         :content="clientId">
         <span slot="reference">{{ interceptString(clientId, 90) }}</span>
       </el-popover>
+      <span v-else>{{ clientId }}</span>
       <el-button
         :class="[basicRecord.connected ? 'connected' : 'disconnected', 'connect-btn']"
         size="mini"
