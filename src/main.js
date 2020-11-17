@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { sync } from 'vuex-router-sync'
 import VueI18n from 'vue-i18n'
-import ElelentUI from 'element-ui'
+import ElementUI from 'element-ui'
 import ElementLocale from 'element-ui/lib/locale'
 
 import App from './App'
@@ -15,7 +15,7 @@ import filter from './common/filter'
 
 Vue.config.productionTip = false
 Vue.use(VueI18n)
-Vue.use(ElelentUI)
+Vue.use(ElementUI)
 Vue.prototype.$ELEMENT = { size: 'medium' }
 
 Vue.use(Mount)
