@@ -162,8 +162,8 @@ export default {
   computed: {
     jwtDoc() {
       return this.lang === 'zh'
-        ? 'https://docs.emqx.io/broker/latest/cn/advanced/auth-jwt.html'
-        : 'https://docs.emqx.io/broker/latest/en/advanced/auth-jwt.html'
+        ? 'https://docs.emqx.cn/cn/broker/latest/advanced/auth-jwt.html'
+        : 'https://docs.emqx.io/en/broker/latest/advanced/auth-jwt.html'
     },
   },
   methods: {
