@@ -50,9 +50,6 @@ export default {
   },
 
   watch: {
-    value(val) {
-      console.log(val)
-    },
     sourceValue(val) {
       let data = val
       if (!val) {
