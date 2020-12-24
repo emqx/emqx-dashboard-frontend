@@ -17,7 +17,7 @@
               class="el-select--public"
               popper-class="el-select--public"
               style="width: 100%;"
-              :disabled="!!resourceType"
+              :disabled="!!resourceType || oper === 'edit'"
               @change="handleTypeChange"
             >
               <div v-for="(item, index) in resourceTypes" :key="index">
@@ -34,9 +34,7 @@
 
         <el-col :span="12">
           <el-form-item>
-            <template slot="label"
-              >&nbsp;</template
-            >
+            <template slot="label">&nbsp;</template>
             <el-button type="primary" @click="handleCreate(false)">
               {{ $t('rule.conf_test') }}
             </el-button>
@@ -46,12 +44,12 @@
         <template v-if="record.type">
           <el-col :span="12">
             <el-form-item prop="id" :label="$t('rule.resource_id')">
-              <el-input v-model="record.id"></el-input>
+              <el-input v-model="record.id" :disabled="oper === 'edit'"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item prop="description" :label="$t('rule.resource_des')">
-              <el-input type="textarea" v-model="record.description"></el-input>
+              <el-input v-model="record.description"></el-input>
             </el-form-item>
           </el-col>
 
@@ -107,7 +105,7 @@
         {{ $t('rule.cancel') }}
       </el-button>
       <el-button class="confirm-btn" type="success" @click="handleCreate">
-        {{ $t('rule.create') }}
+        {{ oper === 'edit' ? $t('rule.confirm') : $t('rule.create') }}
       </el-button>
     </div>
   </el-dialog>
@@ -136,6 +134,14 @@ export default {
     enableItem: {
       type: Array,
       default: () => [],
+    },
+    oper: {
+      type: String,
+      default: 'add',
+    },
+    editItem: {
+      type: Object,
+      default: () => {},
     },
   },
 
@@ -199,6 +205,10 @@ export default {
           }
         })
         const url = isCreate ? '/resources' : '/resources?test=true'
+        if (this.oper === 'edit') {
+          this.handleEdit(url, this.record)
+          return
+        }
         this.$httpPost(url, this.record)
           .then(res => {
             if (!isCreate) {
@@ -233,10 +243,14 @@ export default {
         this.$set(this.record, 'config', {})
       }
       this.$set(this.record, 'config', {})
-      // 设置默认值
-      this.paramsList.forEach(item => {
-        this.$set(this.record.config, item.key, item.defaultValue)
-      })
+      if (this.oper === 'edit') {
+        this.assignValuesToRecord()
+      } else {
+        // 设置默认值
+        this.paramsList.forEach((item) => {
+          this.$set(this.record.config, item.key, item.defaultValue)
+        })
+      }
       setTimeout(() => {
         this.$refs.record.clearValidate()
       }, 30)
@@ -249,7 +263,12 @@ export default {
           description: '',
           id: 'resource:' + Math.random().toString().slice(3, 9),
         }
-        if (this.resourceType) {
+        // edit
+        if (this.oper === 'edit') {
+          const { type, id } = this.editItem
+          this.record.type = type
+          this.record.id = id
+        } else if (this.resourceType) {
           this.record.type = this.resourceType
         }
         this.resourceTypes = response.data.map(item => {
@@ -261,6 +280,24 @@ export default {
           this.$refs.record.clearValidate()
         }, 30)
       })
+    },
+    assignValuesToRecord() {
+      const { config, description } = this.editItem
+      this.record.description = description
+      Object.keys(config).forEach((key) => {
+        const value = config[key]
+        this.$set(this.record.config, key, value)
+      })
+    },
+    handleEdit(url, record) {
+      const { id } = this.editItem
+      this.$httpPut(`${url}/${id}`, record)
+        .then((res) => {
+          this.$message.success(this.$t('rule.edit_success'))
+          this.dialogVisible = false
+          this.$emit('confirm', res.data)
+        })
+        .catch(() => {})
     },
   },
 }
