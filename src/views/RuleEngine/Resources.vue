@@ -11,7 +11,7 @@
         size="medium"
         style="float: right;"
         :disable="$store.state.loading"
-        @click="handleOperation"
+        @click="handleOperation('add')"
       >
         {{ $t('rule.create') }}
       </el-button>
@@ -56,8 +56,11 @@
       </el-table-column>
       <el-table-column prop="description" :label="$t('rule.resource_des')"></el-table-column>
       <el-table-column prop="type" :label="$t('rule.resource_type')"></el-table-column>
-      <el-table-column :label="$t('rule.oper')">
+      <el-table-column min-width="120px" :label="$t('rule.oper')">
         <template slot-scope="{ row, $index }">
+          <el-button plain type="success" size="mini" @click="handleOperation('edit', row)">
+            {{ $t('rule.edit') }}
+          </el-button>
           <el-button plain type="success" size="mini" @click="viewResource(row)">
             {{ $t('rule.view') }}
           </el-button>
@@ -71,7 +74,14 @@
       </el-table-column>
     </el-table>
 
-    <resource-dialog ref="resourceDialog" :visible.sync="dialogVisible" @confirm="loadData"> </resource-dialog>
+    <resource-dialog
+      ref="resourceDialog"
+      :visible.sync="dialogVisible"
+      :oper="oper"
+      :editItem="resourceToEdit"
+      @confirm="loadData"
+    >
+    </resource-dialog>
 
     <el-dialog :title="$t('rule.resource_details')" :visible.sync="viewDialogVisible">
       <div class="dialog-preview">
@@ -152,6 +162,8 @@ export default {
       res: {},
       reloadLoading: false,
       currentResource: '',
+      oper: 'add',
+      resourceToEdit: {},
     }
   },
 
@@ -202,8 +214,10 @@ export default {
       this.res = { ...row }
       this.viewDialogVisible = true
     },
-    handleOperation() {
+    handleOperation(oper, row) {
       this.dialogVisible = true
+      this.oper = oper
+      this.resourceToEdit = { ...row }
     },
     loadData() {
       this.$httpGet('/resources').then(response => {
