@@ -290,14 +290,24 @@ export default {
       })
     },
     handleEdit(url, record) {
-      const { id } = this.editItem
-      this.$httpPut(`${url}/${id}`, record)
-        .then((res) => {
-          this.$message.success(this.$t('rule.edit_success'))
-          this.dialogVisible = false
-          this.$emit('confirm', res.data)
+      this.$confirm(this.$t('rule.confirm_edit_resource'), 'Notice', {
+        confirmButtonClass: 'confirm-btn',
+        confirmButtonText: this.$t('oper.confirm'),
+        cancelButtonClass: 'cache-btn el-button--text',
+        cancelButtonText: this.$t('oper.cancel'),
+        type: 'warning',
+      })
+        .then(() => {
+          const { id } = this.editItem
+          this.$httpPut(`${url}/${id}`, record)
+            .then((res) => {
+              this.$message.success(this.$t('rule.edit_success'))
+              this.dialogVisible = false
+              this.$emit('confirm', res.data)
+            })
+            .catch(() => {})
         })
-        .catch(() => {})
+        .catch()
     },
   },
 }
