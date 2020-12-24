@@ -227,8 +227,8 @@
           <a
             :href="
               lang === 'zh'
-                ? 'https://docs.emqx.io/broker/latest/cn/advanced/http-api.html'
-                : 'https://docs.emqx.io/broker/latest/en/advanced/http-api.html'
+                ? 'https://docs.emqx.cn/cn/broker/latest/advanced/http-api.html'
+                : 'https://docs.emqx.io/en/broker/latest/advanced/http-api.html'
             "
             target="_blank"
           >
