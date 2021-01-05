@@ -260,7 +260,7 @@ export default {
     handleTest() {
       this.testOutPut = ''
       this.needCheckSql = true
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           if (this.inTest && !this.record.id) {
             this.$refs.record.clearValidate('id')
@@ -279,7 +279,7 @@ export default {
         } catch (e) {
           console.log(data.ctx.payload)
         }
-        this.$httpPost('/rules?test=true', data).then(res => {
+        this.$httpPost('/rules?test=true', data).then((res) => {
           const { data } = res
           this.testOutPut = JSON.stringify(data, null, 2)
         })
@@ -297,7 +297,7 @@ export default {
       ]
       let values = null
       let value = ''
-      events.forEach(e => {
+      events.forEach((e) => {
         const [regType, regEvent] = e.split('/')
         const reg = new RegExp(`\\$${regType}\\/${regEvent}`, 'gim')
         if (sql.match(reg)) {
@@ -312,7 +312,7 @@ export default {
       if (value === this.selectedOption.event) {
         return
       }
-      this.selectedOption = this.eventsList.find($ => $.event === value) || { columns: {}, test_columns: {} }
+      this.selectedOption = this.eventsList.find(($) => $.event === value) || { columns: {}, test_columns: {} }
       this.sqlPrimaryKey = this.selectedOption.columns
       this.initTestFormItem()
     },
@@ -322,7 +322,7 @@ export default {
       const testFieldRules = {}
 
       const { test_columns: testColumns } = this.selectedOption
-      Object.keys(testColumns).forEach(k => {
+      Object.keys(testColumns).forEach((k) => {
         let value = testColumns[k]
 
         if (typeof value === 'object') {
@@ -359,7 +359,7 @@ export default {
     },
     handleCreate() {
       if (this.$refs.record) {
-        this.$refs.record.validate(valid => {
+        this.$refs.record.validate((valid) => {
           if (!valid) {
             return
           }
@@ -390,7 +390,7 @@ export default {
       }
     },
     loadRule(ruleID) {
-      this.$httpGet(`/rules/${ruleID}`).then(res => {
+      this.$httpGet(`/rules/${ruleID}`).then((res) => {
         this.record = res.data
       })
     },
