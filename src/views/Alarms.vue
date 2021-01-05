@@ -126,11 +126,11 @@ export default {
     loadAlarmData(type, tableData) {
       this.loading = true
       this.$httpGet(`/alarms/${type}`)
-        .then(response => {
+        .then((response) => {
           const res = response.data
           const data = []
-          res.forEach(item => {
-            item.alarms.forEach(alarm => {
+          res.forEach((item) => {
+            item.alarms.forEach((alarm) => {
               alarm.node = item.node
               data.push(alarm)
             })
@@ -138,7 +138,7 @@ export default {
           this[tableData] = data
           this.loading = false
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false
           this.$message.error(error || this.$t('error.networkError'))
         })
@@ -162,7 +162,7 @@ export default {
           self.$refs[`popover-${index}`].doClose()
           this.loadData()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -177,7 +177,7 @@ export default {
             .then(() => {
               this.loadData()
             })
-            .catch(error => {
+            .catch((error) => {
               this.$message.error(error || this.$t('error.networkError'))
             })
         })

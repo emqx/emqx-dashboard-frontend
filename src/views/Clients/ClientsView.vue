@@ -13,11 +13,7 @@
 
     <div class="client-oper">
       <span :class="[basicRecord.connected ? 'connected' : 'disconnected', 'status-circle']"></span>
-      <el-popover
-        v-if="clientId.length > 90"
-        placement="top-start"
-        trigger="hover"
-        :content="clientId">
+      <el-popover v-if="clientId.length > 90" placement="top-start" trigger="hover" :content="clientId">
         <span slot="reference">{{ interceptString(clientId, 90) }}</span>
       </el-popover>
       <span v-else>{{ clientId }}</span>
@@ -35,7 +31,12 @@
         <clients-basic :record="basicRecord"> </clients-basic>
       </el-tab-pane>
       <el-tab-pane :label="$t('clients.subsInfo')" name="subscription">
-        <clients-subscriptions :clientId="clientId" :tableData="subscriptionsData" :reload="loadSubscription" :mountpoint="mountpoint">
+        <clients-subscriptions
+          :clientId="clientId"
+          :tableData="subscriptionsData"
+          :reload="loadSubscription"
+          :mountpoint="mountpoint"
+        >
         </clients-subscriptions>
       </el-tab-pane>
     </el-tabs>
@@ -110,7 +111,7 @@ export default {
                 this.$router.push({ path: '/clients' })
               }, 500)
             })
-            .catch(error => {
+            .catch((error) => {
               this.$message.error(error || this.$t('error.networkError'))
             })
         })
@@ -118,7 +119,7 @@ export default {
     },
     loadBasicData() {
       this.$httpGet(`/clients/${encodeURIComponent(this.clientId)}`)
-        .then(res => {
+        .then((res) => {
           this.basicRecord = res.data[0]
           this.nodeName = this.basicRecord.node
           if (res.data[0].mountpoint) {
@@ -130,7 +131,7 @@ export default {
     },
     loadSubscription() {
       this.$httpGet(`/nodes/${this.nodeName}/subscriptions/${encodeURIComponent(this.clientId)}`)
-        .then(res => {
+        .then((res) => {
           this.subscriptionsData = res.data
         })
         .catch(() => {})
