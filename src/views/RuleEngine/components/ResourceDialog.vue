@@ -179,7 +179,7 @@ export default {
 
   methods: {
     clearTabIndex() {
-      document.querySelectorAll('.el-icon-question').forEach(el => {
+      document.querySelectorAll('.el-icon-question').forEach((el) => {
         el.setAttribute('tabindex', '-1')
       })
     },
@@ -189,13 +189,13 @@ export default {
       }
     },
     handleCreate(isCreate = true) {
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           return
         }
         const { config } = this.record
         // String to Boolean
-        Object.keys(config).forEach(label => {
+        Object.keys(config).forEach((label) => {
           const value = config[label]
           if (value === 'true') {
             this.record.config[label] = true
@@ -210,7 +210,7 @@ export default {
           return
         }
         this.$httpPost(url, this.record)
-          .then(res => {
+          .then((res) => {
             if (!isCreate) {
               this.$message.success(this.$t('rule.conf_test_success'))
               return
@@ -225,7 +225,7 @@ export default {
     handleTypeChange(val) {
       this.paramsList = []
       this.resourceRules = {}
-      const resourceType = this.resourceTypes.find($ => $.name === val)
+      const resourceType = this.resourceTypes.find(($) => $.name === val)
       if (!resourceType) {
         return
       }
@@ -256,7 +256,7 @@ export default {
       }, 30)
     },
     loadResourceTypes() {
-      this.$httpGet('/resource_types').then(response => {
+      this.$httpGet('/resource_types').then((response) => {
         this.record = {
           type: '',
           config: {},
@@ -271,7 +271,7 @@ export default {
         } else if (this.resourceType) {
           this.record.type = this.resourceType
         }
-        this.resourceTypes = response.data.map(item => {
+        this.resourceTypes = response.data.map((item) => {
           item.titleLabel = typeof item.title === 'object' ? item.title[lang] : item.title
           return item
         })

@@ -117,17 +117,17 @@ export default {
   methods: {
     loadData() {
       this.$httpGet('/auth_username')
-        .then(response => {
-          this.tableData = response.data.map(item => ({
+        .then((response) => {
+          this.tableData = response.data.map((item) => ({
             username: item,
           }))
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     save() {
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           return
         }
@@ -139,7 +139,7 @@ export default {
             this.record = {}
             this.$refs.record.resetFields()
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message.error(error || this.$t('error.networkError'))
           })
       })
@@ -151,24 +151,24 @@ export default {
           // Close popover
           self.$refs[`popover-${index}`].doClose()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     showEdit(row) {
       this.editVisible = true
       this.$httpGet(`/auth_username/${row.username}`)
-        .then(response => {
+        .then((response) => {
           this.editRecord = response.data
           this.editRecord.password = ''
           this.$refs.editRecord.resetFields()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     handleEdit() {
-      this.$refs.editRecord.validate(valid => {
+      this.$refs.editRecord.validate((valid) => {
         if (!valid) {
           return
         }
@@ -183,7 +183,7 @@ export default {
             this.editVisible = false
             this.$refs.editRecord.resetFields()
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message.error(error || this.$t('error.networkError'))
           })
       })

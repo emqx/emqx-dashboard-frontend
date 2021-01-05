@@ -141,9 +141,7 @@
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column prop="ip_address" :label="$t('clients.ipAddr')" min-width="140px" show-overflow-tooltip>
-        <template slot-scope="{ row }">
-          {{ row.ip_address }}:{{ row.port }}
-        </template>
+        <template slot-scope="{ row }"> {{ row.ip_address }}:{{ row.port }} </template>
       </el-table-column>
       <el-table-column prop="keepalive" min-width="100px" :label="$t('clients.keepalive')"></el-table-column>
       <el-table-column prop="expiry_interval" min-width="150px" :label="$t('clients.expiryInterval')"></el-table-column>
@@ -307,13 +305,13 @@ export default {
       this.searchValue = ''
       // set default of select
       this.$httpGet('/nodes')
-        .then(response => {
+        .then((response) => {
           const currentNode = this.$store.state.nodeName || response.data[0].node
           this.nodeName = this.cluster ? 'cluster' : currentNode
           this.nodes = response.data
           this.loadChild()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -345,12 +343,12 @@ export default {
         }
       }
       this.$httpGet(url, params)
-        .then(response => {
+        .then((response) => {
           this[this.activeTab] = response.data.items
           this.count = response.data.meta.count || 0
           this.hasnext = response.data.meta.hasnext
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -370,7 +368,7 @@ export default {
         requestURL = `/${url}/${encodeURIComponent(this.searchValue)}`
       }
       this.$httpGet(requestURL)
-        .then(response => {
+        .then((response) => {
           // reset page
           this.count = 0
           this.params = {
@@ -380,7 +378,7 @@ export default {
           this.searchView = true
           this[this.activeTab] = response.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -411,7 +409,7 @@ export default {
           // Close popover
           self.$refs[`popover-${index}`].doClose()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },

@@ -45,22 +45,22 @@ export default {
     ...mapActions(['CURRENT_NODE']),
     loadData() {
       this.$httpGet('/nodes')
-        .then(response => {
+        .then((response) => {
           this.nodeName = this.$store.state.nodeName || response.data[0].node
           this.nodes = response.data
           this.loadListeners()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     loadListeners() {
       this.CURRENT_NODE(this.nodeName)
       this.$httpGet(`/nodes/${this.nodeName}/listeners`)
-        .then(response => {
+        .then((response) => {
           this.listeners = response.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
