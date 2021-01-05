@@ -220,9 +220,9 @@ export default {
       this.resourceToEdit = { ...row }
     },
     loadData() {
-      this.$httpGet('/resources').then(response => {
+      this.$httpGet('/resources').then((response) => {
         const data = response.data
-        this.tableData = data.map($ => {
+        this.tableData = data.map(($) => {
           $.status = $.status || []
           return $
         })
@@ -232,7 +232,7 @@ export default {
       if (row.status && row.status.length > 0) {
         return
       }
-      this.$httpGet(`/resources/${row.id}`).then(res => {
+      this.$httpGet(`/resources/${row.id}`).then((res) => {
         this.$set(row, 'status', res.data.status)
       })
     },

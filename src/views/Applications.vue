@@ -308,15 +308,15 @@ export default {
   methods: {
     loadData() {
       this.$httpGet('/apps')
-        .then(response => {
+        .then((response) => {
           this.tableData = response.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     createApp() {
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           return
         }
@@ -332,7 +332,7 @@ export default {
             this.$message.success(this.$t('success.createSuccess'))
             this.displayDialog = false
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message.error(error || this.$t('error.networkError'))
           })
       })
@@ -351,11 +351,11 @@ export default {
             this.$message.success(this.$t('oper.editSuccess'))
             this.loadData()
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message.error(error || this.$t('error.networkError'))
           })
       } else {
-        this.$refs.record.validate(valid => {
+        this.$refs.record.validate((valid) => {
           if (!valid) {
             return
           }
@@ -371,7 +371,7 @@ export default {
               this.$message.success(this.$t('oper.editSuccess'))
               this.loadData()
             })
-            .catch(error => {
+            .catch((error) => {
               this.$message.error(error || this.$t('error.networkError'))
             })
         })
@@ -380,7 +380,7 @@ export default {
     showApp(row) {
       this.oper = 'view'
       this.$httpGet(`/apps/${row.app_id}`)
-        .then(response => {
+        .then((response) => {
           this.displayDialog = true
           this.record = response.data
           if (this.record.expired.toString().length === 10) {
@@ -388,7 +388,7 @@ export default {
           }
           this.displayDialog = true
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -398,7 +398,7 @@ export default {
           this.loadData()
           this.hidePopover()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -408,9 +408,7 @@ export default {
         if (create) {
           this.oper = 'new'
           this.record = {
-            app_id: Math.random()
-              .toString(16)
-              .slice(2),
+            app_id: Math.random().toString(16).slice(2),
             name: '',
             desc: '',
             secret: '',
