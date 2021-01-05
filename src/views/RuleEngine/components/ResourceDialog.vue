@@ -205,7 +205,7 @@ export default {
           }
         })
         const url = isCreate ? '/resources' : '/resources?test=true'
-        if (this.oper === 'edit') {
+        if (this.oper === 'edit' && isCreate) {
           this.handleEdit(url, this.record)
           return
         }
