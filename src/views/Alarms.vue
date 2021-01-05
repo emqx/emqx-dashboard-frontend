@@ -24,9 +24,16 @@
           {{ dateFormat(row.activate_at) }}
         </template>
       </el-table-column>
-      <el-table-column :label="$t('analysis.duration')">
+      <el-table-column>
+        <span slot="header">
+          {{ $t('analysis.duration') }}
+          <el-popover trigger="hover" placement="top">
+            {{ $t('analysis.durationTips') }}
+            <i slot="reference" class="el-icon-question"></i>
+          </el-popover>
+        </span>
         <template slot-scope="{ row }">
-          {{ getDuration(row.activate_at) }}
+          {{ getDuration(row.duration) }}
         </template>
       </el-table-column>
       <el-table-column fixed="right" width="120px" :label="$t('oper.oper')">
@@ -136,8 +143,8 @@ export default {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
-    getDuration(activateAt) {
-      return getDateDiff(activateAt / 1000, Date.now())
+    getDuration(duration) {
+      return getDateDiff(duration / 1000)
     },
     dateFormat(date) {
       if (typeof date !== 'number' && date === 'infinity') {

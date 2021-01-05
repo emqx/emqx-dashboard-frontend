@@ -473,6 +473,7 @@ export default {
     activateAt: '开始时间',
     deactivateAt: '结束时间',
     duration: '持续时间',
+    durationTips: '日：时：分：秒',
     currentAlarms: '当前告警',
     historicalAlarm: '历史告警',
     deactivate: '取消告警',

@@ -482,6 +482,7 @@ export default {
     activateAt: 'Activate At',
     deactivateAt: 'Deactivate At',
     duration: 'Duration',
+    durationTips: 'Days: Hours: Minutes: Seconds',
     currentAlarms: 'Current Alarms',
     historicalAlarm: 'Historical Alarms',
     deactivate: 'Deactivate',
