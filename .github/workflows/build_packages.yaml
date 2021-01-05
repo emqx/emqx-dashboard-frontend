@@ -17,6 +17,11 @@ jobs:
       run: |
         yarn
         yarn build
+    - name: create package
+      run: |
+        touch dist/version
+        echo "github_ref: $GITHUB_REF" >> dist/version
+        echo "github_sha: $GITHUB_SHA" >> dist/version
         zip -rq dist.zip ./dist
     - name: Create Release
       id: create_release
