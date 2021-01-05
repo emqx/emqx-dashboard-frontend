@@ -413,7 +413,8 @@ export const ja = {
   event_info: '利用可能なフィールド',
   suggest_sql: 'SQLサンプル',
   upgrade_tip: 'アップグレードヒント',
-  json_decode_upgrade: 'カレントバージョンでは自動的にpayloadのJSONにデコード機能が廃棄されました。payloadのフィールドを選択して、json_decodeでデコードしてください。例として、',
+  json_decode_upgrade:
+    'カレントバージョンでは自動的にpayloadのJSONにデコード機能が廃棄されました。payloadのフィールドを選択して、json_decodeでデコードしてください。例として、',
   events: {
     message_acked: 'メッセージの肯定応答',
     message_dropped: 'メッセージドロップ',
@@ -523,11 +524,13 @@ export const ja = {
   username_doc: 'カレントMQTTユーザ名',
   event_doc: 'トリガーイベント名',
   id_doc: 'MQTTメッセージid',
-  payload_doc: 'JSONフォーマットの場合、payloadが自動的にデコードされます。 SQL文中にpayload.xでオブジェクト情報を取得することができます',
+  payload_doc:
+    'JSONフォーマットの場合、payloadが自動的にデコードされます。 SQL文中にpayload.xでオブジェクト情報を取得することができます',
   peerhost_doc: 'クライアントアドレス',
   qos_doc: 'QoS 0、1、2 のメッセージ中の列挙型',
   timestamp_doc: 'タイムスタンプ（ミリ秒）',
-  topic_doc:'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
+  topic_doc:
+    'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
   node_doc: 'トリガ・イベントのノード名',
   message_delivered: 'メッセージ配信',
   message_acked: 'メッセージの肯定応答',

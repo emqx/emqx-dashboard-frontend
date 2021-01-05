@@ -8,7 +8,7 @@ function getInertText(text, preWord) {
 export function createMonacoComplete(hints, range, { word }) {
   let customHints = []
   if (hints.length) {
-    customHints = hints.map(doc => ({
+    customHints = hints.map((doc) => ({
       label: doc.name,
       // kind is icon
       kind: doc.type ? monaco.languages.CompletionItemKind[doc.type] : monaco.languages.CompletionItemKind.Function,
@@ -31,7 +31,7 @@ function getValueName(hint) {
 }
 export function createMonacoHover(key, hints) {
   const contents = []
-  hints.forEach(hint => {
+  hints.forEach((hint) => {
     let word = hint.name
     if (hint.name.match(/\$events\//)) {
       word = hint.name.split('/')[1].replace('"', '')

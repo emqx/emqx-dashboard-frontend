@@ -212,10 +212,10 @@ export default {
       this.$router.push({ path: '/login' })
     },
     setNewFeatOnleftbar() {
-      this.menus.forEach(menu => {
+      this.menus.forEach((menu) => {
         const { data } = this.showFeatOnLeftbar
         if (menu.children && menu.children.length > 0) {
-          menu.children.forEach(submenu => {
+          menu.children.forEach((submenu) => {
             if (data[submenu.id]) {
               menu.hasNew = true
               submenu.hasNew = true

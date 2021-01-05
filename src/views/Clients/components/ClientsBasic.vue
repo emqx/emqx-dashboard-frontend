@@ -13,7 +13,8 @@
                 v-if="record.clientid.length > 60"
                 placement="top-start"
                 trigger="hover"
-                :content="record.clientid">
+                :content="record.clientid"
+              >
                 <span slot="reference">{{ interceptString(record.clientid, 60) }}</span>
               </el-popover>
               <span v-else>{{ record.clientid }}</span>
