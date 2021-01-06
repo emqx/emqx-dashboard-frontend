@@ -2,9 +2,11 @@ const axios = require('axios')
 const fs = require('fs')
 const path = require('path')
 const { exec } = require('child_process')
+
 const arguments = process.argv
 const tagType = arguments[2]
 const version = arguments[3]
+const remote = arguments[4] || 'origin'
 
 async function getRelease() {
   console.log('Geting release info')
@@ -25,12 +27,12 @@ if (tagType === 'retag') {
     const releaseId = res.data.id
     const token = fs.readFileSync(path.join(__dirname, 'token'))
     const ghToken = `token ${token.toString()}`
-    const cmd = `"./script/retag.sh" ${version} "${ghToken}" ${releaseId}`
+    const cmd = `"./script/retag.sh" ${version} "${ghToken}" ${releaseId} ${remote}`
     console.log('Retaging...')
     executeShell(cmd)
   })
 } else {
-  const cmd = `"./script/tag.sh" ${version}`
+  const cmd = `"./script/tag.sh" ${version} ${remote}`
   console.log('Taging...')
   executeShell(cmd)
 }
