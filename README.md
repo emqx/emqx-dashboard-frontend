@@ -12,6 +12,9 @@ yarn dev
 # build for production with minification
 yarn build
 
-# Build into emqx-dashboard in the upper directory
-yarn deploy:build
+# Tag release
+yarn build:tag $version
+
+# Retag release
+yarn build:retag $version
 ```
