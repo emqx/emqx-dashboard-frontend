@@ -1,6 +1,6 @@
 {
   "name": "emq-dashboard",
-  "version": "4.2-rc.2",
+  "version": "v4.3.0",
   "description": "EMQ X Dashboard",
   "author": "zhangwh <zh.whong@gmail.com>",
   "private": true,
@@ -9,7 +9,9 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.vue\" \"src/**/*.scss\"",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "build:tag": "node script/tag.js tag",
+    "build:retag": "node script/tag.js retag"
   },
   "dependencies": {
     "axios": "^0.19.0",
