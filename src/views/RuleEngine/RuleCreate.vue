@@ -177,6 +177,7 @@ export default {
         actions: [],
         description: '',
         ctx: {},
+        id: `rule:${Math.random().toString().slice(3, 9)}`,
       },
       rules: {
         rawsql: { required: true, message: this.$t('rule.sql_required') },
@@ -361,6 +362,7 @@ export default {
       if (this.$refs.record) {
         this.$refs.record.validate((valid) => {
           if (!valid) {
+            this.$message.error(this.$t('rule.validateErr'))
             return
           }
           if (this.record.actions.length === 0) {

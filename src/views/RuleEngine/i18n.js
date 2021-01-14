@@ -101,6 +101,7 @@ export const en = {
   add: 'Add',
   ruleEnabled: 'Enabled',
   ruleDisabled: 'Disabled',
+  validateErr: 'Related required fields are not filled in!',
 
   basic_info: 'Basic Info',
   rule_name_required: 'rule name required',
@@ -284,6 +285,7 @@ export const zh = {
   add: '添加',
   ruleEnabled: '已启动',
   ruleDisabled: '已停止',
+  validateErr: '相关必填项未填写！',
 
   basic_info: '基本信息',
   rule_name_required: '请输入规则名称',
@@ -464,6 +466,7 @@ export const ja = {
   add: '追加',
   ruleEnabled: '有効になります',
   ruleDisabled: '無効になります',
+  validateErr: '関連する必須フィールドは入力されていません！',
 
   basic_info: '基本情報',
   rule_name_required: 'ルール名を入力してください',
