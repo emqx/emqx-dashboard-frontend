@@ -239,18 +239,24 @@ export function handleClipboard(text, event) {
   clipboard.onClick(event)
 }
 
-export function getDateDiff(beginTime, endTime) {
-  const dateDiff = endTime - beginTime
-  const leave1 = dateDiff % (24 * 3600 * 1000)
-  const hours = Math.floor(leave1 / (3600 * 1000))
+/**
+ * @param duration (ms)
+ * @return dd:hh:mm:ss
+ */
+export function getDateDiff(duration) {
+  // get total seconds value (s)
+  const dateDiff = Math.floor(duration / 1000)
+  const days = Math.floor(dateDiff / (3600 * 24))
 
-  const leave2 = leave1 % (3600 * 1000)
-  const minutes = Math.floor(leave2 / (60 * 1000))
+  const daysRemainder = dateDiff % (3600 * 24)
+  const hours = Math.floor(daysRemainder / 3600)
 
-  const leave3 = leave2 % (60 * 1000)
-  const seconds = Math.round(leave3 / 1000)
+  const minutes = Math.floor((dateDiff % 3600) / 60)
+  const seconds = dateDiff % 60
 
-  return `${hours}:${minutes}:${seconds}`
+  return [days, hours, minutes, seconds]
+    .map((n) => n > 10 ? n : `0${n}`)
+    .join(':')
 }
 
 export const verifyID = (rule, value, callback) => {

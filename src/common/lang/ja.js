@@ -463,6 +463,7 @@ export default {
     activateAt: '開始日時',
     deactivateAt: '終了日時',
     duration: '持続時間',
+    durationTips: '日：時間：分：秒',
     currentAlarms: 'カレントアラート',
     historicalAlarm: 'アラート履歴',
     deactivate: '無効にする',
