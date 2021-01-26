@@ -49,7 +49,7 @@
       <!-- resource table -->
       <el-table-column prop="id" :label="$t('rule.id')">
         <template slot-scope="{ row }">
-          <span class="" @click="viewResource(row)">
+          <span class="resource-id" @click="viewResource(row)">
             {{ row.id }}
           </span>
         </template>
@@ -58,17 +58,14 @@
       <el-table-column prop="type" :label="$t('rule.resource_type')"></el-table-column>
       <el-table-column min-width="120px" :label="$t('rule.oper')">
         <template slot-scope="{ row, $index }">
+          <el-button plain type="success" size="mini" @click="viewRunningStatus(row, $index)">
+            {{ $t('rule.viewStates') }}
+          </el-button>
           <el-button plain type="success" size="mini" @click="handleOperation('edit', row)">
             {{ $t('rule.edit') }}
           </el-button>
-          <el-button plain type="success" size="mini" @click="viewResource(row)">
-            {{ $t('rule.view') }}
-          </el-button>
           <el-button plain size="mini" type="warning" @click="handleDelete(row)">
             {{ $t('rule.delete') }}
-          </el-button>
-          <el-button plain type="success" size="mini" @click="viewRunningStatus(row, $index)">
-            {{ $t('rule.viewStates') }}
           </el-button>
         </template>
       </el-table-column>
@@ -248,6 +245,11 @@ export default {
 .resources-view {
   .el-table {
     margin-top: 24px;
+  }
+
+  .resource-id {
+    color: #34c388;
+    cursor: pointer;
   }
 
   .status-wrapper {
