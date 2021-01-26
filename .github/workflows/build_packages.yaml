@@ -14,7 +14,7 @@ jobs:
     container: node:10.18
     steps:
     - uses: actions/checkout@v2
-    - name: install zip 
+    - name: install zip
       run: apt-get update && apt-get install -y zip
     - name: build
       run: |
@@ -25,10 +25,10 @@ jobs:
         touch dist/version
         echo "github_ref: $GITHUB_REF" >> dist/version
         echo "github_sha: $GITHUB_SHA" >> dist/version
-        zip -rq dist.zip ./dist
+        zip -rq emqx-dashboard.zip ./dist
     - uses: actions/upload-artifact@v2
       with:
-        name: dist
+        name: emqx-dashboard
         path: dist/
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
@@ -49,7 +49,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist.zip
-        asset_name: dist.zip 
+        asset_path: ./emqx-dashboard.zip
+        asset_name: emqx-dashboard.zip
         asset_content_type: application/zip
-        
+
