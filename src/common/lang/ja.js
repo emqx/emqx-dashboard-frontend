@@ -66,6 +66,8 @@ export default {
     reset: 'リセット',
     next: '次へ',
     prev: '前へ',
+    fileTip: 'ファイルをアップロード',
+    uploadFailed: 'アップロード失敗',
   },
   // topbar
   topbar: {
