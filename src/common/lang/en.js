@@ -68,6 +68,8 @@ export default {
     reset: 'Reset',
     next: 'Next',
     prev: 'Previous',
+    fileTip: 'Please upload file',
+    uploadFailed: 'Upload failed',
   },
   // topbar
   topbar: {

@@ -67,6 +67,8 @@ export default {
     reset: '重置',
     next: '下一页',
     prev: '上一页',
+    fileTip: '请上传文件',
+    uploadFailed: '上传失败',
   },
   // topbar
   topbar: {
