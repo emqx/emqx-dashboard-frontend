@@ -83,6 +83,8 @@
               >
               </emq-select>
 
+              <file-editor v-else-if="item.type === 'file'" v-model="record.config[item.key]"></file-editor>
+
               <!-- Number field -->
               <el-input
                 v-else-if="item.type === 'number'"
@@ -114,13 +116,14 @@
 <script>
 import EmqSelect from '~/components/EmqSelect'
 import ArrayEditor from '~/components/ArrayEditor'
+import FileEditor from '~/components/FileEditor'
 import { params2Form, verifyID } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
 export default {
   name: 'resource-dialog',
-  components: { EmqSelect, ArrayEditor },
+  components: { EmqSelect, ArrayEditor, FileEditor },
   inheritAttrs: false,
 
   props: {
