@@ -58,7 +58,10 @@
             :span="item.type === 'object' || item.type === 'array' || item.$attrs.type === 'textarea' ? 24 : 12"
             :key="index"
           >
-            <el-form-item :prop="`config.${item.prop}`">
+            <el-form-item
+              v-if="item.type !== 'file' && !['verify', 'tls_version', 'ciphers'].includes(item.key)"
+              :prop="`config.${item.prop}`"
+            >
               <template slot="label">
                 {{ item.label }}
 
@@ -106,6 +109,35 @@
               <!-- String field -->
               <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
             </el-form-item>
+            <template v-else>
+              <el-form-item
+                v-if="
+                  ['true', true].includes(record.config['https_enabled']) ||
+                  ['true', true].includes(record.config['ssl']) ||
+                  (record.config['ssl'] === undefined && record.config['https_enabled'] === undefined)
+                "
+                :prop="`config.${item.prop}`"
+              >
+                <template slot="label">
+                  {{ item.label }}
+
+                  <el-popover v-if="item.description" placement="right" width="200" trigger="hover">
+                    <div v-html="item.description"></div>
+                    <span tabindex="-1" class="el-icon-question" slot="reference"></span>
+                  </el-popover>
+                </template>
+                <file-editor v-if="item.type === 'file'" v-model="record.config[item.key]"></file-editor>
+                <emq-select
+                  v-else-if="item.type === 'emq-select'"
+                  v-bind="item.$attrs"
+                  v-model="record.config[item.key]"
+                  class="el-select--public"
+                  popper-class="el-select--public"
+                >
+                </emq-select>
+                <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
+              </el-form-item>
+            </template>
           </el-col>
         </template>
       </el-row>
