@@ -94,6 +94,15 @@
               >
               </el-input>
 
+              <!-- Password field -->
+              <el-input
+                v-else-if="item.type === 'password'"
+                v-model="record.config[item.key]"
+                v-bind="item.$attrs"
+                show-password
+              >
+              </el-input>
+
               <!-- String field -->
               <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
             </el-form-item>
