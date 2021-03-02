@@ -232,6 +232,21 @@ export default {
         this.$refs.record.resetFields()
       }
     },
+    cleanFileContent(config) {
+      const falseValues = [false, 'false']
+      if (falseValues.includes(config.ssl)) {
+        config.verify = false
+        Object.keys(config).forEach((key) => {
+          const oneValue = config[key]
+          if (typeof oneValue === 'object' && Object.keys(oneValue).includes('file')) {
+            config[key] = {
+              file: '',
+              filename: '',
+            }
+          }
+        })
+      }
+    },
     handleCreate(isCreate = true) {
       this.$refs.record.validate((valid) => {
         if (!valid) {
@@ -248,6 +263,7 @@ export default {
             this.record.config[label] = false
           }
         })
+        this.cleanFileContent(config)
         const url = isCreate ? '/resources' : '/resources?test=true'
         if (this.oper === 'edit' && isCreate) {
           this.handleEdit(url, this.record)
