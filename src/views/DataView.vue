@@ -11,7 +11,13 @@
           :disabled="$store.state.loading"
           @change="loadChild(true)"
         >
-          <el-option v-for="item in nodes" :key="item.node" :label="item.node" :value="item.node"> </el-option>
+          <el-option
+            v-for="item in nodes"
+            :key="item.node"
+            :label="item.name || item.node"
+            :value="item.node"
+          >
+          </el-option>
         </el-select>
       </div>
     </div>
@@ -306,9 +312,19 @@ export default {
       // set default of select
       this.$httpGet('/nodes')
         .then((response) => {
-          const currentNode = this.$store.state.nodeName || response.data[0].node
+          let currentNode = ''
+          if (this.activeTab !== 'topics') {
+            const allNodesOption = [{
+              name: this.$t('select.cluster'),
+              node: 'all',
+            }]
+            this.nodes = allNodesOption.concat(response.data)
+            currentNode = 'all'
+          } else {
+            this.nodes = response.data
+            currentNode = this.$store.state.nodeName || this.nodes[0].node
+          }
           this.nodeName = this.cluster ? 'cluster' : currentNode
-          this.nodes = response.data
           this.loadChild()
         })
         .catch((error) => {
@@ -326,7 +342,11 @@ export default {
       if (!this.nodeName && this.activeTab !== 'topics') {
         return
       }
-      let url = `/nodes/${this.nodeName}/${this.activeTab}`
+      // show allNodes data or single node data
+      let url =
+        this.nodeName === 'all' && this.activeTab !== 'topics'
+          ? `/${this.activeTab}`
+          : `/nodes/${this.nodeName}/${this.activeTab}`
       // cluster
       if (this.activeTab === 'topics' || this.cluster) {
         url = this.activeTab === 'topics' ? 'routes' : this.activeTab
