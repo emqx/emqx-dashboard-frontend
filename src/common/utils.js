@@ -116,6 +116,16 @@ export function params2Form(params = {}, deepKey = '') {
       }
     }
 
+    if (type === 'file') {
+      defaultValue =
+        typeof defaultValue === 'string'
+        ? {
+            file: '',
+            filename: defaultValue,
+          }
+        : defaultValue
+    }
+
     if (input === 'textarea') {
       $attrs.type = 'textarea'
       $attrs.rows = 5
