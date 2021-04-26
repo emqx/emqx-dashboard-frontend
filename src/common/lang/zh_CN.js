@@ -453,6 +453,7 @@ export default {
     faqDesc: 'FAQ 收录了所有可能出现的问题，优先推荐使用 FAQ 检索您使用过程中遇到的问题。',
     forwardFaq: '前往 FAQ',
     followUs: '关注我们',
+    ytLink: 'https://www.youtube.com/channel/UCir_r04HIsLjf2qqyZ4A8Cg',
   },
   analysis: {
     topicMetrics: '主题监控',
