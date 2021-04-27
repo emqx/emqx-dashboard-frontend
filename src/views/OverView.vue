@@ -8,7 +8,7 @@
     </div>
 
     <!-- Broker -->
-    <div class="card-box" style="margin-top: 54px;">
+    <div class="card-box" style="margin-top: 54px">
       <div class="card-title">{{ $t('overview.broker') }}</div>
       <el-row class="broker-card" :gutter="10">
         <el-col :span="6">
@@ -26,7 +26,7 @@
         <el-col :span="6">
           <div class="card-item">
             <div class="icon">
-              <i class="iconfont icon-version" style="font-weight: 600;"></i>
+              <i class="iconfont icon-version" style="font-weight: 600"></i>
             </div>
             <div class="desc">
               <h3>{{ $t('overview.version') }}</h3>
@@ -49,8 +49,8 @@
 
         <el-col :span="6">
           <div class="card-item">
-            <div class="icon" style="line-height: 46px;">
-              <i class="iconfont icon-Systemtime" style="font-size: 36px; top: 2px;"></i>
+            <div class="icon" style="line-height: 46px">
+              <i class="iconfont icon-Systemtime" style="font-size: 36px; top: 2px"></i>
             </div>
             <div class="desc">
               <h3>{{ $t('overview.systemTime') }}</h3>
@@ -229,7 +229,7 @@ export default {
       this.$httpGet('/nodes')
         .then((response) => {
           // set default of select not clan
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodeName = response.data[0].node
           this.nodes = response.data
           this.CURRENT_NODE(this.nodeName)
           this.refreshInterval()

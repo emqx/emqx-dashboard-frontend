@@ -3,12 +3,12 @@
     <!-- plugin list -->
     <div class="page-title">
       {{ $t('leftbar.plugins') }}
-      <div style="float: right;">
+      <div style="float: right">
         <el-input
           v-model="searchValue"
           class="input-radius"
           size="large"
-          style="float: right; padding-left: 20px;"
+          style="float: right; padding-left: 20px"
           :disabled="$store.state.loading"
           :placeholder="$t('plugins.searchByName')"
           clearable
@@ -95,25 +95,25 @@
 </template>
 
 <script>
-import { Input, Select, Option, Button, Table, TableColumn, Form, FormItem, Row, Col, Card } from 'element-ui'
+// import { Input, Select, Option, Button, Table, TableColumn, Form, FormItem, Row, Col, Card } from 'element-ui'
 import { mapActions } from 'vuex'
 import { getPluginLink, matchSearch } from '~/common/utils'
 
 export default {
   name: 'plugins-view',
-  components: {
-    'el-input': Input,
-    'el-select': Select,
-    'el-option': Option,
-    'el-button': Button,
-    'el-table': Table,
-    'el-table-column': TableColumn,
-    'el-form': Form,
-    'el-form-item': FormItem,
-    'el-row': Row,
-    'el-col': Col,
-    'el-card': Card,
-  },
+  // components: {
+  //   'el-input': Input,
+  //   'el-select': Select,
+  //   'el-option': Option,
+  //   //'el-button': Button,
+  //   'el-table': Table,
+  //   'el-table-column': TableColumn,
+  //   'el-form': Form,
+  //   'el-form-item': FormItem,
+  //   'el-row': Row,
+  //   'el-col': Col,
+  //   'el-card': Card,
+  // },
   data() {
     return {
       filterSet: new Set(),
@@ -136,7 +136,7 @@ export default {
       this.searchView = false
       this.$httpGet('/nodes')
         .then((response) => {
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodeName = response.data[0].node
           this.nodes = response.data
           this.loadPlugins()
         })
