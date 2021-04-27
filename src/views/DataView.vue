@@ -2,7 +2,7 @@
   <div class="data-view">
     <div class="page-title">
       {{ $t(`leftbar.${activeTab}`) }}
-      <div style="float: right;" @keyup.enter.native="searchChild">
+      <div style="float: right" @keyup.enter.native="searchChild">
         <el-select
           v-if="activeTab !== 'topics'"
           v-model="nodeName"
@@ -11,12 +11,7 @@
           :disabled="$store.state.loading"
           @change="loadChild(true)"
         >
-          <el-option
-            v-for="item in nodes"
-            :key="item.node"
-            :label="item.name || item.node"
-            :value="item.node"
-          >
+          <el-option v-for="item in nodes" :key="item.node" :label="item.name || item.node" :value="item.node">
           </el-option>
         </el-select>
       </div>
@@ -167,7 +162,7 @@
         <template slot-scope="{ row, $index, _self }">
           <el-popover :ref="`popover-${$index}`" placement="right" trigger="click">
             <p>{{ row.connected ? $t('oper.confirmKickOut') : $t('oper.confirmCleanSession') }}</p>
-            <div style="text-align: right;">
+            <div style="text-align: right">
               <el-button size="mini" type="text" class="cache-btn" @click="_self.$refs[`popover-${$index}`].doClose()">
                 {{ $t('oper.cancel') }}
               </el-button>
@@ -227,20 +222,20 @@
 
 <script>
 /* eslint-disable camelcase */
-import { Pagination, Input, Select, Option, Table, TableColumn, DatePicker } from 'element-ui'
+// import { Pagination, Input, Select, Option, Table, TableColumn, DatePicker } from 'element-ui'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'data-view',
-  components: {
-    'el-pagination': Pagination,
-    'el-input': Input,
-    'el-select': Select,
-    'el-option': Option,
-    'el-table': Table,
-    'el-table-column': TableColumn,
-    'el-date-picker': DatePicker,
-  },
+  // components: {
+  //   'el-pagination': Pagination,
+  //   'el-input': Input,
+  //   'el-select': Select,
+  //   'el-option': Option,
+  //   'el-table': Table,
+  //   'el-table-column': TableColumn,
+  //   'el-date-picker': DatePicker,
+  // },
   data() {
     return {
       searchView: false,
@@ -314,10 +309,12 @@ export default {
         .then((response) => {
           let currentNode = ''
           if (this.activeTab !== 'topics') {
-            const allNodesOption = [{
-              name: this.$t('select.cluster'),
-              node: 'all',
-            }]
+            const allNodesOption = [
+              {
+                name: this.$t('select.cluster'),
+                node: 'all',
+              },
+            ]
             this.nodes = allNodesOption.concat(response.data)
             currentNode = 'all'
           } else {

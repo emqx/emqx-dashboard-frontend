@@ -3,7 +3,7 @@
     <!-- modules list -->
     <div class="page-title">
       {{ $t('leftbar.modules') }}
-      <div style="float: right;">
+      <div style="float: right">
         <el-select
           v-model="nodeName"
           class="select-radius"
@@ -79,7 +79,7 @@ export default {
     loadData() {
       this.$httpGet('/nodes')
         .then((response) => {
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodeName = response.data[0].node
           this.nodes = response.data
           this.loadModuls()
         })
