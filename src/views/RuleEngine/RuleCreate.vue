@@ -23,7 +23,7 @@
           </div>
 
           <div class="form-block__body">
-            <el-row style="max-width: 1366px;">
+            <el-row style="max-width: 1366px">
               <el-col :span="14">
                 <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql rawsql">
                   <div class="monaco-container">
@@ -97,21 +97,21 @@
               </el-col>
 
               <el-col class="sql-tips" :span="8" :offset="1">
-                <div class="title">
+                <!-- <div class="title">
                   {{ $t('rule.rule_sql_tips_title') }}
                 </div>
-                <el-scrollbar wrap-class="doc-wrapper">
-                  <div v-html="$t('rule.sql_tips_html')"></div>
-                </el-scrollbar>
+                <el-scrollbar wrap-class="doc-wrapper"> -->
+                <div v-html="$t('rule.sql_tips_html')"></div>
+                <!-- </el-scrollbar> -->
               </el-col>
             </el-row>
           </div>
         </div>
 
         <!-- 触发动作 -->
-        <div class="form-block--wrapper" style="clear: both;">
+        <div class="form-block--wrapper" style="clear: both">
           <div class="form-block__title">
-            <span style="color: #ff6d6d;">*</span>
+            <span style="color: #ff6d6d">*</span>
             {{ $t('rule.set_action') }}
             <div class="form-block__title-tips">
               {{ $t('rule.actions_tips') }}
@@ -119,7 +119,7 @@
           </div>
 
           <div class="form-block__body">
-            <el-row style="max-width: 1366px;">
+            <el-row style="max-width: 1366px">
               <el-col :span="23">
                 <rule-actions :operations="['create', 'delete', 'edit']" :record="record"> </rule-actions>
               </el-col>
@@ -478,7 +478,7 @@ export default {
   }
 
   .sql-tips {
-    padding: 20px 0;
+    padding: 20px;
     border-radius: 4px;
     font-size: 15px;
     max-height: 480px;
