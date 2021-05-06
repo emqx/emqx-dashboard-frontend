@@ -24,29 +24,29 @@ const authInstance = Axios.create({
   timeout: 10 * 1000,
 })
 const getRefreshToken = async () => {
-  const user = JSON.parse(localStorage.getItem('user')) || {}
-  if (user.token && user.refreshToken) {
-    const { username, userId, remember, ...tokenBody } = user
-    try {
-      const res = await authInstance.post('/token', {
-        ...tokenBody
-      })
-      const refreshUser = {
-        username,
-        userId,
-        remember,
-        token: res.data.token,
-        refreshToken: tokenBody.refreshToken,
-      }
-      localStorage.setItem('user', JSON.stringify(refreshUser))
-      return refreshUser.token
-    } catch (error) {
-      setTimeout(() => {
-        window.location.replace('/web/login?auth=expired')
-      }, 500)
-      return Promise.reject(error)
-    }
-  }
+  // const user = JSON.parse(localStorage.getItem('user')) || {}
+  // if (user.token && user.refreshToken) {
+  //   const { username, userId, remember, ...tokenBody } = user
+  //   try {
+  //     const res = await authInstance.post('/token', {
+  //       ...tokenBody
+  //     })
+  //     const refreshUser = {
+  //       username,
+  //       userId,
+  //       remember,
+  //       token: res.data.token,
+  //       refreshToken: tokenBody.refreshToken,
+  //     }
+  //     localStorage.setItem('user', JSON.stringify(refreshUser))
+  //     return refreshUser.token
+  //   } catch (error) {
+  //     setTimeout(() => {
+  //       window.location.replace('/web/login?auth=expired')
+  //     }, 500)
+  //     return Promise.reject(error)
+  //   }
+  // }
   return false
 }
 

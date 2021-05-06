@@ -127,20 +127,22 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const { requiresAuth = true } = to.meta
   const user = JSON.parse(localStorage.getItem('user')) || {}
-  if (requiresAuth) {
-    if (!user.token) {
-      window.location.replace('/web/login?auth=failed')
-    } else {
-      if (newFeaturesMenu.indexOf(to.name) > -1) {
-        store.dispatch('CANCEL_FEAT_ON_LEFTBAR', to.name)
-      }
-      document.body.scrollTop = 0
-      document.documentElement.scrollTop = 0
-      next()
-    }
-  } else {
-    next()
-  }
+  next()
+  // if (requiresAuth) {
+  //   if (!user.token) {
+  //     // window.location.replace('/web/login?auth=failed')
+  //     next()
+  //   } else {
+  //     if (newFeaturesMenu.indexOf(to.name) > -1) {
+  //       store.dispatch('CANCEL_FEAT_ON_LEFTBAR', to.name)
+  //     }
+  //     document.body.scrollTop = 0
+  //     document.documentElement.scrollTop = 0
+  //     next()
+  //   }
+  // } else {
+  //   next()
+  // }
 })
 
 export default router
