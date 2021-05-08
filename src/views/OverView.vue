@@ -8,7 +8,7 @@
     </div>
 
     <!-- Broker -->
-    <div class="card-box" style="margin-top: 54px;">
+    <div class="card-box" style="margin-top: 54px">
       <div class="card-title">{{ $t('overview.broker') }}</div>
       <el-row class="broker-card" :gutter="10">
         <el-col :span="6">
@@ -26,7 +26,7 @@
         <el-col :span="6">
           <div class="card-item">
             <div class="icon">
-              <i class="iconfont icon-version" style="font-weight: 600;"></i>
+              <i class="iconfont icon-version" style="font-weight: 600"></i>
             </div>
             <div class="desc">
               <h3>{{ $t('overview.version') }}</h3>
@@ -49,8 +49,8 @@
 
         <el-col :span="6">
           <div class="card-item">
-            <div class="icon" style="line-height: 46px;">
-              <i class="iconfont icon-Systemtime" style="font-size: 36px; top: 2px;"></i>
+            <div class="icon" style="line-height: 46px">
+              <i class="iconfont icon-Systemtime" style="font-size: 36px; top: 2px"></i>
             </div>
             <div class="desc">
               <h3>{{ $t('overview.systemTime') }}</h3>
@@ -106,37 +106,27 @@
         <el-table-column prop="node" min-width="150" :label="$t('overview.name')"> </el-table-column>
         <el-table-column :label="$t('overview.connectionsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.connections_count }} / {{ row.connections_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.connections_count }} / {{ row.connections_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.topicsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.topics_count }} / {{ row.topics_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.topics_count }} / {{ row.topics_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.retainedCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.retained_count }} / {{ row.retained_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.retained_count }} / {{ row.retained_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.sessionsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.sessions_count }} / {{ row.sessions_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.sessions_count }} / {{ row.sessions_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.subscriptionsCount')">
           <el-table-column min-width="150" label="(count/max)">
-            <template slot-scope="{ row }">
-              {{ row.subscriptions_count }} / {{ row.subscriptions_max }}
-            </template>
+            <template slot-scope="{ row }"> {{ row.subscriptions_count }} / {{ row.subscriptions_max }} </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('overview.subscriptionsSharedCount')">
@@ -237,14 +227,14 @@ export default {
     init() {
       // load nodes every page
       this.$httpGet('/nodes')
-        .then(response => {
+        .then((response) => {
           // set default of select not clan
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodeName = response.data[0].node
           this.nodes = response.data
           this.CURRENT_NODE(this.nodeName)
           this.refreshInterval()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
           setTimeout(() => {
             this.init()
@@ -259,7 +249,7 @@ export default {
     loadData() {
       this.CURRENT_NODE(this.nodeName)
       // nodes[]
-      this.$httpGet('/nodes').then(response => {
+      this.$httpGet('/nodes').then((response) => {
         this.nodes = response.data.sort(($1, $2) => {
           if ($1.node === this.nodeName) {
             return -1
@@ -271,14 +261,14 @@ export default {
         })
       })
       // stats[]
-      this.$httpGet('/stats').then(response => {
+      this.$httpGet('/stats').then((response) => {
         const { data } = response
-        data.forEach(item => {
+        data.forEach((item) => {
           const $item = {
             node: item.node,
             ...item.stats,
           }
-          Object.entries($item).forEach(d => {
+          Object.entries($item).forEach((d) => {
             const [k, v] = d
             const realKey = k.replace(/\./g, '_')
             item[realKey] = v
@@ -290,11 +280,11 @@ export default {
         this.stats = data
       })
       // brokers[]
-      this.$httpGet(`/brokers/${this.nodeName}`).then(response => {
+      this.$httpGet(`/brokers/${this.nodeName}`).then((response) => {
         this.brokers = response.data
       })
       // metrics[{}, {}, {}]
-      this.$httpGet(`/nodes/${this.nodeName}/metrics`).then(response => {
+      this.$httpGet(`/nodes/${this.nodeName}/metrics`).then((response) => {
         this.metrics = {
           packets: [],
           messages: [],
@@ -368,8 +358,8 @@ export default {
             'dropped.expired',
           ],
         }
-        Object.keys(indexTable).forEach(item => {
-          indexTable[item].forEach(item2 => {
+        Object.keys(indexTable).forEach((item) => {
+          indexTable[item].forEach((item2) => {
             const indexKey = `${item}.${item2}`
             delete dict[indexKey]
             if (response.data[indexKey] !== undefined) {
@@ -377,14 +367,11 @@ export default {
             }
           })
         })
-        Object.keys(dict).forEach(key => {
+        Object.keys(dict).forEach((key) => {
           const item = key.split('.')[0]
           if (this.metrics[item] && dict[key] !== undefined) {
             this.metrics[item].push({
-              key: key
-                .split('.')
-                .slice(1)
-                .join('.'),
+              key: key.split('.').slice(1).join('.'),
               value: dict[key],
             })
           }

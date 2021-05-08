@@ -60,7 +60,7 @@
       <a target="_blank" class="follow-link" href="https://groups.google.com/forum/#!forum/emqtt">
         <i class="iconfont icon-icons-google_groups"></i>
       </a>
-      <a target="_blank" class="follow-link" href="https://www.youtube.com/channel/UCDU9GWFk8NTGiTvPx_2XskA">
+      <a target="_blank" class="follow-link" :href="$t(`help.ytLink`)">
         <i class="iconfont icon-youtube"></i>
       </a>
     </div>

@@ -66,6 +66,8 @@ export default {
     reset: 'リセット',
     next: '次へ',
     prev: '前へ',
+    fileTip: 'ファイルをアップロード',
+    uploadFailed: 'アップロード失敗',
   },
   // topbar
   topbar: {
@@ -236,13 +238,15 @@ export default {
     clientidRequired: 'クライアントIDを入力してください',
     algorithm: 'アルゴリズム',
     secret: 'シークレット',
-    payloadDesc: '%uと%cプレースホルダは、入力したユーザー名とクライアントIDの代わりに使用できます（verify_claimsを起動する場合）、詳細はこちらへ',
+    payloadDesc:
+      '%uと%cプレースホルダは、入力したユーザー名とクライアントIDの代わりに使用できます（verify_claimsを起動する場合）、詳細はこちらへ',
     jwtDoc: 'JWT認証',
     dataDesc: 'データセットは行で表示されています。ユーザー名とクライアントIDはコンマで区切られます',
     secretRequired: 'シークレットを入力してください',
     payloadRequired: 'Payloadのテンプレートを入力してください',
     dataRequired: 'Payloadのデータを入力してください',
-    leaveTokenPage: '現在のページを離れると、入力内容及び生成したTOKENが失われます。このまま処理を続けてもよろしいですか？',
+    leaveTokenPage:
+      '現在のページを離れると、入力内容及び生成したTOKENが失われます。このまま処理を続けてもよろしいですか？',
   },
   modules: {
     name: 'モジュール名',
@@ -328,7 +332,8 @@ export default {
   // http_api
   httpApi: {
     introduction: '説明',
-    desc: 'ヘルプページを除いて、すべてのURIはapplication / json形式でリソースを返し、各リクエストにはHTTP基本認証が必要です。デフォルトのユーザー名とパスワードはadmin / publicです。<br/>' +
+    desc:
+      'ヘルプページを除いて、すべてのURIはapplication / json形式でリソースを返し、各リクエストにはHTTP基本認証が必要です。デフォルトのユーザー名とパスワードはadmin / publicです。<br/>' +
       'emqx_dashboardプラグインは、サーバーの実行ステータス、データ統計、MQTTパケット数を可視化するためのWeb管理コンソールを提供します。',
     reference: 'リファレンス',
     method: 'メソッド',
@@ -427,18 +432,22 @@ export default {
     ex: 'エクスポート',
     atLeastThree: '少なくとも3つの文字',
     importSuccess: '正しくインポートできました',
-    notice: 'バックアップした設定ファイルを使用して設定を初期化/変更します。<br/>※ 設定ファイルには、データベースアドレスや認証情報などの重要なデータが含まれている可能性があります。設定ファイルを適切に保管してください。',
+    notice:
+      'バックアップした設定ファイルを使用して設定を初期化/変更します。<br/>※ 設定ファイルには、データベースアドレスや認証情報などの重要なデータが含まれている可能性があります。設定ファイルを適切に保管してください。',
   },
   help: {
     quickStart: 'クイックスタート',
-    emqxDesc: 'EMQ X Brokerは、高い並行処理指向のErlang / OTPに基づいて、オープンソースコミュニティで最も人気のあるMQTT ブローカーです。MQTT、LwM2M、MQTT-SN、CoAP、LoRaWAN、HTTP、WebSocketなどの豊富なIoTプロトコルをサポートしています。EMQ X Brokerが良かったと思われる方は、GitHubでフォローしていただけると嬉しいです。更に、皆様からのコントリビューションを歓迎します。',
+    emqxDesc:
+      'EMQ X Brokerは、高い並行処理指向のErlang / OTPに基づいて、オープンソースコミュニティで最も人気のあるMQTT ブローカーです。MQTT、LwM2M、MQTT-SN、CoAP、LoRaWAN、HTTP、WebSocketなどの豊富なIoTプロトコルをサポートしています。EMQ X Brokerが良かったと思われる方は、GitHubでフォローしていただけると嬉しいです。更に、皆様からのコントリビューションを歓迎します。',
     emqxEnterprise: 'EMQ X Enterprise',
-    enterpriseDesc: 'EMQ X Enterpriseにおいて、様々なデータ永続化、セキュリティ監視サービス、稼働監視など機能を提供しています。無料体験版より包括的な機能、より強力な安定性とパフォーマンス、より厳密なセキュリティのメリットがあります。<br/>更に、新しいダッシュボードが含まれ、1つのIoT Hubクラスターにより数百万のデバイス接続を簡単に作成及び管理できます。',
+    enterpriseDesc:
+      'EMQ X Enterpriseにおいて、様々なデータ永続化、セキュリティ監視サービス、稼働監視など機能を提供しています。無料体験版より包括的な機能、より強力な安定性とパフォーマンス、より厳密なセキュリティのメリットがあります。<br/>更に、新しいダッシュボードが含まれ、1つのIoT Hubクラスターにより数百万のデバイス接続を簡単に作成及び管理できます。',
     freeTrial: '無料トライアル',
     useDocs: 'ドキュメント',
     docsDesc: 'EMQ X Brokerの全機能に関する役立つドキュメントを用意しています。',
     forwardView: 'ドキュメントを見る',
-    faqDesc: 'EMQ X Brokerの使用中にエラー（「一時的なエラー」など）が発生した場合、よくあるご質問ページを参考にして問題を解決することをお勧めします。',
+    faqDesc:
+      'EMQ X Brokerの使用中にエラー（「一時的なエラー」など）が発生した場合、よくあるご質問ページを参考にして問題を解決することをお勧めします。',
     forwardFaq: 'よくあるご質問',
     followUs: 'フォローする',
   },

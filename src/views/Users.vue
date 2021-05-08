@@ -210,10 +210,10 @@ export default {
     },
     loadData() {
       this.$httpGet('/users')
-        .then(response => {
+        .then((response) => {
           this.users = response.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -222,7 +222,7 @@ export default {
         this.updateUser()
         return
       }
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           return
         }
@@ -232,13 +232,13 @@ export default {
             this.loadData()
             this.dialogVisible = false
           })
-          .catch(error => {
+          .catch((error) => {
             this.$message.error(error || this.$t('error.networkError'))
           })
       })
     },
     updateUser() {
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           return
         }
@@ -266,7 +266,7 @@ export default {
                   this.loadData()
                 }
               })
-              .catch(error => {
+              .catch((error) => {
                 this.$message.error(error || this.$t('error.networkError'))
               })
           })
@@ -278,7 +278,7 @@ export default {
               this.dialogVisible = false
               this.loadData()
             })
-            .catch(error => {
+            .catch((error) => {
               this.$message.error(error || this.$t('error.networkError'))
             })
         }
@@ -291,7 +291,7 @@ export default {
           this.loadData()
           self.$refs[`popover-${index}`].doClose()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },

@@ -27,7 +27,7 @@ let timer = 0
 
 // Add auth headers
 Axios.interceptors.request.use(
-  config => {
+  (config) => {
     if (store.state.user.username) {
       config.auth = {
         username: store.state.user.username,
@@ -42,7 +42,7 @@ Axios.interceptors.request.use(
     }, 100)
     return config
   },
-  error => {
+  (error) => {
     console.warn('Request Error: ', error)
     store.dispatch('LOADING', false)
   },
@@ -76,7 +76,7 @@ function handleError(error) {
 }
 
 // Response interceptors
-Axios.interceptors.response.use(response => {
+Axios.interceptors.response.use((response) => {
   let res = {}
   let error = ''
   if (typeof response.data === 'object') {

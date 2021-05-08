@@ -17,7 +17,7 @@
               class="el-select--public"
               popper-class="el-select--public"
               style="width: 100%;"
-              :disabled="!!resourceType"
+              :disabled="!!resourceType || oper === 'edit'"
               @change="handleTypeChange"
             >
               <div v-for="(item, index) in resourceTypes" :key="index">
@@ -34,9 +34,7 @@
 
         <el-col :span="12">
           <el-form-item>
-            <template slot="label"
-              >&nbsp;</template
-            >
+            <template slot="label">&nbsp;</template>
             <el-button type="primary" @click="handleCreate(false)">
               {{ $t('rule.conf_test') }}
             </el-button>
@@ -46,12 +44,12 @@
         <template v-if="record.type">
           <el-col :span="12">
             <el-form-item prop="id" :label="$t('rule.resource_id')">
-              <el-input v-model="record.id"></el-input>
+              <el-input v-model="record.id" :disabled="oper === 'edit'"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item prop="description" :label="$t('rule.resource_des')">
-              <el-input type="textarea" v-model="record.description"></el-input>
+              <el-input v-model="record.description"></el-input>
             </el-form-item>
           </el-col>
 
@@ -60,7 +58,10 @@
             :span="item.type === 'object' || item.type === 'array' || item.$attrs.type === 'textarea' ? 24 : 12"
             :key="index"
           >
-            <el-form-item :prop="`config.${item.prop}`">
+            <el-form-item
+              v-if="item.type !== 'file' && !['verify', 'tls_version', 'ciphers'].includes(item.key)"
+              :prop="`config.${item.prop}`"
+            >
               <template slot="label">
                 {{ item.label }}
 
@@ -85,6 +86,8 @@
               >
               </emq-select>
 
+              <file-editor v-else-if="item.type === 'file'" v-model="record.config[item.key]"></file-editor>
+
               <!-- Number field -->
               <el-input
                 v-else-if="item.type === 'number'"
@@ -94,9 +97,47 @@
               >
               </el-input>
 
+              <!-- Password field -->
+              <el-input
+                v-else-if="item.type === 'password'"
+                v-model="record.config[item.key]"
+                v-bind="item.$attrs"
+                show-password
+              >
+              </el-input>
+
               <!-- String field -->
               <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
             </el-form-item>
+            <template v-else>
+              <el-form-item
+                v-if="
+                  ['true', true].includes(record.config['https_enabled']) ||
+                  ['true', true].includes(record.config['ssl']) ||
+                  (record.config['ssl'] === undefined && record.config['https_enabled'] === undefined)
+                "
+                :prop="`config.${item.prop}`"
+              >
+                <template slot="label">
+                  {{ item.label }}
+
+                  <el-popover v-if="item.description" placement="right" width="200" trigger="hover">
+                    <div v-html="item.description"></div>
+                    <span tabindex="-1" class="el-icon-question" slot="reference"></span>
+                  </el-popover>
+                </template>
+                <file-editor v-if="item.type === 'file'" v-model="record.config[item.key]"></file-editor>
+                <emq-select
+                  v-else-if="item.type === 'emq-select'"
+                  v-bind="item.$attrs"
+                  v-model="record.config[item.key]"
+                  class="el-select--public"
+                  popper-class="el-select--public"
+                >
+                </emq-select>
+                <el-input v-else v-bind="item.$attrs" v-model="record.config[item.key]"> </el-input>
+              </el-form-item>
+            </template>
           </el-col>
         </template>
       </el-row>
@@ -107,7 +148,7 @@
         {{ $t('rule.cancel') }}
       </el-button>
       <el-button class="confirm-btn" type="success" @click="handleCreate">
-        {{ $t('rule.create') }}
+        {{ oper === 'edit' ? $t('rule.confirm') : $t('rule.create') }}
       </el-button>
     </div>
   </el-dialog>
@@ -116,13 +157,14 @@
 <script>
 import EmqSelect from '~/components/EmqSelect'
 import ArrayEditor from '~/components/ArrayEditor'
+import FileEditor from '~/components/FileEditor'
 import { params2Form, verifyID } from '~/common/utils'
 
 const lang = window.localStorage.language || window.EMQX_DASHBOARD_CONFIG.lang || 'en'
 
 export default {
   name: 'resource-dialog',
-  components: { EmqSelect, ArrayEditor },
+  components: { EmqSelect, ArrayEditor, FileEditor },
   inheritAttrs: false,
 
   props: {
@@ -136,6 +178,14 @@ export default {
     enableItem: {
       type: Array,
       default: () => [],
+    },
+    oper: {
+      type: String,
+      default: 'add',
+    },
+    editItem: {
+      type: Object,
+      default: () => {},
     },
   },
 
@@ -173,7 +223,7 @@ export default {
 
   methods: {
     clearTabIndex() {
-      document.querySelectorAll('.el-icon-question').forEach(el => {
+      document.querySelectorAll('.el-icon-question').forEach((el) => {
         el.setAttribute('tabindex', '-1')
       })
     },
@@ -182,14 +232,29 @@ export default {
         this.$refs.record.resetFields()
       }
     },
+    cleanFileContent(config) {
+      const falseValues = [false, 'false']
+      if (falseValues.includes(config.ssl)) {
+        config.verify = false
+        Object.keys(config).forEach((key) => {
+          const oneValue = config[key]
+          if (typeof oneValue === 'object' && Object.keys(oneValue).includes('file')) {
+            config[key] = {
+              file: '',
+              filename: '',
+            }
+          }
+        })
+      }
+    },
     handleCreate(isCreate = true) {
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           return
         }
         const { config } = this.record
         // String to Boolean
-        Object.keys(config).forEach(label => {
+        Object.keys(config).forEach((label) => {
           const value = config[label]
           if (value === 'true') {
             this.record.config[label] = true
@@ -198,9 +263,14 @@ export default {
             this.record.config[label] = false
           }
         })
+        this.cleanFileContent(config)
         const url = isCreate ? '/resources' : '/resources?test=true'
+        if (this.oper === 'edit' && isCreate) {
+          this.handleEdit(url, this.record)
+          return
+        }
         this.$httpPost(url, this.record)
-          .then(res => {
+          .then((res) => {
             if (!isCreate) {
               this.$message.success(this.$t('rule.conf_test_success'))
               return
@@ -215,7 +285,7 @@ export default {
     handleTypeChange(val) {
       this.paramsList = []
       this.resourceRules = {}
-      const resourceType = this.resourceTypes.find($ => $.name === val)
+      const resourceType = this.resourceTypes.find(($) => $.name === val)
       if (!resourceType) {
         return
       }
@@ -233,26 +303,35 @@ export default {
         this.$set(this.record, 'config', {})
       }
       this.$set(this.record, 'config', {})
-      // 设置默认值
-      this.paramsList.forEach(item => {
-        this.$set(this.record.config, item.key, item.defaultValue)
-      })
+      if (this.oper === 'edit') {
+        this.assignValuesToRecord()
+      } else {
+        // 设置默认值
+        this.paramsList.forEach((item) => {
+          this.$set(this.record.config, item.key, item.defaultValue)
+        })
+      }
       setTimeout(() => {
         this.$refs.record.clearValidate()
       }, 30)
     },
     loadResourceTypes() {
-      this.$httpGet('/resource_types').then(response => {
+      this.$httpGet('/resource_types').then((response) => {
         this.record = {
           type: '',
           config: {},
           description: '',
           id: 'resource:' + Math.random().toString().slice(3, 9),
         }
-        if (this.resourceType) {
+        // edit
+        if (this.oper === 'edit') {
+          const { type, id } = this.editItem
+          this.record.type = type
+          this.record.id = id
+        } else if (this.resourceType) {
           this.record.type = this.resourceType
         }
-        this.resourceTypes = response.data.map(item => {
+        this.resourceTypes = response.data.map((item) => {
           item.titleLabel = typeof item.title === 'object' ? item.title[lang] : item.title
           return item
         })
@@ -261,6 +340,34 @@ export default {
           this.$refs.record.clearValidate()
         }, 30)
       })
+    },
+    assignValuesToRecord() {
+      const { config, description } = this.editItem
+      this.record.description = description
+      Object.keys(config).forEach((key) => {
+        const value = config[key]
+        this.$set(this.record.config, key, value)
+      })
+    },
+    handleEdit(url, record) {
+      this.$confirm(this.$t('rule.confirm_edit_resource'), 'Notice', {
+        confirmButtonClass: 'confirm-btn',
+        confirmButtonText: this.$t('oper.confirm'),
+        cancelButtonClass: 'cache-btn el-button--text',
+        cancelButtonText: this.$t('oper.cancel'),
+        type: 'warning',
+      })
+        .then(() => {
+          const { id } = this.editItem
+          this.$httpPut(`${url}/${id}`, record)
+            .then((res) => {
+              this.$message.success(this.$t('rule.edit_success'))
+              this.dialogVisible = false
+              this.$emit('confirm', res.data)
+            })
+            .catch(() => {})
+        })
+        .catch()
     },
   },
 }

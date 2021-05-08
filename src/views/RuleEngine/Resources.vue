@@ -11,7 +11,7 @@
         size="medium"
         style="float: right;"
         :disable="$store.state.loading"
-        @click="handleOperation"
+        @click="handleOperation('add')"
       >
         {{ $t('rule.create') }}
       </el-button>
@@ -49,29 +49,36 @@
       <!-- resource table -->
       <el-table-column prop="id" :label="$t('rule.id')">
         <template slot-scope="{ row }">
-          <span class="" @click="viewResource(row)">
+          <span class="resource-id" @click="viewResource(row)">
             {{ row.id }}
           </span>
         </template>
       </el-table-column>
       <el-table-column prop="description" :label="$t('rule.resource_des')"></el-table-column>
       <el-table-column prop="type" :label="$t('rule.resource_type')"></el-table-column>
-      <el-table-column :label="$t('rule.oper')">
+      <el-table-column min-width="120px" :label="$t('rule.oper')">
         <template slot-scope="{ row, $index }">
-          <el-button plain type="success" size="mini" @click="viewResource(row)">
-            {{ $t('rule.view') }}
+          <el-button plain type="success" size="mini" @click="viewRunningStatus(row, $index)">
+            {{ $t('rule.viewStates') }}
+          </el-button>
+          <el-button plain type="success" size="mini" @click="handleOperation('edit', row)">
+            {{ $t('rule.edit') }}
           </el-button>
           <el-button plain size="mini" type="warning" @click="handleDelete(row)">
             {{ $t('rule.delete') }}
-          </el-button>
-          <el-button plain type="success" size="mini" @click="viewRunningStatus(row, $index)">
-            {{ $t('rule.viewStates') }}
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <resource-dialog ref="resourceDialog" :visible.sync="dialogVisible" @confirm="loadData"> </resource-dialog>
+    <resource-dialog
+      ref="resourceDialog"
+      :visible.sync="dialogVisible"
+      :oper="oper"
+      :editItem="resourceToEdit"
+      @confirm="loadData"
+    >
+    </resource-dialog>
 
     <el-dialog :title="$t('rule.resource_details')" :visible.sync="viewDialogVisible">
       <div class="dialog-preview">
@@ -152,6 +159,8 @@ export default {
       res: {},
       reloadLoading: false,
       currentResource: '',
+      oper: 'add',
+      resourceToEdit: {},
     }
   },
 
@@ -202,13 +211,15 @@ export default {
       this.res = { ...row }
       this.viewDialogVisible = true
     },
-    handleOperation() {
+    handleOperation(oper, row) {
       this.dialogVisible = true
+      this.oper = oper
+      this.resourceToEdit = { ...row }
     },
     loadData() {
-      this.$httpGet('/resources').then(response => {
+      this.$httpGet('/resources').then((response) => {
         const data = response.data
-        this.tableData = data.map($ => {
+        this.tableData = data.map(($) => {
           $.status = $.status || []
           return $
         })
@@ -218,7 +229,7 @@ export default {
       if (row.status && row.status.length > 0) {
         return
       }
-      this.$httpGet(`/resources/${row.id}`).then(res => {
+      this.$httpGet(`/resources/${row.id}`).then((res) => {
         this.$set(row, 'status', res.data.status)
       })
     },
@@ -234,6 +245,11 @@ export default {
 .resources-view {
   .el-table {
     margin-top: 24px;
+  }
+
+  .resource-id {
+    color: #34c388;
+    cursor: pointer;
   }
 
   .status-wrapper {

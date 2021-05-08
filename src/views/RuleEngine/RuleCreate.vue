@@ -23,7 +23,7 @@
           </div>
 
           <div class="form-block__body">
-            <el-row style="max-width: 1366px;">
+            <el-row style="max-width: 1366px">
               <el-col :span="14">
                 <el-form-item prop="rawsql" :label="$t('rule.rule_sql')" class="code-sql rawsql">
                   <div class="monaco-container">
@@ -97,21 +97,21 @@
               </el-col>
 
               <el-col class="sql-tips" :span="8" :offset="1">
-                <div class="title">
+                <!-- <div class="title">
                   {{ $t('rule.rule_sql_tips_title') }}
                 </div>
-                <el-scrollbar wrap-class="doc-wrapper">
-                  <div v-html="$t('rule.sql_tips_html')"></div>
-                </el-scrollbar>
+                <el-scrollbar wrap-class="doc-wrapper"> -->
+                <div v-html="$t('rule.sql_tips_html')"></div>
+                <!-- </el-scrollbar> -->
               </el-col>
             </el-row>
           </div>
         </div>
 
         <!-- 触发动作 -->
-        <div class="form-block--wrapper" style="clear: both;">
+        <div class="form-block--wrapper" style="clear: both">
           <div class="form-block__title">
-            <span style="color: #ff6d6d;">*</span>
+            <span style="color: #ff6d6d">*</span>
             {{ $t('rule.set_action') }}
             <div class="form-block__title-tips">
               {{ $t('rule.actions_tips') }}
@@ -119,7 +119,7 @@
           </div>
 
           <div class="form-block__body">
-            <el-row style="max-width: 1366px;">
+            <el-row style="max-width: 1366px">
               <el-col :span="23">
                 <rule-actions :operations="['create', 'delete', 'edit']" :record="record"> </rule-actions>
               </el-col>
@@ -177,6 +177,7 @@ export default {
         actions: [],
         description: '',
         ctx: {},
+        id: `rule:${Math.random().toString().slice(3, 9)}`,
       },
       rules: {
         rawsql: { required: true, message: this.$t('rule.sql_required') },
@@ -260,7 +261,7 @@ export default {
     handleTest() {
       this.testOutPut = ''
       this.needCheckSql = true
-      this.$refs.record.validate(valid => {
+      this.$refs.record.validate((valid) => {
         if (!valid) {
           if (this.inTest && !this.record.id) {
             this.$refs.record.clearValidate('id')
@@ -279,7 +280,7 @@ export default {
         } catch (e) {
           console.log(data.ctx.payload)
         }
-        this.$httpPost('/rules?test=true', data).then(res => {
+        this.$httpPost('/rules?test=true', data).then((res) => {
           const { data } = res
           this.testOutPut = JSON.stringify(data, null, 2)
         })
@@ -297,7 +298,7 @@ export default {
       ]
       let values = null
       let value = ''
-      events.forEach(e => {
+      events.forEach((e) => {
         const [regType, regEvent] = e.split('/')
         const reg = new RegExp(`\\$${regType}\\/${regEvent}`, 'gim')
         if (sql.match(reg)) {
@@ -312,7 +313,7 @@ export default {
       if (value === this.selectedOption.event) {
         return
       }
-      this.selectedOption = this.eventsList.find($ => $.event === value) || { columns: {}, test_columns: {} }
+      this.selectedOption = this.eventsList.find(($) => $.event === value) || { columns: {}, test_columns: {} }
       this.sqlPrimaryKey = this.selectedOption.columns
       this.initTestFormItem()
     },
@@ -322,7 +323,7 @@ export default {
       const testFieldRules = {}
 
       const { test_columns: testColumns } = this.selectedOption
-      Object.keys(testColumns).forEach(k => {
+      Object.keys(testColumns).forEach((k) => {
         let value = testColumns[k]
 
         if (typeof value === 'object') {
@@ -359,8 +360,9 @@ export default {
     },
     handleCreate() {
       if (this.$refs.record) {
-        this.$refs.record.validate(valid => {
+        this.$refs.record.validate((valid) => {
           if (!valid) {
+            this.$message.error(this.$t('rule.validateErr'))
             return
           }
           if (this.record.actions.length === 0) {
@@ -390,7 +392,7 @@ export default {
       }
     },
     loadRule(ruleID) {
-      this.$httpGet(`/rules/${ruleID}`).then(res => {
+      this.$httpGet(`/rules/${ruleID}`).then((res) => {
         this.record = res.data
       })
     },
@@ -476,7 +478,7 @@ export default {
   }
 
   .sql-tips {
-    padding: 20px 0;
+    padding: 20px;
     border-radius: 4px;
     font-size: 15px;
     max-height: 480px;

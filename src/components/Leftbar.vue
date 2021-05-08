@@ -1,10 +1,7 @@
 <template>
   <div class="left-bar">
-    <div class="bar-title">
-      <div>
-        <img class="logo" src="../assets/emqlogo.svg" />
-      </div>
-      <h3>Dashboard</h3>
+    <div class="logo-box">
+      <img class="logo" src="../assets/emq_logo.png" />
     </div>
     <el-menu
       mode="vertical"
@@ -13,6 +10,7 @@
       text-color="#A6A6A8"
       active-text-color="#34C388"
       :default-active="'/' + $route.path.split('/')[1]"
+      class="menu-wrapper"
     >
       <template v-for="(menu, index) in menus">
         <el-submenu v-if="menu.children && menu.children.length > 0" :key="index" :index="`${index + 1}`">
@@ -212,10 +210,10 @@ export default {
       this.$router.push({ path: '/login' })
     },
     setNewFeatOnleftbar() {
-      this.menus.forEach(menu => {
+      this.menus.forEach((menu) => {
         const { data } = this.showFeatOnLeftbar
         if (menu.children && menu.children.length > 0) {
-          menu.children.forEach(submenu => {
+          menu.children.forEach((submenu) => {
             if (data[submenu.id]) {
               menu.hasNew = true
               submenu.hasNew = true
@@ -247,7 +245,6 @@ export default {
   z-index: 1002;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-top: 140px;
   padding-bottom: 45px;
   background-color: #242327;
   box-shadow: 0px 0px 15px #0b0b0b;
@@ -257,27 +254,20 @@ export default {
     font-size: 18px;
   }
 
-  .bar-title {
+  .logo-box {
     position: fixed;
     top: 0;
-    z-index: 1003;
+    z-index: 100;
     width: 200px;
-    border-bottom: 1px solid #2b2c30;
     color: #fff !important;
     background-color: #242327;
-    text-align: center;
-    padding: 24px 0;
-
-    h3 {
-      font-size: 18px;
-      margin: 0px;
-      color: #fff;
-    }
+    padding-left: 22px;
+    height: 60px;
+    line-height: 74px;
 
     img {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 8px;
+      width: 72px;
+      height: auto;
     }
   }
 
@@ -316,6 +306,10 @@ export default {
     width: 200px;
     min-height: 100%;
     border-right: none !important;
+  }
+
+  .menu-wrapper {
+    padding-top: 58px;
   }
 
   .el-submenu__title {

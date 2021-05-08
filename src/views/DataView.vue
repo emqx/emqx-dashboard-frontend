@@ -2,7 +2,7 @@
   <div class="data-view">
     <div class="page-title">
       {{ $t(`leftbar.${activeTab}`) }}
-      <div style="float: right;" @keyup.enter.native="searchChild">
+      <div style="float: right" @keyup.enter.native="searchChild">
         <el-select
           v-if="activeTab !== 'topics'"
           v-model="nodeName"
@@ -11,7 +11,8 @@
           :disabled="$store.state.loading"
           @change="loadChild(true)"
         >
-          <el-option v-for="item in nodes" :key="item.node" :label="item.node" :value="item.node"> </el-option>
+          <el-option v-for="item in nodes" :key="item.node" :label="item.name || item.node" :value="item.node">
+          </el-option>
         </el-select>
       </div>
     </div>
@@ -141,9 +142,7 @@
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column prop="ip_address" :label="$t('clients.ipAddr')" min-width="140px" show-overflow-tooltip>
-        <template slot-scope="{ row }">
-          {{ row.ip_address }}:{{ row.port }}
-        </template>
+        <template slot-scope="{ row }"> {{ row.ip_address }}:{{ row.port }} </template>
       </el-table-column>
       <el-table-column prop="keepalive" min-width="100px" :label="$t('clients.keepalive')"></el-table-column>
       <el-table-column prop="expiry_interval" min-width="150px" :label="$t('clients.expiryInterval')"></el-table-column>
@@ -163,7 +162,7 @@
         <template slot-scope="{ row, $index, _self }">
           <el-popover :ref="`popover-${$index}`" placement="right" trigger="click">
             <p>{{ row.connected ? $t('oper.confirmKickOut') : $t('oper.confirmCleanSession') }}</p>
-            <div style="text-align: right;">
+            <div style="text-align: right">
               <el-button size="mini" type="text" class="cache-btn" @click="_self.$refs[`popover-${$index}`].doClose()">
                 {{ $t('oper.cancel') }}
               </el-button>
@@ -223,20 +222,20 @@
 
 <script>
 /* eslint-disable camelcase */
-import { Pagination, Input, Select, Option, Table, TableColumn, DatePicker } from 'element-ui'
+// import { Pagination, Input, Select, Option, Table, TableColumn, DatePicker } from 'element-ui'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'data-view',
-  components: {
-    'el-pagination': Pagination,
-    'el-input': Input,
-    'el-select': Select,
-    'el-option': Option,
-    'el-table': Table,
-    'el-table-column': TableColumn,
-    'el-date-picker': DatePicker,
-  },
+  // components: {
+  //   'el-pagination': Pagination,
+  //   'el-input': Input,
+  //   'el-select': Select,
+  //   'el-option': Option,
+  //   'el-table': Table,
+  //   'el-table-column': TableColumn,
+  //   'el-date-picker': DatePicker,
+  // },
   data() {
     return {
       searchView: false,
@@ -307,13 +306,25 @@ export default {
       this.searchValue = ''
       // set default of select
       this.$httpGet('/nodes')
-        .then(response => {
-          const currentNode = this.$store.state.nodeName || response.data[0].node
+        .then((response) => {
+          let currentNode = ''
+          if (this.activeTab !== 'topics') {
+            const allNodesOption = [
+              {
+                name: this.$t('select.cluster'),
+                node: 'all',
+              },
+            ]
+            this.nodes = allNodesOption.concat(response.data)
+            currentNode = 'all'
+          } else {
+            this.nodes = response.data
+            currentNode = this.$store.state.nodeName || this.nodes[0].node
+          }
           this.nodeName = this.cluster ? 'cluster' : currentNode
-          this.nodes = response.data
           this.loadChild()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -328,7 +339,11 @@ export default {
       if (!this.nodeName && this.activeTab !== 'topics') {
         return
       }
-      let url = `/nodes/${this.nodeName}/${this.activeTab}`
+      // show allNodes data or single node data
+      let url =
+        this.nodeName === 'all' && this.activeTab !== 'topics'
+          ? `/${this.activeTab}`
+          : `/nodes/${this.nodeName}/${this.activeTab}`
       // cluster
       if (this.activeTab === 'topics' || this.cluster) {
         url = this.activeTab === 'topics' ? 'routes' : this.activeTab
@@ -345,12 +360,12 @@ export default {
         }
       }
       this.$httpGet(url, params)
-        .then(response => {
+        .then((response) => {
           this[this.activeTab] = response.data.items
           this.count = response.data.meta.count || 0
           this.hasnext = response.data.meta.hasnext
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -370,7 +385,7 @@ export default {
         requestURL = `/${url}/${encodeURIComponent(this.searchValue)}`
       }
       this.$httpGet(requestURL)
-        .then(response => {
+        .then((response) => {
           // reset page
           this.count = 0
           this.params = {
@@ -380,7 +395,7 @@ export default {
           this.searchView = true
           this[this.activeTab] = response.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -411,7 +426,7 @@ export default {
           // Close popover
           self.$refs[`popover-${index}`].doClose()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },

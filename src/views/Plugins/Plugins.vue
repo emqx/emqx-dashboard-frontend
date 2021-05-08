@@ -3,12 +3,12 @@
     <!-- plugin list -->
     <div class="page-title">
       {{ $t('leftbar.plugins') }}
-      <div style="float: right;">
+      <div style="float: right">
         <el-input
           v-model="searchValue"
           class="input-radius"
           size="large"
-          style="float: right; padding-left: 20px;"
+          style="float: right; padding-left: 20px"
           :disabled="$store.state.loading"
           :placeholder="$t('plugins.searchByName')"
           clearable
@@ -36,8 +36,8 @@
             <a
               v-if="
                 !props.row.name.includes('dashboard') &&
-                  !props.row.name.includes('management') &&
-                  getLinks(props.row.name) !== undefined
+                !props.row.name.includes('management') &&
+                getLinks(props.row.name) !== undefined
               "
               class="tutorial"
               href="javascript:;"
@@ -53,7 +53,10 @@
         prop="active"
         width="150"
         :label="$t('plugins.status')"
-        :filters="[{ text: $t('plugins.stopped'), value: false }, { text: $t('plugins.running'), value: true }]"
+        :filters="[
+          { text: $t('plugins.stopped'), value: false },
+          { text: $t('plugins.running'), value: true },
+        ]"
       >
         <template slot-scope="props">
           <span :class="[props.row.active ? 'running' : '', 'status']">
@@ -92,25 +95,25 @@
 </template>
 
 <script>
-import { Input, Select, Option, Button, Table, TableColumn, Form, FormItem, Row, Col, Card } from 'element-ui'
+// import { Input, Select, Option, Button, Table, TableColumn, Form, FormItem, Row, Col, Card } from 'element-ui'
 import { mapActions } from 'vuex'
 import { getPluginLink, matchSearch } from '~/common/utils'
 
 export default {
   name: 'plugins-view',
-  components: {
-    'el-input': Input,
-    'el-select': Select,
-    'el-option': Option,
-    'el-button': Button,
-    'el-table': Table,
-    'el-table-column': TableColumn,
-    'el-form': Form,
-    'el-form-item': FormItem,
-    'el-row': Row,
-    'el-col': Col,
-    'el-card': Card,
-  },
+  // components: {
+  //   'el-input': Input,
+  //   'el-select': Select,
+  //   'el-option': Option,
+  //   //'el-button': Button,
+  //   'el-table': Table,
+  //   'el-table-column': TableColumn,
+  //   'el-form': Form,
+  //   'el-form-item': FormItem,
+  //   'el-row': Row,
+  //   'el-col': Col,
+  //   'el-card': Card,
+  // },
   data() {
     return {
       filterSet: new Set(),
@@ -132,12 +135,12 @@ export default {
     loadData() {
       this.searchView = false
       this.$httpGet('/nodes')
-        .then(response => {
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+        .then((response) => {
+          this.nodeName = response.data[0].node
           this.nodes = response.data
           this.loadPlugins()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -147,22 +150,22 @@ export default {
         return
       }
       this.$httpGet(`/nodes/${this.nodeName}/plugins`)
-        .then(response => {
+        .then((response) => {
           this.tableData = response.data
           this.handleFilter()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     handleFilter() {
       // No need to initialize Set
-      this.enableTableData = this.tableData.filter(item => !this.filterSet.has(item.active))
+      this.enableTableData = this.tableData.filter((item) => !this.filterSet.has(item.active))
     },
     resetFilter(e) {
       this.filterSet.clear()
-      Object.keys(e).forEach(item => {
-        e[item].forEach(active => {
+      Object.keys(e).forEach((item) => {
+        e[item].forEach((active) => {
           this.filterSet.add(!active)
         })
       })
@@ -180,7 +183,7 @@ export default {
           )
           this.loadPlugins()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
           this.loadPlugins()
         })
@@ -200,7 +203,7 @@ export default {
       }
       setTimeout(() => {
         matchSearch(this.tableData, 'name', this.searchValue)
-          .then(res => {
+          .then((res) => {
             if (res) {
               this.enableTableData = res
             }

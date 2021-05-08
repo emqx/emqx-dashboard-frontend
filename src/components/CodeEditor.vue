@@ -91,7 +91,7 @@ export default {
       const hintOptions = {
         tables: {},
       }
-      this.primaryKey.forEach(key => {
+      this.primaryKey.forEach((key) => {
         hintOptions.tables[key] = []
       })
       return hintOptions
@@ -114,7 +114,7 @@ export default {
         if (change.origin === '+input delete after+++') {
           const { text } = change
           if (text && (text[0] === ' ' || text[0] === ',')) {
-            setTimeout(function() {
+            setTimeout(function () {
               editor.execCommand('autocomplete')
             }, 20)
           }

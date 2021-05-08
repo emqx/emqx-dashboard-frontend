@@ -62,7 +62,7 @@ export function params2Form(params = {}, deepKey = '') {
   // 数组中的一个对象
   let oneObjOfArray = {}
 
-  Object.entries(params).forEach(item => {
+  Object.entries(params).forEach((item) => {
     const [key, value] = item
 
     if (key === '$resource') {
@@ -94,10 +94,13 @@ export function params2Form(params = {}, deepKey = '') {
     if (enumValue || type === 'boolean') {
       type = 'emq-select'
       if (enumValue) {
-        $attrs.field = { options: enumValue.map($ => ({ value: $, label: $ })) }
+        $attrs.field = { options: enumValue.map(($) => ({ value: $, label: $ })) }
       } else {
         $attrs.field = {
-          options: [{ label: true, value: true }, { label: false, value: false }],
+          options: [
+            { label: true, value: true },
+            { label: false, value: false },
+          ],
         }
       }
     }
@@ -111,6 +114,16 @@ export function params2Form(params = {}, deepKey = '') {
       if (!defaultValue.length) {
         defaultValue = []
       }
+    }
+
+    if (type === 'file') {
+      defaultValue =
+        typeof defaultValue === 'string'
+        ? {
+            file: '',
+            filename: defaultValue,
+          }
+        : defaultValue
     }
 
     if (input === 'textarea') {
@@ -149,7 +162,7 @@ export function getPluginLink(pluginName) {
 export function matchSearch(data, searchKey, searchValue) {
   return new Promise((resolve, reject) => {
     try {
-      const filterData = data.filter($ => {
+      const filterData = data.filter(($) => {
         if ($[searchKey]) {
           const key = $[searchKey].toLowerCase().replace(/\s+/g, '')
           const value = searchValue.toLocaleLowerCase().replace(/\s+/g, '')
@@ -178,7 +191,7 @@ export function ruleOldSqlCheck(sql) {
     'client.unsubscribe',
   ]
   let matchRes = null
-  oldEvent.forEach(e => {
+  oldEvent.forEach((e) => {
     const [eventType, eventValue] = e.split('.')
     const eventReg = new RegExp(`${eventType}\\.${eventValue}`, 'gim')
     if ($sql.match(eventReg)) {

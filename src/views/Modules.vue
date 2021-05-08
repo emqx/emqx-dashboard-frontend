@@ -3,7 +3,7 @@
     <!-- modules list -->
     <div class="page-title">
       {{ $t('leftbar.modules') }}
-      <div style="float: right;">
+      <div style="float: right">
         <el-select
           v-model="nodeName"
           class="select-radius"
@@ -23,7 +23,10 @@
         prop="active"
         width="150"
         :label="$t('plugins.status')"
-        :filters="[{ text: $t('modules.disabled'), value: false }, { text: $t('modules.enabled'), value: true }]"
+        :filters="[
+          { text: $t('modules.disabled'), value: false },
+          { text: $t('modules.enabled'), value: true },
+        ]"
       >
         <template slot-scope="props">
           <span :class="[props.row.active ? 'running' : '', 'status']">
@@ -75,12 +78,12 @@ export default {
     ...mapActions(['CURRENT_NODE']),
     loadData() {
       this.$httpGet('/nodes')
-        .then(response => {
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+        .then((response) => {
+          this.nodeName = response.data[0].node
           this.nodes = response.data
           this.loadModuls()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
@@ -90,22 +93,22 @@ export default {
         return
       }
       this.$httpGet(`/nodes/${this.nodeName}/modules`)
-        .then(response => {
+        .then((response) => {
           this.tableData = response.data
           this.handleFilter()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
     handleFilter() {
       // No need to initialize Set
-      this.enableTableData = this.tableData.filter(item => !this.filterSet.has(item.active))
+      this.enableTableData = this.tableData.filter((item) => !this.filterSet.has(item.active))
     },
     resetFilter(e) {
       this.filterSet.clear()
-      Object.keys(e).forEach(item => {
-        e[item].forEach(active => {
+      Object.keys(e).forEach((item) => {
+        e[item].forEach((active) => {
           this.filterSet.add(!active)
         })
       })
@@ -121,7 +124,7 @@ export default {
           this.$message.success(`${row.active ? this.$t('oper.disabledSuccess') : this.$t('oper.enableSuccess')}`)
           this.loadModuls()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
           this.loadModuls()
         })

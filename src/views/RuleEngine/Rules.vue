@@ -199,7 +199,7 @@ export default {
     loadDetails(id) {
       this.ruleDialogLoading = true
       this.$httpGet(`/rules/${id}`)
-        .then(res => {
+        .then((res) => {
           const { data } = res
           this.rule = data
           setTimeout(() => {
@@ -234,9 +234,9 @@ export default {
       this.$router.push('/rules/create')
     },
     loadData() {
-      this.$httpGet('/rules').then(response => {
+      this.$httpGet('/rules').then((response) => {
         this.tableData = response.data
-        const currentRule = this.tableData.find($ => $.id === this.rule.id)
+        const currentRule = this.tableData.find(($) => $.id === this.rule.id)
         if (currentRule) {
           this.rule = currentRule
         }
@@ -254,7 +254,7 @@ export default {
 
   filters: {
     actionsFilter(actions) {
-      return actions.map($ => $.name).join(',  ')
+      return actions.map(($) => $.name).join(',  ')
     },
   },
 

@@ -68,6 +68,8 @@ export default {
     reset: 'Reset',
     next: 'Next',
     prev: 'Previous',
+    fileTip: 'Please upload file',
+    uploadFailed: 'Upload failed',
   },
   // topbar
   topbar: {
@@ -460,6 +462,7 @@ export default {
       'The FAQ contains questions that we are often asked about. It is recommended to use the FAQ to retrieve problems you encounter during use.',
     forwardFaq: 'Go to FAQ',
     followUs: 'Follow us',
+    ytLink: 'https://www.youtube.com/channel/UC5FjR77ErAxvZENEWzQaO5Q',
   },
   analysis: {
     topicMetrics: 'Topic metrics',

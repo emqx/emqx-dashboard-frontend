@@ -56,7 +56,7 @@ export default {
       },
       set(val) {
         const valueKey = this.fieldName.value
-        const item = this.options.find($ => $[valueKey] === val)
+        const item = this.options.find(($) => $[valueKey] === val)
         if (item && this.parserField[valueKey]) {
           val = val === 'true'
         }
@@ -91,7 +91,7 @@ export default {
       const valueKey = this.fieldName.value
       const labelKey = this.fieldName.label
 
-      this.options = options.map(option => {
+      this.options = options.map((option) => {
         const value = option[valueKey]
         const label = option[labelKey]
         if (typeof value === 'boolean') {
@@ -115,7 +115,7 @@ export default {
       if (options) {
         value = options
       } else if (list) {
-        value = list.map($ => ({ label: $, value: $ }))
+        value = list.map(($) => ({ label: $, value: $ }))
       } else if (api) {
         value = await api()
       }

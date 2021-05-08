@@ -85,6 +85,7 @@ export const en = {
   rule_details: 'Details',
   rule_desc: 'Description',
   confirm_stop_delete: 'Confirm to stop and remove ？',
+  confirm_edit_resource: 'Confirm to modify the configuration information ?',
   delete_success: 'Delete success',
   action_exists: 'Action already exists',
   cancel: 'Cancel',
@@ -93,12 +94,14 @@ export const en = {
   resource_type: 'Resource Type',
   description: 'Description',
   create_success: 'Create success',
+  edit_success: 'Edit success',
   type: 'Type',
   value: 'Value',
   edit: 'Edit',
   add: 'Add',
   ruleEnabled: 'Enabled',
   ruleDisabled: 'Disabled',
+  validateErr: 'Related required fields are not filled in!',
 
   basic_info: 'Basic Info',
   rule_name_required: 'rule name required',
@@ -106,32 +109,8 @@ export const en = {
   rule_id: 'Rule ID',
   rule_descr_placeholder: 'e.g.message render to Webhook',
   rule_sql_tips_title: 'Write SQL statements for conditional filtering and data processing:',
-  sql_tips_html: `<p>EMQ X will trigger the Rule Engine when the message is published and the event is triggered, and the rules meeting the triggering conditions will execute their respective SQL statements to filter and process the context information of the message and event.</p>
-
-  <p class="item">
-    With the Actions, the Rule Engine can store the message processing results of a specified topic to the database, send them to the HTTP Server, forward them to the Kafka or RabbitMQ, and republish them to a new topic or another broker cluster like Azure IoT Hub. Each rule can allocate multiple Actions.
-  </p>
-
-  <p>1. Select the messages published to t/# and select all fields:</p>
-
-  <div class="code">
-    <code>SELECT * FROM  "t/#"</code>
-  </div>
-
-  <p>2. Select the message published to the t/a topic, and select the "x" field from the message payload in JSON format:</p>
-
-  <div class="code">
-    <code>SELECT payload.x as x FROM "t/a"</code>
-  </div>
-
-  <p class="item">The Rule Engine uses the virtual topic (Event Topic) starting with $events/ to process the built-in events of EMQ X. the built-in events provide more sophisticated message control and client action processing capabilities, which can be used in the message arrival records of QoS 1 and QoS 2, the device up and down line records and other businesses.</p>
-
-  <p>1. Select the client connected event, filter the device with Username 'emqx' and select the connection information:</p>
-  <div class="code">
-    <code>SELECT clientid FROM "$events/client_connected" WHERE username = 'emqx'</code>
-  </div>
-
-  <p>See the EMQ X documentation for a detailed tutorial on the rules engine and SQL statements.</p>`,
+  sql_tips_html:
+    '<p>Rule Engine is the core SQL-based data processing and distribution component on top of the standard MQTT. It makes it easy to filter and process MQTT messages and device lifecycle events and move data distribution to HTTP Server, database, message queues, or even another MQTT Broker.</p><p>1. Select the messages published to t/# and select all fields:</p><div class="code"><code>SELECT * FROM  "t/#"</code> </div><p>2. Select the client connected event and filter the device with Username \'emqx\' to get the connection information.</p><div class="code"><code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = \'emqx\'</code></div><p>For a detailed tutorial on the rule engine and SQL queries please refer to <a target="_blank" href="https://docs.emqx.io/en/broker/latest/rule/rule-engine.html">EMQ X Documentation</a>。</p>',
   condition_screening: 'Condition Screening',
   topic_condition: 'Topic',
   message_publish_topic: 'Message topic',
@@ -266,6 +245,7 @@ export const zh = {
   rule_details: '规则详情',
   rule_desc: '规则描述',
   confirm_stop_delete: '确认停用并删除？',
+  confirm_edit_resource: '确认修改配置信息？',
   delete_success: '删除成功',
   action_exists: '动作已存在',
   cancel: '取消',
@@ -274,12 +254,14 @@ export const zh = {
   resource_type: '资源类型',
   description: '备注',
   create_success: '创建成功',
+  edit_success: '编辑成功',
   type: '类型',
   value: '值',
   edit: '编辑',
   add: '添加',
   ruleEnabled: '已启动',
   ruleDisabled: '已停止',
+  validateErr: '相关必填项未填写！',
 
   basic_info: '基本信息',
   rule_name_required: '请输入规则名称',
@@ -287,29 +269,9 @@ export const zh = {
   rule_id: '规则 ID',
   rule_descr_placeholder: 'e.g.消息转发到 Webhook',
   rule_sql_tips_title: '编写 SQL 进行条件过滤与数据处理：',
-  sql_tips_html: `<p>EMQ X 在消息发布、事件触发时将触发规则引擎，满足触发条件的规则将执行各自的 SQL 语句筛选并处理消息和事件的上下文信息。</p>
-  <p class="item">规则引擎借助响应动作可将特定主题的消息处理结果存储到数据库，发送到 HTTP Server，转发到消息队列 Kafka 或 RabbitMQ，重新发布到新的主题甚至是另一个 Broker 集群中，每个规则可以配置多个响应动作。</p>
+  sql_tips_html:
+    '<p>规则引擎是标准 MQTT 之上基于 SQL 的核心数据处理与分发组件，可以方便的筛选并处理 MQTT 消息与设备生命周期事件，并将数据分发移动到 HTTP Server、数据库、消息队列甚至是另一个 MQTT Broker 中。</p><p>1. 选择 \'t/#\' 主题的消息，提取全部字段：</p><div class="code"><code>SELECT * FROM  "t/#"</code></div><p>2. 通过事件主题选择客户端连接事件，筛选 Username 为 \'emqx\' 的设备并获取连接信息：</p><div class="code"><code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = \'emqx\'</code></div><p>规则引擎和 SQL 语句的详细教程参见 <a target="_blank" href="https://docs.emqx.cn/broker/latest/rule/rule-engine.html">EMQ X 文档</a>。</p>`',
 
-  <p>1. 选择发布到 't/#' 主题的消息，并筛选出全部字段：</p>
-
-  <div class="code">
-    <code>SELECT * FROM  "t/#"</code>
-  </div>
-
-  <p>2. 选择发布到 't/a' 主题的消息，并从 JSON 格式的消息内容中筛选出 "x" 字段：</p>
-
-  <div class="code">
-    <code>SELECT payload.x as x FROM "t/a"</code>
-  </div>
-
-  <p class="item">规则引擎使用 $events/ 开头的虚拟主题（事件主题）处理 EMQ X 内置事件，内置事件提供更精细的消息控制和客户端动作处理能力，可用在 QoS 1 QoS 2 的消息抵达记录、设备上下线记录等业务中。<p>
-
-  <p>1. 选择客户端连接事件，筛选 Username 为 'emqx' 的设备并获取连接信息：</p>
-  <div class="code">
-    <code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = 'emqx'</code>
-  </div>
-
-  <p>规则引擎和 SQL 语句的详细教程参见 EMQ X 文档。</p>`,
   condition_screening: '条件筛选',
   topic_condition: '主题条件',
   message_publish_topic: '消息发布主题',
@@ -409,7 +371,8 @@ export const ja = {
   event_info: '利用可能なフィールド',
   suggest_sql: 'SQLサンプル',
   upgrade_tip: 'アップグレードヒント',
-  json_decode_upgrade: 'カレントバージョンでは自動的にpayloadのJSONにデコード機能が廃棄されました。payloadのフィールドを選択して、json_decodeでデコードしてください。例として、',
+  json_decode_upgrade:
+    'カレントバージョンでは自動的にpayloadのJSONにデコード機能が廃棄されました。payloadのフィールドを選択して、json_decodeでデコードしてください。例として、',
   events: {
     message_acked: 'メッセージの肯定応答',
     message_dropped: 'メッセージドロップ',
@@ -443,6 +406,7 @@ export const ja = {
   rule_details: 'ルール詳細',
   rule_desc: 'ルール詳細',
   confirm_stop_delete: '停止して削除することを確認しますか？',
+  confirm_edit_resource: '構成情報の変更を確認する？',
   delete_success: '削除が成功しました',
   action_exists: 'アクションがすでに存在されました',
   cancel: 'キャンセル',
@@ -451,12 +415,14 @@ export const ja = {
   resource_type: 'リソースタイプ',
   description: '備考',
   create_success: '新規作成に成功しました',
+  edit_success: '更新しました',
   type: 'タイプ',
   value: '値',
   edit: '編集',
   add: '追加',
   ruleEnabled: '有効になります',
   ruleDisabled: '無効になります',
+  validateErr: '関連する必須フィールドは入力されていません！',
 
   basic_info: '基本情報',
   rule_name_required: 'ルール名を入力してください',
@@ -517,11 +483,13 @@ export const ja = {
   username_doc: 'カレントMQTTユーザ名',
   event_doc: 'トリガーイベント名',
   id_doc: 'MQTTメッセージid',
-  payload_doc: 'JSONフォーマットの場合、payloadが自動的にデコードされます。 SQL文中にpayload.xでオブジェクト情報を取得することができます',
+  payload_doc:
+    'JSONフォーマットの場合、payloadが自動的にデコードされます。 SQL文中にpayload.xでオブジェクト情報を取得することができます',
   peerhost_doc: 'クライアントアドレス',
   qos_doc: 'QoS 0、1、2 のメッセージ中の列挙型',
   timestamp_doc: 'タイムスタンプ（ミリ秒）',
-  topic_doc:'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
+  topic_doc:
+    'カレントMQTTトピック、SQL中にワイルドカードを使用してフィルターすることができます。 \nサブスクライブとアンサブスクライブの中に複数のトピックが存在している場合、最初のトピックだけを受け取れます。全てのデータを取得したい場合、topic_filtersを使用してください',
   node_doc: 'トリガ・イベントのノード名',
   message_delivered: 'メッセージ配信',
   message_acked: 'メッセージの肯定応答',
