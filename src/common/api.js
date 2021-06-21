@@ -52,7 +52,7 @@ const getRefreshToken = async () => {
 
 const currentNode = JSON.parse(localStorage.getItem('currentNode')) || {}
 const nodeID = currentNode.id
-const baseURL = `/api/edge/${nodeID}`
+const baseURL = `/api/edge/${nodeID}/api/v4`
 const baseInstance = Axios.create({
   headers: {
     'Content-Type': 'application/json',
