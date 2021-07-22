@@ -9,7 +9,7 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right;"
+        style="float: right"
         :disable="$store.state.loading"
         @click="handleOperation"
       >
@@ -29,8 +29,6 @@
       </el-table-column>
 
       <el-table-column prop="for" :label="$t('rule.topic')"></el-table-column>
-
-      <el-table-column prop="rawsql" min-width="150px" label="SQL"></el-table-column>
       <el-table-column prop="actions" :label="$t('rule.actions')">
         <template slot-scope="{ row }">
           <div v-for="(item, i) in row.actions" class="action-item" :key="i">
