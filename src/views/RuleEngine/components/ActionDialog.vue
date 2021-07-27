@@ -26,7 +26,7 @@
               class="el-select--public"
               popper-class="el-select--public"
               @change="handleActionChange"
-              style="width: 100%;"
+              style="width: 100%"
             >
               <el-option v-for="(item, index) in actionsList" :key="index" :label="item.label" :value="item.name">
               </el-option>
@@ -39,7 +39,7 @@
           <el-form-item class="resource-item" prop="params.$resource">
             <template slot="label">
               {{ $t('rule.resource') }}
-              <span class="btn" style="float: right; font-size: 12px;" @click="createResource">
+              <span class="btn" style="float: right; font-size: 12px" @click="createResource">
                 {{ $t('rule.new_resource') }}
               </span>
             </template>
@@ -47,7 +47,7 @@
               v-model="record.params.$resource"
               class="el-select--public"
               popper-class="el-select--public"
-              style="width: 100%;"
+              style="width: 100%"
             >
               <el-option v-for="(item, index) in resourcesOptions" :key="index" :label="item.id" :value="item.id">
               </el-option>
@@ -192,14 +192,14 @@ export default {
         this.$emit('update:visible', val)
       },
     },
-    currentActionsMap() {
-      const dict = {}
-      this.currentActions.forEach((item) => {
-        const hash = JSON.stringify(item)
-        dict[hash] = true
-      })
-      return dict
-    },
+    // currentActionsMap() {
+    //   const dict = {}
+    //   this.currentActions.forEach((item) => {
+    //     const hash = JSON.stringify(item)
+    //     dict[hash] = true
+    //   })
+    //   return dict
+    // },
   },
 
   methods: {
@@ -265,11 +265,11 @@ export default {
         }
         // 资源类型 资源参数
         const action = { name, params: { ...params }, fallbacks }
-        const hash = JSON.stringify(action)
-        if (this.currentActionsMap[hash]) {
-          this.$message.error(this.$t('rule.action_exists'))
-          return
-        }
+        // const hash = JSON.stringify(action)
+        // if (this.currentActionsMap[hash]) {
+        //   this.$message.error(this.$t('rule.action_exists'))
+        //   return
+        // }
         this.$emit('confirm', action, this.recordIndex)
         this.dialogVisible = false
       })
