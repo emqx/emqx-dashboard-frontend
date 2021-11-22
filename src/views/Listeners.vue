@@ -46,7 +46,7 @@ export default {
     loadData() {
       this.$httpGet('/nodes')
         .then((response) => {
-          this.nodeName = this.$store.state.nodeName || response.data[0].node
+          this.nodeName = this.$store.getters.specifiedNodeName || response.data[0].node
           this.nodes = response.data
           this.loadListeners()
         })
@@ -58,7 +58,7 @@ export default {
       this.CURRENT_NODE(this.nodeName)
       this.$httpGet(`/nodes/${this.nodeName}/listeners`)
         .then((response) => {
-          this.listeners = response.data
+          this.listeners = Array.isArray(response.data) ? response.data : []
         })
         .catch((error) => {
           this.$message.error(error || this.$t('error.networkError'))
