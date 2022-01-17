@@ -159,6 +159,12 @@ export const en = {
   fallbackAction: 'Fallback Actions',
   fallbackActionCreate: 'Set the action that will be performed when an action execution error occurs (optional)',
   fallbackActionTip: 'Action to be performed when the action execution error',
+  sqlPassed: 'SQL passed',
+  sqlPassedDesc: 'SQL executes successfully and outputs the result',
+  sqlFailed: 'SQL failed',
+  sqlFailedDesc: 'SQL execution failed due to syntax or function call failure',
+  sqlNoResult: 'SQL no result',
+  sqlNoResultDesc: 'SQL executes successfully but no output results',
 }
 
 export const zh = {
@@ -320,6 +326,12 @@ export const zh = {
   fallbackAction: '失败备选动作',
   fallbackActionCreate: '设置发生动作执行错误时将执行的动作（可选）',
   fallbackActionTip: '动作执行错误时将执行的操作',
+  sqlPassed: 'SQL 通过',
+  sqlPassedDesc: 'SQL 成功执行并输出结果',
+  sqlFailed: 'SQL 失败',
+  sqlFailedDesc: 'SQL 因语法或函数调用失败导致执行失败',
+  sqlNoResult: 'SQL 无结果',
+  sqlNoResultDesc: 'SQL 成功执行但没有输出结果',
 }
 
 export const ja = {
@@ -502,4 +514,10 @@ export const ja = {
   fallbackAction: 'フォールバックアクション',
   fallbackActionCreate: 'アクション実行エラーが発生したとき、エラー処理の動作を設定します（任意）',
   fallbackActionTip: 'アクション実行エラーが発生したときの動作',
+  sqlPassed: 'SQL passed',
+  sqlPassedDesc: 'SQL executes successfully and outputs the result',
+  sqlFailed: 'SQL failed',
+  sqlFailedDesc: 'SQL execution failed due to syntax or function call failure',
+  sqlNoResult: 'SQL no result',
+  sqlNoResultDesc: 'SQL executes successfully but no output results',
 }
