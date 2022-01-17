@@ -73,7 +73,7 @@
                     </el-col>
                     <el-col :span="16">
                       <el-date-picker
-                        v-model="fuzzyParams._connected_at"
+                        v-model="fuzzyParams._created_at"
                         class="datatime"
                         type="datetime"
                         value-format="timestamp"
@@ -433,7 +433,7 @@ export default {
     genQueryParams(params) {
       let newParams = {}
       if (this.activeTab === 'clients') {
-        const { _like_clientid, _like_username, ip_address, conn_state, proto_name, comparator, _connected_at } = params
+        const { _like_clientid, _like_username, ip_address, conn_state, proto_name, comparator, _created_at } = params
         newParams = {
           _like_clientid: _like_clientid || undefined,
           _like_username: _like_username || undefined,
@@ -441,9 +441,9 @@ export default {
           conn_state: conn_state || undefined,
           proto_name: proto_name || undefined,
         }
-        if (_connected_at) {
-          const connectedAtKey = `${comparator}_connected_at`
-          newParams[connectedAtKey] = Math.floor(_connected_at / 1000)
+        if (_created_at) {
+          const connectedAtKey = `${comparator}_created_at`
+          newParams[connectedAtKey] = Math.floor(_created_at / 1000)
         }
       } else if (this.activeTab === 'subscriptions') {
         const { _like_clientid, topic, qos, share, match } = params

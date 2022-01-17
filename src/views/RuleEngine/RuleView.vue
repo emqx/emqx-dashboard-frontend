@@ -35,6 +35,30 @@
       </div>
       <el-table border :data="record.metrics">
         <el-table-column prop="node" :label="$t('rule.node')"></el-table-column>
+        <el-table-column prop="passed">
+          <template slot="header">
+            {{ $t('rule.sqlPassed') }}
+            <el-popover placement="top-start" width="200" trigger="hover" :content="$t('rule.sqlPassedDesc')">
+              <i tabindex="-1" class="el-icon-question" slot="reference"></i>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column prop="exception" :label="$t('rule.sqlFailed')">
+          <template slot="header">
+            {{ $t('rule.sqlFailed') }}
+            <el-popover placement="top-start" width="200" trigger="hover" :content="$t('rule.sqlFailedDesc')">
+              <i tabindex="-1" class="el-icon-question" slot="reference"></i>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column prop="no_result" :label="$t('rule.sqlNoResult')">
+          <template slot="header">
+            {{ $t('rule.sqlNoResult') }}
+            <el-popover placement="top-start" width="200" trigger="hover" :content="$t('rule.sqlNoResultDesc')">
+              <i tabindex="-1" class="el-icon-question" slot="reference"></i>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column prop="matched" sortable :label="$t('rule.rule_matched_1')"></el-table-column>
         <el-table-column prop="speed" sortable :label="$t('rule.speed_current')"></el-table-column>
         <el-table-column prop="speed_max" :label="$t('rule.speed_max_1')"></el-table-column>
@@ -86,6 +110,9 @@ export default {
         metrics: [
           {
             matched: 0,
+            passed: 0,
+            exception: 0,
+            no_result: 0,
             node: 'emqx@127.0.0.1',
             speed: 0,
             speed_last5m: 0,
