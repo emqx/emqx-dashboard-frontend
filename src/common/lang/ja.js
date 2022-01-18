@@ -101,6 +101,8 @@ export default {
     // Analysis
     analysis: '分析',
     topicMetrics: 'トピック分析',
+    slowSub: 'Slow Subscriptions',
+    logTrace: 'Log Trace',
     alarms: 'アラート',
   },
   // overview
@@ -479,6 +481,14 @@ export default {
     clearAll: '全てクリア',
     confirmClear: '全てのアラートをクリアにしてもよろしいですか？',
     confirmDeactivate: '全てのアラートを無効にしてもよろしいですか？',
+  },
+  slowSub: {
+    slowSub: 'Slow Subscriptions',
+    slowSubDesc:
+      'Count the subscribers with slow transmission,generate historical records, and periodically push statistical information',
+    latencyTime: 'Latency Time',
+    updated: 'Updated',
+    clearData: 'Clear data',
   },
   httpCode: {
     0: '成功しました',
