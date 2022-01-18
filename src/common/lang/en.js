@@ -107,6 +107,8 @@ export default {
     // Analysis
     analysis: 'Analysis',
     topicMetrics: 'Topic metrics',
+    slowSub: 'Slow Subscriptions',
+    logTrace: 'Log Trace',
     alarms: 'Alarms',
   },
   // overview
@@ -492,6 +494,14 @@ export default {
     clearAll: 'Clear All',
     confirmClear: 'Confirm clear all alarms?',
     confirmDeactivate: 'Confirm deactivate this alarm?',
+  },
+  slowSub: {
+    slowSub: 'Slow Subscriptions',
+    slowSubDesc:
+      'Count the subscribers with slow transmission,generate historical records, and periodically push statistical information',
+    latencyTime: 'Latency Time',
+    updated: 'Updated',
+    clearData: 'Clear data',
   },
   httpCode: {
     0: 'Success',

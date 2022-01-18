@@ -116,6 +116,16 @@ export default {
               title: this.$t('leftbar.topicMetrics'),
               index: '/topic_metrics',
             },
+            {
+              id: 'slow_sub',
+              title: this.$t('leftbar.slowSub'),
+              index: '/slow_sub',
+            },
+            {
+              id: 'log_trace',
+              title: this.$t('leftbar.logTrace'),
+              index: '/log_trace',
+            },
           ],
         },
         {

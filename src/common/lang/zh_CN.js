@@ -107,6 +107,8 @@ export default {
     // Analysis
     analysis: '统计分析',
     topicMetrics: '主题监控',
+    slowSub: '慢订阅',
+    logTrace: '日志追踪',
     alarms: '告警',
   },
   // overview
@@ -483,6 +485,13 @@ export default {
     clearAll: '清除全部',
     confirmClear: '确认清除全部告警信息？',
     confirmDeactivate: '确认取消该告警信息？',
+  },
+  slowSub: {
+    slowSub: '慢订阅',
+    slowSubDesc: '统计消息传输过慢的订阅者，按照传输时延生成历史记录，并周期性推送统计信息',
+    latencyTime: '时长',
+    updated: '更新时间',
+    clearData: '重置数据',
   },
   httpCode: {
     0: '成功',

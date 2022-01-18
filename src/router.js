@@ -68,6 +68,16 @@ const routes = [
         component: () => import('~/views/TopicMetrics'),
       },
       {
+        path: '/slow_sub',
+        name: 'slow_sub',
+        component: () => import('~/views/SlowSub'),
+      },
+      {
+        path: '/log_trace',
+        name: 'log_trace',
+        component: () => import('~/views/LogTrace/LogTrace'),
+      },
+      {
         path: '/alarms',
         name: 'alarms',
         component: () => import('~/views/Alarms'),
