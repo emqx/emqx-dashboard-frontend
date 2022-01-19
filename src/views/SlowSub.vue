@@ -5,30 +5,18 @@
         {{ $t('slowSub.slowSub') }}
         <span class="sub-tip">{{ $t('slowSub.slowSubDesc') }}</span>
       </div>
-      <div v-if="isSlowSubEnable">
-        <el-select
-          v-model="selectedNode"
-          class="select-radius select-node"
-          :disabled="$store.state.loading"
-          :placeholder="$t('select.placeholder')"
-          @change="refreshLocalData"
-        >
-          <el-option :label="$t('select.cluster')" :value="ALL_NODE_KEY"> </el-option>
-          <el-option v-for="item in nodeOptions" :key="item.node" :label="item.name || item.node" :value="item.node" />
-        </el-select>
-        <el-button
-          class="confirm-btn"
-          round
-          plain
-          type="success"
-          size="medium"
-          :disable="$store.state.loading"
-          @click="clearSlowSub"
-        >
-          {{ $t('slowSub.clearData') }}
-        </el-button>
-      </div>
-
+      <el-button
+        v-if="isSlowSubEnable"
+        class="confirm-btn"
+        round
+        plain
+        type="success"
+        size="medium"
+        :disable="$store.state.loading"
+        @click="clearSlowSub"
+      >
+        {{ $t('slowSub.clearData') }}
+      </el-button>
       <el-button
         v-else
         class="confirm-btn"
@@ -85,7 +73,7 @@
 import filters from '~/common/filter'
 import paging from '~/common/paging'
 
-const ALL_NODE_KEY = 'all'
+const SLOW_SUB_MODULE_NAME = 'emqx_mod_slow_subs'
 const { setTotalData, getAPageData } = paging()
 
 export default {
@@ -96,19 +84,8 @@ export default {
   data() {
     return {
       isSlowSubEnable: true,
-      selectedNode: ALL_NODE_KEY,
-      ALL_NODE_KEY,
-      nodeOptions: [],
       tableSorter: undefined,
-      totalSlowSubData: [
-        {
-          clientid: 'string',
-          topic: 'string',
-          timespan: 1000,
-          node: 'string',
-          last_update_time: Date.now(),
-        },
-      ],
+      totalSlowSubData: [],
       tableData: [],
       pageParams: {
         page: 1,
@@ -120,8 +97,7 @@ export default {
 
   methods: {
     loadTotalData() {
-      // TODO:
-      this.$httpGet('/query-slow-sub')
+      this.$httpGet('/slow_subscriptions')
         .then((res) => {
           const { data } = res
           this.totalSlowSubData = data
@@ -136,15 +112,8 @@ export default {
     },
     getPageData() {
       const { limit, page } = this.pageParams
-      const filters = []
       const { tableSorter } = this
-      if (this.selectedNode !== ALL_NODE_KEY) {
-        filters.push({
-          key: 'node',
-          value: this.selectedNode,
-        })
-      }
-      const { data, meta } = getAPageData({ limit, page }, filters, tableSorter)
+      const { data, meta } = getAPageData({ limit, page }, [], tableSorter)
       this.pageParams = meta
       this.tableData = data
     },
@@ -166,29 +135,23 @@ export default {
           }
       this.refreshLocalData()
     },
-    loadNodes() {
-      this.$httpGet('/nodes')
-        .then((response) => {
-          this.nodeName = response.data[0].node
-          this.nodeOptions = response.data
-        })
-        .catch((error) => {
-          const msg = error.message || error
-          this.$message.error(msg || this.$t('error.networkError'))
-        })
-    },
     enableSlowSub() {
-      this.$httpGet('/enable-slow-sub')
+      this.$httpPut(`/modules/${SLOW_SUB_MODULE_NAME}/load`)
         .then(() => {
+          this.$message.success(this.$t('oper.enableSuccess'))
           this.loadTotalData()
         })
         .catch((error) => {
           this.$message.warning(this.$t(`error.${error.message}`))
         })
     },
-    clearSlowSub() {
-      // TODO:
-      this.$httpGet('/clear-slow-sub')
+    async clearSlowSub() {
+      await this.$confirm(this.$t('slowSub.clearSlowSubscriptionConfirm'), this.$t('oper.warning'), {
+        confirmButtonClass: 'confirm-btn',
+        cancelButtonClass: 'cache-btn el-button--text',
+        type: 'warning',
+      })
+      this.$httpDelete('/slow_subscriptions')
         .then(() => {
           this.$message.success(this.$t(`oper.clear`))
           this.loadTotalData()
@@ -207,7 +170,6 @@ export default {
 
   created() {
     this.loadTotalData()
-    this.loadNodes()
   },
 }
 </script>
@@ -223,6 +185,7 @@ export default {
     color: #9e9e9f;
     text-transform: none;
     margin-right: 10px;
+    margin-left: 8px;
   }
   .select-node {
     float: none;

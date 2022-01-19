@@ -488,10 +488,11 @@ export default {
   },
   slowSub: {
     slowSub: '慢订阅',
-    slowSubDesc: '统计消息传输过慢的订阅者，按照传输时延生成历史记录，并周期性推送统计信息',
+    slowSubDesc: '（统计消息传输过慢的订阅者，按照传输时延生成历史记录，并周期性推送统计信息）',
     latencyTime: '时长',
     updated: '更新时间',
     clearData: '重置数据',
+    clearSlowSubscriptionConfirm: '清除当前所有数据并重新统计慢订阅',
   },
   httpCode: {
     0: '成功',
