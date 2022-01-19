@@ -63,7 +63,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('clients.createdAt')">
+                <el-form-item :label="$t('clients.connectedAt')">
                   <el-row class="form-item-row">
                     <el-col :span="8">
                       <el-select v-model="fuzzyParams.comparator" class="comparator">
@@ -157,7 +157,7 @@
           {{ row.connected ? $t('websocket.connected') : $t('websocket.disconnected') }}
         </template>
       </el-table-column>
-      <el-table-column prop="created_at" :label="$t('clients.createdAt')" min-width="160px"></el-table-column>
+      <el-table-column prop="connected_at" :label="$t('clients.connectedAt')" min-width="160px"></el-table-column>
       <el-table-column fixed="right" width="120px" :label="$t('oper.oper')">
         <template slot-scope="{ row, $index, _self }">
           <el-popover :ref="`popover-${$index}`" placement="right" trigger="click">
