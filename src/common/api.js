@@ -37,6 +37,9 @@ Axios.interceptors.request.use(
       router.push({ path: '/login', query: { to: router.fullPath } })
     }
     NProgress.start()
+    if (timer) {
+      clearTimeout(timer)
+    }
     timer = setTimeout(() => {
       store.dispatch('LOADING', true)
     }, 100)
