@@ -534,6 +534,7 @@ export default {
     srunning: 'Running',
     sstopped: 'Stopped',
     swaiting: 'Waiting',
+    validString: 'Please enter a valid value',
   },
   httpCode: {
     0: 'Success',

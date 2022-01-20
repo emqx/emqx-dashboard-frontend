@@ -527,6 +527,7 @@ export default {
     sstopped: '已停止',
     swaiting: '等待中',
     backToList: '返回日志追踪列表',
+    validString: '请输入合法字符',
   },
   httpCode: {
     0: '成功',
