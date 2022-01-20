@@ -62,16 +62,7 @@
       </el-table-column>
       <el-table-column min-width="140" :label="$t('oper.oper')">
         <template #default="{ row }">
-          <el-button
-            plain
-            size="mini"
-            @click="
-              $router.push({
-                name: 'log-trace-detail',
-                params: { id: row.name },
-              })
-            "
-          >
+          <el-button plain size="mini" @click="viewLogTrace(row)">
             {{ $t('logTrace.view') }}
           </el-button>
           <el-button plain size="mini" @click="downloadLog(row)">
@@ -91,6 +82,7 @@
       </el-table-column>
     </el-table>
     <CreateLogTraceDialog v-model="showCreateDialog" @submitted="loadTableData" />
+    <LogTraceDetailDialog v-model="showDetailDialog" :trace-name="currentViewTraceName" />
   </div>
 </template>
 
@@ -98,6 +90,7 @@
 import filters from '~/common/filter'
 import CreateLogTraceDialog from './components/CreateLogTraceDialog.vue'
 import downloadTraceLog from '~/api/downloadTraceLog'
+import LogTraceDetailDialog from './components/LogTraceDetailDialog.vue'
 
 const LOG_TRACE_MODULE_NAME = 'emqx_mod_trace'
 
@@ -108,6 +101,7 @@ export default {
 
   components: {
     CreateLogTraceDialog,
+    LogTraceDetailDialog,
   },
 
   data() {
@@ -116,12 +110,13 @@ export default {
       tableSorter: undefined,
       tableData: [],
       showCreateDialog: false,
+      showDetailDialog: false,
+      currentViewTraceName: '',
     }
   },
 
   methods: {
     loadTableData() {
-      // TODO:
       this.$httpGet('/trace')
         .then((res) => {
           const { data } = res
@@ -171,6 +166,10 @@ export default {
     },
     downloadLog(data) {
       downloadTraceLog(data.name)
+    },
+    viewLogTrace({ name }) {
+      this.currentViewTraceName = name
+      this.showDetailDialog = true
     },
   },
 
