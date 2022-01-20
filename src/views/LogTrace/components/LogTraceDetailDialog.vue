@@ -15,8 +15,8 @@
       </el-row>
       <el-row>
         <div :style="{ height: initialHeight + 'px' }" class="m-container" ref="monacoContainer">
-          <!-- v-if="showEditor" -->
           <monaco
+            v-if="showEditor"
             ref="monaco"
             id="log-trace"
             v-model="logContent"
@@ -66,6 +66,8 @@ export default {
       logContent: '',
       nextPageLoading: '',
       showEditor: false,
+      // Prevents monaco components from repeatedly triggering load events for unknown reasons
+      isLoadedDataWithin300MS: false,
     }
   },
 
@@ -86,6 +88,9 @@ export default {
         this.$nextTick(() => {
           this.countInitialHeight()
           this.initLog()
+          this.$nextTick(() => {
+            this.showEditor = true
+          })
         })
       } else {
         this.showEditor = false
@@ -124,16 +129,30 @@ export default {
       LAST_ACTIVE_SCROLL_TOP = 0
       this.logContent = ''
       this.nextPageLoading = ''
+      window.clearTimeout(this.loadLogTimer)
+      this.loadLogTimer = undefined
       this.loadLog()
     },
     async loadLog() {
       try {
+        if (this.isLoadedDataWithin300MS) {
+          return
+        }
+        this.isLoadedDataWithin300MS = true
+        window.setTimeout(() => {
+          this.isLoadedDataWithin300MS = false
+        }, 300)
+
         const params = { position: LOG_VIEW_POSITION, bytes: BYTE_PER_PAGE, node: this.node }
         const { data } = await this.$httpGet(`/trace/${this.traceName}/log`, params)
         if (data.items) {
           const { meta = {} } = data
           this.logContent += data.items
-          LOG_VIEW_POSITION += meta.position || BYTE_PER_PAGE
+          if (meta.position) {
+            LOG_VIEW_POSITION = meta.position
+          } else {
+            LOG_VIEW_POSITION += BYTE_PER_PAGE
+          }
         }
       } catch (error) {
         console.error(error)
@@ -142,7 +161,7 @@ export default {
     countInitialHeight() {
       const windowHeight = window.innerHeight
       const containerTop = this.$refs.monacoContainer.getBoundingClientRect().top
-      this.initialHeight = Math.floor(windowHeight - containerTop - 50)
+      this.initialHeight = Math.floor(windowHeight - containerTop - 100)
     },
     download() {
       downloadTraceLog(this.traceName)
