@@ -31,6 +31,18 @@ export default {
       type: Array,
       default: () => [],
     },
+    scrollLoading: {
+      type: Boolean,
+      default: false,
+    },
+    scrollFunc: {
+      type: Function,
+      default: () => () => {},
+    },
+    lineNumbersMinChars: {
+      type: Number,
+      default: 2,
+    },
   },
 
   data() {
@@ -107,7 +119,7 @@ export default {
         lineHeight: 25,
         scrollBeyondLastLine: false,
         readOnly: this.disabled,
-        lineNumbersMinChars: 2,
+        lineNumbersMinChars: this.lineNumbersMinChars,
         theme: this.getTheme(),
         minimap: {
           enabled: false,
@@ -131,6 +143,8 @@ export default {
       })
       // Update editor options
       this.editor.getModel().updateOptions({ tabSize: 2 })
+
+      if (this.scrollLoading) this.editor.onDidScrollChange(this.scrollFunc)
     },
     defineTheme() {
       monaco.editor.defineTheme('monokai', Monokai)
