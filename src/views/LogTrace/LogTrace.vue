@@ -7,15 +7,29 @@
       </div>
 
       <el-button
+        v-if="!isLogTraceEnable"
         class="confirm-btn"
         round
         plain
         type="success"
         size="medium"
         :disable="$store.state.loading"
-        @click="enableLogTrace"
+        @click="enableLogTrace(selfArgument, $event)"
       >
         {{ $t('modules.enable') }}
+      </el-button>
+      <el-button
+        v-else
+        class="confirm-btn"
+        round
+        plain
+        type="success"
+        icon="el-icon-plus"
+        size="medium"
+        :disable="$store.state.loading"
+        @click="addLogTrace"
+      >
+        {{ $t('rule.create') }}
       </el-button>
     </div>
 
@@ -28,19 +42,17 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('logTrace.startEndTime')" min-width="90" sortable>
-        <template #default="{ row }">
-          {{ moment(row.start_at).format('YYYY-MM-DD HH:mm:ss') }}<br />{{
-            moment(row.end_at).format('YYYY-MM-DD HH:mm:ss')
-          }}
-        </template>
+        <template #default="{ row }"> {{ row.start_at | dateFormat }}<br />{{ row.end_at | dateFormat }} </template>
       </el-table-column>
       <el-table-column :label="$t('logTrace.status')" sortable>
         <template #default="{ row }">
-          <el-badge
-            is-dot
-            :type="row.status === 'running' ? 'primary' : row.status === 'stopped' ? 'danger' : 'info'"
-          ></el-badge
-          ><span>{{ row.status && $t('logTrace.s' + row.status) }}</span>
+          <div class="trace-status">
+            <el-badge
+              is-dot
+              :type="row.status === 'running' ? 'primary' : row.status === 'stopped' ? 'danger' : 'info'"
+            />
+            <span>{{ row.status && $t('logTrace.s' + row.status) }}</span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column :label="$t('logTrace.logSize')" sortable>
@@ -62,25 +74,30 @@
           >
             {{ $t('logTrace.view') }}
           </el-button>
-          <el-button plain size="mini" @click="download(row)">{{ $t('logTrace.download') }}</el-button>
+          <el-button plain size="mini" @click="downloadLog(row)">
+            {{ $t('logTrace.download') }}
+          </el-button>
           <template v-if="row.status !== 'stopped'">
-            <el-button plain size="mini" type="danger" @click="stopTraceHandler(row)">
+            <el-button plain size="mini" type="danger" @click="stopTrace(row)">
               {{ $t('logTrace.stop') }}
             </el-button>
           </template>
           <template v-else>
-            <el-button plain size="mini" type="danger" @click="deleteTraceHandler(row)">
+            <el-button plain size="mini" type="danger" @click="deleteTrace(row)">
               {{ $t('oper.delete') }}
             </el-button>
           </template>
         </template>
       </el-table-column>
     </el-table>
+    <CreateLogTraceDialog v-model="showCreateDialog" @submitted="loadTableData" />
   </div>
 </template>
 
 <script>
 import filters from '~/common/filter'
+import CreateLogTraceDialog from './components/CreateLogTraceDialog.vue'
+import downloadTraceLog from '~/api/downloadTraceLog'
 
 const LOG_TRACE_MODULE_NAME = 'emqx_mod_trace'
 
@@ -89,11 +106,16 @@ export default {
 
   filters,
 
+  components: {
+    CreateLogTraceDialog,
+  },
+
   data() {
     return {
       isLogTraceEnable: true,
       tableSorter: undefined,
-      tableData: [{}],
+      tableData: [],
+      showCreateDialog: false,
     }
   },
 
@@ -121,11 +143,34 @@ export default {
           this.$message.warning(this.$t(`error.${error.message}`))
         })
     },
-    formatTime(val) {
-      if (val < 1000) {
-        return `${val} ms`
+    addLogTrace() {
+      this.showCreateDialog = true
+    },
+    async stopTrace({ name }) {
+      try {
+        await this.$httpPut(`/trace/${encodeURIComponent(name)}/stop`)
+        this.$message.success(this.$t('logTrace.stopSuc'))
+        this.loadTableData()
+      } catch (error) {
+        console.error(error)
       }
-      return `${val / 1000} s`
+    },
+    async deleteTrace(data) {
+      await this.$confirm(this.$t('logTrace.confirmDeleteTrace'), {
+        confirmButtonText: this.$t('oper.confirm'),
+        cancelButtonText: this.$t('oper.cancel'),
+        type: 'warning',
+      })
+      try {
+        await this.$httpDelete(`/trace/${encodeURIComponent(data.name)}`)
+        this.$message.success(this.$t('logTrace.deleteSuc'))
+        this.loadTableData()
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    downloadLog(data) {
+      downloadTraceLog(data.name)
     },
   },
 
@@ -153,6 +198,11 @@ export default {
   }
   .el-table {
     margin-top: 24px;
+  }
+  .el-badge {
+    padding-top: 5px;
+    line-height: 1;
+    margin-right: 4px;
   }
 }
 </style>
