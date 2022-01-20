@@ -85,6 +85,8 @@ const createRawForm = () => ({
   startTime: [],
 })
 
+const DEFAULT_DURATION = 30 * 60 * 1000
+
 export default {
   name: 'create-log-trace-dialog',
 
@@ -141,6 +143,8 @@ export default {
     showDialog(val) {
       if (val) {
         this.record = createRawForm()
+        const timeNow = new Date()
+        this.record.startTime = [timeNow, new Date(timeNow.getTime() + DEFAULT_DURATION)]
         this.$nextTick(() => {
           this.$refs.formCom.clearValidate()
         })
