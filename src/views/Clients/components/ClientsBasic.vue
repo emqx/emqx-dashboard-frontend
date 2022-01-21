@@ -110,6 +110,7 @@
       <el-collapse-transition>
         <el-form v-if="showMore" ref="record" class="clients-basic-form" :model="record" label-suffix=":">
           <el-row>
+            <!-- connection msg -->
             <el-col :span="12">
               <el-form-item :label="$t('clients.recv_cnt_desc')" prop="recv_cnt">
                 <span>{{ record.recv_cnt }}</span>
@@ -124,6 +125,7 @@
                 <span>{{ record.recv_pkt }}</span>
               </el-form-item>
             </el-col>
+            <!-- topic msg -->
             <el-col :span="12">
               <el-form-item :label="$t('clients.send_cnt_desc')" prop="send_cnt">
                 <span>{{ record.send_cnt }}</span>
@@ -136,6 +138,42 @@
               </el-form-item>
               <el-form-item :label="$t('clients.send_pkt_desc')" prop="send_pkt">
                 <span>{{ record.send_pkt }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.recv_msg_qos0')" prop="send_pkt">
+                <span>{{ record['recv_msg.qos0'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.recv_msg_qos1')" prop="send_pkt">
+                <span>{{ record['recv_msg.qos1'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.recv_msg_qos2')" prop="send_pkt">
+                <span>{{ record['recv_msg.qos2'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.recv_msg_dropped')" prop="send_pkt">
+                <span>{{ record['recv_msg.dropped'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.recv_msg_dropped_expired')" prop="send_pkt">
+                <span>{{ record['recv_msg.dropped.expired'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_qos0')" prop="send_pkt">
+                <span>{{ record['send_msg.qos0'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_qos1')" prop="send_pkt">
+                <span>{{ record['send_msg.qos1'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_qos2')" prop="send_pkt">
+                <span>{{ record['send_msg.qos2'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_dropped')" prop="send_pkt">
+                <span>{{ record['send_msg.dropped'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_dropped_expired')" prop="send_pkt">
+                <span>{{ record['send_msg.dropped.expired'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_dropped_queue_full')" prop="send_pkt">
+                <span>{{ record['send_msg.dropped.queue_full'] }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('clients.send_msg_dropped_too_large')" prop="send_pkt">
+                <span>{{ record['send_msg.dropped.too_large'] }}</span>
               </el-form-item>
             </el-col>
           </el-row>
