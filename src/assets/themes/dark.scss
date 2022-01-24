@@ -409,6 +409,13 @@ p {
       color: #fff !important;
     }
   }
+
+  .btn-prev,
+  .btn-next,
+  .el-pager li {
+    background-color: transparent;
+    color: #a7a7a7;
+  }
 }
 
 /* Rule */
