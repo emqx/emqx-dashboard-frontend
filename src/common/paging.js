@@ -3,17 +3,17 @@ import _ from 'lodash'
 const DEFAULT_PAGE_SIZE = 20
 
 export default () => {
-  const totalData = []
+  let totalData = []
   // Use the following six variables to do a cache-like operation to reduce computational overhead
   let latestFiltersString = ''
-  const listAfterFilter = []
+  let listAfterFilter = []
   let latestSortFromString = undefined
-  const listAfterFilterNSort = []
+  let listAfterFilterNSort = []
   let currentPageSize = DEFAULT_PAGE_SIZE
-  const currentChunks = []
+  let currentChunks = []
 
   const setTotalData = (data) => {
-    totalData.value = data
+    totalData = data
     filterList()
     sortList()
     chunkList()
@@ -22,9 +22,9 @@ export default () => {
   const filterList = (filters = []) => {
     latestFiltersString = JSON.stringify(filters)
     if (filters.length === 0) {
-      listAfterFilter.value = totalData.value
+      listAfterFilter = totalData
     } else {
-      listAfterFilter.value = totalData.value.filter((item) =>
+      listAfterFilter = totalData.filter((item) =>
         filters.every(({ key, value }) => {
           const target = item[key]
           return !target ? false : target.indexOf && item[key].indexOf(value) > -1
@@ -36,16 +36,16 @@ export default () => {
   const sortList = (sortFrom) => {
     if (!sortFrom) {
       latestSortFromString = undefined
-      listAfterFilterNSort.value = listAfterFilter.value
+      listAfterFilterNSort = listAfterFilter
     } else {
       latestSortFromString = JSON.stringify(sortFrom)
-      listAfterFilterNSort.value = _.orderBy(listAfterFilter.value, [sortFrom.key], [sortFrom.type])
+      listAfterFilterNSort = _.orderBy(listAfterFilter, [sortFrom.key], [sortFrom.type])
     }
   }
 
   const chunkList = (pageSize = DEFAULT_PAGE_SIZE) => {
     currentPageSize = pageSize
-    currentChunks.value = _.chunk(listAfterFilterNSort.value, currentPageSize)
+    currentChunks = _.chunk(listAfterFilterNSort, currentPageSize)
   }
 
   const getAPageData = (pageMeta, filters = [], sortFrom) => {
@@ -59,11 +59,11 @@ export default () => {
     } else if (pageMeta.limit !== currentPageSize) {
       chunkList(pageMeta.limit)
     }
-    const retData = currentChunks.value.length === 0 ? [] : currentChunks.value[pageMeta.page - 1] || []
+    const retData = currentChunks.length === 0 ? [] : currentChunks[pageMeta.page - 1] || []
     return {
       data: retData,
       meta: {
-        count: listAfterFilterNSort.value.length,
+        count: listAfterFilterNSort.length,
         limit: pageMeta.limit,
         page: pageMeta.page,
       },
