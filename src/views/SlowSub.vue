@@ -54,18 +54,20 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      v-if="pageParams.count > 10"
-      background
-      layout="total, sizes, prev, pager, next"
-      :page-sizes="[10, 50, 100, 300, 500]"
-      :current-page.sync="pageParams.page"
-      :page-size="pageParams.limit"
-      :total="pageParams.count"
-      @size-change="handleSizeChange"
-      @current-change="getPageData"
-    >
-    </el-pagination>
+    <div class="center-align">
+      <el-pagination
+        v-if="pageParams.count > 10"
+        background
+        layout="total, sizes, prev, pager, next"
+        :page-sizes="[10, 50, 100, 300, 500]"
+        :current-page.sync="pageParams.page"
+        :page-size="pageParams.limit"
+        :total="pageParams.count"
+        @size-change="handleSizeChange"
+        @current-change="getPageData"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
