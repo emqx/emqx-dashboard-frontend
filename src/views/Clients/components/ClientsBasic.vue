@@ -152,7 +152,7 @@
                 <span>{{ record['recv_msg.dropped'] }}</span>
               </el-form-item>
               <el-form-item :label="$t('clients.recv_msg_dropped_expired')" prop="send_pkt">
-                <span>{{ record['recv_msg.dropped.expired'] }}</span>
+                <span>{{ record['recv_msg.dropped.await_pubrel_timeout'] }}</span>
               </el-form-item>
               <el-form-item :label="$t('clients.send_msg_qos0')" prop="send_pkt">
                 <span>{{ record['send_msg.qos0'] }}</span>
