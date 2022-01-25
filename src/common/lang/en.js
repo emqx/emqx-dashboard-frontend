@@ -510,7 +510,7 @@ export default {
   slowSub: {
     slowSub: 'Slow Subscriptions',
     slowSubDesc:
-      '(Count the subscribers with slow transmission,generate historical records, and periodically push statistical information)',
+      '(Count the subscribers with the slow transmission, generate historical records, and periodically push statistical information)',
     latencyTime: 'Latency Time',
     updated: 'Updated',
     clearData: 'Clear data',
