@@ -128,7 +128,7 @@
       plain
       icon="el-icon-plus"
       size="small"
-      style="min-width: 80px;"
+      style="min-width: 80px"
       @click="dialogVisible = true"
     >
       {{ $t('rule.add') }}
@@ -280,6 +280,9 @@ export default {
     .key {
       width: 120px;
       display: inline-block;
+      vertical-align: top;
+      margin-right: 12px;
+      word-break: break-all;
     }
   }
   .action-item {
