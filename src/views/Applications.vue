@@ -9,7 +9,7 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right;"
+        style="float: right"
         :disable="$store.state.loading"
         @click="handleOperation"
       >
@@ -56,7 +56,7 @@
           <!-- delete -->
           <el-popover placement="right" trigger="click" :value="popoverVisible">
             <p>{{ $t('oper.confirmDelete') }}</p>
-            <div style="text-align: right;">
+            <div style="text-align: right">
               <el-button size="mini" type="text" class="cache-btn" @click="hidePopover">
                 {{ $t('oper.cancel') }}
               </el-button>
@@ -227,8 +227,8 @@
           <a
             :href="
               lang === 'zh'
-                ? 'https://docs.emqx.cn/cn/broker/latest/advanced/http-api.html'
-                : 'https://docs.emqx.io/en/broker/latest/advanced/http-api.html'
+                ? 'https://emqx.io/docs/zh/latest/advanced/http-api.html'
+                : 'https://emqx.io/docs/en/latest/advanced/http-api.html'
             "
             target="_blank"
           >
