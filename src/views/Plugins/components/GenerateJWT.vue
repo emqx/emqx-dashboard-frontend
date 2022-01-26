@@ -33,7 +33,7 @@
               <a :href="jwtDoc" target="_blank" rel="noopener">{{ $t('plugins.jwtDoc') }}</a>
             </p>
             <el-form-item prop="payload">
-              <div class="monaco-container" style="height: 200px;">
+              <div class="monaco-container" style="height: 200px">
                 <monaco id="jwt-payload" v-model="record.payload" lang="json"> </monaco>
               </div>
             </el-form-item>
@@ -41,7 +41,7 @@
               {{ $t('plugins.dataDesc') }}
             </p>
             <el-form-item prop="data">
-              <div class="monaco-container" style="height: 200px;">
+              <div class="monaco-container" style="height: 200px">
                 <monaco id="jwt-data" v-model="record.data" lang="plaintext"> </monaco>
               </div>
             </el-form-item>
@@ -162,8 +162,8 @@ export default {
   computed: {
     jwtDoc() {
       return this.lang === 'zh'
-        ? 'https://docs.emqx.cn/cn/broker/latest/advanced/auth-jwt.html'
-        : 'https://docs.emqx.io/en/broker/latest/advanced/auth-jwt.html'
+        ? 'https://emqx.io/docs/zh/latest/advanced/auth-jwt.html'
+        : 'https://emqx.io/docs/en/latest/advanced/auth-jwt.html'
     },
   },
   methods: {

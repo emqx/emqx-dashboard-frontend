@@ -91,12 +91,12 @@ export default {
         : 'https://www.emqx.io/downloads#enterprise'
     },
     docsLink() {
-      return this.lang === 'zh' ? 'https://docs.emqx.io/broker/latest/cn' : 'https://docs.emqx.cn/cn/broker/latest/'
+      return this.lang === 'zh' ? 'https://emqx.io/docs/zh/latest/' : 'https://emqx.io/docs/en/latest/'
     },
     faqLink() {
       return this.lang === 'zh'
-        ? 'https://docs.emqx.cn/cn/broker/latest/faq/faq.html'
-        : 'https://docs.emqx.io/en/broker/latest/faq/faq.html'
+        ? 'https://emqx.io/docs/zh/latest/faq/faq.html'
+        : 'https://emqx.io/docs/en/latest/faq/faq.html'
     },
   },
 
