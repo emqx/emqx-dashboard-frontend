@@ -227,8 +227,8 @@
           <a
             :href="
               lang === 'zh'
-                ? 'https://emqx.io/docs/zh/latest/advanced/http-api.html'
-                : 'https://emqx.io/docs/en/latest/advanced/http-api.html'
+                ? `https://emqx.io/docs/zh/${$store.state.systemVersion}/advanced/http-api.html`
+                : `https://emqx.io/docs/en/${$store.state.systemVersion}/advanced/http-api.html`
             "
             target="_blank"
           >

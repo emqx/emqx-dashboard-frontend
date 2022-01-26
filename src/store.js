@@ -42,6 +42,7 @@ const state = {
   user: safeParse(sessionStorage.getItem('user')) || safeParse(localStorage.getItem('user')) || {},
   nodeName: '',
   showFeatOnLeftbar: getShowFeatOnLeftbar(),
+  systemVersion: process.env.VUE_APP_VERSION,
 }
 
 // login & logout
@@ -52,6 +53,8 @@ const LOADING = 'LOADING'
 const CURRENT_NODE = 'CURRENT_NODE'
 // Cancel feature active on leftbar
 const CANCEL_FEAT_ON_LEFTBAR = 'CANCEL_FEAT_ON_LEFTBAR'
+// Set system version
+const SYSTEM_VERSION = 'SYSTEM_VERSION'
 
 const actions = {
   [USER_LOGIN]({ commit }, payload) {
@@ -99,6 +102,9 @@ const mutations = {
     data[payload] = false
     Vue.set(state, 'showFeatOnLeftbar', $showFeatOnLeftbar)
     localStorage.setItem('showFeatOnLeftbar', JSON.stringify($showFeatOnLeftbar))
+  },
+  [SYSTEM_VERSION](state, payload) {
+    state.systemVersion = payload
   },
 }
 

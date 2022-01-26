@@ -1,4 +1,4 @@
-import Plugins from '../data_map/plugins_links.json'
+import Plugins from '../data_map/plugins_links'
 
 export const pluginsZh = Plugins.zh
 
