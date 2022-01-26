@@ -1,6 +1,4 @@
-import store from '~/store'
-
-const version = store.state.systemVersion
+const version = process.env.VUE_APP_VERSION
 
 export const en = {
   viewStates: 'Status',
