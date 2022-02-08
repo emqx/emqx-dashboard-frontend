@@ -46,8 +46,8 @@ export default {
       if (type === 'enterprise') {
         link =
           this.lang === 'zh'
-            ? 'https://www.emqx.io/cn/downloads#enterprise'
-            : 'https://www.emqx.io/downloads#enterprise'
+            ? 'https://www.emqx.com/zh/try?product=enterprise'
+            : 'https://www.emqx.com/en/try?product=enterprise'
       } else if (type === 'github') {
         link = 'https://github.com/emqx/emqx'
       }

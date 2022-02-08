@@ -81,14 +81,12 @@ export default {
 
   computed: {
     learnEnterprise() {
-      return this.lang === 'zh'
-        ? 'https://www.emqx.io/cn/products/enterprise'
-        : 'https://www.emqx.io/products/enterprise'
+      return this.lang === 'zh' ? 'https://www.emqx.com/zh/products/emqx' : 'https://www.emqx.com/en/products/emqx'
     },
     freeTrial() {
       return this.lang === 'zh'
-        ? 'https://www.emqx.io/cn/downloads#enterprise'
-        : 'https://www.emqx.io/downloads#enterprise'
+        ? 'https://www.emqx.com/zh/try?product=enterprise'
+        : 'https://www.emqx.com/en/try?product=enterprise'
     },
     docsLink() {
       return this.lang === 'zh'
