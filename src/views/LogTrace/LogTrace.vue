@@ -132,7 +132,7 @@ export default {
       this.$httpPut(`/modules/${LOG_TRACE_MODULE_NAME}/load`)
         .then(() => {
           this.$message.success(this.$t('oper.enableSuccess'))
-          this.loadTotalData()
+          this.loadTableData()
         })
         .catch((error) => {
           this.$message.warning(this.$t(`error.${error.message}`))
