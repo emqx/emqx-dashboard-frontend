@@ -40,9 +40,12 @@ Axios.interceptors.request.use(
     if (timer) {
       clearTimeout(timer)
     }
-    timer = setTimeout(() => {
-      store.dispatch('LOADING', true)
-    }, 100)
+    // download file just need NProgress
+    if (!(config.responseType === 'blob')) {
+      timer = setTimeout(() => {
+        store.dispatch('LOADING', true)
+      }, 100)
+    }
     return config
   },
   (error) => {
@@ -86,6 +89,10 @@ Axios.interceptors.response.use((response) => {
     const { status } = response
     const { code, meta, message } = response.data
     let { data } = response.data
+    // download file
+    if (response.config.responseType === 'blob') {
+      data = response
+    }
     if (code !== 0) {
       error = httpCode[code] || message
     }

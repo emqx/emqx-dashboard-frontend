@@ -119,11 +119,11 @@ export function params2Form(params = {}, deepKey = '') {
     if (type === 'file') {
       defaultValue =
         typeof defaultValue === 'string'
-        ? {
-            file: '',
-            filename: defaultValue,
-          }
-        : defaultValue
+          ? {
+              file: '',
+              filename: defaultValue,
+            }
+          : defaultValue
     }
 
     if (input === 'textarea') {
@@ -267,9 +267,7 @@ export function getDateDiff(duration) {
   const minutes = Math.floor((dateDiff % 3600) / 60)
   const seconds = dateDiff % 60
 
-  return [days, hours, minutes, seconds]
-    .map((n) => n > 10 ? n : `0${n}`)
-    .join(':')
+  return [days, hours, minutes, seconds].map((n) => (n > 10 ? n : `0${n}`)).join(':')
 }
 
 export const verifyID = (rule, value, callback) => {
@@ -290,6 +288,25 @@ export const intercept = (text, len) => {
     return `${text.substring(0, len)}...`
   }
   return text
+}
+
+export const downloadBlobData = (blobRes) => {
+  const { data, headers } = blobRes
+  if (!(data instanceof Blob)) {
+    return
+  }
+  const fileName =
+    (headers['content-disposition'] && headers['content-disposition'].replace(/\w+; filename=(.*)/, '$1')) || 'file'
+  const blob = new Blob([data], { type: headers['content-type'] })
+  const DOM = document.createElement('a')
+  const url = window.URL.createObjectURL(blob)
+  DOM.href = url
+  DOM.download = decodeURI(fileName)
+  DOM.style.display = 'none'
+  document.body.appendChild(DOM)
+  DOM.click()
+  DOM.parentNode && DOM.parentNode.removeChild && DOM.parentNode.removeChild(DOM)
+  window.URL.revokeObjectURL(url)
 }
 
 export default {}
