@@ -500,7 +500,7 @@ export default {
   },
   slowSub: {
     slowSub: '慢订阅',
-    slowSubDesc: '（统计消息传输过慢的订阅者，按照传输时延生成历史记录，并周期性推送统计信息）',
+    slowSubDesc: '（统计最近时间窗口内 消息传输过慢的订阅者，按照传输时延生成历史记录，需要启用emqx_mod_slow_subs模块. 配置: module.slow_subs.*）',
     latencyTime: '时长',
     updated: '更新时间',
     clearData: '重置数据',
