@@ -517,6 +517,9 @@ export default {
     clearSlowSubscriptionConfirm: 'Clear current data and re-count slow subscription',
   },
   logTrace: {
+    logTrace: 'Log Trace',
+    logTraceDesc:
+      '(Filter logs in real time for a specified ClientID or Topic or IP for debugging and troubleshooting)',
     activeList: 'Active Log Trace List',
     finishedList: 'Finished Log Trace List',
     name: 'Name',
@@ -546,6 +549,7 @@ export default {
     srunning: 'Running',
     sstopped: 'Stopped',
     swaiting: 'Waiting',
+    backToList: 'Back to log trace list',
     validString: 'Please enter a valid value',
   },
   httpCode: {

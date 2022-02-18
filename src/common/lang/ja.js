@@ -503,6 +503,9 @@ export default {
     clearSlowSubscriptionConfirm: '現在のデータをクリアし、遅いサブスクリプションを再カウントします',
   },
   logTrace: {
+    logTrace: 'ログ追跡',
+    logTraceDesc:
+      '（デバッグとトラブルシューティングのために、指定されたClientID、トピック、またはIPのログをリアルタイムでフィルター処理します）',
     activeList: 'アクティブログトレースリスト',
     finishedList: '完成したログトレースリスト',
     name: '名前',
@@ -532,6 +535,7 @@ export default {
     srunning: 'ランニング',
     sstopped: '停止',
     swaiting: '待っている',
+    backToList: 'ログ追跡リストに戻る',
     validString: '有効な値を入れてください',
   },
   httpCode: {
