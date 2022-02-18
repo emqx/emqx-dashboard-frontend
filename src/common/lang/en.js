@@ -510,11 +510,11 @@ export default {
   slowSub: {
     slowSub: 'Slow Subscriptions',
     slowSubDesc:
-      '(Count the subscribers with the slow transmission, generate historical records, and periodically push statistical information)',
-    latencyTime: 'Latency Time',
+      '(Lists high latency transmissions during the latest time window. Need emqx_mod_slow_subs module to be enabled. Config namespace: module.slow_subs)',
+    latencyTime: 'Latency',
     updated: 'Updated',
     clearData: 'Clear data',
-    clearSlowSubscriptionConfirm: 'Clear current data and re-count slow subscription',
+    clearSlowSubscriptionConfirm: 'Clear current current data for fresh statistics',
   },
   logTrace: {
     logTrace: 'Log Trace',
