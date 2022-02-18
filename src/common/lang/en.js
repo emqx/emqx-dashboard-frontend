@@ -514,7 +514,7 @@ export default {
     latencyTime: 'Latency',
     updated: 'Updated',
     clearData: 'Clear data',
-    clearSlowSubscriptionConfirm: 'Clear current current data for fresh statistics',
+    clearSlowSubscriptionConfirm: 'Clear current data for fresh statistics',
   },
   logTrace: {
     logTrace: 'Log Trace',
