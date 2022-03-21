@@ -9,7 +9,7 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right;"
+        style="float: right"
         :disabled="$store.state.loading"
         @click="handleOperation(true)"
       >
@@ -27,7 +27,7 @@
           </el-button>
           <el-popover :ref="`popover-${$index}`" placement="right" trigger="click">
             <p>{{ $t('oper.confirmDelete') }}</p>
-            <div style="text-align: right;">
+            <div style="text-align: right">
               <el-button size="mini" type="text" class="cache-btn" @click="_self.$refs[`popover-${$index}`].doClose()">
                 {{ $t('oper.cancel') }}
               </el-button>
@@ -248,9 +248,9 @@ export default {
             old_pwd: this.record.password,
             new_pwd: this.record.newPassword,
           }
-          this.$httpPut(`/users/${this.record.username}`, this.record).then(() => {
+          this.$httpPut(`/users/${decodeURIComponent(this.record.username)}`, this.record).then(() => {
             // change password
-            this.$httpPut(`/change_pwd/${this.record.username}`, user)
+            this.$httpPut(`/change_pwd/${decodeURIComponent(this.record.username)}`, user)
               .then(() => {
                 // re login
                 if (
@@ -271,7 +271,7 @@ export default {
               })
           })
         } else {
-          this.$httpPut(`/users/${this.record.username}`, this.record)
+          this.$httpPut(`/users/${decodeURIComponent(this.record.username)}`, this.record)
             .then(() => {
               // change password
               this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
@@ -285,7 +285,7 @@ export default {
       })
     },
     deleteUser(row, index, self) {
-      this.$httpDelete(`/users/${row.username}`)
+      this.$httpDelete(`/users/${decodeURIComponent(row.username)}`)
         .then(() => {
           this.$message.success(`${this.$t('oper.delete')}${this.$t('alert.success')}`)
           this.loadData()
