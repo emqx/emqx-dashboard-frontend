@@ -383,7 +383,7 @@ export default {
     enableText: 'Access allowed',
     disableText: 'Access barred',
     expiredText: 'Never expired',
-    guide: 'Application for authentication of EMQ X Management API (REST API)',
+    guide: 'Application for authentication of EMQX Management API (REST API)',
     docs: 'Documentation',
   },
   // users
@@ -463,10 +463,10 @@ export default {
   help: {
     quickStart: 'Quick start',
     emqxDesc:
-      'EMQ X is a MQTT broker developed on the Erlang/OTP platform, which is the most popular MQTT message middleware in the open source community. It supports common IoT protocols, including MQTT, LwM2M, MQTT-SN, CoAP, LoRaWAN, HTTP, and WebSocket. Welcome to follow our project or participate in development.',
-    emqxEnterprise: 'EMQ X Enterprise Edition',
+      'EMQX is a MQTT broker developed on the Erlang/OTP platform, which is the most popular MQTT message middleware in the open source community. It supports common IoT protocols, including MQTT, LwM2M, MQTT-SN, CoAP, LoRaWAN, HTTP, and WebSocket. Welcome to follow our project or participate in development.',
+    emqxEnterprise: 'EMQX Enterprise Edition',
     enterpriseDesc:
-      'EMQ X Enterprise Edition has built-in data persistence support, security auditing, operation monitoring and other functions, providing you with the service of more comprehensive functions, enhanced stability and performance, and higher level of data security and service response.<br/>The latest Enterprise Edition includes a new Dashboard, which allows you to easily create and manage IoT Hub clusters with dozens of nodes and millions of connections.',
+      'EMQX Enterprise Edition has built-in data persistence support, security auditing, operation monitoring and other functions, providing you with the service of more comprehensive functions, enhanced stability and performance, and higher level of data security and service response.<br/>The latest Enterprise Edition includes a new Dashboard, which allows you to easily create and manage IoT Hub clusters with dozens of nodes and millions of connections.',
     freeTrial: 'Free Trial',
     useDocs: 'Documentation',
     docsDesc:
