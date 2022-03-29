@@ -167,6 +167,7 @@ export const en = {
   sqlFailedDesc: 'SQL execution failed due to syntax or function call failure',
   sqlNoResult: 'SQL no result',
   sqlNoResultDesc: 'SQL executes successfully but no output results',
+  duplicate: 'Duplicate',
 }
 
 export const zh = {
@@ -334,6 +335,7 @@ export const zh = {
   sqlFailedDesc: 'SQL 因语法或函数调用失败导致执行失败',
   sqlNoResult: 'SQL 无结果',
   sqlNoResultDesc: 'SQL 成功执行但没有输出结果',
+  duplicate: '复制',
 }
 
 export const ja = {
@@ -523,4 +525,5 @@ export const ja = {
   sqlFailedDesc: '構文または関数呼び出しの失敗が原因でSQLの実行に失敗しました',
   sqlNoResult: 'SQLの結果なし',
   sqlNoResultDesc: 'SQLは正常に実行されますが、出力結果がありません',
+  duplicate: 'コピー',
 }
