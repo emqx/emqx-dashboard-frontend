@@ -1,7 +1,7 @@
 <template>
   <el-table
     class="data-table"
-    style="margin-top: 1px;"
+    style="margin-top: 1px"
     border
     :class="{ disable: disabled, 'el-table--public': isRaw }"
     :data="tableData"
@@ -23,7 +23,6 @@
         </el-input>
       </template>
     </el-table-column>
-
     <el-table-column prop="value" class-name="value-column" :label="_option.valueLabel">
       <template slot-scope="{ row, $index }">
         <span class="data-value">{{ row.value }}</span>
@@ -35,10 +34,10 @@
           @input="handleInput(row, false)"
         >
         </el-input>
-
         <i
           v-if="!disabled"
-          :class="{ 'el-icon-close': !row.__new, 'oper-icon': true }"
+          class="oper-icon"
+          :class="{ 'el-icon-close': !row.__new }"
           @click="handleOper('remove', $index, true)"
         >
           {{ row.__new ? '&nbsp;' : '' }}
@@ -82,11 +81,16 @@ export default {
   },
 
   watch: {
-    // value: 'initValue',
+    value(newVal) {
+      if (JSON.stringify(newVal) !== this.objCache) {
+        this.initValue(newVal)
+      }
+    },
   },
 
   data() {
     return {
+      objCache: '',
       tableData: [
         {
           __new: true,
@@ -171,6 +175,7 @@ export default {
         }
         keyMap[key] = true
       })
+      this.objCache = JSON.stringify(obj)
       this.$emit('input', obj)
     },
 
@@ -240,7 +245,7 @@ export default {
     padding: 0 4px;
   }
 
-  .el-table__row.hover-row {
+  .el-table__row:hover {
     .el-icon-close {
       visibility: visible;
     }
