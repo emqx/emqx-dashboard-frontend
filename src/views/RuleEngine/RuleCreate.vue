@@ -205,13 +205,16 @@ export default {
         edit: this.$t('rule.edit'),
         create: this.$t('rule.create'),
       }
-      if (rule) {
+      if (rule && !this.isCopy) {
         return operationNameMap.edit
       }
       return operationNameMap.create
     },
     sqlProvider() {
       return ruleEngineProvider
+    },
+    isCopy() {
+      return this.$route.query.command === 'copy'
     },
   },
 
@@ -395,13 +398,16 @@ export default {
     loadRule(ruleID) {
       this.$httpGet(`/rules/${ruleID}`).then((res) => {
         this.record = res.data
+        if (this.isCopy) {
+          this.record.id += '_Copy'
+        }
       })
     },
     async loadData() {
       this.eventsList = await loadRuleEvents()
       const { rule } = this.$route.query
       if (rule) {
-        this.isEdit = true
+        this.isEdit = !this.isCopy
         this.loadRule(rule)
         this.generateEventsSelect()
       } else {

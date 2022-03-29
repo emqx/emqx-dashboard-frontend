@@ -64,6 +64,9 @@
           <el-button type="success" size="mini" plain @click="editRule(row)">
             {{ $t('rule.edit') }}
           </el-button>
+          <el-button size="mini" plain @click="copyRule(row)">
+            {{ $t('rule.duplicate') }}
+          </el-button>
           <el-button size="mini" type="danger" plain @click="handleDelete(row)">
             {{ $t('rule.delete') }}
           </el-button>
@@ -193,6 +196,9 @@ export default {
     },
     editRule(row) {
       this.$router.push(`/rules/create?rule=${row.id}`)
+    },
+    copyRule({ id }) {
+      this.$router.push({ name: 'ruleCreate', query: { command: 'copy', rule: id } })
     },
     loadDetails(id) {
       this.ruleDialogLoading = true
