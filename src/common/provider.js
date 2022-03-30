@@ -114,6 +114,16 @@ export const ruleEngineProvider = [
     documentation: VueI18n.rule.delivery_dropped,
     type: 'Method',
   },
+  {
+    name: '"$events/client_check_acl_complete"',
+    documentation: VueI18n.rule.client_check_acl_complete,
+    type: 'Method',
+  },
+  {
+    name: '"$events/client_connack"',
+    documentation: VueI18n.rule.client_connack,
+    type: 'Method',
+  },
 ]
 
 export default []

@@ -299,6 +299,8 @@ export default {
         'events/session_subscribed',
         'events/session_unsubscribed',
         'events/delivery_dropped',
+        'events/client_check_acl_complete',
+        'events/client_connack',
       ]
       let values = null
       let value = ''
