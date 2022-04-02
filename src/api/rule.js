@@ -22,4 +22,8 @@ export async function loadRuleEvents() {
   })
 }
 
+export async function resetRuleMetrics(ruleId) {
+  return http.put(`/rules/${ruleId}/reset_metrics`)
+}
+
 export default {}
