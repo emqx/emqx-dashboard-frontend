@@ -168,6 +168,9 @@ export const en = {
   sqlNoResult: 'SQL no result',
   sqlNoResultDesc: 'SQL executes successfully but no output results',
   duplicate: 'Duplicate',
+  resetMetrics: 'Reset metrics',
+  resetMetricsConfirm: 'Are you sure want to reset metrics?',
+  resetSuccessfully: 'Reset successfully',
 }
 
 export const zh = {
@@ -336,6 +339,9 @@ export const zh = {
   sqlNoResult: 'SQL 无结果',
   sqlNoResultDesc: 'SQL 成功执行但没有输出结果',
   duplicate: '复制',
+  resetMetrics: '重置度量指标',
+  resetMetricsConfirm: '是否确认重置度量指标？',
+  resetSuccessfully: '重置成功',
 }
 
 export const ja = {
@@ -526,4 +532,7 @@ export const ja = {
   sqlNoResult: 'SQLの結果なし',
   sqlNoResultDesc: 'SQLは正常に実行されますが、出力結果がありません',
   duplicate: 'コピー',
+  resetMetrics: 'メトリックをリセット',
+  resetMetricsConfirm: 'メトリックをリセットしてもよろしいですか？',
+  resetSuccessfully: '正常にリセット',
 }

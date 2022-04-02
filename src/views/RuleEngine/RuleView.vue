@@ -30,8 +30,13 @@
     </el-card>
 
     <el-card class="el-card--self">
-      <div slot="header" class="config-dialog">
-        {{ $t('rule.metrics') }}
+      <div slot="header" class="config-dialog metrics-hd">
+        <div>
+          {{ $t('rule.metrics') }}
+        </div>
+        <el-button size="small" type="primary" plain @click="resetMetrics">
+          {{ $t('rule.resetMetrics') }}
+        </el-button>
       </div>
       <el-table border :data="record.metrics">
         <el-table-column prop="node" :label="$t('rule.node')"></el-table-column>
@@ -78,6 +83,7 @@
 
 <script>
 import RuleActions from './components/RuleActions'
+import { resetRuleMetrics } from '~/api/rule'
 
 export default {
   name: 'RuleView',
@@ -132,6 +138,16 @@ export default {
       const data = await this.$httpGet(`/rules/${this.id}`)
       this.record = data.data
     },
+    async resetMetrics() {
+      await this.$confirm(this.$t('rule.resetMetricsConfirm'), this.$t('oper.warning'), {
+        confirmButtonClass: 'confirm-btn',
+        cancelButtonClass: 'cache-btn el-button--text',
+        type: 'warning',
+      })
+      await resetRuleMetrics(this.id)
+      this.$message.success(this.$t('rule.resetSuccessfully'))
+      this.loadData()
+    },
   },
 
   created() {
@@ -155,6 +171,10 @@ export default {
 
   .page-title .el-breadcrumb {
     text-transform: none;
+  }
+  .metrics-hd {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
