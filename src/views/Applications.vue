@@ -346,7 +346,7 @@ export default {
         } else {
           record.expired = undefined
         }
-        this.$httpPut(`/apps/${decodeURIComponent(record.app_id)}`, record)
+        this.$httpPut(`/apps/${encodeURIComponent(record.app_id)}`, record)
           .then(() => {
             this.$message.success(this.$t('oper.editSuccess'))
             this.loadData()
@@ -365,7 +365,7 @@ export default {
           } else {
             record.expired = undefined
           }
-          this.$httpPut(`/apps/${decodeURIComponent(record.app_id)}`, record)
+          this.$httpPut(`/apps/${encodeURIComponent(record.app_id)}`, record)
             .then(() => {
               this.displayDialog = false
               this.$message.success(this.$t('oper.editSuccess'))
@@ -379,7 +379,7 @@ export default {
     },
     showApp(row) {
       this.oper = 'view'
-      this.$httpGet(`/apps/${decodeURIComponent(row.app_id)}`)
+      this.$httpGet(`/apps/${encodeURIComponent(row.app_id)}`)
         .then((response) => {
           this.displayDialog = true
           this.record = response.data
@@ -393,7 +393,7 @@ export default {
         })
     },
     deleteApp(row) {
-      this.$httpDelete(`/apps/${decodeURIComponent(row.app_id)}`)
+      this.$httpDelete(`/apps/${encodeURIComponent(row.app_id)}`)
         .then(() => {
           this.loadData()
           this.hidePopover()
