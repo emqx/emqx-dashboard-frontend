@@ -248,9 +248,9 @@ export default {
             old_pwd: this.record.password,
             new_pwd: this.record.newPassword,
           }
-          this.$httpPut(`/users/${decodeURIComponent(this.record.username)}`, this.record).then(() => {
+          this.$httpPut(`/users/${encodeURIComponent(this.record.username)}`, this.record).then(() => {
             // change password
-            this.$httpPut(`/change_pwd/${decodeURIComponent(this.record.username)}`, user)
+            this.$httpPut(`/change_pwd/${encodeURIComponent(this.record.username)}`, user)
               .then(() => {
                 // re login
                 if (
@@ -271,7 +271,7 @@ export default {
               })
           })
         } else {
-          this.$httpPut(`/users/${decodeURIComponent(this.record.username)}`, this.record)
+          this.$httpPut(`/users/${encodeURIComponent(this.record.username)}`, this.record)
             .then(() => {
               // change password
               this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
@@ -285,7 +285,7 @@ export default {
       })
     },
     deleteUser(row, index, self) {
-      this.$httpDelete(`/users/${decodeURIComponent(row.username)}`)
+      this.$httpDelete(`/users/${encodeURIComponent(row.username)}`)
         .then(() => {
           this.$message.success(`${this.$t('oper.delete')}${this.$t('alert.success')}`)
           this.loadData()
