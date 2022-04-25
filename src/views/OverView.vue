@@ -81,13 +81,7 @@
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column min-width="200" :label="$t('overview.memoryInfo')">
-          <el-table-column min-width="180" label=" (used/total)">
-            <template slot-scope="scope">
-              {{ scope.row.memory_used + ' / ' + scope.row.memory_total }}
-            </template>
-          </el-table-column>
-        </el-table-column>
+        <el-table-column min-width="200" prop="memory_used" :label="$t('overview.memoryInfo')"> </el-table-column>
         <el-table-column prop="max_fds" min-width="120" :label="$t('overview.maxFds')"> </el-table-column>
         <el-table-column min-width="120" :label="$t('overview.status')">
           <template slot-scope="props">
