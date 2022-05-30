@@ -328,7 +328,7 @@ export default {
   // http_api
   httpApi: {
     introduction: '説明',
-    desc: 'ヘルプページを除いて、すべてのURIはapplication / json形式でリソースを返し、各リクエストにはHTTP基本認証が必要です。デフォルトのユーザー名とパスワードはadmin / publicです。<br/>' +
+    desc: 'ヘルプページを除いて、すべてのURIはapplication / json形式でリソースを返し、各リクエストにはHTTP基本認証が必要です。<br/>' +
       'emqx_dashboardプラグインは、サーバーの実行ステータス、データ統計、MQTTパケット数を可視化するためのWeb管理コンソールを提供します。',
     reference: 'リファレンス',
     method: 'メソッド',

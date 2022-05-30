@@ -338,7 +338,7 @@ export default {
   httpApi: {
     introduction: 'Introduction',
     desc:
-      'Apart from this help page, all URIs will serve only resources of type application/json, and will require HTTP basic authentication. The default user is admin / public.\n' +
+      'Apart from this help page, all URIs will serve only resources of type application/json, and will require HTTP basic authentication. \n' +
       '<br/>' +
       "The emqx_dashboard plugin provides a web management console. The Dashboard helps monitor broker's running status, statistics and metrics of MQTT packets.",
     reference: 'Reference',

@@ -335,7 +335,7 @@ export default {
   httpApi: {
     introduction: '说明',
     desc:
-      '除了帮助页面，所有URI返回application/json格式的的资源，每个请求都需要HTTP基本认证。默认用户是admin / public。<br/>' +
+      '除了帮助页面，所有URI返回application/json格式的的资源，每个请求都需要HTTP基本认证。<br/>' +
       'emqx_dashboard插件提供了一个Web管理控制台, 用于监控服务器的运行状态，数据统计和MQTT包计数监控。',
     reference: '参考',
     method: '请求方法',
