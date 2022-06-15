@@ -371,5 +371,9 @@ export default {
   .el-select {
     width: 100%;
   }
+
+  .el-form-item__content {
+    line-height: 1;
+  }
 }
 </style>

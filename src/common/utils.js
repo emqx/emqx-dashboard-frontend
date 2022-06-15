@@ -103,6 +103,10 @@ export function params2Form(params = {}, deepKey = '') {
           ],
         }
       }
+      if (input === 'editable_select') {
+        $attrs.filterable = true
+        $attrs['allow-create'] = true
+      }
     }
     if (type === 'object' && !defaultValue) {
       defaultValue = {}
@@ -119,11 +123,11 @@ export function params2Form(params = {}, deepKey = '') {
     if (type === 'file') {
       defaultValue =
         typeof defaultValue === 'string'
-        ? {
-            file: '',
-            filename: defaultValue,
-          }
-        : defaultValue
+          ? {
+              file: '',
+              filename: defaultValue,
+            }
+          : defaultValue
     }
 
     if (input === 'textarea') {
@@ -267,9 +271,7 @@ export function getDateDiff(duration) {
   const minutes = Math.floor((dateDiff % 3600) / 60)
   const seconds = dateDiff % 60
 
-  return [days, hours, minutes, seconds]
-    .map((n) => n > 10 ? n : `0${n}`)
-    .join(':')
+  return [days, hours, minutes, seconds].map((n) => (n > 10 ? n : `0${n}`)).join(':')
 }
 
 export const verifyID = (rule, value, callback) => {
