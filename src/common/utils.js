@@ -103,6 +103,10 @@ export function params2Form(params = {}, deepKey = '') {
           ],
         }
       }
+      if (input === 'editable_select') {
+        $attrs.filterable = true
+        $attrs['allow-create'] = true
+      }
     }
     if (type === 'object' && !defaultValue) {
       defaultValue = {}
