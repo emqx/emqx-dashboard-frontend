@@ -16,7 +16,7 @@
               v-model="record.type"
               class="el-select--public"
               popper-class="el-select--public"
-              style="width: 100%;"
+              style="width: 100%"
               :disabled="!!resourceType || oper === 'edit'"
               @change="handleTypeChange"
             >
@@ -247,6 +247,21 @@ export default {
         })
       }
     },
+
+    findParamItemByKey(keyForFind) {
+      return this.paramsList.find(({ key }) => keyForFind === key) || {}
+    },
+
+    isParamBoolType(param) {
+      const { type, $attrs } = param
+      if (type !== 'emq-select') {
+        return false
+      }
+      const optList = (($attrs && $attrs.field && $attrs.field.options) || []).map(({ value }) => value)
+      const isBoolOpts = optList.length === 2 && [true, false].every((item) => optList.includes(item))
+      return isBoolOpts
+    },
+
     handleCreate(isCreate = true) {
       this.$refs.record.validate((valid) => {
         if (!valid) {
@@ -255,6 +270,12 @@ export default {
         const { config } = this.record
         // String to Boolean
         Object.keys(config).forEach((label) => {
+          const param = this.findParamItemByKey(label)
+          const isBoolType = this.isParamBoolType(param)
+          if (!isBoolType) {
+            return
+          }
+
           const value = config[label]
           if (value === 'true') {
             this.record.config[label] = true

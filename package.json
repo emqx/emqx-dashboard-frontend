@@ -22,6 +22,7 @@
     "js-sql-parser": "^1.2.1",
     "jsonlint": "^1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.20.0",
     "mqtt": "^2.18.8",
     "nprogress": "^0.2.0",

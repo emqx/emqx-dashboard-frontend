@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { cloneDeep } from 'lodash'
+
 export default {
   name: 'emq-select',
 
@@ -110,7 +112,7 @@ export default {
       return this.disabledItem.includes(item[this.fieldName.value])
     },
     async getOptions() {
-      const { api, url, options, list } = this.field
+      const { api, url, options, list } = cloneDeep(this.field)
       let value = []
       if (options) {
         value = options
