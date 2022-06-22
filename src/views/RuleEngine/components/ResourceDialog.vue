@@ -253,12 +253,9 @@ export default {
     },
 
     isParamBoolType(param) {
-      const { type, $attrs } = param
-      if (type !== 'emq-select') {
-        return false
-      }
+      const { $attrs } = param
       const optList = (($attrs && $attrs.field && $attrs.field.options) || []).map(({ value }) => value)
-      const isBoolOpts = optList.length === 2 && [true, false].every((item) => optList.includes(item))
+      const isBoolOpts = optList.length >= 2 && [true, false].every((item) => optList.includes(item))
       return isBoolOpts
     },
 
