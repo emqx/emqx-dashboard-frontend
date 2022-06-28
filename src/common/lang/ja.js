@@ -120,6 +120,7 @@ export default {
     erlangProcesses: 'Erlang プロセス',
     cpuInfo: 'CPU',
     memoryInfo: 'メモリ情報',
+    memory: 'メモリー',
     maxFds: 'ファイルオープン上限数',
     status: 'ステータス',
     // Stats
