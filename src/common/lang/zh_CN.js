@@ -124,6 +124,7 @@ export default {
     erlangProcesses: 'Erlang 进程',
     cpuInfo: 'CPU',
     memoryInfo: '内存',
+    memory: '内存',
     maxFds: '最大文件句柄数',
     status: '状态',
     // Stats

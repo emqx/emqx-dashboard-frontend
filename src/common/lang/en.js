@@ -124,6 +124,7 @@ export default {
     erlangProcesses: 'Erlang Processes',
     cpuInfo: 'CPU Info',
     memoryInfo: 'Memory Info',
+    memory: 'Memory',
     maxFds: 'MaxFds',
     status: 'Status',
     // Stats

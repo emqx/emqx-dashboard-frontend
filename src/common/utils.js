@@ -294,4 +294,27 @@ export const intercept = (text, len) => {
   return text
 }
 
+export const usefulMemoryUnit = ['Byte', 'KB', 'MB', 'GB', 'TB']
+
+const ONE_KB = 1024
+const ONE_MB = ONE_KB * 1024
+const ONE_GB = ONE_MB * 1024
+const ONE_TB = ONE_GB * 1024
+
+export const transMemorySizeNumToStr = (byte) => {
+  if (byte < ONE_KB) {
+    return byte + ' Byte'
+  }
+  if (byte < ONE_MB) {
+    return byte / ONE_KB + ' KB'
+  }
+  if (byte < ONE_GB) {
+    return byte / ONE_MB + ' MB'
+  }
+  if (byte < ONE_TB) {
+    return byte / ONE_GB + ' GB'
+  }
+  return byte / ONE_TB + ' TB'
+}
+
 export default {}
