@@ -83,7 +83,7 @@
         </el-table-column>
         <el-table-column min-width="200" :label="$t('overview.memory')" v-if="showMemoryColumn">
           <template slot-scope="{ row }">
-            {{ transMemorySizeNumToStr(row.memory_used) + ' / ' + transMemorySizeNumToStr(row.memory_total) }}
+            {{ row.memory_used + ' / ' + row.memory_total }}
           </template>
         </el-table-column>
         <el-table-column prop="max_fds" min-width="120" :label="$t('overview.maxFds')"> </el-table-column>
@@ -192,7 +192,6 @@
 <script>
 import { Select, Option, Table, TableColumn, Row, Col } from 'element-ui'
 import { mapActions } from 'vuex'
-import { transMemorySizeNumToStr } from '~/common/utils.js'
 
 export default {
   name: 'overview-view',
@@ -227,7 +226,6 @@ export default {
     },
   },
   methods: {
-    transMemorySizeNumToStr,
     ...mapActions(['CURRENT_NODE']),
     init() {
       // load nodes every page
