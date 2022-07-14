@@ -35,7 +35,17 @@
             </el-col>
             <el-col :span="6">
               <el-form-item :label="$t('rule.topic')">
-                <el-input type="text" size="small" v-model="filterParams._like_for" />
+                <div class="like-input">
+                  <el-select class="select-topic-type" size="small" v-model="keyForSearchTopic" @hover.prevent.native>
+                    <el-option
+                      v-for="{ label, value } in KEYS_FOR_SEARCH_TOPIC"
+                      :key="value"
+                      :label="label"
+                      :value="value"
+                    />
+                  </el-select>
+                  <el-input type="text" size="small" v-model="filterParams[keyForSearchTopic]" />
+                </div>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -225,13 +235,17 @@ import RuleActions from '~/views/RuleEngine/components/RuleActions'
 const createRawFilterParams = () => ({
   _like_id: undefined,
 
-  for: undefined,
   _like_for: undefined,
   _match_for: undefined,
 
   enabled: undefined,
   _like_description: undefined,
 })
+
+const KEYS_FOR_SEARCH_TOPIC = [
+  { value: '_like_for', label: 'Topic' },
+  { value: '_match_for', label: 'Wildcard' },
+]
 
 export default {
   name: 'rules-view',
@@ -240,6 +254,7 @@ export default {
 
   data() {
     return {
+      KEYS_FOR_SEARCH_TOPIC,
       ruleDialogLoading: false,
       timer: 0,
       rule: {
@@ -255,6 +270,7 @@ export default {
       rulesCount: 0,
       showMoreQuery: false,
       filterParams: createRawFilterParams(),
+      keyForSearchTopic: KEYS_FOR_SEARCH_TOPIC[0].value,
     }
   },
 
@@ -336,13 +352,18 @@ export default {
       this.$router.push('/rules/create')
     },
     getFilterParams() {
-      return Object.keys(this.filterParams).reduce((obj, currentKey) => {
+      const { _like_for, _match_for, ...filterParams } = this.filterParams
+      const ret = Object.keys(filterParams).reduce((obj, currentKey) => {
         const currentVal = this.filterParams[currentKey]
         if (currentVal !== undefined && currentVal !== '') {
           return { ...obj, [currentKey]: currentVal }
         }
         return obj
       }, {})
+      if (this.filterParams[this.keyForSearchTopic]) {
+        ret[this.keyForSearchTopic] = this.filterParams[this.keyForSearchTopic]
+      }
+      return ret
     },
     loadData() {
       const params = { ...this.pageParams, ...this.getFilterParams() }
@@ -451,6 +472,43 @@ export default {
       margin-bottom: 16px;
       .el-form-item {
         margin-bottom: 0;
+      }
+    }
+    .like-input {
+      font-size: 0;
+      .el-input__inner {
+        position: relative;
+        transition: none;
+      }
+      > .el-select,
+      > .el-input {
+        vertical-align: top;
+        &:hover {
+          .el-input__inner {
+            z-index: 20;
+          }
+        }
+        .el-input__inner:hover {
+          z-index: 20;
+        }
+      }
+      > .el-select {
+        width: 42%;
+        .el-input__inner {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          background-color: var(--el-fill-color-light);
+        }
+      }
+      > .el-input {
+        width: 58%;
+        position: relative;
+        left: -1px;
+        .el-input__inner {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-left-color: transparent;
+        }
       }
     }
   }
