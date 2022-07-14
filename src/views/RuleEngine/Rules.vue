@@ -1,78 +1,160 @@
 <template>
   <div class="rules-view">
-    <div class="page-title">
-      {{ $t('rule.message_rule') }}
-      <el-button
-        class="confirm-btn"
-        round
-        plain
-        type="success"
-        icon="el-icon-plus"
-        size="medium"
-        style="float: right"
-        :disable="$store.state.loading"
-        @click="handleOperation"
-      >
-        {{ $t('rule.create') }}
-      </el-button>
-    </div>
+    <div class="rules-page">
+      <div class="page-title">
+        {{ $t('rule.message_rule') }}
+        <el-button
+          class="confirm-btn"
+          round
+          plain
+          type="success"
+          icon="el-icon-plus"
+          size="medium"
+          style="float: right"
+          :disable="$store.state.loading"
+          @click="handleOperation"
+        >
+          {{ $t('rule.create') }}
+        </el-button>
+      </div>
 
-    <!-- rules list -->
-    <el-table v-loading="$store.state.loading" border :data="tableData">
-      <!-- rule name -->
-      <el-table-column prop="id" :label="$t('rule.id')">
-        <template slot-scope="{ row }">
-          <span class="btn" @click="viewRule(row)">
-            {{ row.id }}
-          </span>
-        </template>
-      </el-table-column>
+      <!-- Fuzzy search card -->
+      <el-card class="el-card--self card-search">
+        <el-form
+          ref="filterParams"
+          :model="filterParams"
+          label-position="left"
+          label-width="90px"
+          @keyup.enter.native="searchData"
+        >
+          <el-row :gutter="32">
+            <el-col :span="6">
+              <el-form-item :label="$t('rule.id')">
+                <el-input type="text" size="small" v-model="filterParams._like_id" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item :label="$t('rule.topic')">
+                <el-input type="text" size="small" v-model="filterParams._like_for" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item :label="$t('rule.viewStates')">
+                <el-select v-model="filterParams.enabled" size="small" clearable>
+                  <el-option :label="$t('rule.ruleEnabled')" :value="true" />
+                  <el-option :label="$t('rule.ruleDisabled')" :value="false" />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <template v-if="showMoreQuery">
+              <el-col :span="6">
+                <el-form-item :label="$t('rule.description')">
+                  <el-input type="text" size="small" v-model="filterParams._like_description" />
+                </el-form-item>
+              </el-col>
+            </template>
 
-      <el-table-column prop="for" :label="$t('rule.topic')"></el-table-column>
-      <el-table-column prop="actions" :label="$t('rule.actions')">
-        <template slot-scope="{ row }">
-          <div v-for="(item, i) in row.actions" class="action-item" :key="i">
-            {{ item.name }}
-          </div>
-        </template>
-      </el-table-column>
+            <div class="col-oper">
+              <el-button size="small" type="primary" plain @click="searchData">
+                {{ $t('oper.search') }}
+              </el-button>
+              <el-button
+                size="small"
+                plain
+                @click="
+                  resetFilterParams()
+                  loadData()
+                "
+              >
+                {{ $t('oper.reset') }}
+              </el-button>
+              <a href="javascript:;" class="show-more" @click="showMoreQuery = !showMoreQuery">
+                {{ showMoreQuery ? $t('oper.collapse') : $t('oper.expand') }}
+                <i :class="showMoreQuery ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i>
+              </a>
+            </div>
+          </el-row>
+        </el-form>
+      </el-card>
 
-      <el-table-column
-        prop="metrics.matched"
-        min-width="110px"
-        :label="$t('rule.rule_matched_1')"
-        :formatter="getMatchedCount"
-      ></el-table-column>
+      <!-- rules list -->
+      <el-table v-loading="$store.state.loading" border :data="tableData">
+        <!-- rule name -->
+        <el-table-column prop="id" :label="$t('rule.id')">
+          <template slot-scope="{ row }">
+            <span class="btn" @click="viewRule(row)">
+              {{ row.id }}
+            </span>
+          </template>
+        </el-table-column>
 
-      <el-table-column :label="$t('rule.viewStates')">
-        <template slot-scope="props">
-          <el-tooltip :content="props.row.enabled ? $t('rule.ruleEnabled') : $t('rule.ruleDisabled')" placement="left">
-            <el-switch
-              v-model="props.row.enabled"
-              active-text=""
-              inactive-text=""
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="updateRule(props.row)"
+        <el-table-column prop="for" :label="$t('rule.topic')"></el-table-column>
+        <el-table-column prop="actions" :label="$t('rule.actions')">
+          <template slot-scope="{ row }">
+            <div v-for="(item, i) in row.actions" class="action-item" :key="i">
+              {{ item.name }}
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          prop="metrics.matched"
+          min-width="110px"
+          :label="$t('rule.rule_matched_1')"
+          :formatter="getMatchedCount"
+        />
+
+        <el-table-column :label="$t('rule.viewStates')">
+          <template slot-scope="props">
+            <el-tooltip
+              :content="props.row.enabled ? $t('rule.ruleEnabled') : $t('rule.ruleDisabled')"
+              placement="left"
             >
-            </el-switch>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('rule.oper')" min-width="120px">
-        <template slot-scope="{ row }">
-          <el-button type="success" size="mini" plain @click="editRule(row)">
-            {{ $t('rule.edit') }}
-          </el-button>
-          <el-button size="mini" plain @click="copyRule(row)">
-            {{ $t('rule.duplicate') }}
-          </el-button>
-          <el-button size="mini" type="danger" plain @click="handleDelete(row)">
-            {{ $t('rule.delete') }}
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+              <el-switch
+                v-model="props.row.enabled"
+                active-text=""
+                inactive-text=""
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                @change="updateRule(props.row)"
+              >
+              </el-switch>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('rule.oper')" min-width="120px">
+          <template slot-scope="{ row }">
+            <el-button type="success" size="mini" plain @click="editRule(row)">
+              {{ $t('rule.edit') }}
+            </el-button>
+            <el-button size="mini" plain @click="copyRule(row)">
+              {{ $t('rule.duplicate') }}
+            </el-button>
+            <el-button size="mini" type="danger" plain @click="handleDelete(row)">
+              {{ $t('rule.delete') }}
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div class="center-align">
+        <el-pagination
+          hide-on-single-page
+          background
+          layout="total, sizes, prev, pager, next"
+          :page-sizes="[10, 50, 100, 300, 500]"
+          :current-page.sync="pageParams._page"
+          :page-size="pageParams._limit"
+          :total="rulesCount"
+          @size-change="
+            resetPageNo()
+            loadData()
+          "
+          @current-change="loadData()"
+        >
+        </el-pagination>
+      </div>
+    </div>
 
     <el-dialog :title="$t('rule.rule_details')" :visible.sync="dialogVisible" @close="closeDialog">
       <div class="dialog-preview">
@@ -140,12 +222,21 @@
 <script>
 import RuleActions from '~/views/RuleEngine/components/RuleActions'
 
+const createRawFilterParams = () => ({
+  _like_id: undefined,
+
+  for: undefined,
+  _like_for: undefined,
+  _match_for: undefined,
+
+  enabled: undefined,
+  _like_description: undefined,
+})
+
 export default {
   name: 'rules-view',
 
   components: { RuleActions },
-
-  props: {},
 
   data() {
     return {
@@ -157,6 +248,13 @@ export default {
       },
       dialogVisible: false,
       tableData: [],
+      pageParams: {
+        _limit: 10,
+        _page: 1,
+      },
+      rulesCount: 0,
+      showMoreQuery: false,
+      filterParams: createRawFilterParams(),
     }
   },
 
@@ -237,14 +335,37 @@ export default {
     handleOperation() {
       this.$router.push('/rules/create')
     },
+    getFilterParams() {
+      return Object.keys(this.filterParams).reduce((obj, currentKey) => {
+        const currentVal = this.filterParams[currentKey]
+        if (currentVal !== undefined && currentVal !== '') {
+          return { ...obj, [currentKey]: currentVal }
+        }
+        return obj
+      }, {})
+    },
     loadData() {
-      this.$httpGet('/rules').then((response) => {
-        this.tableData = response.data
+      const params = { ...this.pageParams, ...this.getFilterParams() }
+      this.$httpGet('/rules', params).then(({ data }) => {
+        const { items, meta } = data
+        this.tableData = items
+        this.rulesCount = meta.count
         const currentRule = this.tableData.find(($) => $.id === this.rule.id)
         if (currentRule) {
           this.rule = currentRule
         }
       })
+    },
+    resetPageNo() {
+      this.pageParams._page = 1
+    },
+    searchData() {
+      this.resetPageNo()
+      this.loadData()
+    },
+    resetFilterParams() {
+      this.filterParams = createRawFilterParams()
+      this.resetPageNo()
     },
     updateRule(row) {
       const { id, enabled } = row
@@ -306,6 +427,42 @@ export default {
         font-weight: 800;
       }
     }
+  }
+
+  .page-title {
+    margin-bottom: 24px;
+  }
+
+  .card-search {
+    .el-select {
+      width: 100%;
+    }
+    .el-select.el-select--small .el-input__inner {
+      height: 32px !important;
+    }
+    .el-form-item--medium .el-form-item__content {
+      height: 32px;
+    }
+    .el-form-item--medium .el-form-item__label {
+      line-height: 32px;
+    }
+    .el-col {
+      line-height: 1;
+      margin-bottom: 16px;
+      .el-form-item {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .col-oper {
+    float: right;
+    position: relative;
+    top: 1px;
+    .show-more {
+      margin: 0px 10px;
+      font-size: 12px;
+    }
+    margin-bottom: 10px;
   }
 }
 </style>
