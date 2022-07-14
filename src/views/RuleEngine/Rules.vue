@@ -156,10 +156,7 @@
           :current-page.sync="pageParams._page"
           :page-size="pageParams._limit"
           :total="rulesCount"
-          @size-change="
-            resetPageNo()
-            loadData()
-          "
+          @size-change="handleSizeChanged"
           @current-change="loadData()"
         >
         </el-pagination>
@@ -381,6 +378,11 @@ export default {
       this.pageParams._page = 1
     },
     searchData() {
+      this.resetPageNo()
+      this.loadData()
+    },
+    handleSizeChanged(size) {
+      this.pageParams._limit = size
       this.resetPageNo()
       this.loadData()
     },
