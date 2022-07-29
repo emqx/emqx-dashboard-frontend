@@ -390,6 +390,7 @@ export default {
     authenticate: '你已成功修改已登录用户密码，请重新登录',
     createUser: '新建用户成功',
     passwordIllegal: '密码长度: 3~255',
+    noSameNewPwd: '新密码不能与旧密码相同',
   },
   // alert
   alert: {
@@ -408,6 +409,7 @@ export default {
     error: '用户名或密码错误',
     usernameRequired: '请填写用户名',
     passwordRequired: '请填写密码',
+    defaultPwdTip: '检测到您正在使用默认密码登录，请及时修改密码',
   },
   // settings
   settings: {
