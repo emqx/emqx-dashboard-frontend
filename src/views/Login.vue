@@ -46,6 +46,7 @@
 <script>
 import { Col, Row, Card, Form, FormItem, Input, Checkbox, Button } from 'element-ui'
 import { mapActions } from 'vuex'
+import { DEFAULT_PWD } from '~/common/constants'
 
 export default {
   name: 'login-view',
@@ -85,7 +86,8 @@ export default {
       this.$axios
         .post('/auth', this.user)
         .then(() => {
-          this.USER_LOGIN({ user: this.user, remember: this.remember })
+          const isUsingDefaultPwd = this.user.password === DEFAULT_PWD
+          this.USER_LOGIN({ user: { ...this.user, isUsingDefaultPwd }, remember: this.remember })
           this.$router.push(this.$route.query.redirect || '/')
         })
         .catch(() => {

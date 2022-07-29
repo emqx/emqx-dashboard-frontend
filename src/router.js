@@ -121,6 +121,7 @@ const routes = [
         path: '/users',
         name: 'users',
         component: () => import('~/views/Users'),
+        props: true,
       },
       {
         path: '/settings',

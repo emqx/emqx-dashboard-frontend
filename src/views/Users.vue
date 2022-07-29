@@ -53,6 +53,8 @@
       width="500px"
       :visible.sync="dialogVisible"
       :title="oper === 'new' ? $t('users.newUser') : $t('users.editUser')"
+      :show-close="!isForChangeDefaultPwd"
+      :close-on-click-modal="!isForChangeDefaultPwd"
       @keyup.enter.native="createUser"
     >
       <el-form class="el-form--public" ref="record" label-position="top" size="medium" :model="record" :rules="rules">
@@ -94,7 +96,7 @@
           <el-col :span="24">
             <el-form-item>
               <el-button
-                v-if="oper === 'edit'"
+                v-if="oper === 'edit' && !isForChangeDefaultPwd"
                 class="cache-btn change-password"
                 type="text"
                 @click="changePassword = !changePassword"
@@ -106,7 +108,7 @@
         </el-row>
       </el-form>
       <div slot="footer">
-        <el-button type="text" class="cache-btn" @click="dialogVisible = false">
+        <el-button v-if="!isForChangeDefaultPwd" type="text" class="cache-btn" @click="dialogVisible = false">
           {{ $t('oper.cancel') }}
         </el-button>
         <el-button type="success" class="confirm-btn" :loading="$store.state.loading" @click="createUser">
@@ -137,10 +139,23 @@ export default {
     'el-col': Col,
   },
 
+  props: {
+    isForChangeDefaultPwd: {
+      type: Boolean,
+    },
+  },
+
   data() {
     const checkRepeatPassword = (rule, value, callback) => {
       if (value !== this.record.newPassword) {
         callback(new Error(this.$t('users.passwordInconsistent')))
+      } else {
+        callback()
+      }
+    }
+    const newPwdSameConfirm = (rule, value, callback) => {
+      if (value === this.record.password) {
+        callback(new Error(this.$t('users.noSameNewPwd')))
       } else {
         callback()
       }
@@ -170,6 +185,7 @@ export default {
         newPassword: [
           { required: true, message: this.$t('users.passwordRequired') },
           { min: 3, max: 255, message: this.$t('users.passwordIllegal'), trigger: 'change' },
+          { validator: newPwdSameConfirm, trigger: 'blur' },
         ],
         repeatPassword: [
           { required: true, message: this.$t('users.passwordRequired') },
@@ -181,6 +197,9 @@ export default {
 
   computed: {
     username() {
+      return this.$store.state.user.username
+    },
+    currentUserName() {
       return this.$store.state.user.username
     },
   },
@@ -208,14 +227,13 @@ export default {
         this.$set(this.record, 'password', '')
       }
     },
-    loadData() {
-      this.$httpGet('/users')
-        .then((response) => {
-          this.users = response.data
-        })
-        .catch((error) => {
-          this.$message.error(error || this.$t('error.networkError'))
-        })
+    async loadData() {
+      try {
+        const { data } = await this.$httpGet('/users')
+        this.users = data
+      } catch (error) {
+        this.$message.error(error || this.$t('error.networkError'))
+      }
     },
     createUser() {
       if (this.oper === 'edit') {
@@ -295,9 +313,39 @@ export default {
           this.$message.error(error || this.$t('error.networkError'))
         })
     },
+    /**
+     * open when user using default pwd
+     */
+    openChangePwdDialog() {
+      try {
+        const user = this.users.find(({ username }) => username === this.currentUserName)
+        if (!user) {
+          throw new Error('User not found')
+        }
+        this.handleOperation(false, user)
+        this.changePassword = true
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    confirmForChangeDefaultPwdParam() {
+      if (this.isForChangeDefaultPwd) {
+        this.openChangePwdDialog()
+      }
+    },
   },
-  created() {
-    this.loadData()
+
+  watch: {
+    isForChangeDefaultPwd(val) {
+      if (val) {
+        this.openChangePwdDialog()
+      }
+    },
+  },
+
+  async created() {
+    await this.loadData()
+    this.confirmForChangeDefaultPwdParam()
   },
 }
 </script>

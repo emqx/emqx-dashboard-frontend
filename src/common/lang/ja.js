@@ -400,6 +400,7 @@ export default {
     authenticate: 'パスワードが変更されたので、もう一度ログインしてください',
     createUser: 'ユーザーを作成しました',
     passwordIllegal: 'パスワードの長さ: 3~255',
+    noSameNewPwd: '新しいパスワードと古いパスワードを同じにすることはできません',
   },
   // alert
   alert: {
@@ -418,6 +419,7 @@ export default {
     error: 'ユーザー名またはパスワードが間違っています',
     usernameRequired: 'ユーザー名を入力してください',
     passwordRequired: 'パスワードを入力してください',
+    defaultPwdTip: 'デフォルトのパスワードでログインしていることが検出されました。時間内にパスワードを変更してください',
   },
   // settings
   settings: {

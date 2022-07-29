@@ -18,6 +18,45 @@ export default {
     Leftbar,
     Topbar,
   },
+
+  computed: {
+    isUsingDefaultPwd() {
+      return this.$store.state.user.isUsingDefaultPwd
+    },
+  },
+
+  methods: {
+    popupMessageBox() {
+      this.$msgbox({
+        type: 'info',
+        message: this.$t('login.defaultPwdTip'),
+        confirmButtonText: 'OK',
+        customClass: 'default-pwd-tip',
+        closeOnClickModal: false,
+        callback: () => {
+          const route = {
+            name: 'users',
+            params: { isForChangeDefaultPwd: true },
+          }
+          if (this.$route.name === 'users') {
+            this.$router.replace({
+              ...route,
+              query: { _t: Date.now() },
+            })
+          } else {
+            this.$router.push(route)
+          }
+        },
+        showClose: false,
+      })
+    },
+  },
+
+  created() {
+    if (this.isUsingDefaultPwd) {
+      this.popupMessageBox()
+    }
+  },
 }
 </script>
 
@@ -28,6 +67,15 @@ export default {
   .home-content {
     margin: 0 32px 0 232px;
     padding: 60px 0 20px 0;
+  }
+}
+.default-pwd-tip {
+  width: 380px;
+  .el-message-box__content {
+    padding-top: 28px;
+  }
+  .el-message-box__message {
+    padding-right: 0;
   }
 }
 </style>

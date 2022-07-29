@@ -411,6 +411,7 @@ export default {
     authenticate: 'You have changed your password. Please re authenticate',
     createUser: 'Create user success',
     passwordIllegal: 'Password length: 3~255',
+    noSameNewPwd: 'The new and old passwords cannot be the same',
   },
   // alert
   alert: {
@@ -429,6 +430,7 @@ export default {
     error: 'Username Or Password Error',
     usernameRequired: 'Username Required',
     passwordRequired: 'Password Required',
+    defaultPwdTip: 'Detected that you are logging in with the default password, please change your password in time',
   },
   // settings
   settings: {
