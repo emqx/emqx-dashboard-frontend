@@ -122,9 +122,12 @@
 <script>
 import { Dialog, Input, Button, Table, TableColumn, Popover, Form, FormItem, Row, Col } from 'element-ui'
 import { mapActions } from 'vuex'
+import changeDefaultPwd from '~/mixins/changeDefaultPwd'
 
 export default {
   name: 'users-view',
+
+  mixins: [changeDefaultPwd],
 
   components: {
     'el-dialog': Dialog,
@@ -346,6 +349,13 @@ export default {
   async created() {
     await this.loadData()
     this.confirmForChangeDefaultPwdParam()
+  },
+
+  beforeRouteLeave(to, from, next) {
+    this.preventLeaveWithoutChangeDefaultPwd(to, from, next)
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.preventLeaveWithoutChangeDefaultPwd(to, from, next)
   },
 }
 </script>

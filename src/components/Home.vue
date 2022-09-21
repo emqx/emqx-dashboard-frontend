@@ -11,12 +11,22 @@
 <script>
 import Leftbar from './Leftbar'
 import Topbar from './Topbar'
+import changeDefaultPwd from '~/mixins/changeDefaultPwd'
 
 export default {
   name: 'home-view',
+
+  mixins: [changeDefaultPwd],
+
   components: {
     Leftbar,
     Topbar,
+  },
+
+  data() {
+    return {
+      isPwdMsgBoxClosed: false,
+    }
   },
 
   computed: {
@@ -33,7 +43,9 @@ export default {
         confirmButtonText: 'OK',
         customClass: 'default-pwd-tip',
         closeOnClickModal: false,
+        closeOnHashChange: false,
         callback: () => {
+          this.isPwdMsgBoxClosed = true
           const route = {
             name: 'users',
             params: { isForChangeDefaultPwd: true },
@@ -56,6 +68,13 @@ export default {
     if (this.isUsingDefaultPwd) {
       this.popupMessageBox()
     }
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    if (this.isUsingDefaultPwd && !this.isPwdMsgBoxClosed) {
+      this.$msgbox.close()
+    }
+    this.preventLeaveWithoutChangeDefaultPwd(to, from, next)
   },
 }
 </script>
