@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Package from '../package.json'
 import newFeaturesMenu from './data_map/new_features_menu'
+import { getUser, setUser, removeUser } from '~/common/auth'
 
 Vue.use(Vuex)
 
@@ -39,7 +40,7 @@ function getShowFeatOnLeftbar() {
 
 const state = {
   loading: false,
-  user: safeParse(sessionStorage.getItem('user')) || safeParse(localStorage.getItem('user')) || {},
+  user: getUser() || {},
   nodeName: '',
   showFeatOnLeftbar: getShowFeatOnLeftbar(),
   systemVersion: process.env.VUE_APP_VERSION,
@@ -59,16 +60,11 @@ const SYSTEM_VERSION = 'SYSTEM_VERSION'
 const actions = {
   [USER_LOGIN]({ commit }, payload) {
     if (payload.isLogOut) {
-      sessionStorage.removeItem('user')
-      localStorage.removeItem('user')
+      removeUser()
       commit(USER_LOGIN, payload)
       return
     }
-    if (payload.remember) {
-      localStorage.setItem('user', JSON.stringify(payload.user))
-    } else {
-      sessionStorage.setItem('user', JSON.stringify(payload.user))
-    }
+    setUser(payload.user, payload.remember)
     commit(USER_LOGIN, payload)
   },
   [CURRENT_NODE]({ commit }, nodeName) {
