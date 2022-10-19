@@ -55,6 +55,7 @@
       :title="oper === 'new' ? $t('users.newUser') : $t('users.editUser')"
       :show-close="!isForChangeDefaultPwd"
       :close-on-click-modal="!isForChangeDefaultPwd"
+      :close-on-press-escape="!isForChangeDefaultPwd"
       @keyup.enter.native="createUser"
     >
       <el-form class="el-form--public" ref="record" label-position="top" size="medium" :model="record" :rules="rules">
