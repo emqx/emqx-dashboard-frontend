@@ -6,7 +6,7 @@ import encUTF8 from 'crypto-js/enc-utf8'
  * key for set/get local storage
  */
 const USER_INFO_KEY = 'uK'
-const ENCRYPTION_KEY = 'eK'
+const ENCRYPTION_KEY = 'LATRJJ04GW'
 
 const getUserInfoKey = () => {
   return localStorage.getItem(USER_INFO_KEY)
@@ -16,16 +16,6 @@ const setUserInfoKey = () => {
   const uk = createRandomString(8)
   localStorage.setItem(USER_INFO_KEY, uk)
   return uk
-}
-
-const getEncryptionKey = () => {
-  return localStorage.getItem(ENCRYPTION_KEY)
-}
-
-const setEncryptionKey = () => {
-  const ek = createRandomString(10)
-  localStorage.setItem(ENCRYPTION_KEY, ek)
-  return ek
 }
 
 const encryptSafely = (str, key) => {
@@ -49,13 +39,11 @@ const decryptSafely = (str, key) => {
 
 /**
  * 1. generate uk
- * 2. generate ek
- * 3. set user info
+ * 2. set user info
  */
 export const setUser = (user, remember) => {
   const uk = setUserInfoKey()
-  const ek = setEncryptionKey()
-  const userInfo = encryptSafely(stringifyObjSafely(user), ek)
+  const userInfo = encryptSafely(stringifyObjSafely(user), ENCRYPTION_KEY)
   if (remember) {
     localStorage.setItem(uk, userInfo)
   } else {
@@ -65,16 +53,14 @@ export const setUser = (user, remember) => {
 
 export const getUser = () => {
   const uk = getUserInfoKey()
-  const ek = getEncryptionKey()
-  if (!uk || !ek) {
+  if (!uk) {
     return
   }
   const user = localStorage.getItem(uk) || sessionStorage.getItem(uk)
-  console.log(user)
   if (!user) {
     return
   }
-  const userInfoStr = decryptSafely(user, ek)
+  const userInfoStr = decryptSafely(user, ENCRYPTION_KEY)
   const userInfo = parseJSONSafely(userInfoStr)
   return userInfo
 }
