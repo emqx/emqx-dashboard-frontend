@@ -377,7 +377,7 @@ export default {
       })
         .then(() => {
           const { id } = this.editItem
-          this.$httpPut(`${url}/${id}`, record)
+          this.$httpPut(`${url}/${encodeURIComponent(id)}`, record)
             .then((res) => {
               this.$message.success(this.$t('rule.edit_success'))
               this.dialogVisible = false

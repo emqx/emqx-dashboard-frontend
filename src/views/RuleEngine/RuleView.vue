@@ -135,7 +135,7 @@ export default {
       if (!this.id) {
         return
       }
-      const data = await this.$httpGet(`/rules/${this.id}`)
+      const data = await this.$httpGet(`/rules/${encodeURIComponent(this.id)}`)
       this.record = data.data
     },
     async resetMetrics() {

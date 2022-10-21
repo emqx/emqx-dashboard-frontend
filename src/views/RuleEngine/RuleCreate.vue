@@ -382,7 +382,7 @@ export default {
               description,
               rawsql,
             }
-            this.$httpPut(`/rules/${rule}`, data).then(() => {
+            this.$httpPut(`/rules/${encodeURIComponent(rule)}`, data).then(() => {
               this.$message.success(this.$t('oper.editSuccess'))
               this.$router.push('/rules')
             })
@@ -396,7 +396,7 @@ export default {
       }
     },
     loadRule(ruleID) {
-      this.$httpGet(`/rules/${ruleID}`).then((res) => {
+      this.$httpGet(`/rules/${encodeURIComponent(ruleID)}`).then((res) => {
         this.record = res.data
         if (this.isCopy) {
           this.record.id += '_Copy'
