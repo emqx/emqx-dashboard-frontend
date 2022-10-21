@@ -9,7 +9,7 @@
         type="success"
         icon="el-icon-plus"
         size="medium"
-        style="float: right;"
+        style="float: right"
         :disable="$store.state.loading"
         @click="handleOperation('add')"
       >
@@ -121,10 +121,8 @@
                   {{ item[0] }}
                 </div>
                 <div class="option-value">
-                  <span v-if="!item[1] || Object.keys(item[1]).length === 0">
-                    N/A
-                  </span>
-                  <data-table v-else v-model="item[1]" disabled style="margin-top: 0;"> </data-table>
+                  <span v-if="!item[1] || Object.keys(item[1]).length === 0"> N/A </span>
+                  <data-table v-else v-model="item[1]" disabled style="margin-top: 0"> </data-table>
                 </div>
               </template>
             </div>
@@ -174,7 +172,7 @@ export default {
     handleReconnect(row, i) {
       this.reloadLoading = true
       this.currentResource = row.id
-      this.$httpPost(`/resources/${row.id}`)
+      this.$httpPost(`/resources/${encodeURIComponent(row.id)}`)
         .then(() => {
           setTimeout(() => {
             // this.loadData()
@@ -200,7 +198,7 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          this.$httpDelete(`/resources/${row.id}`).then(() => {
+          this.$httpDelete(`/resources/${encodeURIComponent(row.id)}`).then(() => {
             this.$message.success(this.$t('rule.delete_success'))
             this.loadData()
           })
@@ -229,7 +227,7 @@ export default {
       if (row.status && row.status.length > 0) {
         return
       }
-      this.$httpGet(`/resources/${row.id}`).then((res) => {
+      this.$httpGet(`/resources/${encodeURIComponent(row.id)}`).then((res) => {
         this.$set(row, 'status', res.data.status)
       })
     },

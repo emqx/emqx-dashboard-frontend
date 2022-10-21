@@ -292,7 +292,7 @@ export default {
         this.$router.push({ name: 'ruleDetails', params: { id: row.id } })
         return
       }
-      const data = ((await this.$httpGet(`/rules/${row.id}`)) || {}).data || {}
+      const data = ((await this.$httpGet(`/rules/${encodeURIComponent(row.id)}`)) || {}).data || {}
       if (!data) {
         this.rule = row
       } else {
@@ -313,7 +313,7 @@ export default {
     },
     loadDetails(id) {
       this.ruleDialogLoading = true
-      this.$httpGet(`/rules/${id}`)
+      this.$httpGet(`/rules/${encodeURIComponent(id)}`)
         .then((res) => {
           const { data } = res
           this.rule = data
@@ -338,7 +338,7 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          this.$httpDelete(`/rules/${row.id}`).then(() => {
+          this.$httpDelete(`/rules/${encodeURIComponent(row.id)}`).then(() => {
             this.$message.success(this.$t('rule.delete_success'))
             this.loadData()
           })
@@ -392,7 +392,7 @@ export default {
     },
     updateRule(row) {
       const { id, enabled } = row
-      this.$httpPut(`/rules/${id}`, {
+      this.$httpPut(`/rules/${encodeURIComponent(id)}`, {
         enabled,
       }).then(() => {
         this.$message.success(this.$t('oper.editSuccess'))
