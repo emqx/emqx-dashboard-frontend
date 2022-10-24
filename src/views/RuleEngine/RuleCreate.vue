@@ -12,7 +12,14 @@
     </div>
 
     <el-card class="el-card--self">
-      <el-form label-position="right" label-width="108px" ref="record" :model="record" :rules="rules">
+      <el-form
+        label-position="right"
+        label-width="108px"
+        ref="record"
+        :model="record"
+        :rules="rules"
+        :validate-on-rule-change="false"
+      >
         <!-- 基本信息 -->
         <div class="form-block--wrapper">
           <div class="form-block__title">
@@ -180,8 +187,8 @@ export default {
         id: `rule:${Math.random().toString().slice(3, 9)}`,
       },
       rules: {
-        rawsql: { required: true, message: this.$t('rule.sql_required') },
-        id: { required: true, validator: verifyID },
+        rawsql: { required: true, message: this.$t('rule.sql_required'), trigger: 'blur' },
+        id: { required: true, validator: (rules, value) => verifyID(value, this.isEdit), trigger: 'blur' },
       },
       selectedOption: {
         event: '$events/messagepublish',

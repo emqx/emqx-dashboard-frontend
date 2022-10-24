@@ -214,7 +214,7 @@ export default {
     },
     rules() {
       return {
-        id: { required: true, validator: verifyID },
+        id: { required: true, validator: (rules, value) => verifyID(value, this.oper === 'edit') },
         type: { required: true, message: this.$t('rule.type_required') },
         ...this.resourceRules,
       }
