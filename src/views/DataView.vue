@@ -130,9 +130,7 @@
     <el-table v-show="activeTab === 'clients'" v-loading="$store.state.loading" border :data="clients">
       <el-table-column prop="clientid" :label="$t('clients.clientId')" width="160px" show-overflow-tooltip>
         <template slot-scope="{ row }">
-          <a href="javascript:;" @click="$router.push({ path: `/clients/${encodeURIComponent(row.clientid)}` })">
-            {{ row.clientid }}
-          </a>
+          <router-link :to="{ name: 'clientDetails', params: { id: row.clientid } }">{{ row.clientid }}</router-link>
         </template>
       </el-table-column>
       <el-table-column

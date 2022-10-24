@@ -222,9 +222,7 @@ export default {
       return pluginsDict[name]
     },
     handleManage(row) {
-      this.$router.push({
-        path: `/plugins/${row.name}`,
-      })
+      this.$router.push({ name: 'pluginsName', params: { pluginName: row.name } })
     },
   },
   created() {

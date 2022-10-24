@@ -289,7 +289,7 @@ export default {
     },
     async viewRule(row) {
       if (row.id) {
-        this.$router.push(`/rules/${row.id}`)
+        this.$router.push({ name: 'ruleDetails', params: { id: row.id } })
         return
       }
       const data = ((await this.$httpGet(`/rules/${encodeURIComponent(row.id)}`)) || {}).data || {}
@@ -306,7 +306,7 @@ export default {
       }, 10 * 1000)
     },
     editRule(row) {
-      this.$router.push(`/rules/create?rule=${row.id}`)
+      this.$router.push({ name: 'ruleCreate', query: { rule: row.id } })
     },
     copyRule({ id }) {
       this.$router.push({ name: 'ruleCreate', query: { command: 'copy', rule: id } })
