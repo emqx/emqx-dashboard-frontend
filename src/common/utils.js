@@ -274,17 +274,24 @@ export function getDateDiff(duration) {
   return [days, hours, minutes, seconds].map((n) => (n > 10 ? n : `0${n}`)).join(':')
 }
 
-export const verifyID = (rule, value, callback) => {
+/**
+ * if is edit, just return resolve directly
+ */
+export const verifyID = async (value, isEdit = false) => {
+  if (isEdit) {
+    return Promise.resolve()
+  }
   const reg = /^[0-9a-zA-Z_:]{1,64}$/
   if (!value) {
-    callback(new Error(`ID ${Vue.prototype.$t('rule.is_required')}`))
-  } else if (value.length > 64) {
-    callback(new Error(Vue.prototype.$t('rule.id_len_tip')))
-  } else if (!reg.test(value)) {
-    callback(new Error(Vue.prototype.$t('rule.id_char_tip')))
-  } else {
-    callback()
+    return Promise.reject(`ID ${Vue.prototype.$t('rule.is_required')}`)
   }
+  if (value.length > 64) {
+    return Promise.reject(Vue.prototype.$t('rule.id_len_tip'))
+  }
+  if (!reg.test(value)) {
+    return Promise.reject(Vue.prototype.$t('rule.id_char_tip'))
+  }
+  return Promise.resolve()
 }
 
 export const intercept = (text, len) => {
