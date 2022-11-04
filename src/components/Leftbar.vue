@@ -1,7 +1,9 @@
 <template>
   <div class="left-bar">
     <div class="logo-box">
-      <img class="logo" src="../assets/emq_logo.png" />
+      <a :href="homeLink" target="_blank">
+        <img class="logo" src="../assets/emqx_logo.png" />
+      </a>
     </div>
     <el-menu
       mode="vertical"
@@ -204,6 +206,12 @@ export default {
     showFeatOnLeftbar() {
       return this.$store.state.showFeatOnLeftbar
     },
+    homeLink() {
+      const lang = window.localStorage.getItem('language') || 'en'
+      return `https://www.emqx.io/${
+        lang === 'zh' ? 'zh' : ''
+      }?utm_source=emqx-dashboard&utm_medium=referral&utm_campaign=dashboard-logo-to-emqxio`
+    },
   },
   watch: {
     showFeatOnLeftbar: {
@@ -276,7 +284,7 @@ export default {
     line-height: 74px;
 
     img {
-      width: 72px;
+      width: 80px;
       height: auto;
     }
   }
