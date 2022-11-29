@@ -412,6 +412,7 @@ export default {
     createUser: 'Create user success',
     passwordIllegal: 'Password length: 3~255',
     noSameNewPwd: 'The new and old passwords cannot be the same',
+    jumpLoginTip: 'Password change successful, please login again',
   },
   // alert
   alert: {

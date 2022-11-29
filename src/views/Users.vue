@@ -279,9 +279,11 @@ export default {
                   this.$store.state.user.username === this.record.username &&
                   this.record.password !== this.record.newPassword
                 ) {
-                  this.$message.error(this.$t('users.authenticate'))
-                  this.USER_LOGIN({ isLogOut: true })
-                  this.$router.push('/login')
+                  this.$message.success(this.$t('users.jumpLoginTip'))
+                  window.setTimeout(() => {
+                    this.USER_LOGIN({ isLogOut: true })
+                    this.$router.push('/login')
+                  }, 1500)
                 } else {
                   this.$message.success(`${this.$t('oper.edit')}${this.$t('alert.success')}`)
                   this.dialogVisible = false

@@ -405,6 +405,7 @@ export default {
     createUser: '新建用户成功',
     passwordIllegal: '密码长度: 3~255',
     noSameNewPwd: '新密码不能与旧密码相同',
+    jumpLoginTip: '修改密码成功，请重新登录',
   },
   // alert
   alert: {

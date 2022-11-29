@@ -401,6 +401,7 @@ export default {
     createUser: 'ユーザーを作成しました',
     passwordIllegal: 'パスワードの長さ: 3~255',
     noSameNewPwd: '新しいパスワードと古いパスワードを同じにすることはできません',
+    jumpLoginTip: 'パスワードの変更に成功しました、もう一度ログインしてください',
   },
   // alert
   alert: {
