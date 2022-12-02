@@ -25,7 +25,7 @@ export default {
 
   data() {
     return {
-      isPwdMsgBoxClosed: false,
+      isPwdMsgBoxClosed: true,
     }
   },
 
@@ -37,6 +37,7 @@ export default {
 
   methods: {
     popupMessageBox() {
+      this.isPwdMsgBoxClosed = false
       this.$msgbox({
         type: 'info',
         message: this.$t('login.defaultPwdTip'),
@@ -71,8 +72,9 @@ export default {
   },
 
   beforeRouteUpdate(to, from, next) {
-    if (this.isUsingDefaultPwd && !this.isPwdMsgBoxClosed) {
+    if (!this.isPwdMsgBoxClosed) {
       this.$msgbox.close()
+      this.isPwdMsgBoxClosed = true
     }
     this.preventLeaveWithoutChangeDefaultPwd(to, from, next)
   },
