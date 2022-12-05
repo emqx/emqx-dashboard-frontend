@@ -262,6 +262,7 @@ export default {
     dataRequired: 'Payloadのデータを入力してください',
     leaveTokenPage:
       '現在のページを離れると、入力内容及び生成したTOKENが失われます。このまま処理を続けてもよろしいですか？',
+    invalidSignature: '無効な秘密鍵',
   },
   modules: {
     name: 'モジュール名',

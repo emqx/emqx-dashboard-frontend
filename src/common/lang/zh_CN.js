@@ -266,6 +266,7 @@ export default {
     payloadRequired: '请输入 Payload 模版',
     dataRequired: '请填写 Payload 数据',
     leaveTokenPage: '离开页面后当前输入的配置与生成的 TOKEN 信息均不再保留，确认离开？',
+    invalidSignature: '无效私钥',
   },
   modules: {
     name: '模块名称',

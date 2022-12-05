@@ -268,6 +268,7 @@ export default {
     dataRequired: 'Payload data is required',
     leaveTokenPage:
       'After leaving the page, the currently entered configuration and generated TOKEN information are no longer retained. Continue?',
+    invalidSignature: 'Invalid secret',
   },
   modules: {
     name: 'Name',
