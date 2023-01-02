@@ -93,8 +93,7 @@
 
 <script>
 import { Input, Button, Table, TableColumn, Form, FormItem, Row, Col, Checkbox, DatePicker } from 'element-ui'
-import jwt from 'jsonwebtoken'
-
+import { sign } from '~/common/sign.js'
 import Monaco from '~/components/Monaco'
 import EmqSelect from '~/components/EmqSelect'
 import { handleClipboard } from '~/common/utils'
@@ -137,7 +136,20 @@ export default {
         payload: { required: true, message: this.$t('plugins.payloadRequired') },
         data: { required: true, message: this.$t('plugins.dataRequired') },
       },
-      algsOptions: ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512'],
+      algsOptions: [
+        'HS256',
+        'HS384',
+        'HS512',
+        'RS256',
+        'RS384',
+        'RS512',
+        'ES256',
+        'ES384',
+        'ES512',
+        'PS256',
+        'PS384',
+        'PS512',
+      ],
       payloadVisible: false,
       pickerOptions: {
         disabledDate(time) {
@@ -200,6 +212,14 @@ export default {
     inCurrentAlgNeedPubKey() {
       return !algorithmsDoNotNeedPubKey.includes(this.record.alg)
     },
+    popupErrorsMessage(errors) {
+      if (Array.isArray(errors.errors)) {
+        const errorMsg = errors.errors.map(({ message }) => message).join('; ')
+        this.$message.error(errorMsg)
+      } else {
+        this.$message.error(errors.message)
+      }
+    },
     async getPayloadJWTData(template, data) {
       let payloadStr = JSON.stringify(template)
       const ret = await Promise.all(
@@ -207,20 +227,18 @@ export default {
           const [username = '', clientid = ''] = item.split(',')
           payloadStr = template.replace(/%u/g, username).replace(/%c/g, clientid)
           const payload = JSON.parse(payloadStr)
-          const options = { algorithm: this.record.alg }
+          const header = { alg: this.record.alg }
           if (this.record.expired) {
             payload.exp = this.record.expired / 1000
           }
-          const token = jwt.sign(payload, this.record.secret, options)
-          return new Promise((resolve, reject) => {
-            jwt.sign(payload, this.record.secret, options, (err, token) => {
-              if (err) {
-                this.$message.error(this.$t('plugins.invalidSignature'))
-                reject()
-              } else {
-                resolve({ username, clientid, token })
-              }
-            })
+          return new Promise(async (resolve, reject) => {
+            try {
+              const token = await sign(header, payload, this.record.secret)
+              resolve({ username, clientid, token })
+            } catch (error) {
+              this.popupErrorsMessage(error)
+              reject()
+            }
           })
         }),
       )
@@ -231,17 +249,15 @@ export default {
       if (this.record.expired) {
         payload.exp = this.record.expired / 1000
       }
-      const options = { algorithm: this.record.alg }
-      return new Promise((resolve, reject) => {
-        jwt.sign(payload, this.record.secret, options, (err, token) => {
-          console.error(err)
-          if (err) {
-            this.$message.error(this.$t('plugins.invalidSignature'))
-            reject()
-          } else {
-            resolve([{ clientid: '', username: '', token }])
-          }
-        })
+      const header = { alg: this.record.alg }
+      return new Promise(async (resolve, reject) => {
+        try {
+          const token = await sign(header, payload, this.record.secret)
+          resolve([{ clientid: '', username: '', token }])
+        } catch (error) {
+          this.popupErrorsMessage(error)
+          reject()
+        }
       })
     },
     copyToken(row, event) {
