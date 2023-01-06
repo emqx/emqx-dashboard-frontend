@@ -403,6 +403,8 @@ export default {
     passwordIllegal: 'パスワードの長さ: 3~255',
     noSameNewPwd: '新しいパスワードと古いパスワードを同じにすることはできません',
     jumpLoginTip: 'パスワードの変更に成功しました、もう一度ログインしてください',
+    passwordRequirement:
+      'パスワードの長さは 8 ～ 64 文字である必要があります。 文字、数字、記号のうち少なくとも 2 つを含む',
   },
   // alert
   alert: {

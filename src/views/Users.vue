@@ -58,7 +58,15 @@
       :close-on-press-escape="!isForChangeDefaultPwd"
       @keyup.enter.native="createUser"
     >
-      <el-form class="el-form--public" ref="record" label-position="top" size="medium" :model="record" :rules="rules">
+      <el-form
+        class="el-form--public"
+        ref="record"
+        label-position="top"
+        size="medium"
+        :model="record"
+        :rules="rules"
+        :validate-on-rule-change="false"
+      >
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item prop="username" :label="$t('users.username')">
@@ -68,7 +76,7 @@
           <!-- create new User -->
           <el-col v-if="oper === 'new'" :span="24">
             <el-form-item prop="password" :label="$t('users.password')">
-              <el-input v-model="record.password" type="password"></el-input>
+              <el-input v-model="record.password" type="password" autocomplete="one-time-code"></el-input>
             </el-form-item>
           </el-col>
           <div v-if="changePassword && oper === 'edit'">
@@ -125,6 +133,8 @@ import { Dialog, Input, Button, Table, TableColumn, Popover, Form, FormItem, Row
 import { mapActions } from 'vuex'
 import changeDefaultPwd from '~/mixins/changeDefaultPwd'
 
+const PWD_REG = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$)[ -~]{8,64}$/
+
 export default {
   name: 'users-view',
 
@@ -150,20 +160,6 @@ export default {
   },
 
   data() {
-    const checkRepeatPassword = (rule, value, callback) => {
-      if (value !== this.record.newPassword) {
-        callback(new Error(this.$t('users.passwordInconsistent')))
-      } else {
-        callback()
-      }
-    }
-    const newPwdSameConfirm = (rule, value, callback) => {
-      if (value === this.record.password) {
-        callback(new Error(this.$t('users.noSameNewPwd')))
-      } else {
-        callback()
-      }
-    }
     return {
       changePassword: false,
       dialogVisible: false,
@@ -176,26 +172,6 @@ export default {
         repeatPassword: '',
         tags: '',
       },
-      rules: {
-        username: [
-          { required: true, message: this.$t('users.usernameRequired') },
-          { min: 2, max: 32, message: this.$t('users.usernameIllegal'), trigger: 'change' },
-        ],
-        tags: [{ required: true, message: this.$t('users.remarkRequired') }],
-        password: [
-          { required: true, message: this.$t('users.passwordRequired') },
-          { min: 3, max: 255, message: this.$t('users.passwordIllegal'), trigger: 'change' },
-        ],
-        newPassword: [
-          { required: true, message: this.$t('users.passwordRequired') },
-          { min: 3, max: 255, message: this.$t('users.passwordIllegal'), trigger: 'change' },
-          { validator: newPwdSameConfirm, trigger: 'blur' },
-        ],
-        repeatPassword: [
-          { required: true, message: this.$t('users.passwordRequired') },
-          { validator: checkRepeatPassword, trigger: 'change' },
-        ],
-      },
     }
   },
 
@@ -205,6 +181,44 @@ export default {
     },
     currentUserName() {
       return this.$store.state.user.username
+    },
+    rules() {
+      const checkRepeatPassword = (rule, value, callback) => {
+        if (value !== this.record.newPassword) {
+          callback(new Error(this.$t('users.passwordInconsistent')))
+        } else {
+          callback()
+        }
+      }
+      const newPwdSameConfirm = (rule, value, callback) => {
+        if (value === this.record.password) {
+          callback(new Error(this.$t('users.noSameNewPwd')))
+        } else {
+          callback()
+        }
+      }
+      const newPwdRule = { pattern: PWD_REG, message: this.$t('users.passwordRequirement'), trigger: ['blur'] }
+      const ret = {
+        username: [
+          { required: true, message: this.$t('users.usernameRequired') },
+          { min: 2, max: 32, message: this.$t('users.usernameIllegal'), trigger: 'change' },
+        ],
+        tags: [{ required: true, message: this.$t('users.remarkRequired') }],
+        password: [{ required: true, message: this.$t('users.passwordRequired') }],
+        newPassword: [
+          { required: true, message: this.$t('users.passwordRequired') },
+          newPwdRule,
+          { validator: newPwdSameConfirm, trigger: 'blur' },
+        ],
+        repeatPassword: [
+          { required: true, message: this.$t('users.passwordRequired') },
+          { validator: checkRepeatPassword, trigger: 'change' },
+        ],
+      }
+      if (this.oper === 'new') {
+        ret.password.push(newPwdRule)
+      }
+      return ret
     },
   },
 

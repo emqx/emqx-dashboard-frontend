@@ -407,6 +407,7 @@ export default {
     passwordIllegal: '密码长度: 3~255',
     noSameNewPwd: '新密码不能与旧密码相同',
     jumpLoginTip: '修改密码成功，请重新登录',
+    passwordRequirement: '密码长度必须为 8～64 个字符；至少包含字母、数字、符号中的两种',
   },
   // alert
   alert: {

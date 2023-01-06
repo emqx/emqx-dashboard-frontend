@@ -414,6 +414,8 @@ export default {
     passwordIllegal: 'Password length: 3~255',
     noSameNewPwd: 'The new and old passwords cannot be the same',
     jumpLoginTip: 'Password change successful, please login again',
+    passwordRequirement:
+      'The password must be 8 to 64 characters in length; contain at least two of the letters, numbers and symbols',
   },
   // alert
   alert: {
