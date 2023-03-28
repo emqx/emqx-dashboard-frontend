@@ -46,8 +46,8 @@ export default {
       if (type === 'enterprise') {
         link =
           this.lang === 'zh'
-            ? 'https://www.emqx.com/zh/try?product=enterprise'
-            : 'https://www.emqx.com/en/try?product=enterprise'
+            ? 'https://www.emqx.com/zh/lp/upgrade-emqx/enterprise?utm_source=emqx-dashboard&utm_medium=referral&utm_campaign=dashboard-header-to-upgrade'
+            : 'https://www.emqx.com/en/lp/upgrade-emqx/enterprise?utm_source=emqx-dashboard&utm_medium=referral&utm_campaign=dashboard-header-to-upgrade'
       } else if (type === 'github') {
         link = 'https://github.com/emqx/emqx'
       }
