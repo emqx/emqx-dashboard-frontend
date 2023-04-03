@@ -160,6 +160,16 @@
           @current-change="loadData()"
         >
         </el-pagination>
+        <div v-if="rulesCount === -1" class="custom-pagination">
+          <a :class="['prev', pageParams._page === 1 ? 'disabled' : '']" href="javascript:;" @click="handlePrevClick">
+            <i class="el-icon-arrow-left"></i>
+            {{ $t('oper.prev') }}
+          </a>
+          <a :class="['next', hasnext ? '' : 'disabled']" href="javascript:;" @click="handleNextClick">
+            {{ $t('oper.next') }}
+            <i class="el-icon-arrow-right"></i>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -264,6 +274,7 @@ export default {
         _limit: 10,
         _page: 1,
       },
+      hasnext: false,
       rulesCount: 0,
       showMoreQuery: false,
       filterParams: createRawFilterParams(),
@@ -368,6 +379,7 @@ export default {
         const { items, meta } = data
         this.tableData = items
         this.rulesCount = meta.count
+        this.hasnext = meta.hasnext
         const currentRule = this.tableData.find(($) => $.id === this.rule.id)
         if (currentRule) {
           this.rule = currentRule
@@ -381,6 +393,21 @@ export default {
       this.resetPageNo()
       this.loadData()
     },
+    handlePrevClick() {
+      if (this.pageParams._page === 1) {
+        return
+      }
+      this.pageParams._page -= 1
+      this.loadData()
+    },
+    handleNextClick() {
+      if (!this.hasnext) {
+        return
+      }
+      this.pageParams._page += 1
+      this.loadData()
+    },
+
     handleSizeChanged(size) {
       this.pageParams._limit = size
       this.resetPageNo()
@@ -523,6 +550,28 @@ export default {
       font-size: 12px;
     }
     margin-bottom: 10px;
+  }
+
+  .custom-pagination {
+    margin-top: 10px;
+    a {
+      transition: all 0.3s ease;
+      color: #fff;
+      margin-right: 10px;
+      background: #42d885;
+      display: inline-block;
+      border-radius: 4px;
+      padding: 5px 8px;
+      &:hover {
+        color: #fff;
+      }
+    }
+    a.disabled {
+      transition: all 0.3s ease;
+      color: #606266;
+      background: transparent;
+      cursor: not-allowed;
+    }
   }
 }
 </style>
