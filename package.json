@@ -1,7 +1,7 @@
 {
   "name": "emq-dashboard",
   "version": "v4.3.0",
-  "description": "EMQ X Dashboard",
+  "description": "EMQX Dashboard",
   "author": "zhangwh <zh.whong@gmail.com>",
   "private": true,
   "scripts": {

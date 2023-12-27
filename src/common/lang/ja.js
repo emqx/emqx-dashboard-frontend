@@ -360,7 +360,7 @@ export default {
     enableText: '有効になります',
     disableText: '無効になります',
     expiredText: '有効期限なし',
-    guide: 'EMQ X REST API を利用してアプリケーションを構築するガイド、詳細はこちらへ',
+    guide: 'EMQX REST API を利用してアプリケーションを構築するガイド、詳細はこちらへ',
     docs: 'ドキュメント',
   },
   // users
@@ -438,16 +438,16 @@ export default {
   help: {
     quickStart: 'クイックスタート',
     emqxDesc:
-      'EMQ X Brokerは、高い並行処理指向のErlang / OTPに基づいて、オープンソースコミュニティで最も人気のあるMQTT ブローカーです。MQTT、LwM2M、MQTT-SN、CoAP、LoRaWAN、HTTP、WebSocketなどの豊富なIoTプロトコルをサポートしています。EMQ X Brokerが良かったと思われる方は、GitHubでフォローしていただけると嬉しいです。更に、皆様からのコントリビューションを歓迎します。',
-    emqxEnterprise: 'EMQ X Enterprise',
+      'EMQX Brokerは、高い並行処理指向のErlang / OTPに基づいて、オープンソースコミュニティで最も人気のあるMQTT ブローカーです。MQTT、LwM2M、MQTT-SN、CoAP、LoRaWAN、HTTP、WebSocketなどの豊富なIoTプロトコルをサポートしています。EMQX Brokerが良かったと思われる方は、GitHubでフォローしていただけると嬉しいです。更に、皆様からのコントリビューションを歓迎します。',
+    emqxEnterprise: 'EMQX Enterprise',
     enterpriseDesc:
-      'EMQ X Enterpriseにおいて、様々なデータ永続化、セキュリティ監視サービス、稼働監視など機能を提供しています。無料体験版より包括的な機能、より強力な安定性とパフォーマンス、より厳密なセキュリティのメリットがあります。<br/>更に、新しいダッシュボードが含まれ、1つのIoT Hubクラスターにより数百万のデバイス接続を簡単に作成及び管理できます。',
+      'EMQX Enterpriseにおいて、様々なデータ永続化、セキュリティ監視サービス、稼働監視など機能を提供しています。無料体験版より包括的な機能、より強力な安定性とパフォーマンス、より厳密なセキュリティのメリットがあります。<br/>更に、新しいダッシュボードが含まれ、1つのIoT Hubクラスターにより数百万のデバイス接続を簡単に作成及び管理できます。',
     freeTrial: '無料トライアル',
     useDocs: 'ドキュメント',
-    docsDesc: 'EMQ X Brokerの全機能に関する役立つドキュメントを用意しています。',
+    docsDesc: 'EMQX Brokerの全機能に関する役立つドキュメントを用意しています。',
     forwardView: 'ドキュメントを見る',
     faqDesc:
-      'EMQ X Brokerの使用中にエラー（「一時的なエラー」など）が発生した場合、よくあるご質問ページを参考にして問題を解決することをお勧めします。',
+      'EMQX Brokerの使用中にエラー（「一時的なエラー」など）が発生した場合、よくあるご質問ページを参考にして問題を解決することをお勧めします。',
     forwardFaq: 'よくあるご質問',
     followUs: 'フォローする',
   },

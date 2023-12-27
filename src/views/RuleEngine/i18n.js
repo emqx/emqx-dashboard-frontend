@@ -110,7 +110,7 @@ export const en = {
   rule_descr_placeholder: 'e.g.message render to Webhook',
   rule_sql_tips_title: 'Write SQL statements for conditional filtering and data processing:',
   sql_tips_html:
-    '<p>Rule Engine is the core SQL-based data processing and distribution component on top of the standard MQTT. It makes it easy to filter and process MQTT messages and device lifecycle events and move data distribution to HTTP Server, database, message queues, or even another MQTT Broker.</p><p>1. Select the messages published to t/# and select all fields:</p><div class="code"><code>SELECT * FROM  "t/#"</code> </div><p>2. Select the client connected event and filter the device with Username \'emqx\' to get the connection information.</p><div class="code"><code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = \'emqx\'</code></div><p>For a detailed tutorial on the rule engine and SQL queries please refer to <a target="_blank" href="https://docs.emqx.io/en/broker/latest/rule/rule-engine.html">EMQ X Documentation</a>。</p>',
+    '<p>Rule Engine is the core SQL-based data processing and distribution component on top of the standard MQTT. It makes it easy to filter and process MQTT messages and device lifecycle events and move data distribution to HTTP Server, database, message queues, or even another MQTT Broker.</p><p>1. Select the messages published to t/# and select all fields:</p><div class="code"><code>SELECT * FROM  "t/#"</code> </div><p>2. Select the client connected event and filter the device with Username \'emqx\' to get the connection information.</p><div class="code"><code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = \'emqx\'</code></div><p>For a detailed tutorial on the rule engine and SQL queries please refer to <a target="_blank" href="https://docs.emqx.io/en/broker/latest/rule/rule-engine.html">EMQX Documentation</a>。</p>',
   condition_screening: 'Condition Screening',
   topic_condition: 'Topic',
   message_publish_topic: 'Message topic',
@@ -270,7 +270,7 @@ export const zh = {
   rule_descr_placeholder: 'e.g.消息转发到 Webhook',
   rule_sql_tips_title: '编写 SQL 进行条件过滤与数据处理：',
   sql_tips_html:
-    '<p>规则引擎是标准 MQTT 之上基于 SQL 的核心数据处理与分发组件，可以方便的筛选并处理 MQTT 消息与设备生命周期事件，并将数据分发移动到 HTTP Server、数据库、消息队列甚至是另一个 MQTT Broker 中。</p><p>1. 选择 \'t/#\' 主题的消息，提取全部字段：</p><div class="code"><code>SELECT * FROM  "t/#"</code></div><p>2. 通过事件主题选择客户端连接事件，筛选 Username 为 \'emqx\' 的设备并获取连接信息：</p><div class="code"><code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = \'emqx\'</code></div><p>规则引擎和 SQL 语句的详细教程参见 <a target="_blank" href="https://docs.emqx.cn/broker/latest/rule/rule-engine.html">EMQ X 文档</a>。</p>`',
+    '<p>规则引擎是标准 MQTT 之上基于 SQL 的核心数据处理与分发组件，可以方便的筛选并处理 MQTT 消息与设备生命周期事件，并将数据分发移动到 HTTP Server、数据库、消息队列甚至是另一个 MQTT Broker 中。</p><p>1. 选择 \'t/#\' 主题的消息，提取全部字段：</p><div class="code"><code>SELECT * FROM  "t/#"</code></div><p>2. 通过事件主题选择客户端连接事件，筛选 Username 为 \'emqx\' 的设备并获取连接信息：</p><div class="code"><code>SELECT clientid, connected_at FROM "$events/client_connected" WHERE username = \'emqx\'</code></div><p>规则引擎和 SQL 语句的详细教程参见 <a target="_blank" href="https://docs.emqx.cn/broker/latest/rule/rule-engine.html">EMQX 文档</a>。</p>`',
 
   condition_screening: '条件筛选',
   topic_condition: '主题条件',
