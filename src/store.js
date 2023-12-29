@@ -44,6 +44,12 @@ const state = {
   showFeatOnLeftbar: getShowFeatOnLeftbar(),
 }
 
+const getters = {
+  specifiedNodeName(state) {
+    return !state.nodeName || state.nodeName === 'all' ? undefined : state.nodeName
+  },
+}
+
 // login & logout
 const USER_LOGIN = 'USER_LOGIN'
 // ajax state
@@ -105,6 +111,7 @@ const mutations = {
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state,
+  getters,
   actions,
   mutations,
 })
